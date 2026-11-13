@@ -8,6 +8,16 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, dan penambahan fi
 
 ---
 
+## [2.3.1] - 2026-11-13
+### Added & Configured (Subfolder Deployment `/game` for Apache htdocs/game)
+- **Konfigurasi Subfolder BasePath `/game`:**
+  - Menyetel `basePath: "/game"` di `next.config.ts` sehingga seluruh rute internal (`<Link>`), routing navigasi, chunk JS, stylesheet CSS, dan aset statis otomatis diawali dengan prefix `/game`.
+  - Memperbarui path iframe pada `GameFrame.tsx` agar memuat engine game HTML5 dari subfolder `/game/games/[slug]/index.html`.
+  - Memperbarui tag `<head>` dan metadata favicon di `layout.tsx` agar menggunakan path `/game/teknogame-icon.png?v=3` dan `/game/favicon.ico?v=3`.
+  - Hasil kompilasi folder `out/` kini siap di-upload ke dalam folder **`htdocs/game/`** dan langsung dapat diakses sempurna melalui URL **`http://.../game`**.
+
+---
+
 ## [2.3.0] - 2026-11-13
 ### Added & Optimized (Static HTML Export for Apache XAMPP / htdocs Deployment)
 - **Konfigurasi Output Static Export (`out/`):**
