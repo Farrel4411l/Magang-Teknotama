@@ -8,6 +8,16 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, dan penambahan fi
 
 ---
 
+## [2.4.0] - 2026-11-13
+### Added & Documented (Deployment Guide `DEPLOY.md` for Apache XAMPP & FileZilla)
+- **Pembuatan Panduan Deployment Lengkap ([DEPLOY.md](DEPLOY.md)):**
+  - Menjelaskan secara rinci bahwa yang di-deploy ke server adalah **HASIL BUILD di dalam folder `out/`**, bukan file mentah project (`src/`, `node_modules/`, dll).
+  - Menyediakan panduan langkah demi langkah penggunaan FileZilla untuk meng-upload ke subfolder `htdocs/game/` maupun root domain `htdocs/`.
+  - Menyertakan konfigurasi template Apache `.htaccess` untuk client-side routing dan pencegahan error 404 pada saat refresh halaman.
+  - Menyertakan checklist troubleshooting permission file, path URL `basePath`, dan cache buster browser.
+
+---
+
 ## [2.3.1] - 2026-11-13
 ### Added & Configured (Subfolder Deployment `/game` for Apache htdocs/game)
 - **Konfigurasi Subfolder BasePath `/game`:**
