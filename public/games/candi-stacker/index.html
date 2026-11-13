@@ -242,6 +242,7 @@
     }
 
     function gameOver() {
+      if (!isPlaying) return;
       isPlaying = false;
       currentBlock = null;
       finalScore.innerText = score.toLocaleString('id-ID') + ' pts';

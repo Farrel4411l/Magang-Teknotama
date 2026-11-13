@@ -168,6 +168,7 @@
     }
 
     function gameOver() {
+      if (!isPlaying) return;
       isPlaying = false;
       finalScore.innerText = score.toLocaleString('id-ID') + ' pts';
       overModal.style.display = 'flex';

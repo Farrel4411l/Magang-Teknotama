@@ -8,6 +8,17 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, dan penambahan fi
 
 ---
 
+## [2.5.1] - 2026-11-13
+### Fixed (Header Logo Asset Path & Game Over Audio Loop Bug)
+- **Perbaikan Audio Game Over (Anti-Loop & Sound Sekali Saja):**
+  - Memperbaiki bug di mana fungsi `gameOver()` terpanggil berulang kali (60x/detik) saat becak/karakter menabrak rintangan di `becak-drift` dan `nusantara-runner`.
+  - Menambahkan guard clause `if (!isPlaying) return;` dan membatasi collision check di dalam blok `isPlaying` pada seluruh game mini HTML5.
+  - Suara tabrakan game over kini berbunyi sekali saja dengan volume yang nyaman dan tidak berulang.
+- **Perbaikan Logo Header TeknoGame di Subfolder `/games/`:**
+  - Mengubah path gambar `<Image src="/games/teknogame-icon.png">` di `Navbar.tsx` dan `Footer.tsx` agar browser memuat logo langsung dari subfolder `/games/` tanpa error broken image icon.
+
+---
+
 ## [2.5.0] - 2026-11-13
 ### Changed & Optimized (Configured Subfolder `/games` for /public_html/games/ Match)
 - **Penyesuaian Subfolder Menjadi `/games`:**
@@ -35,6 +46,17 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, dan penambahan fi
   - Memperbarui path iframe pada `GameFrame.tsx` agar memuat engine game HTML5 dari subfolder `/game/games/[slug]/index.html`.
   - Memperbarui tag `<head>` dan metadata favicon di `layout.tsx` agar menggunakan path `/game/teknogame-icon.png?v=3` dan `/game/favicon.ico?v=3`.
   - Hasil kompilasi folder `out/` kini siap di-upload ke dalam folder **`htdocs/game/`** dan langsung dapat diakses sempurna melalui URL **`http://.../game`**.
+
+---
+
+## [2.5.1] - 2026-11-13
+### Fixed (Header Logo Asset Path & Game Over Audio Loop Bug)
+- **Perbaikan Audio Game Over (Anti-Loop & Sound Sekali Saja):**
+  - Memperbaiki bug di mana fungsi `gameOver()` terpanggil berulang kali (60x/detik) saat becak/karakter menabrak rintangan di `becak-drift` dan `nusantara-runner`.
+  - Menambahkan guard clause `if (!isPlaying) return;` dan membatasi collision check di dalam blok `isPlaying` pada seluruh game mini HTML5.
+  - Suara tabrakan game over kini berbunyi sekali saja dengan volume yang nyaman dan tidak berulang.
+- **Perbaikan Logo Header TeknoGame di Subfolder `/games/`:**
+  - Mengubah path gambar `<Image src="/games/teknogame-icon.png">` di `Navbar.tsx` dan `Footer.tsx` agar browser memuat logo langsung dari subfolder `/games/` tanpa error broken image icon.
 
 ---
 

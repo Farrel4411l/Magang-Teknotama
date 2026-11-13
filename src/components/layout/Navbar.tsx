@@ -36,7 +36,7 @@ export default function Navbar({ onOpenSearch, onOpenLeaderboard }: NavbarProps)
             >
               <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg border border-cyan-500/40 group-hover:border-cyan-400 group-hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all shrink-0">
                 <Image
-                  src="/teknogame-icon.png"
+                  src="/games/teknogame-icon.png"
                   alt="TeknoGame Shield Emblem"
                   fill
                   className="object-cover"

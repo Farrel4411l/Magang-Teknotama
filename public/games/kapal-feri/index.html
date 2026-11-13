@@ -163,6 +163,7 @@
     }
 
     function finish(isSuccess) {
+      if (!isPlaying) return;
       isPlaying = false;
       let score = 0;
       if (isSuccess) {

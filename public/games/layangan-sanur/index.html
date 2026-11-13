@@ -123,6 +123,7 @@
     }
 
     function gameOver(desc) {
+      if (!isPlaying) return;
       isPlaying = false;
       playSnap();
       document.getElementById('over-desc').innerText = desc;

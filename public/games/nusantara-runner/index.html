@@ -174,8 +174,9 @@
     }
 
     function gameOver() {
+      if (!isPlaying) return;
       isPlaying = false;
-      playBeep(180, 'sawtooth', 0.35);
+      playBeep(180, 'sawtooth', 0.25, 0.15);
       finalScoreEl.innerText = score.toLocaleString('id-ID') + ' pts';
       gameOverScreen.style.display = 'flex';
 
@@ -282,12 +283,14 @@
 
         // Collision Check
         if (
+          isPlaying &&
           player.x < obs.x + obs.w &&
           player.x + player.width > obs.x &&
           player.y < obs.y + obs.h &&
           player.y + player.height > obs.y
         ) {
           gameOver();
+          break;
         }
 
         if (obs.x + obs.w < 0) obstacles.splice(i, 1);

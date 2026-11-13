@@ -141,8 +141,9 @@
     }
 
     function gameOver() {
+      if (!isPlaying) return;
       isPlaying = false;
-      playBeep(90, 'sawtooth', 0.4, 0.3);
+      playBeep(120, 'sawtooth', 0.3, 0.15);
       finalScore.innerText = Math.floor(score).toLocaleString('id-ID') + ' pts';
       overModal.style.display = 'flex';
 
@@ -289,8 +290,9 @@
         }
 
         // Collision Check
-        if (Math.hypot(becakX - obs.x, (height - 110) - obs.y) < 32) {
+        if (isPlaying && Math.hypot(becakX - obs.x, (height - 110) - obs.y) < 32) {
           gameOver();
+          break;
         }
 
         if (obs.y > height + 80) obstacles.splice(i, 1);
@@ -310,7 +312,7 @@
         ctx.fillText('🧳', p.x - 9, p.y + 6);
 
         // Pickup
-        if (Math.hypot(becakX - p.x, (height - 110) - p.y) < 36) {
+        if (isPlaying && Math.hypot(becakX - p.x, (height - 110) - p.y) < 36) {
           score += 350;
           playBeep(1046, 'sine', 0.1, 0.2);
           setTimeout(() => playBeep(1318, 'sine', 0.15, 0.2), 60);

@@ -13,7 +13,7 @@ export default function Footer() {
             <Link href="/" className="inline-flex items-center gap-2.5 group">
               <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-cyan-500/40 shrink-0">
                 <Image
-                  src="/teknogame-icon.png"
+                  src="/games/teknogame-icon.png"
                   alt="TeknoGame Icon"
                   fill
                   className="object-cover"
