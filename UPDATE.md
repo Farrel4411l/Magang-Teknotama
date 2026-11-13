@@ -8,6 +8,46 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, dan penambahan fi
 
 ---
 
+## [2.5.0] - 2026-11-13
+### Changed & Optimized (Configured Subfolder `/games` for /public_html/games/ Match)
+- **Penyesuaian Subfolder Menjadi `/games`:**
+  - Menyetel `basePath: "/games"` di `next.config.ts` agar presisi 100% dengan folder server `/public_html/games/`.
+  - Mengubah prefix aset metadata & icon favicon menjadi `/games/teknogame-icon.png?v=3` dan `/games/favicon.ico?v=3`.
+  - Menyesuaikan iframe container `GameFrame.tsx` agar memuat engine game dari `/games/games/[slug]/index.html`.
+  - Memperbarui panduan deployment di `DEPLOY.md` untuk mencerminkan folder `/public_html/games/` dan `.htaccess` dengan `RewriteBase /games/`.
+
+---
+
+## [2.4.0] - 2026-11-13
+### Added & Documented (Deployment Guide `DEPLOY.md` for Apache XAMPP & FileZilla)
+- **Pembuatan Panduan Deployment Lengkap ([DEPLOY.md](DEPLOY.md)):**
+  - Menjelaskan secara rinci bahwa yang di-deploy ke server adalah **HASIL BUILD di dalam folder `out/`**, bukan file mentah project (`src/`, `node_modules/`, dll).
+  - Menyediakan panduan langkah demi langkah penggunaan FileZilla untuk meng-upload ke subfolder `htdocs/game/` maupun root domain `htdocs/`.
+  - Menyertakan konfigurasi template Apache `.htaccess` untuk client-side routing dan pencegahan error 404 pada saat refresh halaman.
+  - Menyertakan checklist troubleshooting permission file, path URL `basePath`, dan cache buster browser.
+
+---
+
+## [2.3.1] - 2026-11-13
+### Added & Configured (Subfolder Deployment `/game` for Apache htdocs/game)
+- **Konfigurasi Subfolder BasePath `/game`:**
+  - Menyetel `basePath: "/game"` di `next.config.ts` sehingga seluruh rute internal (`<Link>`), routing navigasi, chunk JS, stylesheet CSS, dan aset statis otomatis diawali dengan prefix `/game`.
+  - Memperbarui path iframe pada `GameFrame.tsx` agar memuat engine game HTML5 dari subfolder `/game/games/[slug]/index.html`.
+  - Memperbarui tag `<head>` dan metadata favicon di `layout.tsx` agar menggunakan path `/game/teknogame-icon.png?v=3` dan `/game/favicon.ico?v=3`.
+  - Hasil kompilasi folder `out/` kini siap di-upload ke dalam folder **`htdocs/game/`** dan langsung dapat diakses sempurna melalui URL **`http://.../game`**.
+
+---
+
+## [2.5.0] - 2026-11-13
+### Changed & Optimized (Configured Subfolder `/games` for /public_html/games/ Match)
+- **Penyesuaian Subfolder Menjadi `/games`:**
+  - Menyetel `basePath: "/games"` di `next.config.ts` agar presisi 100% dengan folder server `/public_html/games/`.
+  - Mengubah prefix aset metadata & icon favicon menjadi `/games/teknogame-icon.png?v=3` dan `/games/favicon.ico?v=3`.
+  - Menyesuaikan iframe container `GameFrame.tsx` agar memuat engine game dari `/games/games/[slug]/index.html`.
+  - Memperbarui panduan deployment di `DEPLOY.md` untuk mencerminkan folder `/public_html/games/` dan `.htaccess` dengan `RewriteBase /games/`.
+
+---
+
 ## [2.4.0] - 2026-11-13
 ### Added & Documented (Deployment Guide `DEPLOY.md` for Apache XAMPP & FileZilla)
 - **Pembuatan Panduan Deployment Lengkap ([DEPLOY.md](DEPLOY.md)):**

@@ -99,7 +99,7 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
       >
         <iframe
           ref={iframeRef}
-          src={game.gamePath.startsWith("/game") ? game.gamePath : `/game${game.gamePath}`}
+          src={`/games${game.gamePath.startsWith("/") ? game.gamePath : `/${game.gamePath}`}`}
           title={game.title}
           className="w-full h-full border-0 select-none"
           allow="autoplay; fullscreen; pointer-lock"

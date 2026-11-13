@@ -21,19 +21,19 @@ Dokumen ini adalah panduan resmi langkah demi langkah untuk melakukan deployment
 
 Pilih salah satu dari 2 skenario deployment di bawah ini:
 
-### Skenario A: Subfolder `http://<IP_atau_Domain>/game` (AKTIF SAAT INI)
-Gunakan skenario ini jika web diletakkan di dalam subfolder `htdocs/game/`.
+### Skenario A: Subfolder `http://<IP_atau_Domain>/games` (AKTIF SAAT INI)
+Gunakan skenario ini jika web diletakkan di dalam subfolder `public_html/games/` atau `htdocs/games/`.
 * Pengaturan di `next.config.ts`:
   ```ts
   const nextConfig: NextConfig = {
     output: "export",
-    basePath: "/game",
+    basePath: "/games",
     reactStrictMode: true,
     images: { unoptimized: true },
   };
   ```
-* Target folder di remote server: **`htdocs/game/`**
-* URL akses: **`http://<IP_atau_Domain>/game`**
+* Target folder di remote server: **`/public_html/games/`** atau **`htdocs/games/`**
+* URL akses: **`http://<IP_atau_Domain>/games`**
 
 ---
 
@@ -78,10 +78,10 @@ Pastikan build selesai dengan status sukses (`exited with code 0`). Seluruh file
 ---
 
 ### Langkah 3: Siapkan Folder Target di Server (Sisi Kanan FileZilla)
-1. Di panel kanan (Remote Site), cari dan buka folder **`htdocs/`** (atau `/opt/lampp/htdocs/` / `public_html/`).
+1. Di panel kanan (Remote Site), cari dan buka folder **`public_html/`** atau **`htdocs/`**.
 2. *Untuk skenario subfolder:*  
-   Klik kanan di dalam folder `htdocs/` -> pilih **Create directory** -> beri nama **`game`**.
-3. Masuk ke dalam folder **`htdocs/game/`** tersebut.
+   Folder target adalah **`games`** (seperti yang sudah Anda buat: `/public_html/games/`).
+3. Masuk ke dalam folder **`games/`** tersebut.
 
 ---
 
@@ -92,26 +92,26 @@ Pastikan build selesai dengan status sukses (`exited with code 0`). Seluruh file
    * Folder: `_next`, `category`, `play`, `games`, `_not-found`
    * File: `index.html`, `404.html`, `favicon.ico`, `teknogame-*.png`, `apple-icon.png`, dll.
 3. **PENTING:** Pastikan Anda meng-upload **ISI** dari folder `out/`, bukan meng-upload folder `out` itu sendiri!
-4. Klik kanan -> pilih **Upload**.
+4. Klik kanan -> pilih **Upload** (timpa file yang ada / *Overwrite*).
 5. Tunggu hingga status antrean transfer (Queued files) di bagian bawah FileZilla menjadi `0` dan pindah ke tab *Successful transfers*.
 
 ---
 
 ## 4. Konfigurasi Apache `.htaccess` (Rekomendasi)
 
-Untuk memastikan URL rute halaman (seperti `/game/category/arcade` atau `/game/play/nusantara-runner`) dapat di-refresh di browser tanpa memicu pesan error 404 dari Apache, buat file bernama **`.htaccess`** di dalam folder **`htdocs/game/`** di remote server dengan isi berikut:
+Untuk memastikan URL rute halaman (seperti `/games/category/arcade` atau `/games/play/nusantara-runner`) dapat di-refresh di browser tanpa memicu pesan error 404 dari Apache, buat file bernama **`.htaccess`** di dalam folder **`public_html/games/`** di remote server dengan isi berikut:
 
 ```apache
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /game/
+  RewriteBase /games/
 
   # Jika ada request ke file fisik atau direktori yang ada, layani langsung
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # Jika mengakses /game/play/slug, arahkan ke file statis slug.html jika ada
+  # Jika mengakses /games/play/slug, arahkan ke file statis slug.html jika ada
   RewriteCond %{REQUEST_FILENAME}.html -f
   RewriteRule ^(.*)$ $1.html [L]
 
@@ -126,9 +126,9 @@ Untuk memastikan URL rute halaman (seperti `/game/category/arcade` atau `/game/p
 
 | Gejala Masalah | Penyebab Umum | Solusi Cepat |
 | :--- | :--- | :--- |
-| **CSS atau styling hitam polos tidak muncul** | Path `basePath` tidak sesuai dengan nama folder di `htdocs`. | Pastikan jika URL dibuka lewat `http://.../game`, folder di server bernama persis `game` dan `basePath` di `next.config.ts` adalah `/game`. |
+| **CSS atau styling hitam polos tidak muncul** | Path `basePath` tidak sesuai dengan nama folder di server. | Karena folder di server bernama `games`, pastikan `basePath` di `next.config.ts` adalah `/games` dan buka URL lewat `http://.../games`. |
 | **Game HTML5 di iframe tidak mau jalan** | Izin file (file permissions) di Linux/Apache belum dapat dibaca. | Di FileZilla, klik kanan folder `games/` di server -> pilih **File permissions** -> ubah menjadi `755` dan centang *Recurse into subdirectories*. |
-| **Halaman 404 Not Found saat pertama dibuka** | File `index.html` berada di dalam subfolder `out/` di server. | Pastikan `index.html` berada langsung di `htdocs/game/index.html`, bukan `htdocs/game/out/index.html`. |
+| **Halaman 404 Not Found saat pertama dibuka** | File `index.html` berada di dalam subfolder `out/` di server. | Pastikan `index.html` berada langsung di `/public_html/games/index.html`. |
 | **Tab icon / favicon masih gambar lama** | Browser menyimpan cache favicon lama secara agresif. | Tekan `Ctrl + F5` atau `Ctrl + Shift + R` (Hard Reload) di browser Anda, atau buka via jendela *Incognito / Private Window*. |
 
 ---
@@ -139,3 +139,4 @@ Setiap kali Anda meminta AI atau melakukan perubahan fitur baru:
 1. Jalankan build di lokal: `npm run build`
 2. Buka FileZilla -> upload ulang file-file di folder `e:\Coding\travelista-game\game\out\` ke `htdocs/game/`.
 3. Website di server langsung ter-update secara instan tanpa perlu restart server!
+

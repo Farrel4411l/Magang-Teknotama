@@ -37,11 +37,11 @@ export const metadata: Metadata = {
   authors: [{ name: "TeknoGame Studio" }],
   icons: {
     icon: [
-      { url: "/game/teknogame-icon.png?v=3", type: "image/png" },
-      { url: "/game/favicon.ico?v=3", sizes: "any" },
+      { url: "/games/teknogame-icon.png?v=3", type: "image/png" },
+      { url: "/games/favicon.ico?v=3", sizes: "any" },
     ],
-    shortcut: "/game/teknogame-icon.png?v=3",
-    apple: "/game/teknogame-icon.png?v=3",
+    shortcut: "/games/teknogame-icon.png?v=3",
+    apple: "/games/teknogame-icon.png?v=3",
   },
 };
 
@@ -57,9 +57,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
     >
       <head>
-        <link rel="icon" href="/game/teknogame-icon.png?v=3" type="image/png" />
-        <link rel="shortcut icon" href="/game/teknogame-icon.png?v=3" type="image/png" />
-        <link rel="apple-touch-icon" href="/game/teknogame-icon.png?v=3" />
+        <link rel="icon" href="/games/teknogame-icon.png?v=3" type="image/png" />
+        <link rel="shortcut icon" href="/games/teknogame-icon.png?v=3" type="image/png" />
+        <link rel="apple-touch-icon" href="/games/teknogame-icon.png?v=3" />
       </head>
       <body className="min-h-full bg-[#070B14] text-[#F8FAFC]" suppressHydrationWarning>
         <ClientLayout>{children}</ClientLayout>
