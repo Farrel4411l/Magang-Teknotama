@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Trophy, X, Medal, Sparkles, User, RefreshCw } from "lucide-react";
-import { LeaderboardEntry } from "@/types/leaderboard";
-import { getLocalScores } from "@/lib/local-storage";
+import Link from "next/link";
+import Image from "next/image";
+import { X, Medal, Sparkles, Play, Trash2, Trophy, Zap } from "lucide-react";
+import { getLocalScores, clearLocalScores } from "@/lib/local-storage";
+import { INITIAL_GAMES } from "@/lib/games-data";
 
 interface LeaderboardModalProps {
   isOpen: boolean;
@@ -11,193 +13,192 @@ interface LeaderboardModalProps {
 }
 
 export default function LeaderboardModal({ isOpen, onClose }: LeaderboardModalProps) {
-  const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [localScores, setLocalScores] = useState<Record<string, number>>({});
-  const [activeTab, setActiveTab] = useState<"global" | "local">("global");
-  const [loading, setLoading] = useState(false);
-
-  const fetchScores = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/leaderboard");
-      const json = await res.json();
-      if (json.success && json.data) {
-        setEntries(json.data);
-      }
-    } catch {
-      // ignore
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
     if (isOpen) {
-      fetchScores();
       setLocalScores(getLocalScores());
     }
   }, [isOpen]);
 
   if (!isOpen) return null;
 
+  // Map local scores with game details and sort descending
+  const scoreEntries = Object.entries(localScores)
+    .map(([gameId, score]) => {
+      const gameInfo = INITIAL_GAMES.find((g) => g.id === gameId);
+      return {
+        gameId,
+        score,
+        title: gameInfo?.title || gameId.replace(/-/g, " "),
+        category: gameInfo?.category || "game",
+        slug: gameInfo?.slug || gameId,
+      };
+    })
+    .sort((a, b) => b.score - a.score);
+
+  const totalPlayed = scoreEntries.length;
+  const bestScore = scoreEntries.length > 0 ? scoreEntries[0].score : 0;
+
+  const handleClear = () => {
+    if (window.confirm("Apakah kamu yakin ingin mereset seluruh rekor skor pribadimu?")) {
+      clearLocalScores();
+      setLocalScores({});
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="w-full max-w-lg bg-[#0B1222] rounded-3xl shadow-[0_0_50px_rgba(0,240,255,0.2)] border border-cyan-500/40 overflow-hidden flex flex-col text-white">
         {/* Modal Header */}
-        <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-white p-5 flex items-center justify-between border-b border-slate-800">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center text-xl shadow-lg">
+        <div className="bg-gradient-to-r from-slate-950 via-[#0B1222] to-blue-950 text-white p-5 flex items-center justify-between border-b border-slate-800">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-slate-950 flex items-center justify-center text-xl shadow-[0_0_15px_rgba(0,240,255,0.4)] shrink-0">
               🏆
             </div>
             <div>
-              <h3 className="text-base font-black tracking-tight flex items-center gap-1.5">
-                <span>Papan Peringkat Juara</span>
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+              <h3 className="text-base font-black tracking-wide flex items-center gap-1.5 text-white">
+                <span>Tekno Hall of Fame</span>
+                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
               </h3>
-              <p className="text-[11px] text-slate-400">
-                Peringkat skor tertinggi pemain Travelista Games
+              <p className="text-[11px] text-cyan-400/80 font-medium">
+                Papan rekor skor terbaikmu (100% Offline di Browser)
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-white rounded-full hover:bg-white/10"
+            className="p-1.5 text-slate-400 hover:text-white rounded-full hover:bg-slate-800 transition-colors cursor-pointer"
+            aria-label="Tutup Modal"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Tab Controls */}
-        <div className="flex items-center p-2 bg-slate-100 border-b border-slate-200">
-          <button
-            onClick={() => setActiveTab("global")}
-            className={`flex-1 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer ${
-              activeTab === "global"
-                ? "bg-white text-slate-900 shadow-sm"
-                : "text-slate-500 hover:text-slate-800"
-            }`}
-          >
-            Global Top 10 (MySQL)
-          </button>
-          <button
-            onClick={() => setActiveTab("local")}
-            className={`flex-1 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer ${
-              activeTab === "local"
-                ? "bg-white text-slate-900 shadow-sm"
-                : "text-slate-500 hover:text-slate-800"
-            }`}
-          >
-            Skor Pribadi (LocalStorage)
-          </button>
+        {/* Stats Summary Bar */}
+        <div className="grid grid-cols-2 p-3 bg-[#070B14] border-b border-slate-800 text-center gap-2">
+          <div className="bg-[#0F172A] py-2 px-3 rounded-xl border border-slate-800 shadow-xs">
+            <span className="text-[10px] text-slate-400 uppercase font-bold block">Game Ditaklukkan</span>
+            <span className="text-sm font-black text-cyan-400">{totalPlayed} Game</span>
+          </div>
+          <div className="bg-[#0F172A] py-2 px-3 rounded-xl border border-slate-800 shadow-xs">
+            <span className="text-[10px] text-slate-400 uppercase font-bold block">Skor Tertinggi</span>
+            <span className="text-sm font-black text-amber-400">
+              {bestScore.toLocaleString("id-ID")} pts
+            </span>
+          </div>
         </div>
 
         {/* Content Body */}
         <div className="p-4 max-h-[380px] overflow-y-auto space-y-2">
-          {activeTab === "global" ? (
-            loading ? (
-              <div className="py-12 flex flex-col items-center justify-center text-slate-400 gap-2">
-                <RefreshCw className="w-6 h-6 animate-spin text-red-600" />
-                <span className="text-xs">Memuat data juara...</span>
+          {scoreEntries.length === 0 ? (
+            <div className="py-10 text-center space-y-3">
+              <div className="w-12 h-12 rounded-full bg-slate-900 border border-slate-800 text-slate-400 flex items-center justify-center mx-auto text-2xl">
+                🎮
               </div>
-            ) : entries.length === 0 ? (
-              <div className="py-8 text-center text-slate-500 text-xs">
-                Belum ada skor tercatat. Jadilah yang pertama bermain dan cetak rekor!
+              <div>
+                <h4 className="text-xs sm:text-sm font-black text-slate-200">
+                  Belum Ada Rekor Terdaftar
+                </h4>
+                <p className="text-xs text-slate-400 mt-1 max-w-xs mx-auto">
+                  Mainkan game pilihanmu sekarang! Skor tertinggi akan tersimpan otomatis di browsermu setiap game selesai.
+                </p>
               </div>
-            ) : (
-              entries.map((entry, idx) => {
-                const isTop1 = idx === 0;
-                const isTop2 = idx === 1;
-                const isTop3 = idx === 2;
-
-                return (
-                  <div
-                    key={idx}
-                    className={`flex items-center justify-between p-3 rounded-2xl border transition-all ${
-                      isTop1
-                        ? "bg-amber-50/70 border-amber-200"
-                        : isTop2
-                        ? "bg-slate-50 border-slate-200"
-                        : isTop3
-                        ? "bg-orange-50/50 border-orange-200"
-                        : "bg-white border-slate-100"
-                    }`}
+              <div className="pt-2 flex flex-wrap gap-2 justify-center">
+                {INITIAL_GAMES.slice(0, 3).map((g) => (
+                  <Link
+                    key={g.id}
+                    href={`/play/${g.slug}`}
+                    onClick={onClose}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 hover:brightness-110 text-xs font-black rounded-xl transition-all shadow-sm"
                   >
-                    <div className="flex items-center gap-3">
-                      <span
-                        className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
-                          isTop1
-                            ? "bg-amber-400 text-slate-950 shadow"
-                            : isTop2
-                            ? "bg-slate-300 text-slate-800"
-                            : isTop3
-                            ? "bg-amber-700 text-white"
-                            : "bg-slate-100 text-slate-600"
-                        }`}
-                      >
-                        {idx + 1}
-                      </span>
-                      <div>
-                        <h4 className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1">
-                          <span>{entry.playerName}</span>
-                          {isTop1 && <Medal className="w-3.5 h-3.5 text-amber-500 inline" />}
-                        </h4>
-                        <span className="text-[10px] text-slate-400 uppercase font-semibold">
-                          Game: {entry.gameId}
-                        </span>
-                      </div>
-                    </div>
+                    <Play className="w-3 h-3 fill-slate-950" />
+                    <span>{g.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : (
+            scoreEntries.map((entry, idx) => {
+              const isTop1 = idx === 0;
+              const isTop2 = idx === 1;
+              const isTop3 = idx === 2;
 
+              return (
+                <div
+                  key={entry.gameId}
+                  className={`flex items-center justify-between p-3 rounded-2xl border transition-all ${
+                    isTop1
+                      ? "bg-amber-950/30 border-amber-500/50 shadow-[0_0_15px_rgba(250,204,21,0.15)]"
+                      : isTop2
+                      ? "bg-slate-800/40 border-slate-600/50"
+                      : isTop3
+                      ? "bg-orange-950/30 border-orange-600/40"
+                      : "bg-[#0F172A] border-slate-800/80"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span
+                      className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
+                        isTop1
+                          ? "bg-amber-400 text-slate-950 shadow-md"
+                          : isTop2
+                          ? "bg-slate-300 text-slate-900"
+                          : isTop3
+                          ? "bg-amber-700 text-white"
+                          : "bg-slate-800 text-slate-300"
+                      }`}
+                    >
+                      {idx + 1}
+                    </span>
+                    <div>
+                      <h4 className="text-xs sm:text-sm font-bold text-white flex items-center gap-1">
+                        <span>{entry.title}</span>
+                        {isTop1 && <Medal className="w-3.5 h-3.5 text-amber-400 inline" />}
+                      </h4>
+                      <span className="text-[10px] text-cyan-400/80 uppercase font-semibold">
+                        Arena: {entry.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
                     <div className="text-right">
-                      <span className="text-sm font-black text-red-600">
+                      <span className="text-sm font-black text-cyan-400">
                         {entry.score.toLocaleString("id-ID")}
                       </span>
                       <span className="text-[10px] text-slate-400 block font-medium">pts</span>
                     </div>
+                    <Link
+                      href={`/play/${entry.slug}`}
+                      onClick={onClose}
+                      className="p-2 rounded-xl bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-slate-300 transition-colors"
+                      title="Mainkan Lagi"
+                    >
+                      <Play className="w-3.5 h-3.5" />
+                    </Link>
                   </div>
-                );
-              })
-            )
-          ) : (
-            Object.keys(localScores).length === 0 ? (
-              <div className="py-8 text-center text-slate-500 text-xs">
-                Belum ada skor lokal yang tersimpan di browsermu. Mainkan salah satu game sekarang!
-              </div>
-            ) : (
-              Object.entries(localScores).map(([gameId, score], idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center justify-between p-3 rounded-2xl bg-white border border-slate-100"
-                >
-                  <div className="flex items-center gap-2">
-                    <User className="w-4 h-4 text-slate-400" />
-                    <div>
-                      <h4 className="text-xs font-bold text-slate-900 capitalize">
-                        {gameId.replace(/-/g, " ")}
-                      </h4>
-                      <span className="text-[10px] text-slate-400">Tersimpan di perangkat lokal</span>
-                    </div>
-                  </div>
-                  <span className="text-sm font-black text-red-600">
-                    {score.toLocaleString("id-ID")} pts
-                  </span>
                 </div>
-              ))
-            )
+              );
+            })
           )}
         </div>
 
         {/* Modal Footer */}
-        <div className="p-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-          <span>Skor tersinkronisasi otomatis saat Game Over.</span>
-          <button
-            onClick={fetchScores}
-            className="flex items-center gap-1 font-semibold text-red-600 hover:text-red-700 cursor-pointer"
-          >
-            <RefreshCw className="w-3 h-3" /> Refresh
-          </button>
+        <div className="p-3 bg-[#070B14] border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+          <span className="text-[11px] text-slate-400 flex items-center gap-1">
+            <span className="text-cyan-400">●</span> 100% tersimpan lokal di browsermu tanpa database server.
+          </span>
+          {scoreEntries.length > 0 && (
+            <button
+              onClick={handleClear}
+              className="flex items-center gap-1 font-semibold text-slate-400 hover:text-rose-400 cursor-pointer transition-colors text-[11px]"
+            >
+              <Trash2 className="w-3 h-3" /> Reset Skor
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 }
-

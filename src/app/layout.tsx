@@ -17,28 +17,31 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
+  themeColor: "#070B14",
 };
 
 export const metadata: Metadata = {
-  title: "Travelista Games",
+  title: "TeknoGame - Play. Evolve. Conquer.",
   description:
-    "Mainkan ratusan game petualangan, arcade, puzzle, dan kuliner nusantara seru gratis tanpa download di Travelista Games!",
+    "Portal game web HTML5 instan terkemuka! Mainkan ratusan game aksi, petualangan, balap, arcade, dan puzzle seru gratis tanpa install di TeknoGame.",
   keywords: [
+    "teknogame",
     "game web",
-    "game friv",
-    "travelista games",
     "game online gratis",
-    "nusantara runner",
-    "game html5",
+    "game friv",
+    "game poki",
+    "html5 games",
+    "play evolve conquer",
+    "free web games",
   ],
-  authors: [{ name: "Travelista Indonesia" }],
+  authors: [{ name: "TeknoGame Studio" }],
   icons: {
     icon: [
-      { url: "/travelista-logo-gram.png", type: "image/png" },
-      { url: "/favicon.ico", sizes: "any" },
+      { url: "/teknogame-icon.png?v=3", type: "image/png" },
+      { url: "/favicon.ico?v=3", sizes: "any" },
     ],
-    shortcut: "/travelista-logo-gram.png",
-    apple: "/travelista-logo-gram.png",
+    shortcut: "/teknogame-icon.png?v=3",
+    apple: "/teknogame-icon.png?v=3",
   },
 };
 
@@ -51,12 +54,16 @@ export default function RootLayout({
     <html
       lang="id"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
     >
-      <body className="min-h-full" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/teknogame-icon.png?v=3" type="image/png" />
+        <link rel="shortcut icon" href="/teknogame-icon.png?v=3" type="image/png" />
+        <link rel="apple-touch-icon" href="/teknogame-icon.png?v=3" />
+      </head>
+      <body className="min-h-full bg-[#070B14] text-[#F8FAFC]" suppressHydrationWarning>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
 }
-

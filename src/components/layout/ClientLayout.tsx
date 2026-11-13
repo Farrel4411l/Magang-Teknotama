@@ -18,14 +18,14 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-red-500 selection:text-white">
-      {/* Tier 1: Main Navbar */}
+    <div className="min-h-screen flex flex-col bg-[#070B14] text-[#F8FAFC] selection:bg-cyan-500 selection:text-slate-950">
+      {/* Tier 1: Main Gamer Navbar */}
       <Navbar
         onOpenSearch={() => setSearchOpen(true)}
         onOpenLeaderboard={() => setLeaderboardOpen(true)}
       />
 
-      {/* Tier 2: Red Ticker */}
+      {/* Tier 2: Cyber Live Radar Ticker */}
       <BreakingTicker />
 
       {/* Main Page Layout Wrapper with Skyscraper Gutters */}
@@ -46,4 +46,3 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
     </div>
   );
 }
-

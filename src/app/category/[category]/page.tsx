@@ -23,27 +23,27 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   return (
     <div className="pt-6 space-y-6">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
+      <div className="flex items-center gap-2 text-xs font-semibold text-slate-400">
         <Link
           href="/"
-          className="inline-flex items-center gap-1 hover:text-red-600 transition-colors"
+          className="inline-flex items-center gap-1 hover:text-cyan-400 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Semua Game</span>
         </Link>
         <span>/</span>
-        <span className="text-slate-800 font-bold uppercase">{validCat.label}</span>
+        <span className="text-cyan-400 font-bold uppercase">{validCat.label}</span>
       </div>
 
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-950 text-white rounded-3xl p-6 sm:p-8 border border-slate-700/60 shadow-lg flex items-center justify-between">
+      <div className="bg-gradient-to-r from-[#070B14] via-[#0B1222] to-[#1E3A8A]/50 text-white rounded-3xl p-6 sm:p-8 border border-cyan-500/30 shadow-2xl flex items-center justify-between">
         <div>
           <span className="text-3xl mb-2 block">{validCat.icon}</span>
-          <h1 className="text-xl sm:text-2xl font-black tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white">
             Game Kategori {validCat.label}
           </h1>
           <p className="text-xs sm:text-sm text-slate-300 mt-1">
-            Jelajahi dan mainkan game {validCat.label.toLowerCase()} seru pilihan Travelista Games.
+            Jelajahi dan mainkan game {validCat.label.toLowerCase()} seru pilihan TeknoGame.
           </p>
         </div>
       </div>
@@ -53,4 +53,3 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     </div>
   );
 }
-

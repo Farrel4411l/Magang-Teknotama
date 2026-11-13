@@ -7,3 +7,27 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+---
+
+# AGENT WORKFLOW & COMMIT POLICY
+
+Setiap kali agent / asisten melakukan perubahan pada project ini, **WAJIB mengikuti workflow berikut**:
+
+1. **Catat Perubahan di UPDATE.md (SemVer):**
+   - Setiap pembaruan wajib dicatat di `UPDATE.md` dan `game/UPDATE.md` dengan standar Semantic Versioning (`MAJOR.MINOR.PATCH`).
+
+2. **Wajib Melakukan Git Commit (Mandatory Git Commit):**
+   - Setiap selesai mengimplementasikan fitur, merapikan desain, atau memperbaiki issue, jalankan perintah git commit:
+     ```bash
+     cd game
+     git add .
+     git commit -m "<tipe>: <deskripsi singkat perubahan>"
+     ```
+   - Contoh konvensi commit:
+     - `feat: implementasi tema cyber blue dan logo teknogame`
+     - `fix: update tab favicon cache buster teknogame-icon`
+     - `docs: update PRD dan Design.md v2.1.0`
+
+3. **Verifikasi Build:**
+   - Jalankan `npm run build` (`next build --webpack`) untuk memastikan tidak ada error kompilasi atau TypeScript mismatch sebelum turn berakhir.

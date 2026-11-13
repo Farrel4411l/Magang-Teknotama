@@ -81,3 +81,13 @@ export function getLocalScores(): Record<string, number> {
   }
 }
 
+export function clearLocalScores(): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.removeItem(HIGH_SCORES_KEY);
+  } catch {
+    // ignore
+  }
+}
+
+

@@ -8,6 +8,58 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, dan penambahan fi
 
 ---
 
+## [2.1.1] - 2026-11-13
+### Fixed & Added (Tab Favicon Cache Refresh & Agent Workflow Policy)
+- **Tab Favicon Cache Refresh & Head Injection:**
+  - Menginjeksi tag `<head>` eksplisit dengan cache-buster (`/teknogame-icon.png?v=3` dan `/favicon.ico?v=3`) di `src/app/layout.tsx` untuk memastikan tab browser segera memperbarui favicon ke logo perisai TeknoGame.
+  - Menimpa legacy `travelista-logo-gram.png` dengan logo resmi TeknoGame.
+- **Workflow & Commit Policy Integration:**
+  - Menambahkan aturan wajib commit Git dan standar SemVer ke `AGENTS.md` agar setiap perubahan langsung tersimpan ke version control.
+
+---
+
+## [2.1.0] - 2026-11-13
+### Added & Changed (Complete Brand Pivot to TeknoGame & Cyber Blue Theme)
+- **Transformasi Identitas Brand ke TeknoGame:**
+  - Melakukan pivot menyeluruh dari portal *Travelista Games* menjadi **TeknoGame (`TEKNO GAME`)** dengan slogan resmi *"PLAY. EVOLVE. CONQUER."*.
+  - Mengintegrasikan aset logo resmi `TeknoGame_Logo.jpeg`, memproses ikon perisai `GT` emblem untuk `favicon.ico`, `icon.png`, `apple-icon.png`, dan `teknogame-icon.png`.
+- **Implementasi Sistem Palet Warna Cyber Blue & Dark Mode:**
+  - Mengubah tema dasar menjadi *Deep Space Dark Mode* (`#070B14` void black, `#0B1222` midnight navy, `#0F172A` card surface).
+  - Mengadopsi aksen utama *Neon Cyber Cyan* (`#00F0FF` / `#38BDF8`) dan *Electric Blue* (`#2563EB` / `#1D4ED8`) dengan efek interaktif *glow cyan* pada hover kartu game.
+- **Perombakan Total Komponen UI/UX:**
+  - **Navbar:** Header cyberpunk baru berlogo perisai `GT` menyala, navigasi arena kategori, dan tombol neon `[ ⚡ Main Acak ]` & `[ 🏆 Hall of Fame ]`.
+  - **Breaking Ticker (Live Radar):** Mengubah bar berita merah lama menjadi bar kaca navy gelap `[ ⚡ LIVE RADAR ]` dengan pulsing dot hijau menampilkan aktivitas online gamer.
+  - **Game Hero:** Menghadirkan spotlight arena bertema *Game of the Week* dengan tombol CTA neon cyan-blue dan kartu trending bertumpuk.
+  - **Game Grid & Card (The Tekno Matrix):** Kartu Friv dengan border sirkuit gelap yang menyala terang (*cyan glow*) saat di-hover.
+  - **Game Frame (Cyber Theater Mode):** Layar bermain berbingkai neon dengan dock kontrol instan dan banner Game Over otomatis.
+  - **LeaderboardModal (Tekno Hall of Fame):** Papan rekor pribadi bergaya ruang piala sirkuit digital berbasis `LocalStorage` tanpa latensi server.
+  - **Footer:** Identitas TeknoGame, informasi fitur, dan penegasan privasi 100% bebas database.
+  - **Sponsor Ads:** Memperbarui banner fallback companion, skyscraper, native tile, dan bottom anchor ke tema perlengkapan gaming futuristik.
+- **Penyelarasan Seluruh Dokumentasi Proyek:**
+  - Memperbarui `Design.md`, `PRD.md`, `newdesign.md`, dan `UPDATE.md` di seluruh direktori proyek.
+
+---
+
+## [2.0.0] - 2026-11-13
+### Changed & Removed (Zero-Database Architecture & 100% Static / LocalStorage)
+- **Eliminasi Total Koneksi & Modul Database:**
+  - Menghapus dependency driver `mysql2` dari `package.json` dan membersihkan `node_modules`.
+  - Menghapus modul pool koneksi database `src/lib/db.ts`.
+  - Menghapus seluruh variabel lingkungan database (`DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`) dari file `.env.local` dan `.env.example`.
+- **Penghapusan Fitur & Route Handler Berbasis Database:**
+  - Menghapus direktori backend route handlers `src/app/api/` (`/api/games`, `/api/leaderboard`, dan `/api/stats`).
+  - Menghilangkan network request tracker statistik `fetch('/api/stats')` pada saat game dibuka di `GameFrame.tsx`.
+  - Menghilangkan form input nickname & submission score `fetch('/api/leaderboard')` di `GameFrame.tsx`.
+- **Refactoring Leaderboard ke 100% Client-Side LocalStorage:**
+  - Mengubah `LeaderboardModal.tsx` menjadi modal "Papan Rekor & Prestasi Pribadi" yang memuat skor terbaik langsung dari `LocalStorage` browser secara instan tanpa loading spinner atau latensi server.
+  - Menambahkan visualisasi ringkasan rekor (total game dimainkan, skor tertinggi, medali juara, dan tombol main lagi).
+  - Menambahkan utilitas `clearLocalScores()` di `src/lib/local-storage.ts` agar pemain dapat mereset rekor lokal secara mandiri.
+  - Memperbarui tampilan Game Over banner pada layar game agar langsung menampilkan skor akhir dan konfirmasi penyimpanan ke browser.
+- **Pembaruan Dokumen PRD ke Versi 2.0.0:**
+  - Menyelaraskan seluruh dokumen `PRD.md` (root dan `game/PRD.md`) dengan arsitektur 100% Database-Free, menghilangkan langkah setup MariaDB di DirectAdmin Hostdata.id, dan menghapus skema tabel SQL yang sudah tidak digunakan.
+
+---
+
 ## [1.5.1] - 2026-11-05
 ### Changed & Fixed (Web Title & Official Favicon)
 - **Web Title Optimization:** Mengubah metadata title tab browser menjadi ringkas dan tepat: **`Travelista Games`** (menghilangkan suffix deskripsi panjang pada tab title).

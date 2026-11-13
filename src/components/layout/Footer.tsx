@@ -1,134 +1,123 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Gamepad2, Compass, Shield, Heart } from "lucide-react";
+import { Gamepad2, Shield, Zap, Trophy, Heart } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 mt-16 pt-12 pb-24">
+    <footer className="bg-[#0B1222] text-slate-400 text-xs border-t border-slate-800 mt-16 pt-12 pb-24 shadow-2xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-800">
           {/* Kolom 1: Brand Info */}
           <div className="space-y-3">
-            <Link
-              href="https://travelista.id"
-              className="inline-flex items-center gap-2 group"
-              title="Kunjungi Travelista.id"
-            >
-              <Image
-                src="/travelista-logo-light.png"
-                alt="Travelista Logo"
-                width={130}
-                height={32}
-                className="h-7 w-auto object-contain brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity"
-              />
-              <span className="bg-red-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow">
-                GAMES
-              </span>
+            <Link href="/" className="inline-flex items-center gap-2.5 group">
+              <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-cyan-500/40 shrink-0">
+                <Image
+                  src="/teknogame-icon.png"
+                  alt="TeknoGame Icon"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-1">
+                  <span className="text-base font-black tracking-wider text-white">TEKNO</span>
+                  <span className="text-base font-black tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                    GAME
+                  </span>
+                </div>
+                <span className="text-[8px] uppercase font-bold tracking-widest text-cyan-400/80 -mt-0.5">
+                  PLAY. EVOLVE. CONQUER.
+                </span>
+              </div>
             </Link>
             <p className="text-slate-400 text-xs leading-relaxed">
-              Portal game web instan resmi Travelista. Mainkan ratusan game petualangan, arcade, puzzle, dan kuliner nusantara secara gratis tanpa perlu instalasi aplikasi!
+              Portal game web HTML5 instan terkemuka. Mainkan ratusan game aksi, petualangan, balap, arcade, dan puzzle seru secara gratis tanpa install!
             </p>
           </div>
 
-          {/* Kolom 2: Kategori Populer */}
+          {/* Kolom 2: Kategori Game */}
           <div>
-            <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-3">
-              Kategori Game
+            <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <Gamepad2 className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Arena Game</span>
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/category/arcade" className="hover:text-red-400 transition-colors">
-                  🕹️ Game Arcade Populer
+                <Link href="/category/arcade" className="hover:text-cyan-400 transition-colors">
+                  🕹️ Game Arcade Klasik
                 </Link>
               </li>
               <li>
-                <Link href="/category/adventure" className="hover:text-red-400 transition-colors">
-                  🧭 Petualangan Nusantara
+                <Link href="/category/adventure" className="hover:text-cyan-400 transition-colors">
+                  🧭 Petualangan & Eksplorasi
                 </Link>
               </li>
               <li>
-                <Link href="/category/puzzle" className="hover:text-red-400 transition-colors">
-                  🧩 Asah Otak & Packing Koper
+                <Link href="/category/puzzle" className="hover:text-cyan-400 transition-colors">
+                  🧩 Puzzle & Asah Otak
                 </Link>
               </li>
               <li>
-                <Link href="/category/casual" className="hover:text-red-400 transition-colors">
-                  ☕ Kuliner & Santai
+                <Link href="/category/casual" className="hover:text-cyan-400 transition-colors">
+                  ☕ Santai & Kasual
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Kolom 3: Layanan Travelista Utama */}
+          {/* Kolom 3: Fitur & Komunitas */}
           <div>
-            <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-3">
-              Layanan Travelista
+            <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <Trophy className="w-3.5 h-3.5 text-amber-400" />
+              <span>Fitur Gamer</span>
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link
-                  href="https://travelista.id"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-sky-400 transition-colors flex items-center gap-1"
-                >
-                  <span>🚢 Booking Tiket Kapal Feri</span>
+                <Link href="/" className="hover:text-cyan-400 transition-colors">
+                  ⚡ Mode Main Acak
                 </Link>
               </li>
               <li>
-                <Link
-                  href="https://travelista.id"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-emerald-400 transition-colors flex items-center gap-1"
-                >
-                  <span>🎒 Paket Wisata & Open Trip</span>
+                <Link href="/" className="hover:text-cyan-400 transition-colors">
+                  🏆 Tekno Hall of Fame
                 </Link>
               </li>
               <li>
-                <Link
-                  href="https://travelista.id"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-amber-400 transition-colors flex items-center gap-1"
-                >
-                  <span>📖 Tips & Rekomendasi Destinasi</span>
+                <Link href="/" className="hover:text-cyan-400 transition-colors">
+                  💾 Simpan Skor Otomatis
+                </Link>
+              </li>
+              <li>
+                <Link href="/" className="hover:text-cyan-400 transition-colors">
+                  🚀 100% Bebas Lag & Tanpa Install
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Kolom 4: Legal & Keamanan */}
+          {/* Kolom 4: Jaminan Privasi & Sistem */}
           <div>
-            <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-3">
-              Tentang Kami
+            <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <Shield className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Keamanan & Privasi</span>
             </h4>
             <p className="text-slate-400 text-xs leading-relaxed">
-              Seluruh game HTML5 dioptimalkan untuk performa tinggi, ramah kuota, dan aman dimainkan di seluruh perangkat desktop dan mobile.
+              TeknoGame beroperasi dengan arsitektur bebas database server. Seluruh riwayat skor dan game favoritmu tersimpan aman di browser lokal tanpa pengumpulan data pribadi.
             </p>
-            <div className="mt-3 flex items-center gap-3 text-slate-500">
-              <span className="flex items-center gap-1 text-[11px]">
-                <Shield className="w-3.5 h-3.5 text-emerald-500" /> Bebas Malware
-              </span>
-              <span className="flex items-center gap-1 text-[11px]">
-                <Gamepad2 className="w-3.5 h-3.5 text-sky-500" /> HTML5 Instant
-              </span>
-            </div>
           </div>
         </div>
 
-        {/* Bottom Copyright */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-slate-500 gap-3">
-          <p>© {new Date().getFullYear()} Travelista Games (game.travelista.id). All rights reserved.</p>
-          <div className="flex items-center gap-1 text-[11px]">
-            <span>Dibuat dengan</span>
-            <Heart className="w-3 h-3 text-red-500 fill-red-500 inline" />
-            <span>untuk Traveler & Gamers Indonesia</span>
+        {/* Baris Bawah: Hak Cipta & Slogan */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-500 text-[11px]">
+          <p>© 2026 TeknoGame. All rights reserved. <span className="text-cyan-400 font-bold">PLAY. EVOLVE. CONQUER.</span></p>
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-1">
+              Made with <Heart className="w-3 h-3 text-rose-500 fill-rose-500 inline" /> for Gamers
+            </span>
           </div>
         </div>
       </div>
     </footer>
   );
 }
-

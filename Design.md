@@ -1,244 +1,112 @@
 # PANDUAN DESAIN & DOKUMEN SPESIFIKASI UI/UX
-## Subdomain: game.travelista.id (Portal Game Ala Friv)
+## Portal: TeknoGame (Dedicated Web Gaming Platform)
 
 > **Catatan Dokumen:**  
-> Dokumen ini adalah **panduan desain tunggal (Single Source of Truth / Design System)** untuk `game.travelista.id`. Seluruh implementasi kode nantinya **wajib mengacu** pada spesifikasi token warna, komponen navigasi, aturan slot iklan, dan struktur grid yang dirumuskan di sini.
+> Dokumen ini adalah **panduan desain tunggal (Single Source of Truth / Design System)** untuk **TeknoGame** (`TEKNO GAME`). Seluruh implementasi kode mengacu pada spesifikasi token warna, komponen navigasi, aturan slot iklan, dan struktur grid cyber yang dirumuskan di sini.
 
 ---
 
 ## 1. Brand Identity & Design Tokens
 
-Desain `game.travelista.id` mengadopsi DNA visual portal induk **Travelista** dengan sentuhan dinamis, playful, dan bersih untuk portal ribuan game mini (seperti Friv/Poki).
+Desain **TeknoGame** mengadopsi DNA visual *Cyberpunk / High-Tech Esports* dengan basis **Dark Mode** modern, memadukan energi tinggi dari **Neon Cyber Cyan** dan **Electric Blue** yang terinspirasi langsung dari logo resmi `TeknoGame_Logo.jpeg`.
+
+* **Brand Name:** TeknoGame (`TEKNO GAME`)
+* **Slogan:** *"PLAY. EVOLVE. CONQUER."*
+* **Aset Logo:** Perisai Monogram `GT`, D-Pad Controller, Lightning Bolt, dan PCB Circuit Traces.
 
 ### 1.1 Palet Warna Resmi (Color Palette)
 
 | Kategori Token | Nama Token | Nilai HEX | RGB / HSL | Implementasi & Karakteristik |
 | :--- | :--- | :--- | :--- | :--- |
-| **Primary Brand** | `travelista-red` | `#E53935` | `rgb(229, 57, 53)` | Warna identitas utama Travelista. Digunakan untuk background Ticker Berita, tombol aksi primer, badge "HOT", dan highlight aktif. |
-| **Primary Dark** | `travelista-red-dark` | `#C62828` | `rgb(198, 40, 40)` | State hover pada tombol primer dan border elemen aksen merah. |
-| **Neutral Dark** | `neutral-black` | `#1A1D20` | `rgb(26, 29, 32)` | Warna teks judul utama, navbar background (mode gelap), dan elemen kontras tinggi. |
-| **Neutral Body** | `neutral-gray-700` | `#374151` | `rgb(55, 65, 81)` | Warna teks deskripsi, metadata game, dan link navigasi sekunder. |
-| **Neutral Border** | `neutral-gray-200` | `#E5E7EB` | `rgb(229, 231, 235)` | Garis pembatas kartu game, pemisah navbar, dan placeholder iklan. |
-| **Canvas Background**| `canvas-light` | `#F8FAFC` | `rgb(248, 250, 252)` | Latar belakang halaman utama agar mata pengguna tidak cepat lelah saat browsing ratusan game. |
-| **Surface White** | `surface-white` | `#FFFFFF` | `rgb(255, 255, 255)` | Warna latar kartu game, header navbar, dan modal pop-up. |
-| **Accent Sky Blue** | `travelista-blue` | `#0284C7` | `rgb(2, 132, 199)` | Mengikuti pill *"Tiket Kapal"* Travelista. Digunakan untuk tombol *"Main Acak"* dan kategori puzzle/santai. |
-| **Accent Blue Soft**| `travelista-blue-light`| `#E0F2FE` | `rgb(224, 242, 254)` | Background badge pill biru pada mode terang. |
-| **Accent Green** | `travelista-green` | `#16A34A` | `rgb(22, 163, 74)` | Mengikuti pill *"Paket Wisata"* Travelista. Digunakan untuk tombol *"Leaderboard"* dan badge "BARU". |
-| **Accent Green Soft**| `travelista-green-light`| `#DCFCE7`| `rgb(220, 252, 231)` | Background badge pill hijau pada mode terang. |
-| **Accent Amber** | `travelista-amber` | `#F59E0B` | `rgb(245, 158, 11)` | Warna bintang rating dan ikon trofi ranking. |
+| **Primary Brand (Neon)** | `tekno-cyan` | `#00F0FF` | `rgb(0, 240, 255)` | Warna aksen utama logo, tombol aksi primer (CTA), outline glow aktif, badge "HOT", kursor/hover highlight. |
+| **Primary Soft** | `tekno-cyan-light` | `#38BDF8` | `rgb(56, 189, 248)` | State hover pada teks link, icon glow sekunder, dan gradient transit. |
+| **Secondary Brand (Blue)**| `tekno-blue` | `#2563EB` | `rgb(37, 99, 235)` | Warna biru elektrik untuk badge kategori, border kontur perisai, tombol sekunder. |
+| **Secondary Dark** | `tekno-blue-deep`| `#1D4ED8` | `rgb(29, 78, 216)` | Gradasi pembungkus kartu, header dropdown, dan border kartu game. |
+| **Canvas Background** | `tekno-void` | `#070B14` | `rgb(7, 11, 20)` | Latar belakang dasar web (Deep Space Dark Mode) yang nyaman di mata gamer saat sesi bermain panjang. |
+| **Surface Level 1** | `tekno-surface` | `#0B1222` | `rgb(11, 18, 34)` | Latar belakang Navbar, Footer, Ticker Bar, dan Sidebar Container. |
+| **Surface Level 2 (Cards)**| `tekno-card` | `#0F172A` | `rgb(15, 23, 42)` | Latar kartu game Friv, modal pop-up, search bar container. |
+| **Surface Elevated** | `tekno-card-hover`| `#162238`| `rgb(22, 34, 56)` | State kartu saat di-hover dengan kilau border cyan. |
+| **Border Cyber** | `tekno-border` | `#1E293B` | `rgb(30, 41, 59)` | Garis pemisah netral antar modul. |
+| **Border Active Glow** | `tekno-glow-border`| `#0284C7` | `rgb(2, 132, 199)` | Border kartu saat aktif/terfokus dengan bayangan glow cyan. |
+| **Text Pure White** | `tekno-text-main` | `#F8FAFC` | `rgb(248, 250, 252)` | Judul game, heading h1/h2/h3, dan teks kontras tinggi. |
+| **Text Muted Slate** | `tekno-text-muted`| `#94A3B8` | `rgb(148, 163, 184)`| Deskripsi game, metadata kategori, dan label informasi sekunder. |
+| **Accent Rank / Trophy** | `tekno-amber` | `#FACC15` | `rgb(250, 204, 21)` | Bintang rating emas, ikon trofi rank #1, dan skor rekor. |
+| **Accent Live Status** | `tekno-green` | `#10B981` | `rgb(16, 185, 129)` | Indikator live status "ONLINE", badge "BARU", dan konfirmasi sukses. |
 
 ---
 
-### 1.2 Sistem Tipografi (Typography)
+### 1.2 Efek Visual Cyber Glow (Shadows & Gradients)
 
-* **Font Primer (Display & Body):** `Inter`, `system-ui`, `-apple-system`, `sans-serif`. Bersih, terbaca jelas pada ukuran kecil di thumbnail kartu game.
-* **Font Aksen (Logo & Ticker):** `Poppins` atau `Montserrat` (bold 700 / 800) untuk mencerminkan gaya logo Travelista yang dinamis.
+* **Glow Cyan Primer:** `box-shadow: 0 0 20px rgba(0, 240, 255, 0.45);`
+* **Glow Blue Sekunder:** `box-shadow: 0 0 25px rgba(37, 99, 235, 0.35);`
+* **Glow Trophy Emas:** `box-shadow: 0 0 18px rgba(250, 204, 21, 0.4);`
+* **Gradient Hero:** `bg-gradient-to-r from-[#070B14] via-[#0B1222] to-[#1E3A8A]/50`
+* **Gradient Button:** `bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600`
+* **Card Border Effect:** `border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,240,255,0.35)]`
+
+---
+
+### 1.3 Sistem Tipografi (Typography)
+
+* **Font Utama (Display & Body):** `Geist`, `Inter`, `system-ui`, `-apple-system`, `sans-serif`. Bersih, tajam, dan mudah dibaca pada thumbnail kartu game.
+* **Font Aksen (Skor & Tabular):** Monospace modern (`tabular-nums`) untuk skor leaderboard dan angka ranking.
 
 #### Skala Hirarki Tipografi:
-* **H1 / Page Title:** 24px – 28px | Bold 700 | Line-height 1.2
-* **Game Card Title:** 13px – 14px | Semi-bold 600 | Line-height 1.3 (truncate 1 baris)
-* **Navbar Items:** 14px | Medium 500
-* **Pill Badges:** 12px | Semi-bold 600
-* **Ad Label / Tiny Meta:** 10px – 11px | Regular 400 | Uppercase & tracking-wider
-
----
-
-### 1.3 Sistem Sudut & Bayangan (Radius & Elevations)
-
-* **Game Card Radius:** `16px` (Rounded-2xl) – Karakteristik Friv yang ramah pengguna dan modern.
-* **Button & Pill Radius:** `9999px` (Full Rounded).
-* **Modal & Container Radius:** `20px`.
-* **Elevasi Bayangan (Shadows):**
-  * Normal: `0 2px 4px -1px rgba(0, 0, 0, 0.06)`
-  * Hover Game Card: `0 12px 24px -4px rgba(0, 0, 0, 0.18)` + border glow tipis warna merah/biru.
+* **H1 Hero / Brand Title:** 26px – 34px | Font-black 900 | Line-height 1.15
+* **Game Card Title:** 13px – 14px | Font-bold 700 | Line-height 1.25 (truncate 1 baris)
+* **Navbar Items:** 14px | Font-bold 700
+* **Pill Badges:** 11px – 12px | Font-black 900 | Uppercase & tracking-wider
+* **Meta & Description:** 12px – 13px | Font-medium 500 | Text slate-400
 
 ---
 
 ## 2. Blueprint & Spesifikasi Navbar
 
-Navbar `game.travelista.id` terdiri dari 2 tingkat: **Tier 1 (Main Bar)** dan **Tier 2 (Ticker Bar Merah)**.
+Navbar TeknoGame terdiri dari 2 tingkat: **Tier 1 (Main Cyber Nav)** dan **Tier 2 (Live Radar Ticker Bar)**.
 
 ```
-+---------------------------------------------------------------------------------------------------------------+
-|  [Logo: Travelista ]    Arcade   Petualangan   Puzzle   Aksi   Santai   | [🎮 Main Acak] [🏆 Ranking]  🔍 [ID] |
-+---------------------------------------------------------------------------------------------------------------+
++─────────────────────────────────────────────────────────────────────────────────────────────+
+|  [EMBLEM] TEKNOGAME  |  🎮 Semua  🕹️ Arcade  🧭 Petualangan  🧩 Puzzle  ☕ Santai  |  ⚡ Acak  🏆 Hall of Fame  🔍  |
++─────────────────────────────────────────────────────────────────────────────────────────────+
+|  [⚡ LIVE RADAR]  🔥 2.450 Gamers Sedang Online! • 🏆 Rekor Baru: 24.800 pts • 🎮 11 Game Siap Dimainkan!     |
++─────────────────────────────────────────────────────────────────────────────────────────────+
 ```
 
-### 2.1 Tier 1: Main Bar (Tinggi: 68px)
-1. **Logo & Sub-brand:**
-   * Logo teks melengkung *"Travelista"* warna gelap/ungu tua, ada di folder public travelista-logo.
-   * Teks badge tebal *"GAMES"* di sisi kanan logo dengan background merah `#E53935` dan teks putih `text-[10px] uppercase font-black px-2 py-0.5 rounded-md`.
-   * Klik logo: me-refresh atau kembali ke homepage `game.travelista.id`.
-   * Terdapat link mikro *"Kembali ke Travelista Utama"* untuk akses balik ke portal travel.
+### 2.1 Tier 1: Main Cyber Nav (Tinggi: 68px)
+1. **Logo & Identitas:**
+   - Emblem perisai `GT` dari logo resmi dengan border cyan menyala (`/teknogame-icon.png`).
+   - Teks `TEKNO` warna putih + `GAME` dengan gradasi cyan-blue.
+   - Slogan micro: `PLAY. EVOLVE. CONQUER.`
 2. **Kategori Navigasi:**
-   * Item: `Semua`, `Arcade`, `Petualangan`, `Puzzle`, `Aksi`, `Olahraga`, `Santai`, `Multiplayer`.
-   * Indikator aktif: Teks berubah jadi merah `#E53935` dengan garis indikator bawah 2px.
-3. **Pills Aksi Khas Travelista (Dual Badges):**
-   * **Pill 1 (Biru):** `[ 🎮 Main Acak ]`
-     * Latar: `#E0F2FE`, border: `#BAE6FD`, teks & ikon: `#0284C7`.
-     * Fungsi: Membuka game acak secara instan (fitur favorit portal mini game).
-   * **Pill 2 (Hijau):** `[ 🏆 Leaderboard ]`
-     * Latar: `#DCFCE7`, border: `#BBF7D0`, teks & ikon: `#16A34A`.
-     * Fungsi: Membuka tabel skor tertinggi pemain.
-4. **Alat Pengguna (Right Utilities):**
-   * Ikon Pencarian: Membuka modal pencarian instan dengan auto-complete judul game.
-   * Pemilih Bahasa: Dropdown `ID` / `EN`.
+   - *Semua Game, Arcade, Petualangan, Puzzle, Santai*.
+3. **Pill Aksi Cepat:**
+   - `[ ⚡ Main Acak ]` dengan aksen cyan neon.
+   - `[ 🏆 Hall of Fame ]` dengan trofi emas dan border cobalt blue.
+   - Tombol pencarian instan (modal dialog).
 
-### 2.2 Tier 2: Sub-bar Ticker Merah (Tinggi: 36px)
-* **Background:** Merah solid `#E53935`.
-* **Badge Kiri:** Kotak teks putih tebal *"TRENDING"* atau *"BREAKING"* dengan aksen gelap tipis.
-* **Area Teks Berjalan (Marquis):**
-  * Teks putih bersih `text-xs font-medium`.
-  * Menampilkan informasi dinamis: nama game yang sedang viral, skor tertinggi terbaru, atau game baru yang baru ditambahkan.
-  * Efek jeda (pause) saat kursor mouse diarahkan ke area ticker (*hover-pause*).
+### 2.2 Tier 2: Live Radar Ticker (Tinggi: 36px)
+* Background: Glassmorphism `#0B1222` dengan border bawah `border-cyan-500/20`.
+* Badge: `[ ⚡ LIVE RADAR ]` dengan indikator titik hijau neon berkedip (*pulsing green dot*).
+* Marquis berjalan: Menampilkan aktivitas gamer, pemecahan rekor skor, dan rekomendasi game.
 
 ---
 
-## 3. Tata Letak Placeholder Iklan (Ad Placements Guide)
+## 3. Komponen Layar Utama & Permainan
 
-Integrasi iklan dirancang agar menghasilkan **eCPM maksimal** tanpa melanggar kebijakan Google AdSense (*accidental clicks & content occlusion*) serta menjaga kenyamanan bermain.
+### 3.1 Hero Spotlight Section
+* 1 Kartu Game Utama (Game of the Week) dengan latar radial cyber glow dan tombol CTA `"▶ Main Sekarang"`.
+* 2 Kartu Game Trending bertumpuk di sisi kanan.
 
-```
-========================================================================================================
-[                                          NAVBAR & TICKER                                             ]
-========================================================================================================
-+----------------------+-------------------------------------------------------+-----------------------+
-|                      |  [BARIS FILTER KATEGORI: JELAJAHI PILLS]              |                       |
-|  AD SKYSCRAPER KIRI  |-------------------------------------------------------|  AD SKYSCRAPER KANAN  |
-|  (Fixed Sticky)      |  [HERO SECTION: 1 Game Utama + 2 Game Unggulan]       |  (Fixed Sticky)       |
-|                      |-------------------------------------------------------|                       |
-|  Ukuran: 160x600 px  |  [FRIV-STYLE GAME GRID]                               |  Ukuran: 160x600 px   |
-|  atau 300x600 px     |  [Game] [Game] [Game] [Game] [SPONSORED AD TILE] [Game] |  atau 300x600 px     |
-|                      |  [Game] [Game] [Game] [Game] [Game] [Game] [Game] [Game] |                       |
-|  Hanya tampil pada   |  [Game] [Game] [Game] [Game] [Game] [Game] [Game] [Game] |  Hanya tampil pada    |
-|  layar >= 1440px     |-------------------------------------------------------|  layar >= 1440px      |
-|                      |  [LEADERBOARD BANNER AD: 728x90 px / 970x250 px]      |                       |
-+----------------------+-------------------------------------------------------+-----------------------+
-========================================================================================================
-[  [X Minimize]         STICKY BOTTOM ANCHOR AD (Banner Melayang 728x90 / 320x50)                      ]
-========================================================================================================
-```
+### 3.2 The Tekno Matrix Friv Grid
+* Responsive CSS Grid: 3 kolom (mobile) hingga 8 kolom (layar lebar).
+* Hover interaktif: Kartu terangkat (`scale-105`), border menyala menjadi neon cyan terang dengan bayangan glow lembut.
+* Badge visual: `HOT` (cyan-blue), `BARU` (emerald), `POPULAR` (amber).
 
-### 3.1 Detail Spesifikasi Setiap Slot Iklan
+### 3.3 Layar Permainan (Cyber Theater Mode)
+* Kontainer iframe berbingkai neon dengan atribut `sandbox="allow-scripts allow-same-origin allow-pointer-lock"`.
+* Toolbar HUD: Fullscreen, Reload, Favorit, Share.
+* Deteksi Game Over otomatis: Skor langsung dicatat ke `LocalStorage` tanpa form kirim server atau database.
 
-#### A. Slot 1 & 2: Gutter / Skyscraper Ads (Sisi Kiri & Kanan Layar)
-* **Format:** `160x600` (Wide Skyscraper) atau `300x600` (Half Page Banner).
-* **Posisi:** Menempel tetap (*fixed / sticky*) di margin kiri dan kanan di luar kontainer konten utama.
-* **Perilaku Responsif:**
-  * **Screen >= 1440px (Ultra-wide / Large Desktop):** Kedua sisi aktif ditampilkan.
-  * **Screen 1280px - 1439px:** Hanya tampilkan sisi kanan, atau matikan kedua sisi agar grid game tidak terhimpit.
-  * **Screen < 1280px (Laptop biasa, Tablet, Mobile):** **Wajib disembunyikan total (`display: none`)**.
-* **Aturan Visual:**
-  * Wajib diberi label teks abu-abu kecil `"IKLAN / ADVERTISEMENT"` di atas banner dengan ukuran 9px.
-  * Harus memiliki border tipis `#E5E7EB` untuk membedakan materi iklan dengan kanvas konten.
-
-#### B. Slot 3: Sticky Bottom Anchor Ad (Melayang di Bawah Layar)
-* **Format:** `728x90` (Desktop) dan `320x50` / `300x50` (Mobile).
-* **Posisi:** Melayang di bagian bawah tengah layar (*fixed bottom*).
-* **Fitur Wajib (Anti-Penalti Google):**
-  * **Tombol Minimize / Tutup:** Memiliki tombol chevron lipat atau tombol `X` di atas banner agar pemain game tidak terhalang.
-  * **Safe-Zone Padding:** Elemen kontainer halaman terbawah wajib diberi padding ekstra sebesar `110px` di desktop dan `70px` di mobile agar banner tidak menutupi kartu game paling bawah (*no content overlap*).
-  * **Tidak Boleh Menabrak Tombol Navigasi:** Jika ada tombol bantuan atau chat, letakkan di pojok kanan atas atau integrasikan agar tidak tumpang tindih.
-
-#### C. Slot 4: In-Grid Native Ad Tiles (Gaya Khas Friv / Poki)
-* **Format:** Kartu berbentuk kotak yang berbaur secara proporsional dengan kartu game (ukuran 1:1 atau 2:1 span).
-* **Penempatan:** Disisipkan otomatis di antara deretan kartu game (misal: di posisi slot ke-9 dan slot ke-25).
-* **Aturan Desain:**
-  * Menggunakan border dengan garis putus-putus halus atau warna latar sedikit berbeda (misal abu-abu terang `#F1F5F9`).
-  * Memiliki label jelas `"SPONSORED"` atau `"IKLAN"` di pojok atas agar pengguna tidak terkecoh.
-
-#### D. Slot 5: Play Screen Ads (Saat Mode Permainan Berjalan)
-Ketika pemain mengklik suatu game dan masuk ke halaman/modal gameplay:
-1. **Pre-roll Transition Ad:** Layar tunggu 5 detik dengan countdown sebelum frame game dapat dimainkan.
-2. **Companion Sidebar Ad (300x250):** Terletak di sisi kanan atau bawah frame game berdampingan dengan petunjuk tombol keyboard (WASD / Panah) dan tombol *"Layar Penuh"*.
-
----
-
-## 4. Konsep Desain Katalog Game (Friv-Style)
-
-Konsep **Friv** berfokus pada eksplorasi visual: puluhan kotak game berwarna-warni yang padat, rapi, dan instan.
-
-### 4.1 Filter Kategori "Jelajahi" (Pill Chips)
-Tepat di bawah ticker, terdapat deretan chip filter bergaya Travelista:
-* Format: `JELAJAHI > [ Semua ] [ 🔥 Populer ] [ 🚗 Balapan ] [ ⚔️ Aksi ] [ 🧩 Puzzle ] [ 👗 Santai ]`
-* Chip aktif: Background merah `#E53935`, teks putih, shadow halus.
-* Chip non-aktif: Background putih `#FFFFFF`, border abu-abu `#E2E8F0`, teks abu-abu gelap `#374151`.
-
-### 4.2 Hero Section Unggulan (Meniru Grid Travelista)
-Sebelum masuk ke grid penuh Friv, baris teratas menampilkan 3 game terbaik minggu ini:
-* **1 Kartu Besar (Kiri):** Game of the Week dengan thumbnail sinematik, badge rating bintang, jumlah pemain aktif, dan tombol *"Main Sekarang"*.
-* **2 Kartu Sedang Bertumpuk (Kanan):** Game yang sedang trending dengan layout horizontal.
-
-### 4.3 Dinding Grid Game Utama (The Friv Grid)
-* **Rasio Kartu:** Kotak presisi 1:1 (`aspect-square`) dengan sudut lengkung `rounded-2xl`.
-* **Breakpoints Grid Kolom:**
-  * Layar HP (Mobile): **3 kolom** (`grid-cols-3`)
-  * Tablet: **4 - 5 kolom** (`grid-cols-4 md:grid-cols-5`)
-  * Laptop: **6 - 7 kolom** (`lg:grid-cols-6 xl:grid-cols-7`)
-  * Monitor Lebar (Desktop 1440px+): **8 - 10 kolom** di antara dua banner Skyscraper.
-* **Interaksi Hover (Desktop):**
-  * Zoom halus `scale-105` dengan transisi 200ms.
-  * Overlay gelap transparan (scrim) muncul menampilkan judul game dan ikon play segitiga.
-  * Elevation shadow meningkat tajam (`shadow-xl`).
-* **Badge Status Game:**
-  * `BARU` (Hijau emerald) di pojok kiri atas.
-  * `HOT` (Merah cerah) di pojok kiri atas.
-  * `RATING` (Bintang emas di pojok kanan bawah).
-
----
-
-## 5. Arsitektur Komponen Antarmuka (UI Architecture)
-
-Pemetaan komponen kode yang akan dibuat nantinya:
-
-```
-[game.travelista.id]
-│
-├── components/layout/
-│   ├── MainNavbar.tsx           # Navbar Tier-1 (Logo, menu, pills, tools)
-│   ├── BreakingTicker.tsx       # Navbar Tier-2 (Ticker marquis merah)
-│   ├── CategoryChips.tsx        # Baris filter kategori "Jelajahi"
-│   └── AppFooter.tsx            # Footer SEO & link jaringan Travelista
-│
-├── components/ads/
-│   ├── AdSkyscraper.tsx         # Banner vertikal kiri & kanan (responsive 1440px+)
-│   ├── AdStickyBottom.tsx       # Banner melayang bawah dengan tombol collapse
-│   ├── AdNativeCard.tsx         # Iklan kotak di dalam grid Friv
-│   └── AdPlayCompanion.tsx      # Iklan 300x250 di sebelah layar game
-│
-├── components/game/
-│   ├── GameHeroGrid.tsx         # 3 game unggulan format besar ala Travelista
-│   ├── FrivGrid.tsx             # Grid wadah ratusan kartu game mini
-│   ├── GameCard.tsx             # Kartu individual game (hover effect & badge)
-│   ├── GameFrameModal.tsx       # Modal layar permainan (iframe loader)
-│   └── SearchModal.tsx          # Modal pencarian cepat game
-│
-└── types/
-    ├── game.ts                  # Interface TypeScript untuk metadata game
-    └── ads.ts                   # Tipe konfigurasi & ukuran slot iklan
-```
-
----
-
-## 6. Matriks Responsivitas Layar (Responsive Breakpoints Matrix)
-
-| Breakpoint | Target Layar | Lebar Layar | Skyscraper Kiri-Kanan | Sticky Bottom Ad | Kolom Grid Game |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `sm` | Ponsel (Portrait) | `< 640px` | Sembunyi (Hidden) | Tampil (320x50) | 3 Kolom |
-| `md` | Tablet / Foldable | `640px - 1023px`| Sembunyi (Hidden) | Tampil (320x50 / 468x60) | 4 - 5 Kolom |
-| `lg` | Laptop Standar | `1024px - 1279px`| Sembunyi (Hidden) | Tampil (728x90) | 6 Kolom |
-| `xl` | Desktop / Laptop Besar| `1280px - 1439px`| Sembunyi (Opsional kanan)| Tampil (728x90) | 7 Kolom |
-| `2xl`| Wide Desktop | `>= 1440px` | **Tampil Lengkap (Kiri & Kanan)** | Tampil (728x90) | 8 - 10 Kolom |
-
----
-
-## 7. Status Dokumen & Langkah Selanjutnya
-
-> [!IMPORTANT]
-> **Status:** Panduan desain selesai dirumuskan dan telah disetujui untuk arsitektur UI/UX `game.travelista.id`.
-> 
-> **Langkah Berikutnya (Menunggu instruksi pembuatan kode):**
-> 1. Konfigurasi token warna dan font di stylesheet Next.js (`globals.css`).
-> 2. Implementasi komponen layout dasar: Navbar 2-Tier & Ticker.
-> 3. Implementasi wrapper layout iklan Skyscraper & Bottom Sticky.
-> 4. Implementasi Friv-style Game Grid & Game Card interaktif.
+### 3.4 Papan Rekor (Tekno Hall of Fame)
+* Modal cyberpunk untuk meninjau rekor skor terbaik per game.
+* Dilengkapi ringkasan game yang telah dimainkan, skor puncak, dan opsi reset mandiri.

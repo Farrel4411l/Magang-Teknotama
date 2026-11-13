@@ -11,6 +11,7 @@ import {
   Trophy,
   Sparkles,
   Check,
+  X,
 } from "lucide-react";
 import {
   toggleLocalFavorite,
@@ -31,21 +32,12 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [copied, setCopied] = useState(false);
   const [lastScore, setLastScore] = useState<number | null>(null);
-  const [playerName, setPlayerName] = useState("");
-  const [submittedScore, setSubmittedScore] = useState(false);
 
   // Initialize favorite and record recent play
   useEffect(() => {
     const favs = getLocalFavorites();
     setIsFavorite(favs.includes(game.id));
     addRecentGame(game.id);
-
-    // Record play count on server
-    fetch("/api/stats", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ gameId: game.id, action: "play" }),
-    }).catch(() => {});
   }, [game.id]);
 
   // Listen to postMessage from internal HTML5 game iframe
@@ -55,7 +47,6 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
         const score = Number(e.data.score) || 0;
         setLastScore(score);
         saveLocalScore(game.id, score);
-        setSubmittedScore(false);
       }
     };
 
@@ -86,8 +77,8 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: `${game.title} - Travelista Games`,
-        text: `Ayo mainkan game ${game.title} di Travelista Games sekarang!`,
+        title: `${game.title} - TeknoGame`,
+        text: `Ayo mainkan game seru ${game.title} di TeknoGame sekarang!`,
         url: window.location.href,
       });
     } else {
@@ -97,33 +88,12 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
     }
   };
 
-  const handleSubmitScore = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!playerName.trim() || lastScore === null) return;
-
-    try {
-      await fetch("/api/leaderboard", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          gameId: game.id,
-          playerName: playerName.trim(),
-          score: lastScore,
-        }),
-      });
-      setSubmittedScore(true);
-      onOpenLeaderboard?.();
-    } catch {
-      // ignore
-    }
-  };
-
   return (
     <div className="flex flex-col gap-3">
-      {/* Game Iframe Wrapper */}
+      {/* Game Iframe Wrapper (Cyber Theater Mode) */}
       <div
         ref={containerRef}
-        className={`relative w-full rounded-3xl overflow-hidden bg-slate-950 border border-slate-800 shadow-2xl transition-all ${
+        className={`relative w-full rounded-3xl overflow-hidden bg-slate-950 border border-cyan-500/30 shadow-[0_0_35px_rgba(0,240,255,0.12)] transition-all ${
           isFullscreen ? "h-screen rounded-none" : "h-[450px] sm:h-[540px] md:h-[600px]"
         }`}
       >
@@ -136,52 +106,57 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
           sandbox="allow-scripts allow-same-origin allow-pointer-lock"
         />
 
-        {/* Score Submission Banner Overlay (When Game Over Emitted) */}
-        {lastScore !== null && !submittedScore && (
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 bg-slate-900/95 border border-amber-500/80 rounded-2xl p-4 shadow-2xl text-white flex flex-col sm:flex-row items-center gap-3 backdrop-blur-md animate-in slide-in-from-top duration-300">
-            <div className="flex items-center gap-2">
-              <Trophy className="w-5 h-5 text-amber-400" />
+        {/* Score Achievement Banner Overlay (When Game Over Emitted) */}
+        {lastScore !== null && (
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 bg-[#0B1222]/95 border border-cyan-500/80 rounded-2xl p-4 shadow-[0_0_30px_rgba(0,240,255,0.3)] text-white flex flex-col sm:flex-row items-center gap-4 backdrop-blur-md animate-in slide-in-from-top duration-300">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 flex items-center justify-center text-xl shrink-0 shadow-lg">
+                🏆
+              </div>
               <div>
                 <span className="text-xs text-slate-300 block">Game Selesai! Skor Kamu:</span>
-                <span className="text-lg font-black text-amber-400">
+                <span className="text-lg font-black bg-gradient-to-r from-cyan-300 to-amber-400 bg-clip-text text-transparent">
                   {lastScore.toLocaleString("id-ID")} pts
+                </span>
+                <span className="text-[11px] text-emerald-400 block font-medium">
+                  ✓ Tersimpan di rekor browsermu
                 </span>
               </div>
             </div>
 
-            <form onSubmit={handleSubmitScore} className="flex items-center gap-2">
-              <input
-                type="text"
-                value={playerName}
-                onChange={(e) => setPlayerName(e.target.value)}
-                placeholder="Ketik Nickname..."
-                maxLength={16}
-                required
-                className="px-3 py-1.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:border-red-500"
-              />
+            <div className="flex items-center gap-2">
               <button
-                type="submit"
-                className="px-3.5 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow cursor-pointer transition-colors"
+                type="button"
+                onClick={() => onOpenLeaderboard?.()}
+                className="px-3.5 py-1.5 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 text-xs font-black rounded-xl shadow-[0_0_12px_rgba(0,240,255,0.4)] cursor-pointer transition-all"
               >
-                Kirim Skor
+                Lihat Rekor
               </button>
-            </form>
+              <button
+                type="button"
+                onClick={() => setLastScore(null)}
+                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
+                aria-label="Tutup Banner Skor"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         )}
       </div>
 
       {/* Control Utility Toolbar */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-3.5 shadow-sm flex items-center justify-between gap-3">
+      <div className="bg-[#0B1222] rounded-2xl border border-slate-800 p-3.5 shadow-xl flex items-center justify-between gap-3">
         {/* Left: Game Title & Category */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center text-xl shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center text-xl shrink-0">
             🎮
           </div>
           <div>
-            <h1 className="text-sm sm:text-base font-black text-slate-900 leading-tight">
+            <h1 className="text-sm sm:text-base font-black text-white leading-tight">
               {game.title}
             </h1>
-            <span className="text-[11px] font-semibold text-red-600 uppercase">
+            <span className="text-[11px] font-bold text-cyan-400 uppercase">
               Kategori: {game.category}
             </span>
           </div>
@@ -195,27 +170,27 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
             aria-label="Simpan ke Favorit"
             className={`p-2 rounded-xl border transition-colors cursor-pointer ${
               isFavorite
-                ? "bg-rose-50 border-rose-200 text-rose-600"
-                : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100"
+                ? "bg-rose-950/80 border-rose-500/50 text-rose-400"
+                : "bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:border-slate-700"
             }`}
           >
-            <Heart className={`w-4 h-4 ${isFavorite ? "fill-rose-600" : ""}`} />
+            <Heart className={`w-4 h-4 ${isFavorite ? "fill-rose-500 text-rose-500" : ""}`} />
           </button>
 
           {/* Share */}
           <button
             onClick={handleShare}
             aria-label="Bagikan Game"
-            className="p-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+            className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:border-cyan-500/40 transition-colors cursor-pointer"
           >
-            {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
+            {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Share2 className="w-4 h-4" />}
           </button>
 
           {/* Reload Game */}
           <button
             onClick={handleReload}
             aria-label="Ulangi Permainan"
-            className="p-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+            className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:border-cyan-500/40 transition-colors cursor-pointer"
           >
             <RotateCcw className="w-4 h-4" />
           </button>
@@ -223,7 +198,7 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
           {/* Fullscreen Toggle */}
           <button
             onClick={handleFullscreen}
-            className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 text-xs font-black transition-all shadow-md flex items-center gap-1.5 cursor-pointer shadow-[0_0_15px_rgba(0,240,255,0.3)]"
           >
             {isFullscreen ? (
               <>
@@ -242,4 +217,3 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
     </div>
   );
 }
-

@@ -4,27 +4,30 @@
 
 @layer base {
   :root {
-    --color-travelista-red: #E53935;
-    --color-travelista-red-dark: #C62828;
-    --color-travelista-blue: #0284C7;
-    --color-travelista-blue-light: #E0F2FE;
-    --color-travelista-green: #16A34A;
-    --color-travelista-green-light: #DCFCE7;
-    --color-travelista-amber: #F59E0B;
-    --color-canvas-light: #F8FAFC;
-    --color-surface-white: #FFFFFF;
-    --color-neutral-dark: #1A1D20;
-    --color-neutral-gray: #64748B;
+    --color-tekno-cyan: #00F0FF;
+    --color-tekno-cyan-light: #38BDF8;
+    --color-tekno-blue: #2563EB;
+    --color-tekno-blue-deep: #1D4ED8;
+    --color-tekno-void: #070B14;
+    --color-tekno-surface: #0B1222;
+    --color-tekno-card: #0F172A;
+    --color-tekno-card-hover: #162238;
+    --color-tekno-border: #1E293B;
+    --color-tekno-glow-border: #0284C7;
+    --color-tekno-text-main: #F8FAFC;
+    --color-tekno-text-muted: #94A3B8;
+    --color-tekno-amber: #FACC15;
+    --color-tekno-green: #10B981;
   }
 
   body {
-    background-color: var(--color-canvas-light);
-    color: var(--color-neutral-dark);
+    background-color: #070B14;
+    color: #F8FAFC;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 
-/* Custom Marquis Animation for Breaking Ticker */
+/* Custom Marquis Animation for Tekno Live Radar */
 @keyframes ticker {
   0% {
     transform: translate3d(0, 0, 0);
@@ -44,21 +47,22 @@
   animation-play-state: paused;
 }
 
-/* Custom Scrollbar for Game Cards & Modals */
+/* Custom Sleek Dark Scrollbar for Gamers */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: #0B1222;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #1E293B;
   border-radius: 9999px;
+  border: 2px solid #0B1222;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: #0284C7;
 }
