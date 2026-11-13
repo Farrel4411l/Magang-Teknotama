@@ -11,6 +11,12 @@ interface PlayPageProps {
   params: Promise<{ slug: string }>;
 }
 
+export function generateStaticParams() {
+  return INITIAL_GAMES.map((game) => ({
+    slug: game.slug,
+  }));
+}
+
 export default async function PlayPage({ params }: PlayPageProps) {
   const { slug } = await params;
   const game = getGameBySlug(slug);

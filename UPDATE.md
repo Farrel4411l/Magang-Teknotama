@@ -8,6 +8,15 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, dan penambahan fi
 
 ---
 
+## [2.3.0] - 2026-11-13
+### Added & Optimized (Static HTML Export for Apache XAMPP / htdocs Deployment)
+- **Konfigurasi Output Static Export (`out/`):**
+  - Mengubah konfigurasi `next.config.ts` menjadi `output: "export"` sehingga build menghasilkan bundle 100% statis (HTML, CSS, JS, dan aset game).
+  - Mengimplementasikan `generateStaticParams()` pada rute `src/app/play/[slug]/page.tsx` dan `src/app/category/[category]/page.tsx` untuk pre-render seluruh halaman game dan kategori secara statis (SSG).
+  - Folder output **`out/`** kini dapat di-copy/upload langsung via FileZilla ke folder **`htdocs`** Apache XAMPP tanpa perlu instalasi Node.js runtime di server remote.
+
+---
+
 ## [2.2.0] - 2026-11-13
 ### Added & Changed (All Promotional Links Connected to teknotama.com)
 - **Integrasi Penuh Promosi ke teknotama.com:**

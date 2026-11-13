@@ -10,6 +10,12 @@ interface CategoryPageProps {
   params: Promise<{ category: string }>;
 }
 
+export function generateStaticParams() {
+  return CATEGORIES.filter((c) => c.id !== "all").map((c) => ({
+    category: c.id,
+  }));
+}
+
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { category } = await params;
   const validCat = CATEGORIES.find((c) => c.id === category);
