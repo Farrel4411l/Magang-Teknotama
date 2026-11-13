@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Gamepad2, Shield, Zap, Trophy, Heart } from "lucide-react";
+import { Gamepad2, Shield, Zap, Trophy, Heart, ExternalLink, Globe } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -96,15 +96,24 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Kolom 4: Jaminan Privasi & Sistem */}
+          {/* Kolom 4: Partner Resmi & Solusi IT */}
           <div>
             <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-1.5">
-              <Shield className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Keamanan & Privasi</span>
+              <Globe className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Partner Teknologi Resmi</span>
             </h4>
-            <p className="text-slate-400 text-xs leading-relaxed">
-              TeknoGame beroperasi dengan arsitektur bebas database server. Seluruh riwayat skor dan game favoritmu tersimpan aman di browser lokal tanpa pengumpulan data pribadi.
+            <p className="text-slate-400 text-xs leading-relaxed mb-3">
+              Didukung oleh <strong className="text-white font-bold">PT Teknotama Prakarsa Mulia</strong>. Penyedia solusi infrastruktur IT, cloud system, data security, dan custom software development untuk akselerasi bisnis Anda.
             </p>
+            <a
+              href="https://teknotama.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 font-bold transition-colors"
+            >
+              <span>Kunjungi teknotama.com</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
           </div>
         </div>
 
@@ -112,6 +121,15 @@ export default function Footer() {
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-500 text-[11px]">
           <p>© 2026 TeknoGame. All rights reserved. <span className="text-cyan-400 font-bold">PLAY. EVOLVE. CONQUER.</span></p>
           <div className="flex items-center gap-4">
+            <a
+              href="https://teknotama.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cyan-400/80 hover:text-cyan-300 transition-colors flex items-center gap-1"
+            >
+              <span>Partner Resmi: teknotama.com</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
             <span className="flex items-center gap-1">
               Made with <Heart className="w-3 h-3 text-rose-500 fill-rose-500 inline" /> for Gamers
             </span>

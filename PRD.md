@@ -192,6 +192,16 @@ travelista-game/
 3. Banner apresiasi skor langsung muncul merayakan rekor tanpa form input nickname yang membebani.
 4. Modal *Tekno Hall of Fame* menyajikan ringkasan game yang ditaklukkan, skor tertinggi, medali juara, dan tombol reset skor mandiri.
 
+### 5.5 Integrasi Promosi & Partner Resmi (teknotama.com)
+1. **Target URL Promosi Tunggal:** Seluruh komponen promosi, slot iklan sponsor, dan backlink partner terintegrasi mengarah ke **`https://teknotama.com`** (**PT Teknotama Prakarsa Mulia**).
+2. **Cakupan Penempatan Promosi:**
+   * **AdSkyscraper (160x600 Desktop):** Solusi IT Infrastructure, jaringan, dan keamanan data enterprise.
+   * **AdBottomAnchor (728x90 / 320x50):** Sticky banner sponsor Teknotama IT Solutions & Digital Services.
+   * **AdCompanion (300x250) & Play Sidebar Card:** Highlight solusi transformasi digital saat user bermain.
+   * **AdNativeTile (In-Grid Tile):** Kartu sponsor native di antara matriks game TeknoGame.
+   * **Navbar & Live Radar Ticker:** Badge partner resmi dan marquis update solusi digital Teknotama.
+   * **Footer & Homepage Banner:** Bagian khusus partner teknologi resmi dan backlink verifikasi legal.
+
 ---
 
 ## 6. Prosedur Build & Deployment di Hostdata.id

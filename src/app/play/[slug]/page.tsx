@@ -100,21 +100,23 @@ export default async function PlayPage({ params }: PlayPageProps) {
           {/* Sinergi Tekno Partner Arena Card */}
           <div className="w-[300px] bg-gradient-to-br from-blue-950 via-[#0B1222] to-slate-950 text-white p-5 rounded-2xl shadow-xl border border-cyan-500/30 space-y-3">
             <span className="text-[10px] uppercase font-black bg-cyan-500/20 text-cyan-300 px-2.5 py-0.5 rounded-full inline-block border border-cyan-500/30">
-              TEKNOGAME ARENA
+              PROMO &amp; PARTNER
             </span>
             <h4 className="text-sm font-black leading-tight text-white">
-              Tantang Dirimu &amp; Raih Rekor Tertinggi!
+              Solusi IT &amp; Transformasi Digital
             </h4>
             <p className="text-xs text-slate-300 leading-relaxed">
-              Kumpulkan skor terbaik di setiap arena game dan buktikan kemampuanmu di Papan Rekor Tekno Hall of Fame.
+              Konsultasikan kebutuhan infrastruktur IT, cloud network, pembuatan aplikasi kustom, dan keamanan data enterprise bersama PT Teknotama Prakarsa Mulia.
             </p>
             <div className="pt-1">
-              <Link
-                href="/"
+              <a
+                href="https://teknotama.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block w-full py-2 bg-gradient-to-r from-cyan-400 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 text-xs font-black rounded-xl text-center shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all"
               >
-                Jelajahi Game Lainnya &gt;
-              </Link>
+                Kunjungi teknotama.com &gt;
+              </a>
             </div>
           </div>
         </div>

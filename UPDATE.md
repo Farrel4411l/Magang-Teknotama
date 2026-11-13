@@ -8,6 +8,21 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, dan penambahan fi
 
 ---
 
+## [2.2.0] - 2026-11-13
+### Added & Changed (All Promotional Links Connected to teknotama.com)
+- **Integrasi Penuh Promosi ke teknotama.com:**
+  - Menghubungkan seluruh elemen promosi, slot iklan sponsor, dan backlink partner ke situs resmi **`https://teknotama.com`** (**PT Teknotama Prakarsa Mulia**).
+  - **AdBottomAnchor:** Mengubah banner sticky sponsor bawah menjadi highlight solusi IT & layanan digital Teknotama dengan tombol aksi langsung ke `teknotama.com`.
+  - **AdCompanion (300x250) & Play Page Partner Card:** Menampilkan promo layanan cloud system, data security, dan custom software development dari Teknotama di sebelah layar bermain game.
+  - **AdNativeTile:** Menyesuaikan tile sponsor di dalam matriks game menjadi promosi resmi solusi IT Teknotama.
+  - **AdSkyscraper (160x600 Rails):** Menyelaraskan promosi banner rel kiri (Solusi Jaringan & Cloud) dan kanan (Custom Software & Security) lengkap dengan tautan ke `teknotama.com`.
+  - **Navbar & Live Radar Ticker:** Menambahkan badge partner `🌐 teknotama.com` pada navbar desktop & drawer mobile, serta menyisipkan marquis promo solusi digital Teknotama pada ticker Live Radar.
+  - **Footer & Homepage Feature:** Menambahkan kolom profil partner teknologi resmi PT Teknotama Prakarsa Mulia pada footer serta banner promosi akselerasi bisnis di beranda utama.
+- **Penyelarasan Dokumentasi:**
+  - Memperbarui `Design.md`, `PRD.md`, dan `UPDATE.md` terkait integrasi promosi tunggal ke `teknotama.com`.
+
+---
+
 ## [2.1.1] - 2026-11-13
 ### Fixed & Added (Tab Favicon Cache Refresh & Agent Workflow Policy)
 - **Tab Favicon Cache Refresh & Head Injection:**

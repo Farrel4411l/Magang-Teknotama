@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Search, Trophy, Dices, Globe, Menu, X, Zap } from "lucide-react";
+import { Search, Trophy, Dices, Globe, Menu, X, Zap, ExternalLink } from "lucide-react";
 import { INITIAL_GAMES } from "@/lib/games-data";
 
 interface NavbarProps {
@@ -112,6 +112,18 @@ export default function Navbar({ onOpenSearch, onOpenLeaderboard }: NavbarProps)
               <span className="sm:hidden">Rekor</span>
             </button>
 
+            {/* Promo / Partner Link to teknotama.com */}
+            <a
+              href="https://teknotama.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Official Partner: Teknotama IT Solutions"
+              className="hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-cyan-500/30 hover:border-cyan-400 text-cyan-300 text-xs font-bold transition-all shadow-sm active:scale-95 cursor-pointer hover:shadow-[0_0_12px_rgba(0,240,255,0.3)]"
+            >
+              <span>🌐 teknotama.com</span>
+              <ExternalLink className="w-3 h-3 text-cyan-400" />
+            </a>
+
             {/* Search Icon Trigger */}
             <button
               onClick={onOpenSearch}
@@ -202,6 +214,16 @@ export default function Navbar({ onOpenSearch, onOpenLeaderboard }: NavbarProps)
           >
             ☕ Santai
           </Link>
+          <a
+            href="https://teknotama.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center justify-between px-3 py-2 text-sm font-semibold text-cyan-300 rounded-lg bg-cyan-950/30 border border-cyan-500/30 hover:bg-cyan-950/50 mt-2"
+          >
+            <span>🌐 Kunjungi teknotama.com</span>
+            <ExternalLink className="w-4 h-4 text-cyan-400" />
+          </a>
         </div>
       )}
     </header>

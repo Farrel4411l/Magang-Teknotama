@@ -32,32 +32,34 @@ export default function AdBottomAnchor() {
         {/* Left Ad Info */}
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-2xl shadow-md shrink-0">
-            ⚡
+            🌐
           </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="text-[9px] bg-cyan-500 text-slate-950 font-black uppercase px-1.5 py-0.2 rounded">
-                SPONSOR
+                PROMO PARTNER
               </span>
               <span className="text-white text-xs font-bold sm:text-sm">
-                Tekno Gaming Pass &amp; Gear
+                Teknotama IT Solutions &amp; Digital Services
               </span>
             </div>
             <p className="text-slate-300 text-[11px] hidden sm:block mt-0.5">
-              Tingkatkan kecepatan dan pengalaman bermainmu dengan perlengkapan gaming pilihan!
+              Solusi infrastruktur IT, cloud system, data security, dan pembuatan aplikasi kustom dari PT Teknotama Prakarsa Mulia.
             </p>
           </div>
         </div>
 
         {/* Right Action Button */}
         <div className="flex items-center gap-2 shrink-0">
-          <Link
-            href="/"
+          <a
+            href="https://teknotama.com"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 active:scale-95 text-slate-950 text-xs font-black rounded-lg shadow-[0_0_12px_rgba(0,240,255,0.4)] transition-all"
           >
-            <span>Cek Info</span>
+            <span>Kunjungi Teknotama</span>
             <ExternalLink className="w-3.5 h-3.5" />
-          </Link>
+          </a>
         </div>
       </div>
     </div>

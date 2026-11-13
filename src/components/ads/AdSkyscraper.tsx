@@ -32,38 +32,40 @@ export default function AdSkyscraper({ position }: AdSkyscraperProps) {
           <div className="relative z-10 text-center">
             <div className="inline-flex items-center gap-1 bg-cyan-500 text-slate-950 text-[10px] font-black uppercase px-2 py-0.5 rounded-full mb-2 shadow">
               <Zap className="w-2.5 h-2.5 fill-slate-950" />
-              <span>TEKNO GEAR</span>
+              <span>PROMO TEKNOTAMA</span>
             </div>
             <h4 className="text-white text-xs font-bold leading-tight">
-              {position === "left" ? "Ultra Wireless Mouse" : "Mechanical Pro Gaming"}
+              {position === "left" ? "Solusi Jaringan & Cloud" : "Custom Software & Security"}
             </h4>
             <p className="text-slate-300 text-[10px] mt-1 leading-snug">
               {position === "left"
-                ? "Presisi 24.000 DPI & zero delay untuk gamer kompetitif."
-                : "Switch optik responsif secepat kilat untuk kemenanganmu."}
+                ? "Perancangan & instalasi network infrastructure handal untuk bisnis."
+                : "Pengembangan web/mobile apps & sistem data security terpercaya."}
             </p>
           </div>
 
           {/* Visual Graphic Element */}
           <div className="relative z-10 flex flex-col items-center justify-center my-4">
             <div className="w-24 h-24 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-4xl shadow-[0_0_20px_rgba(0,240,255,0.2)] group-hover:scale-105 transition-transform duration-300">
-              {position === "left" ? "🖱️" : "⌨️"}
+              {position === "left" ? "🌐" : "🛡️"}
             </div>
-            <div className="mt-3 px-2 py-1 bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-black text-xs rounded-md shadow">
-              DISCOUNT 35%
+            <div className="mt-3 px-2 py-1 bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-black text-[10px] uppercase rounded-md shadow">
+              {position === "left" ? "IT INFRASTRUCTURE" : "DIGITAL SOLUTION"}
             </div>
           </div>
 
           {/* Bottom Call to Action */}
           <div className="relative z-10 text-center">
-            <Link
-              href="/"
+            <a
+              href="https://teknotama.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block w-full py-2 px-3 bg-gradient-to-r from-cyan-400 to-blue-600 hover:from-cyan-300 hover:to-blue-500 active:scale-95 text-slate-950 text-xs font-black rounded-lg shadow-md transition-all text-center shadow-[0_0_12px_rgba(0,240,255,0.3)]"
             >
-              Lihat Gear &gt;
-            </Link>
+              Kunjungi Teknotama &gt;
+            </a>
             <span className="text-[9px] text-cyan-400/80 block mt-1 font-semibold">
-              teknogame.com
+              teknotama.com
             </span>
           </div>
         </div>

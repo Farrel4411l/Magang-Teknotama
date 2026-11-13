@@ -110,3 +110,26 @@ Navbar TeknoGame terdiri dari 2 tingkat: **Tier 1 (Main Cyber Nav)** dan **Tier 
 ### 3.4 Papan Rekor (Tekno Hall of Fame)
 * Modal cyberpunk untuk meninjau rekor skor terbaik per game.
 * Dilengkapi ringkasan game yang telah dimainkan, skor puncak, dan opsi reset mandiri.
+
+---
+
+## 4. Slot Iklan, Sponsor & Integrasi Promosi (Official Partner: teknotama.com)
+
+Seluruh komponen promosi, slot iklan sponsor, dan backlink partner terintegrasi langsung ke website resmi partner teknologi: **`https://teknotama.com`** (**PT Teknotama Prakarsa Mulia**).
+
+### 4.1 Unit Promosi & Tata Letak
+1. **AdSkyscraper (Rails Kiri & Kanan - 160x600):**
+   - Menampilkan promo solusi infrastruktur jaringan, cloud system, keamanan data, dan custom software development dari Teknotama.
+   - Tombol CTA mengarah ke `https://teknotama.com` dengan target `_blank`.
+2. **AdBottomAnchor (Sticky Bottom Banner - 728x90 / 320x50):**
+   - Unit melayang di bawah layar dengan kontrol buka/tutup (*minimize/expand*), menampilkan highlight layanan IT Teknotama.
+3. **AdCompanion (Sidebar 300x250) & Play Page Partner Card:**
+   - Ditempatkan di sisi kanan layar bermain untuk memaksimalkan eksposur saat user sedang bermain game.
+4. **AdNativeTile (In-Grid Sponsor Tile):**
+   - Tile interaktif yang menyatu secara harmonis di antara kotak permainan Tekno Matrix.
+5. **Navbar & Breaking Ticker Live Radar:**
+   - Badge partner `[ 🌐 teknotama.com ]` di navbar desktop dan drawer navigasi mobile.
+   - Live ticker marquis menampilkan update promo solusi digital Teknotama secara berkala.
+6. **Footer Partner Directory:**
+   - Kolom khusus informasi partner resmi PT Teknotama Prakarsa Mulia dan backlink legal copyright.
+
