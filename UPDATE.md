@@ -8,6 +8,12 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, dan penambahan fi
 
 ---
 
+## [2.6.3] - 2026-11-17
+### Changed & Deployed (Include `out/` Build Folder in Git Tracking)
+- **Mengaktifkan Git Tracking untuk Folder `out/` ([.gitignore](.gitignore)):**
+  - Menghapus `/out/` dari `.gitignore` agar artefak hasil build produksi Next.js tersimpan langsung di branch GitHub `games`.
+  - Memudahkan proses deployment langsung ke hosting cPanel/Apache tanpa harus menjalankan build di sisi server.
+
 ## [2.6.2] - 2026-11-16
 ### Fixed (Lembah Bromo Game Over & Sunset/Momentum Mechanics)
 - **Implementasi Mekanik Game Over yang Seimbang di Lembah Bromo:**

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Packing Master: Koper Rapi - TeknoGame</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      touch-action: manipulation;
+    }
+    .header { text-align: center; margin-bottom: 12px; }
+    .title { font-size: 20px; font-weight: 900; color: #fff; }
+    .desc { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+    .game-board {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 95%;
+    }
+    
+    /* Suitcase Container */
+    .suitcase {
+      width: 260px;
+      height: 300px;
+      background: #1e293b;
+      border: 5px solid #0284c7;
+      border-radius: 24px;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.5), inset 0 2px 6px rgba(255,255,255,0.08);
+      padding: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 8px;
+      position: relative;
+    }
+    .handle {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 76px;
+      height: 16px;
+      border: 4px solid #0284c7;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+    }
+    .slot {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 12px;
+      border: 2px dashed rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .slot.drag-over, .slot.highlight {
+      background: rgba(0, 240, 255, 0.25);
+      border-color: #00f0ff;
+      border-style: solid;
+    }
+    
+    /* Item Palette */
+    .palette {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: rgba(15, 23, 42, 0.85);
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      backdrop-filter: blur(8px);
+    }
+    .palette-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: #00f0ff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .items-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    
+    .item {
+      width: 62px;
+      height: 62px;
+      background: #1e293b;
+      border: 2px solid #334155;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+      font-size: 24px;
+      touch-action: manipulation;
+    }
+    .item:hover { transform: scale(1.05); }
+    .item.selected {
+      border-color: #00f0ff;
+      background: #0f2744;
+      transform: scale(1.1);
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.6);
+      animation: pulse 1s infinite alternate;
+    }
+    @keyframes pulse {
+      from { transform: scale(1.05); }
+      to { transform: scale(1.12); }
+    }
+    .item-label { font-size: 9px; font-weight: 700; color: #cbd5e1; margin-top: 1px; }
+
+    /* Modal */
+    #win-modal {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(10px);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      z-index: 50;
+    }
+    .btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      border: none;
+      padding: 13px 32px;
+      border-radius: 14px;
+      font-weight: 900;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 16px;
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+    }
+    .btn:active { transform: scale(0.96); }
+    .hint-mobile {
+      font-size: 11px;
+      color: #38bdf8;
+      text-align: center;
+      margin-top: 8px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1 class="title">Packing Master: Koper Rapi</h1>
+    <p class="desc">Tata perlengkapan traveling ke dalam koper bagasi!</p>
+    <p class="hint-mobile">📱 Tap barang untuk memilih, lalu tap kotak kosong di koper</p>
+  </div>
+
+  <div class="game-board">
+    <!-- Suitcase -->
+    <div class="suitcase">
+      <div class="handle"></div>
+      <div class="slot" data-index="0"></div>
+      <div class="slot" data-index="1"></div>
+      <div class="slot" data-index="2"></div>
+      <div class="slot" data-index="3"></div>
+      <div class="slot" data-index="4"></div>
+      <div class="slot" data-index="5"></div>
+      <div class="slot" data-index="6"></div>
+      <div class="slot" data-index="7"></div>
+      <div class="slot" data-index="8"></div>
+      <div class="slot" data-index="9"></div>
+      <div class="slot" data-index="10"></div>
+      <div class="slot" data-index="11"></div>
+    </div>
+
+    <!-- Items Palette -->
+    <div class="palette">
+      <div class="palette-title">Barang Bawaan:</div>
+      <div class="items-container" id="palette-items">
+        <div class="item" draggable="true" id="item-camera">📷<span class="item-label">Kamera</span></div>
+        <div class="item" draggable="true" id="item-shoes">🥾<span class="item-label">Sepatu</span></div>
+        <div class="item" draggable="true" id="item-pass">📕<span class="item-label">Paspor</span></div>
+        <div class="item" draggable="true" id="item-thermos">🧉<span class="item-label">Termos</span></div>
+        <div class="item" draggable="true" id="item-sunglass">🕶️<span class="item-label">Kacamata</span></div>
+        <div class="item" draggable="true" id="item-jacket">🧥<span class="item-label">Jaket</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Win Modal -->
+  <div id="win-modal">
+    <div style="font-size: 54px; margin-bottom: 8px;">🧳✨</div>
+    <h2 style="font-size: 24px; font-weight: 900; color: #4ade80;">Koper Siap Berangkat!</h2>
+    <p style="font-size: 13px; color: #cbd5e1; max-width: 300px; line-height: 1.4; margin-top: 4px;">
+      Semua perlengkapan tersusun rapi tanpa ada yang tertinggal.
+    </p>
+    <div style="font-size: 26px; font-weight: 900; color: #f59e0b; margin-top: 12px;">9.500 pts</div>
+    <button class="btn" id="replay-btn" type="button">Packing Lagi 🔄</button>
+  </div>
+
+  <script>
+    const items = document.querySelectorAll('.item');
+    const slots = document.querySelectorAll('.slot');
+    const winModal = document.getElementById('win-modal');
+    const replayBtn = document.getElementById('replay-btn');
+    const palette = document.getElementById('palette-items');
+
+    // Audio SFX
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+    function initAudio() {
+      if (!audioCtx) audioCtx = new AudioContext();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+    }
+    function playBeep(freq, type, duration) {
+      initAudio();
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e){}
+    }
+
+    let selectedItem = null;
+    let draggedItem = null;
+
+    function selectItem(item) {
+      initAudio();
+      playBeep(420, 'sine', 0.08);
+
+      if (selectedItem === item) {
+        selectedItem.classList.remove('selected');
+        selectedItem = null;
+        slots.forEach(s => s.classList.remove('highlight'));
+        return;
+      }
+
+      if (selectedItem) {
+        selectedItem.classList.remove('selected');
+      }
+
+      selectedItem = item;
+      selectedItem.classList.add('selected');
+
+      // Highlight empty slots
+      slots.forEach(s => {
+        if (s.children.length === 0) s.classList.add('highlight');
+      });
+    }
+
+    function placeItemInSlot(slot) {
+      if (!selectedItem) return;
+      if (slot.children.length === 0) {
+        slot.appendChild(selectedItem);
+        playBeep(640, 'sine', 0.1);
+        selectedItem.classList.remove('selected');
+        selectedItem = null;
+        slots.forEach(s => s.classList.remove('highlight'));
+        checkWin();
+      }
+    }
+
+    // Attach Click / Tap handlers for mobile & desktop
+    items.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // If item is already inside a slot, clicking it returns it to palette
+        if (item.parentElement !== palette) {
+          palette.appendChild(item);
+          playBeep(320, 'sine', 0.08);
+          if (selectedItem === item) {
+            selectedItem.classList.remove('selected');
+            selectedItem = null;
+            slots.forEach(s => s.classList.remove('highlight'));
+          }
+          return;
+        }
+        selectItem(item);
+      });
+
+      // Desktop HTML5 drag fallback
+      item.addEventListener('dragstart', (e) => {
+        draggedItem = item;
+        setTimeout(() => item.style.opacity = '0.5', 0);
+      });
+      item.addEventListener('dragend', () => {
+        if (draggedItem) draggedItem.style.opacity = '1';
+        draggedItem = null;
+      });
+    });
+
+    slots.forEach(slot => {
+      slot.addEventListener('click', () => {
+        placeItemInSlot(slot);
+      });
+
+      slot.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        slot.classList.add('drag-over');
+      });
+      slot.addEventListener('dragleave', () => {
+        slot.classList.remove('drag-over');
+      });
+      slot.addEventListener('drop', (e) => {
+        e.preventDefault();
+        slot.classList.remove('drag-over');
+        if (slot.children.length === 0 && draggedItem) {
+          slot.appendChild(draggedItem);
+          playBeep(640, 'sine', 0.1);
+          checkWin();
+        }
+      });
+    });
+
+    function checkWin() {
+      if (palette.children.length === 0) {
+        setTimeout(() => {
+          playBeep(780, 'sine', 0.35);
+          winModal.style.display = 'flex';
+
+          if (window.parent) {
+            window.parent.postMessage({
+              type: 'GAME_OVER',
+              gameId: 'packing-master',
+              score: 9500
+            }, '*');
+          }
+        }, 300);
+      }
+    }
+
+    replayBtn.addEventListener('click', () => {
+      winModal.style.display = 'none';
+      items.forEach(item => {
+        item.classList.remove('selected');
+        palette.appendChild(item);
+      });
+      slots.forEach(s => s.classList.remove('highlight'));
+      selectedItem = null;
+    });
+  </script>
+</body>
+</html>
