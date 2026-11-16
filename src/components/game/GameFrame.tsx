@@ -54,6 +54,16 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
     return () => window.removeEventListener("message", handleMessage);
   }, [game.id]);
 
+  // Auto-close score popup banner after 2 seconds (2000ms)
+  useEffect(() => {
+    if (lastScore !== null) {
+      const timer = setTimeout(() => {
+        setLastScore(null);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [lastScore]);
+
   const handleToggleFavorite = () => {
     const next = toggleLocalFavorite(game.id);
     setIsFavorite(next);

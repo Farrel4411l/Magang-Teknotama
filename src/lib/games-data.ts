@@ -212,6 +212,24 @@ export const INITIAL_GAMES: Game[] = [
       touch: "Tarik garis antar huruf menggunakan jari",
     },
   },
+  // 12. Werewolf (Malam & Desa)
+  {
+    id: "werewolf",
+    slug: "werewolf",
+    title: "Werewolf: Malam & Desa",
+    description: "Permainan deduksi sosial legendaris! Temukan Werewolf di antara warga desa atau mangsa penduduk saat malam tiba.",
+    category: "casual",
+    thumbnailUrl: "/images/games/werewolf.webp",
+    gamePath: "/games/werewolf/index.html",
+    playCount: 8940,
+    likesCount: 820,
+    rating: 4.9,
+    badge: "HOT",
+    controlsGuide: {
+      keyboard: ["Klik Menu & Pilih Aksi Moderator"],
+      touch: "Oper perangkat ke tiap pemain secara bergiliran",
+    },
+  },
 ];
 
 export function getGameBySlug(slug: string): Game | undefined {

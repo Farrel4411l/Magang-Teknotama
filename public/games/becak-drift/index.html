@@ -2,23 +2,133 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Becak Drift: Malioboro Rush - Travelista Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Becak Drift: Malioboro Rush - TeknoGame</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    canvas { width: 100%; height: 100%; display: block; }
-    #ui { position: absolute; inset: 0; pointer-events: none; }
-    .hud { position: absolute; top: 15px; left: 15px; display: flex; gap: 10px; pointer-events: auto; }
-    .badge { background: rgba(15, 23, 42, 0.85); color: #fff; padding: 6px 14px; border-radius: 9999px; font-weight: 800; font-size: 13px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      touch-action: none;
+    }
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: none;
+    }
+    #ui {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .hud {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: flex;
+      gap: 10px;
+      pointer-events: auto;
+      z-index: 20;
+    }
+    .badge {
+      background: rgba(15, 23, 42, 0.88);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-weight: 800;
+      font-size: 13px;
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      backdrop-filter: blur(6px);
+    }
     .badge span { color: #f59e0b; }
-    .drift-alert { position: absolute; top: 70px; left: 50%; transform: translateX(-50%); color: #38bdf8; font-weight: 900; font-size: 20px; text-shadow: 0 0 10px rgba(56, 189, 248, 0.6); opacity: 0; transition: opacity 0.2s; }
-    .modal { position: absolute; inset: 0; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(8px); display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: auto; color: #fff; text-align: center; padding: 20px; }
-    .btn { background: #e53935; color: #fff; border: none; padding: 12px 28px; border-radius: 12px; font-weight: 800; font-size: 15px; cursor: pointer; transition: all 0.2s; margin-top: 16px; box-shadow: 0 8px 20px rgba(229, 57, 53, 0.4); }
-    .btn:hover { background: #c62828; transform: translateY(-2px); }
+    .drift-alert {
+      position: absolute;
+      top: 65px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #00f0ff;
+      font-weight: 900;
+      font-size: 22px;
+      text-shadow: 0 0 12px rgba(0, 240, 255, 0.8);
+      opacity: 0;
+      transition: opacity 0.15s;
+      pointer-events: none;
+      z-index: 15;
+    }
+
+    /* Onscreen Mobile Steering Buttons */
+    .mobile-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      pointer-events: auto;
+      z-index: 25;
+    }
+    .steer-btn {
+      width: 120px;
+      height: 64px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 2px solid rgba(0, 240, 255, 0.45);
+      border-radius: 20px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      touch-action: none;
+      transition: transform 0.08s, background 0.08s, border-color 0.08s;
+    }
+    .steer-btn:active, .steer-btn.active {
+      transform: scale(0.92);
+      background: rgba(0, 240, 255, 0.35);
+      border-color: #00f0ff;
+    }
+
+    .modal {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+      color: #fff;
+      text-align: center;
+      padding: 24px;
+      z-index: 50;
+    }
+    .btn {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      color: #fff;
+      border: none;
+      padding: 13px 32px;
+      border-radius: 14px;
+      font-weight: 900;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 18px;
+      box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4);
+    }
+    .btn:active { transform: scale(0.96); }
     .title { font-size: 26px; font-weight: 900; margin-bottom: 6px; }
     .subtitle { font-size: 13px; color: #94a3b8; max-width: 320px; line-height: 1.4; }
-    .touch-hints { position: absolute; bottom: 20px; inset-x: 20px; display: flex; justify-content: space-between; pointer-events: none; opacity: 0.6; font-size: 12px; font-weight: bold; color: #fff; }
   </style>
 </head>
 <body>
@@ -30,29 +140,30 @@
     </div>
     <div class="drift-alert" id="drift-alert">DRIFT BONUS! 🔥</div>
 
-    <div class="touch-hints">
-      <span>◀ TAP KIRI</span>
-      <span>TAP KANAN ▶</span>
+    <!-- Onscreen Steering Controls for HP / Mobile -->
+    <div class="mobile-controls">
+      <div class="steer-btn" id="btn-left">◀ KIRI</div>
+      <div class="steer-btn" id="btn-right">KANAN ▶</div>
     </div>
 
     <!-- Start Modal -->
     <div class="modal" id="start-modal">
       <div style="font-size: 48px; margin-bottom: 8px;">🛺💨</div>
       <h1 class="title">Becak Drift: Malioboro Rush</h1>
-      <p class="subtitle">Luncurkan becak kayuh melintasi lorong Malioboro Jogja! Hindari andong kuda & tiang lampu, kumpulkan turis!</p>
-      <div style="margin-top: 14px; font-size: 11px; color: #cbd5e1; background: rgba(255,255,255,0.08); padding: 6px 14px; border-radius: 8px;">
-        Gunakan <b>A / D</b> atau <b>PANAH KIRI/KANAN</b> / Tap sisi layar
+      <p class="subtitle">Kemudikan becak kayuh melintasi lorong Malioboro Jogja! Lakukan drifting tajam, hindari andong kuda & tiang lampu!</p>
+      <div style="margin-top: 14px; font-size: 12px; color: #cbd5e1; background: rgba(255,255,255,0.08); padding: 8px 16px; border-radius: 10px;">
+        Gunakan tombol <b>◀ KIRI / KANAN ▶</b> di layar HP, atau tombol keyboard <b>A / D / PANAH</b>
       </div>
-      <button class="btn" id="start-btn">Ngebut Sekarang</button>
+      <button class="btn" id="start-btn" type="button">Mulai Ngebut 🚀</button>
     </div>
 
     <!-- Game Over Modal -->
     <div class="modal" id="over-modal" style="display: none;">
-      <div style="font-size: 48px; margin-bottom: 8px;">💥</div>
+      <div style="font-size: 48px; margin-bottom: 8px;">💥🛺</div>
       <h2 class="title" style="color: #ef4444;">Becak Terguling!</h2>
       <p class="subtitle">Kamu menabrak rintangan di jalan Malioboro.</p>
-      <div style="font-size: 24px; font-weight: 900; color: #f59e0b; margin-top: 10px;" id="final-score">0 pts</div>
-      <button class="btn" id="restart-btn">Tarik Becak Lagi</button>
+      <div style="font-size: 26px; font-weight: 900; color: #f59e0b; margin-top: 12px;" id="final-score">0 pts</div>
+      <button class="btn" id="restart-btn" type="button">Tarik Becak Lagi 🔄</button>
     </div>
   </div>
 
@@ -67,6 +178,8 @@
     const finalScore = document.getElementById('final-score');
     const startBtn = document.getElementById('start-btn');
     const restartBtn = document.getElementById('restart-btn');
+    const btnLeft = document.getElementById('btn-left');
+    const btnRight = document.getElementById('btn-right');
 
     let width, height;
     function resize() {
@@ -99,7 +212,7 @@
     // State
     let isPlaying = false;
     let score = 0;
-    let speed = 7;
+    let speed = 6.5;
     let roadOffset = 0;
     let steer = 0; // -1 left, 1 right
     let becakX = width / 2;
@@ -116,34 +229,91 @@
     window.addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
     window.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
 
-    let touchX = null;
-    canvas.addEventListener('pointerdown', e => {
-      touchX = e.clientX;
+    // Mobile Steer State
+    let touchLeft = false;
+    let touchRight = false;
+    let directTouchSide = 0; // -1 left half, 1 right half
+
+    function setupTouchButton(btn, setFlag) {
+      const start = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        initAudio();
+        setFlag(true);
+        btn.classList.add('active');
+      };
+      const stop = (e) => {
+        e.preventDefault();
+        setFlag(false);
+        btn.classList.remove('active');
+      };
+      btn.addEventListener('pointerdown', start);
+      btn.addEventListener('pointerup', stop);
+      btn.addEventListener('pointerleave', stop);
+      btn.addEventListener('pointercancel', stop);
+
+      btn.addEventListener('touchstart', start, { passive: false });
+      btn.addEventListener('touchend', stop, { passive: false });
+      btn.addEventListener('touchcancel', stop, { passive: false });
+    }
+
+    setupTouchButton(btnLeft, v => touchLeft = v);
+    setupTouchButton(btnRight, v => touchRight = v);
+
+    // Direct Canvas Touch (Left half = steer left, Right half = steer right)
+    function handleCanvasTouch(e) {
+      if (!isPlaying) return;
       initAudio();
-    });
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      if (clientX < width / 2) {
+        directTouchSide = -1;
+      } else {
+        directTouchSide = 1;
+      }
+    }
+    function endCanvasTouch() {
+      directTouchSide = 0;
+    }
+
+    canvas.addEventListener('pointerdown', handleCanvasTouch);
     canvas.addEventListener('pointermove', e => {
-      if (touchX !== null) touchX = e.clientX;
+      if (directTouchSide !== 0) handleCanvasTouch(e);
     });
-    window.addEventListener('pointerup', () => touchX = null);
+    window.addEventListener('pointerup', endCanvasTouch);
+    window.addEventListener('pointercancel', endCanvasTouch);
+
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      handleCanvasTouch(e);
+    }, { passive: false });
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      handleCanvasTouch(e);
+    }, { passive: false });
+    window.addEventListener('touchend', endCanvasTouch);
+    window.addEventListener('touchcancel', endCanvasTouch);
 
     function start() {
       startModal.style.display = 'none';
       overModal.style.display = 'none';
       score = 0;
-      speed = 7;
+      speed = 6.5;
       roadOffset = 0;
       becakX = width / 2;
       becakAngle = 0;
       obstacles = [];
       passengers = [];
       skidMarks = [];
+      touchLeft = false;
+      touchRight = false;
+      directTouchSide = 0;
       isPlaying = true;
     }
 
     function gameOver() {
       if (!isPlaying) return;
       isPlaying = false;
-      playBeep(120, 'sawtooth', 0.3, 0.15);
+      playBeep(120, 'sawtooth', 0.3, 0.2);
       finalScore.innerText = Math.floor(score).toLocaleString('id-ID') + ' pts';
       overModal.style.display = 'flex';
 
@@ -162,23 +332,24 @@
     let spawnTimer = 0;
 
     function loop() {
+      requestAnimationFrame(loop);
       ctx.clearRect(0, 0, width, height);
 
       // Road Area
-      const roadW = Math.min(width * 0.7, 440);
+      const roadW = Math.min(width * 0.78, 440);
       const roadL = (width - roadW) / 2;
       const roadR = roadL + roadW;
 
       // Sidewalks
-      ctx.fillStyle = '#334155';
+      ctx.fillStyle = '#1e293b';
       ctx.fillRect(0, 0, roadL, height);
       ctx.fillRect(roadR, 0, width - roadR, height);
 
       // Malioboro Asphalt
-      ctx.fillStyle = '#1e293b';
+      ctx.fillStyle = '#0f172a';
       ctx.fillRect(roadL, 0, roadW, height);
 
-      // Sidewalk Kerb / Paving pattern
+      // Sidewalk Kerb
       ctx.fillStyle = '#e2e8f0';
       ctx.fillRect(roadL - 8, 0, 8, height);
       ctx.fillRect(roadR, 0, 8, height);
@@ -195,174 +366,201 @@
       ctx.setLineDash([]);
 
       // Draw Skid Marks
-      ctx.fillStyle = 'rgba(0,0,0,0.25)';
-      skidMarks.forEach((m, idx) => {
+      ctx.fillStyle = 'rgba(0,0,0,0.3)';
+      for (let i = skidMarks.length - 1; i >= 0; i--) {
+        const m = skidMarks[i];
         m.y += speed;
         ctx.fillRect(m.x - 3, m.y, 6, 8);
-        if (m.y > height) skidMarks.splice(idx, 1);
-      });
+        if (m.y > height) skidMarks.splice(i, 1);
+      }
 
       if (isPlaying) {
         score += speed * 0.15;
         speed = Math.min(speed + 0.001, 14);
 
-        // Steering input
+        // Steering input (Keyboard OR Buttons OR Screen Touch)
         steer = 0;
-        if (keys['a'] || keys['arrowleft'] || (touchX !== null && touchX < width / 2)) steer -= 1;
-        if (keys['d'] || keys['arrowright'] || (touchX !== null && touchX >= width / 2)) steer += 1;
+        if (keys['a'] || keys['arrowleft'] || touchLeft || directTouchSide === -1) steer -= 1;
+        if (keys['d'] || keys['arrowright'] || touchRight || directTouchSide === 1) steer += 1;
 
         if (steer !== 0) {
           becakAngle += steer * 0.08;
-          becakX += steer * (speed * 0.85);
+          becakX += steer * (speed * 0.88);
 
           // Drift threshold
-          if (Math.abs(becakAngle) > 0.35) {
+          if (Math.abs(becakAngle) > 0.32) {
             isDrifting = true;
             driftTimer++;
             score += 1;
             driftAlert.style.opacity = '1';
-            skidMarks.push({ x: becakX - 12, y: height - 110 });
-            skidMarks.push({ x: becakX + 12, y: height - 110 });
-            if (driftTimer % 12 === 0) playBeep(900, 'square', 0.04, 0.05);
+            skidMarks.push({ x: becakX - 14, y: height - 110 });
+            skidMarks.push({ x: becakX + 14, y: height - 110 });
+            if (driftTimer % 10 === 0) playBeep(880, 'square', 0.04, 0.06);
           } else {
             isDrifting = false;
             driftAlert.style.opacity = '0';
           }
         } else {
-          becakAngle *= 0.85;
+          becakAngle *= 0.82;
           isDrifting = false;
           driftAlert.style.opacity = '0';
         }
 
-        // Clamp angle & bounds
+        // Clamp angle & road bounds
         becakAngle = Math.max(-0.6, Math.min(0.6, becakAngle));
         becakX = Math.max(roadL + 24, Math.min(roadR - 24, becakX));
 
-        scoreVal.innerText = Math.floor(score).toLocaleString('id-ID');
-        speedVal.innerText = Math.floor(speed * 4);
-
-        // Spawning
+        // Spawning Obstacles & Tourists
         spawnTimer++;
-        if (spawnTimer > 60) {
+        if (spawnTimer > Math.max(35, 75 - Math.floor(speed * 3))) {
           spawnTimer = 0;
-          if (Math.random() < 0.75) {
-            // Spawn Obstacle (Andong / Tiang)
+          const laneX = roadL + 30 + Math.random() * (roadW - 60);
+
+          if (Math.random() > 0.35) {
+            // Obstacle: Andong Kuda (Horse Cart) or Traffic Cone
             const isAndong = Math.random() > 0.4;
             obstacles.push({
-              x: roadL + 30 + Math.random() * (roadW - 60),
-              y: -80,
-              w: isAndong ? 38 : 22,
-              h: isAndong ? 48 : 22,
-              type: isAndong ? 'andong' : 'tiang'
+              x: laneX,
+              y: -50,
+              w: isAndong ? 36 : 24,
+              h: isAndong ? 44 : 26,
+              type: isAndong ? 'andong' : 'cone'
             });
           } else {
-            // Spawn Tourist Passenger (Pickup Bonus)
+            // Passenger: Turis Malioboro (Bonus)
             passengers.push({
-              x: roadL + 30 + Math.random() * (roadW - 60),
-              y: -50,
-              r: 16
+              x: laneX,
+              y: -40,
+              radius: 14
             });
           }
         }
-      }
 
-      // Draw Obstacles
-      for (let i = obstacles.length - 1; i >= 0; i--) {
-        const obs = obstacles[i];
-        if (isPlaying) obs.y += speed * 0.85;
+        // Update Obstacles
+        for (let i = obstacles.length - 1; i >= 0; i--) {
+          const obs = obstacles[i];
+          obs.y += speed;
 
-        if (obs.type === 'andong') {
-          ctx.fillStyle = '#78350f';
-          ctx.beginPath();
-          ctx.roundRect(obs.x - obs.w/2, obs.y - obs.h/2, obs.w, obs.h, [6]);
-          ctx.fill();
-          ctx.fillStyle = '#fef08a';
-          ctx.font = '22px sans-serif';
-          ctx.fillText('🐎', obs.x - 12, obs.y + 8);
-        } else {
-          ctx.fillStyle = '#0f766e';
-          ctx.beginPath();
-          ctx.arc(obs.x, obs.y, obs.w / 2, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#fde047';
-          ctx.font = '16px sans-serif';
-          ctx.fillText('💡', obs.x - 8, obs.y + 6);
+          // Collision with Becak
+          if (
+            Math.abs(becakX - obs.x) < (obs.w / 2 + 18) &&
+            Math.abs((height - 110) - obs.y) < (obs.h / 2 + 20)
+          ) {
+            gameOver();
+            return;
+          }
+
+          if (obs.y > height + 60) obstacles.splice(i, 1);
         }
 
-        // Collision Check
-        if (isPlaying && Math.hypot(becakX - obs.x, (height - 110) - obs.y) < 32) {
-          gameOver();
-          break;
+        // Update Passengers
+        for (let i = passengers.length - 1; i >= 0; i--) {
+          const p = passengers[i];
+          p.y += speed;
+
+          // Pickup Turis!
+          if (Math.hypot(becakX - p.x, (height - 110) - p.y) < 28) {
+            passengers.splice(i, 1);
+            score += 500;
+            playBeep(1046, 'triangle', 0.15, 0.2);
+            continue;
+          }
+
+          if (p.y > height + 40) passengers.splice(i, 1);
         }
 
-        if (obs.y > height + 80) obstacles.splice(i, 1);
+        scoreVal.innerText = Math.floor(score).toLocaleString('id-ID');
+        speedVal.innerText = Math.floor(speed * 6);
       }
 
-      // Draw Passengers / Turis
-      for (let i = passengers.length - 1; i >= 0; i--) {
-        const p = passengers[i];
-        if (isPlaying) p.y += speed * 0.85;
-
-        ctx.fillStyle = '#f59e0b';
+      // Draw Passengers (Turis)
+      passengers.forEach(p => {
+        ctx.fillStyle = '#38bdf8';
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
         ctx.fillStyle = '#fff';
-        ctx.font = '18px sans-serif';
-        ctx.fillText('🧳', p.x - 9, p.y + 6);
+        ctx.font = '14px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('🧍', p.x, p.y);
+      });
 
-        // Pickup
-        if (isPlaying && Math.hypot(becakX - p.x, (height - 110) - p.y) < 36) {
-          score += 350;
-          playBeep(1046, 'sine', 0.1, 0.2);
-          setTimeout(() => playBeep(1318, 'sine', 0.15, 0.2), 60);
-          passengers.splice(i, 1);
+      // Draw Obstacles
+      obstacles.forEach(obs => {
+        if (obs.type === 'andong') {
+          // Andong Cart
+          ctx.fillStyle = '#78350f';
+          ctx.beginPath();
+          ctx.roundRect(obs.x - obs.w / 2, obs.y - obs.h / 2, obs.w, obs.h, 6);
+          ctx.fill();
+          ctx.fillStyle = '#f59e0b';
+          ctx.font = '18px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('🐎', obs.x, obs.y);
+        } else {
+          // Traffic Cone
+          ctx.fillStyle = '#ea580c';
+          ctx.beginPath();
+          ctx.moveTo(obs.x, obs.y - obs.h / 2);
+          ctx.lineTo(obs.x - obs.w / 2, obs.y + obs.h / 2);
+          ctx.lineTo(obs.x + obs.w / 2, obs.y + obs.h / 2);
+          ctx.closePath();
+          ctx.fill();
+          ctx.fillStyle = '#fff';
+          ctx.fillRect(obs.x - 7, obs.y, 14, 4);
         }
+      });
 
-        if (p.y > height + 80) passengers.splice(i, 1);
-      }
-
-      // Draw Becak (Player)
+      // Draw Becak Jogja (Player)
       ctx.save();
       ctx.translate(becakX, height - 110);
       ctx.rotate(becakAngle);
 
-      // Rear single wheel
-      ctx.fillStyle = '#020617';
-      ctx.fillRect(-4, 18, 8, 18);
-      // Bicycle frame
-      ctx.fillStyle = '#475569';
-      ctx.fillRect(-2, 0, 4, 20);
-
-      // Passenger cabin (Front)
+      // Becak Canopy / Hood (Front Passenger Seat)
       ctx.fillStyle = '#e53935';
       ctx.beginPath();
-      ctx.roundRect(-20, -28, 40, 30, [8]);
+      ctx.roundRect(-18, -26, 36, 32, [8, 8, 4, 4]);
       ctx.fill();
 
-      // Canopy roof
-      ctx.fillStyle = '#b91c1c';
+      // Yellow Stripes on Canopy
+      ctx.fillStyle = '#facc15';
+      ctx.fillRect(-12, -26, 6, 32);
+      ctx.fillRect(6, -26, 6, 32);
+
+      // Front Wheels
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(-22, -18, 4, 20);
+      ctx.fillRect(18, -18, 4, 20);
+
+      // Rear Bicycle Frame & Driver
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 4;
       ctx.beginPath();
-      ctx.roundRect(-16, -24, 32, 22, [4]);
+      ctx.moveTo(0, 6);
+      ctx.lineTo(0, 26);
+      ctx.stroke();
+
+      // Rear Single Wheel
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(-3, 22, 6, 20);
+
+      // Driver (Penarik Becak)
+      ctx.fillStyle = '#f8fafc';
+      ctx.beginPath();
+      ctx.arc(0, 14, 6, 0, Math.PI * 2);
       ctx.fill();
-
-      // Front Wheels (Left & Right)
-      ctx.fillStyle = '#020617';
-      ctx.fillRect(-24, -22, 6, 20);
-      ctx.fillRect(18, -22, 6, 20);
-
-      // Driver Cap
-      ctx.fillStyle = '#f59e0b';
+      // Caping (Farmer/Driver hat)
+      ctx.fillStyle = '#d97706';
       ctx.beginPath();
-      ctx.arc(0, 10, 6, 0, Math.PI * 2);
+      ctx.arc(0, 14, 9, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.restore();
-
-      requestAnimationFrame(loop);
     }
+
     loop();
   </script>
 </body>
 </html>
-

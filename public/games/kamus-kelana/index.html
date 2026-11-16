@@ -21,9 +21,9 @@
     .current-word { height: 36px; padding: 6px 18px; background: rgba(15, 23, 42, 0.85); border: 1px solid #38bdf8; border-radius: 9999px; color: #38bdf8; font-weight: 900; font-size: 16px; letter-spacing: 2px; min-width: 120px; text-align: center; }
 
     /* Letter Wheel Area */
-    .wheel-wrap { position: relative; width: 220px; height: 220px; margin-bottom: 10px; }
-    #wheel-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-    .letter-node { position: absolute; width: 48px; height: 48px; border-radius: 50%; background: #1e293b; border: 3px solid #64748b; color: #fff; font-size: 20px; font-weight: 900; display: flex; align-items: center; justify-content: center; cursor: pointer; transform: translate(-50%, -50%); transition: background 0.15s, border 0.15s, transform 0.15s; }
+    .wheel-wrap { position: relative; width: 220px; height: 220px; margin-bottom: 10px; touch-action: none; }
+    #wheel-canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; }
+    .letter-node { position: absolute; width: 48px; height: 48px; border-radius: 50%; background: #1e293b; border: 3px solid #64748b; color: #fff; font-size: 20px; font-weight: 900; display: flex; align-items: center; justify-content: center; cursor: pointer; transform: translate(-50%, -50%); transition: background 0.15s, border 0.15s, transform 0.15s; touch-action: none; }
     .letter-node.selected { background: #e53935; border-color: #fca5a5; transform: translate(-50%, -50%) scale(1.15); box-shadow: 0 0 15px rgba(229, 57, 53, 0.7); }
 
     /* Modals */
@@ -288,6 +288,7 @@
     wrap.addEventListener('pointerdown', startConnect);
     window.addEventListener('pointermove', moveConnect);
     window.addEventListener('pointerup', endConnect);
+    window.addEventListener('pointercancel', endConnect);
 
     startBtn.addEventListener('click', () => {
       startModal.style.display = 'none';

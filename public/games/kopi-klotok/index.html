@@ -2,23 +2,141 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Kopi Klotok: Barista Rhythm - Travelista Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kopi Klotok: Barista Rhythm - TeknoGame</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #1c1917; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; }
-    canvas { width: 100%; height: 100%; display: block; }
-    #ui { position: absolute; inset: 0; pointer-events: none; }
-    .hud { position: absolute; top: 15px; left: 15px; display: flex; gap: 10px; pointer-events: auto; }
-    .badge { background: rgba(28, 25, 23, 0.9); color: #fff; padding: 6px 14px; border-radius: 9999px; font-weight: 800; font-size: 13px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #1c1917;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      touch-action: manipulation;
+    }
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: manipulation;
+    }
+    #ui {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .hud {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: flex;
+      gap: 10px;
+      pointer-events: auto;
+      z-index: 20;
+    }
+    .badge {
+      background: rgba(28, 25, 23, 0.9);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-weight: 800;
+      font-size: 13px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      backdrop-filter: blur(6px);
+    }
     .badge span { color: #f59e0b; }
-    .rating-banner { position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%) scale(0.6); font-size: 32px; font-weight: 900; opacity: 0; transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); pointer-events: none; }
-    .rating-banner.show { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-    .tap-btn { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); width: 140px; height: 54px; background: #b45309; border: 3px solid #fef3c7; border-radius: 16px; color: #fff; font-size: 16px; font-weight: 900; display: flex; align-items: center; justify-content: center; cursor: pointer; pointer-events: auto; box-shadow: 0 8px 24px rgba(180, 83, 9, 0.5); }
-    .tap-btn:active { transform: translateX(-50%) scale(0.95); background: #92400e; }
-    .modal { position: absolute; inset: 0; background: rgba(28, 25, 23, 0.92); backdrop-filter: blur(8px); display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: auto; color: #fff; text-align: center; padding: 20px; }
-    .btn { background: #b45309; color: #fff; border: none; padding: 12px 28px; border-radius: 12px; font-weight: 800; font-size: 15px; cursor: pointer; transition: all 0.2s; margin-top: 16px; box-shadow: 0 8px 20px rgba(180, 83, 9, 0.4); }
-    .btn:hover { background: #92400e; transform: translateY(-2px); }
+    .rating-banner {
+      position: absolute;
+      top: 28%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.6);
+      font-size: 30px;
+      font-weight: 900;
+      opacity: 0;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+      text-shadow: 0 4px 16px rgba(0,0,0,0.6);
+      z-index: 15;
+    }
+    .rating-banner.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    .tap-btn {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 180px;
+      height: 58px;
+      background: linear-gradient(135deg, #b45309, #d97706);
+      border: 3px solid #fef3c7;
+      border-radius: 20px;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 8px 24px rgba(180, 83, 9, 0.55);
+      touch-action: manipulation;
+      transition: transform 0.1s, background 0.1s;
+      z-index: 25;
+    }
+    .tap-btn:active {
+      transform: translateX(-50%) scale(0.94);
+      background: #92400e;
+    }
+    .screen-hint {
+      position: absolute;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: #a8a29e;
+      font-weight: 700;
+      pointer-events: none;
+      letter-spacing: 0.05em;
+    }
+    .modal {
+      position: absolute;
+      inset: 0;
+      background: rgba(28, 25, 23, 0.94);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+      color: #fff;
+      text-align: center;
+      padding: 24px;
+      z-index: 50;
+    }
+    .btn {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      color: #fff;
+      border: none;
+      padding: 13px 32px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 18px;
+      box-shadow: 0 8px 20px rgba(180, 83, 9, 0.45);
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: scale(0.96); }
     .title { font-size: 26px; font-weight: 900; margin-bottom: 6px; }
     .subtitle { font-size: 13px; color: #cbd5e1; max-width: 320px; line-height: 1.4; }
   </style>
@@ -27,30 +145,33 @@
   <canvas id="canvas"></canvas>
   <div id="ui">
     <div class="hud">
-      <div class="badge">Cangkir Terisi: <span id="cups-val">0</span> ☕</div>
+      <div class="badge">Cangkir: <span id="cups-val">0</span> ☕</div>
       <div class="badge">Skor Barista: <span id="score-val">0</span> pts</div>
+      <div class="badge">Sisa Nyawa: <span id="lives-val">❤️❤️❤️❤️❤️</span></div>
     </div>
+    
     <div class="rating-banner" id="rating-banner">SEMPURNA! ✨</div>
+    <div class="screen-hint">Tap layar atau tombol SEDOH tepat di garis sasaran</div>
     <div class="tap-btn" id="tap-btn">SEDOH! ☕</div>
 
     <!-- Start Modal -->
     <div class="modal" id="start-modal">
       <div style="font-size: 48px; margin-bottom: 8px;">☕🔥</div>
       <h1 class="title">Kopi Klotok: Barista Rhythm</h1>
-      <p class="subtitle">Ketuk seduhan kopi tepat saat tetesan air mendidih & biji kopi panggang menyentuh bibir cangkir tanah liat!</p>
-      <div style="margin-top: 14px; font-size: 11px; color: #cbd5e1; background: rgba(255,255,255,0.08); padding: 6px 14px; border-radius: 8px;">
-        Tekan <b>SPASI</b> atau <b>TOMBOL SEDOH</b> saat tetesan berada di garis merah
+      <p class="subtitle">Ketuk seduhan kopi tepat saat tetesan kopi & biji sangrai menyentuh bibir cangkir tanah liat!</p>
+      <div style="margin-top: 14px; font-size: 12px; color: #fde68a; background: rgba(255,255,255,0.08); padding: 8px 16px; border-radius: 10px;">
+        Tekan <b>SPASI</b> atau <b>TAP LAYAR / TOMBOL SEDOH</b> saat tetesan berada di garis merah
       </div>
-      <button class="btn" id="start-btn">Buka Warung Kopi</button>
+      <button class="btn" id="start-btn" type="button">Buka Warung Kopi</button>
     </div>
 
     <!-- Over Modal -->
     <div class="modal" id="over-modal" style="display: none;">
       <div style="font-size: 48px; margin-bottom: 8px;">♨️</div>
       <h2 class="title" style="color: #ef4444;">Kopi Tumpah & Gosong!</h2>
-      <p class="subtitle">Ketukan meleset terlalu banyak dari ritme seduhan.</p>
-      <div style="font-size: 24px; font-weight: 900; color: #f59e0b; margin-top: 10px;" id="final-score">0 pts</div>
-      <button class="btn" id="restart-btn">Seduh Kopi Baru</button>
+      <p class="subtitle">Ketukan meleset terlalu banyak dari ritme seduhan warung.</p>
+      <div style="font-size: 26px; font-weight: 900; color: #f59e0b; margin-top: 12px;" id="final-score">0 pts</div>
+      <button class="btn" id="restart-btn" type="button">Seduh Kopi Baru ☕</button>
     </div>
   </div>
 
@@ -59,6 +180,7 @@
     const ctx = canvas.getContext('2d');
     const cupsVal = document.getElementById('cups-val');
     const scoreVal = document.getElementById('score-val');
+    const livesVal = document.getElementById('lives-val');
     const ratingBanner = document.getElementById('rating-banner');
     const tapBtn = document.getElementById('tap-btn');
     const startModal = document.getElementById('start-modal');
@@ -75,7 +197,7 @@
     window.addEventListener('resize', resize);
     resize();
 
-    // Web Audio Synthesizer
+    // Audio SFX
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let actx = null;
     function initAudio() {
@@ -88,11 +210,23 @@
         const osc = actx.createOscillator(), gain = actx.createGain();
         osc.type = 'sine';
         osc.frequency.setValueAtTime(freq, actx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(freq * 1.8, actx.currentTime + 0.06);
-        gain.gain.setValueAtTime(0.3, actx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.01, actx.currentTime + 0.06);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.8, actx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.28, actx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, actx.currentTime + 0.08);
         osc.connect(gain); gain.connect(actx.destination);
-        osc.start(); osc.stop(actx.currentTime + 0.06);
+        osc.start(); osc.stop(actx.currentTime + 0.08);
+      } catch(e){}
+    }
+    function playMissSound() {
+      initAudio();
+      try {
+        const osc = actx.createOscillator(), gain = actx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(140, actx.currentTime);
+        gain.gain.setValueAtTime(0.18, actx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, actx.currentTime + 0.12);
+        osc.connect(gain); gain.connect(actx.destination);
+        osc.start(); osc.stop(actx.currentTime + 0.12);
       } catch(e){}
     }
 
@@ -100,9 +234,10 @@
     let score = 0;
     let cups = 0;
     let misses = 0;
+    const MAX_MISSES = 5;
     let drops = [];
     let steam = [];
-    const HIT_Y = () => height - 160;
+    const HIT_Y = () => height - 170;
 
     function init() {
       startModal.style.display = 'none';
@@ -112,7 +247,15 @@
       misses = 0;
       drops = [];
       steam = [];
+      cupsVal.innerText = '0';
+      scoreVal.innerText = '0';
+      updateLives();
       isPlaying = true;
+    }
+
+    function updateLives() {
+      const left = Math.max(0, MAX_MISSES - misses);
+      livesVal.innerText = '❤️'.repeat(left) + '🖤'.repeat(MAX_MISSES - left);
     }
 
     function hit() {
@@ -131,40 +274,49 @@
         }
       });
 
-      if (hitIdx !== -1 && minDiff < 45) {
+      if (hitIdx !== -1 && minDiff < 48) {
         // Successful hit
         drops.splice(hitIdx, 1);
         cups++;
         cupsVal.innerText = cups;
 
-        if (minDiff < 15) {
+        if (minDiff < 16) {
           score += 300;
           showRating("SEMPURNA! ✨", "#4ade80");
-          playDropSound(600);
+          playDropSound(640);
         } else {
           score += 150;
           showRating("PAS! ☕", "#facc15");
-          playDropSound(450);
+          playDropSound(460);
         }
         scoreVal.innerText = score.toLocaleString('id-ID');
 
         // Add steam particles
-        for (let i = 0; i < 4; i++) {
-          steam.push({ x: width / 2 + (Math.random() - 0.5) * 40, y: hitY, vy: -1.5, alpha: 0.8 });
+        for (let i = 0; i < 5; i++) {
+          steam.push({
+            x: width / 2 + (Math.random() - 0.5) * 44,
+            y: hitY,
+            vy: -1.8,
+            alpha: 0.85
+          });
         }
       } else {
         // Miss / Tap Kosong
         misses++;
+        updateLives();
+        playMissSound();
         showRating("LEWAT!", "#ef4444");
-        if (misses >= 5) gameOver();
+        if (misses >= MAX_MISSES) gameOver();
       }
     }
 
+    let ratingTimeout = null;
     function showRating(text, color) {
       ratingBanner.innerText = text;
       ratingBanner.style.color = color;
       ratingBanner.classList.add('show');
-      setTimeout(() => ratingBanner.classList.remove('show'), 350);
+      if (ratingTimeout) clearTimeout(ratingTimeout);
+      ratingTimeout = setTimeout(() => ratingBanner.classList.remove('show'), 400);
     }
 
     function gameOver() {
@@ -182,14 +334,24 @@
       }
     }
 
+    // Keyboard & Touch Handlers
     window.addEventListener('keydown', e => { if (e.code === 'Space') hit(); });
-    tapBtn.addEventListener('pointerdown', hit);
+    tapBtn.addEventListener('pointerdown', (e) => {
+      e.stopPropagation();
+      hit();
+    });
+    // Canvas tap anywhere to hit
+    canvas.addEventListener('pointerdown', (e) => {
+      if (isPlaying) hit();
+    });
+
     startBtn.addEventListener('click', () => { initAudio(); init(); });
     restartBtn.addEventListener('click', () => { initAudio(); init(); });
 
     let spawnTimer = 0;
 
     function loop() {
+      requestAnimationFrame(loop);
       ctx.clearRect(0, 0, width, height);
 
       // Warung Ambient Background
@@ -203,17 +365,17 @@
 
       // Wooden Table
       ctx.fillStyle = '#78350f';
-      ctx.fillRect(0, hitY + 20, width, height - (hitY + 20));
+      ctx.fillRect(0, hitY + 22, width, height - (hitY + 22));
       ctx.fillStyle = '#451a03';
-      ctx.fillRect(0, hitY + 20, width, 6);
+      ctx.fillRect(0, hitY + 22, width, 6);
 
-      // Hit Line Marker
+      // Hit Line Target Marker
       ctx.strokeStyle = '#ef4444';
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 2.5;
       ctx.setLineDash([8, 8]);
       ctx.beginPath();
-      ctx.moveTo(width / 2 - 80, hitY);
-      ctx.lineTo(width / 2 + 80, hitY);
+      ctx.moveTo(width / 2 - 85, hitY);
+      ctx.lineTo(width / 2 + 85, hitY);
       ctx.stroke();
       ctx.setLineDash([]);
 
@@ -223,12 +385,14 @@
       ctx.beginPath();
       ctx.roundRect(cupX - 44, hitY, 88, 56, [0, 0, 20, 20]);
       ctx.fill();
+
       // Cup handle
       ctx.strokeStyle = '#92400e';
       ctx.lineWidth = 8;
       ctx.beginPath();
       ctx.arc(cupX + 44, hitY + 26, 14, -Math.PI / 2, Math.PI / 2);
       ctx.stroke();
+
       // Coffee surface inside cup
       ctx.fillStyle = '#1c1917';
       ctx.beginPath();
@@ -248,13 +412,18 @@
       }
 
       if (isPlaying) {
+        // Slow falling at start (2.0), gradually faster with score (up to 6.5)
+        const currentSpeed = 2.0 + Math.min(score / 500, 4.5);
+        // Spawn cadence: starts at 72 frames, speeds up to 34 frames
+        const spawnCadence = Math.max(34, 72 - Math.floor(score / 450) * 4);
+
         spawnTimer++;
-        if (spawnTimer > 45) {
+        if (spawnTimer >= spawnCadence) {
           spawnTimer = 0;
           drops.push({
             x: cupX,
-            y: 40,
-            vy: 4.5 + Math.min(cups * 0.1, 4),
+            y: 35,
+            vy: currentSpeed,
             isBean: Math.random() > 0.5
           });
         }
@@ -269,7 +438,7 @@
             // Roasted Bean
             ctx.fillStyle = '#451a03';
             ctx.beginPath();
-            ctx.ellipse(d.x, d.y, 8, 12, 0, 0, Math.PI * 2);
+            ctx.ellipse(d.x, d.y, 9, 13, 0, 0, Math.PI * 2);
             ctx.fill();
             ctx.fillStyle = '#292524';
             ctx.fillRect(d.x - 1, d.y - 8, 2, 16);
@@ -277,24 +446,23 @@
             // Boiling Water Droplet
             ctx.fillStyle = '#38bdf8';
             ctx.beginPath();
-            ctx.arc(d.x, d.y, 8, 0, Math.PI * 2);
+            ctx.arc(d.x, d.y, 9, 0, Math.PI * 2);
             ctx.fill();
           }
 
           // Missed Drop
-          if (d.y > hitY + 50) {
+          if (d.y > hitY + 45) {
             drops.splice(i, 1);
             misses++;
+            updateLives();
+            playMissSound();
             showRating("TERLEWAT!", "#ef4444");
-            if (misses >= 5) gameOver();
+            if (misses >= MAX_MISSES) gameOver();
           }
         }
       }
-
-      requestAnimationFrame(loop);
     }
     loop();
   </script>
 </body>
 </html>
-

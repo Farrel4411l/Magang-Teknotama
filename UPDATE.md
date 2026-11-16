@@ -8,6 +8,37 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, dan penambahan fi
 
 ---
 
+## [2.6.0] - 2026-11-16
+### Added (Integrasi Game Werewolf: Malam & Desa)
+- **Integrasi Penuh Game Werewolf (`/games/werewolf/index.html`):**
+  - Mengintegrasikan game deduksi sosial lokal Werewolf ke portal utama TeknoGame.
+  - Fitur lengkap: setup nama pemain unik (min 5 pemain), pembagian role rahasia (Werewolf, Seer, Doctor, Villager), fase malam (target Werewolf, perlindungan Doctor, terawang Seer), fase siang (diskusi desa & voting eliminasi), serta penentuan kemenangan warga vs werewolf.
+  - Sinkronisasi skor akhir ronde ke portal TeknoGame via `postMessage({ type: 'GAME_OVER' })`.
+  - Terdaftar resmi di `INITIAL_GAMES` (`games-data.ts`) dan kartu game (`GameCard.tsx`) dengan icon `🐺`.
+
+### Fixed & Improved (Bug Fixes & Mobile HP Compatibility)
+- **Perbaikan Game Lembah Bromo (Hang Glider):**
+  - Memperbaiki bug kritis loop animasi terputus (`requestAnimationFrame`) saat menabrak lereng yang menyebabkan gunung membeku (stuck) dan jalanan/karakter hilang.
+  - Memperbaiki tombol restart "Terbangkan Kembali" agar langsung me-reset state dan melanjutkan permainan tanpa macet.
+  - Menambahkan mekanik **LOMPAT / ANGKAT SAYAP** (melalui Spasi, Panah Atas, tombol on-screen `🪂 LOMPAT`, atau tap cepat layar) dengan dorongan updraft thermal.
+  - Menyesuaikan gravitasi dan aerodinamika luncur (aerodynamic lift) agar paralayang tidak jatuh terlalu cepat dan melayang anggun di atas lembah Bromo.
+  - Menambahkan tombol on-screen `🔻 TUKIK` untuk menukik di lereng turunan dan mendapatkan dorongan kecepatan tinggi.
+- **Perbaikan Game Barista (Kopi Klotok):**
+  - Mengatur popup score banner di bagian atas `GameFrame.tsx` agar otomatis menutup (auto-close) setelah **2 detik** (2000ms), sehingga tidak menghalangi area bermain.
+  - Memperlambat kecepatan jatuh tetesan kopi di awal permainan (kecepatan awal santai 2.0) dan mempercepat secara bertahap seiring bertambahnya skor pemain.
+  - Menyesuaikan jeda spawn tetesan secara dinamis sesuai ritme kopi barista.
+  - Mendukung tap di seluruh area kanvas layar untuk mempermudah pemain di smartphone.
+- **Optimasi Kontrol Becak Drift & Kompatibilitas Seluruh Game di HP (Mobile):**
+  - **Becak Drift:** Menambahkan tombol kemudi sentuh di layar `[ ◀ KIRI ]` dan `[ KANAN ▶ ]` serta area tap layar kiri/kanan dengan event listener anti-stuck (`pointerleave`, `pointercancel`, `touchcancel`). Menambahkan `touch-action: none` agar tidak terganggu gesture browser HP.
+  - **Packing Master:** Menambahkan sistem sentuh tap-to-select & tap-to-place (karena HTML5 native drag-and-drop tidak didukung browser mobile HP).
+  - **Pasar Terapung:** Menambahkan tombol kemudi `[ ◀ KAYUH ]` dan `[ KAYUH ▶ ]` serta swipe drag layar dengan `touch-action: none`.
+  - **Candi Stacker:** Menambahkan tombol `[ 🛕 JATUHKAN BATU ]` dan tap kanvas responsif di HP.
+  - **Layangan Sanur:** Menambahkan tombol `[ 🪁 TARIK MENUKIK ]` di layar HP.
+  - **Nusantara Runner:** Menambahkan tombol `[ 👟 LOMPAT ]` melayang di layar HP.
+  - **Kamus Kelana & Batik Flow:** Mengoptimalkan `touch-action: none` / `manipulation` agar input roda huruf dan ubin batik instan tanpa delay.
+
+---
+
 ## [2.5.1] - 2026-11-13
 ### Fixed (Header Logo Asset Path & Game Over Audio Loop Bug)
 - **Perbaikan Audio Game Over (Anti-Loop & Sound Sekali Saja):**

@@ -5,14 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Nusantara Runner - Travelista Games</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-    body, html { width: 100%; height: 100%; overflow: hidden; background: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    #canvas { width: 100%; height: 100%; display: block; }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
+    body, html { width: 100%; height: 100%; overflow: hidden; background: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; touch-action: manipulation; }
+    #canvas { width: 100%; height: 100%; display: block; touch-action: manipulation; }
     #ui-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-    .hud { position: absolute; top: 15px; left: 15px; display: flex; gap: 12px; pointer-events: auto; }
+    .hud { position: absolute; top: 15px; left: 15px; display: flex; gap: 12px; pointer-events: auto; z-index: 20; }
     .hud-badge { background: rgba(15, 23, 42, 0.85); color: #fff; padding: 6px 14px; border-radius: 9999px; font-weight: 800; font-size: 13px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 4px 10px rgba(0,0,0,0.3); backdrop-filter: blur(4px); }
     .hud-badge span { color: #f59e0b; }
-    #game-over-screen, #start-screen { position: absolute; inset: 0; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: auto; color: #fff; text-align: center; padding: 20px; }
+
+    .jump-btn {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      border: 3px solid #fca5a5;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 900;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 8px 24px rgba(239, 68, 68, 0.5);
+      touch-action: manipulation;
+      z-index: 25;
+      transition: transform 0.08s;
+    }
+    .jump-btn:active {
+      transform: scale(0.92);
+      background: #b91c1c;
+    }
+
+    #game-over-screen, #start-screen { position: absolute; inset: 0; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: auto; color: #fff; text-align: center; padding: 20px; z-index: 50; }
     .btn { background: #e53935; color: #fff; border: none; padding: 12px 28px; border-radius: 12px; font-weight: 800; font-size: 15px; cursor: pointer; transition: all 0.2s; margin-top: 16px; box-shadow: 0 8px 20px rgba(229, 57, 53, 0.4); }
     .btn:hover { background: #c62828; transform: translateY(-2px); }
     .btn:active { transform: translateY(0); }
@@ -27,6 +56,10 @@
     <div class="hud">
       <div class="hud-badge">Skor: <span id="hud-score">0</span> pts</div>
       <div class="hud-badge">Koin: <span id="hud-coins">0</span> 🪙</div>
+    </div>
+    <div class="jump-btn" id="jump-btn">
+      <span style="font-size: 20px;">👟</span>
+      <span>LOMPAT</span>
     </div>
 
     <!-- Start Screen -->
@@ -157,6 +190,13 @@
       }
     });
     canvas.addEventListener('pointerdown', jump);
+    const jumpBtn = document.getElementById('jump-btn');
+    if (jumpBtn) {
+      jumpBtn.addEventListener('pointerdown', (e) => {
+        e.stopPropagation();
+        jump();
+      });
+    }
 
     function start() {
       startScreen.style.display = 'none';

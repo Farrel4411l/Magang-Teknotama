@@ -53,6 +53,8 @@ export default function GameCard({ game }: GameCardProps) {
         return "🛶";
       case "kamus-kelana":
         return "🗺️";
+      case "werewolf":
+        return "🐺";
       default:
         switch (game.category) {
           case "arcade":
