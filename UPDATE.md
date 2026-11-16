@@ -8,6 +8,12 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, dan penambahan fi
 
 ---
 
+## [2.6.1] - 2026-11-16
+### Added & Fixed (Custom Not-Found Page & Auto-Redirect from Root to /games)
+- **Penambahan Custom 404 & Auto-Redirect Root ([not-found.tsx](src/app/not-found.tsx)):**
+  - Membuat halaman khusus 404 Cyber TeknoGame dengan tombol aksi cepat menuju beranda `/games`.
+  - Menambahkan auto-redirect otomatis berbasis JavaScript di browser ketika user membuka root `http://localhost:3000/` agar langsung diarahkan ke `http://localhost:3000/games`.
+
 ## [2.6.0] - 2026-11-16
 ### Added (Integrasi Game Werewolf: Malam & Desa)
 - **Integrasi Penuh Game Werewolf (`/games/werewolf/index.html`):**
