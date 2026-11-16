@@ -8,6 +8,15 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, dan penambahan fi
 
 ---
 
+## [2.6.2] - 2026-11-16
+### Fixed (Lembah Bromo Game Over & Sunset/Momentum Mechanics)
+- **Implementasi Mekanik Game Over yang Seimbang di Lembah Bromo:**
+  - Menambahkan batas waktu siang (*Daylight / Sunset Timer*) selama 60 detik. Setiap mengambil bintang emas di bukit, waktu siang bertambah `+3 detik`. Saat matahari terbenam (waktu habis), petualangan berakhir (*Game Over*).
+  - Menambahkan sistem *Friction & Loss of Momentum*: jika paralayang terhenti di hamparan pasir bukit dan kehilangan kecepatan (`vx <= 0.8`) selama ~0.7 detik, game over dipicu.
+  - Menambahkan *Hard Crash Detection*: jika pemain menukik tajam langsung menabrak lereng tebing terjal (`vy > 4.5` pada lereng negatif curam), paralayang terhempas dan game over.
+  - Membatasi lompatan di udara (*Air Jump*) menjadi 1 kali per fase terbang (bisa di-reset dengan menyentuh lereng bukit atau mengambil bintang), sehingga pemain harus mahir memanfaatkan gelombang bukit ala Tiny Wings.
+  - Folder `out/` telah di-build ulang (`npm run build`).
+
 ## [2.6.1] - 2026-11-16
 ### Added & Fixed (Custom Not-Found Page & Auto-Redirect from Root to /games)
 - **Penambahan Custom 404 & Auto-Redirect Root ([not-found.tsx](src/app/not-found.tsx)):**

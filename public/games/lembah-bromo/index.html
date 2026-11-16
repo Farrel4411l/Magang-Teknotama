@@ -30,12 +30,13 @@
       top: 14px;
       left: 14px;
       display: flex;
+      flex-wrap: wrap;
       gap: 8px;
       pointer-events: auto;
       z-index: 20;
     }
     .badge {
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.88);
       color: #fff;
       padding: 6px 14px;
       border-radius: 9999px;
@@ -44,28 +45,32 @@
       border: 1px solid rgba(0, 240, 255, 0.25);
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
     .badge span { color: #f59e0b; }
+    .badge.timer span { color: #38bdf8; }
 
     /* On-Screen Mobile Controls */
     .controls-container {
       position: absolute;
-      bottom: 18px;
+      bottom: 20px;
       left: 0;
       right: 0;
       display: flex;
       justify-content: space-between;
-      padding: 0 18px;
+      padding: 0 20px;
       pointer-events: auto;
       z-index: 25;
     }
     .ctrl-action-btn {
       background: rgba(15, 23, 42, 0.85);
-      border: 2px solid rgba(0, 240, 255, 0.4);
-      border-radius: 16px;
+      border: 2px solid rgba(0, 240, 255, 0.45);
+      border-radius: 18px;
       color: #fff;
-      padding: 12px 20px;
-      font-size: 14px;
+      padding: 14px 24px;
+      font-size: 15px;
       font-weight: 900;
       display: flex;
       align-items: center;
@@ -77,8 +82,8 @@
       touch-action: manipulation;
     }
     .ctrl-action-btn:active, .ctrl-action-btn.active {
-      transform: scale(0.94);
-      background: rgba(0, 240, 255, 0.25);
+      transform: scale(0.92);
+      background: rgba(0, 240, 255, 0.3);
       border-color: #00f0ff;
     }
     .dive-btn { border-color: rgba(245, 158, 11, 0.5); }
@@ -87,7 +92,7 @@
     .modal {
       position: absolute;
       inset: 0;
-      background: rgba(15, 23, 42, 0.92);
+      background: rgba(15, 23, 42, 0.94);
       backdrop-filter: blur(10px);
       display: flex;
       flex-direction: column;
@@ -114,7 +119,7 @@
     }
     .btn:active { transform: scale(0.96); }
     .title { font-size: 26px; font-weight: 900; margin-bottom: 6px; }
-    .subtitle { font-size: 13px; color: #94a3b8; max-width: 320px; line-height: 1.4; }
+    .subtitle { font-size: 13px; color: #94a3b8; max-width: 340px; line-height: 1.4; }
   </style>
 </head>
 <body>
@@ -123,6 +128,7 @@
     <div class="hud">
       <div class="badge">Jarak: <span id="dist-val">0</span> m</div>
       <div class="badge">Skor: <span id="score-val">0</span> pts</div>
+      <div class="badge timer">☀️ Waktu: <span id="time-val">60</span>s</div>
     </div>
 
     <!-- Onscreen Controls for Mobile & Desktop -->
@@ -139,21 +145,21 @@
     <div class="modal" id="start-modal">
       <div style="font-size: 48px; margin-bottom: 8px;">🪂🌋</div>
       <h1 class="title">Lembah Bromo: Hang Glider</h1>
-      <p class="subtitle">Kemudikan paralayang melintasi kontur perbukitan pasir Bromo! Lompat ke udara atau tukik menuruni bukit untuk momentum terbang tinggi!</p>
+      <p class="subtitle">Kemudikan paralayang melintasi kontur perbukitan pasir Bromo! Tukik menuruni lembah untuk momentum terbang tinggi dan kumpulkan bintang sebelum matahari terbenam!</p>
       <div style="margin-top: 14px; font-size: 12px; color: #cbd5e1; background: rgba(255,255,255,0.08); padding: 8px 16px; border-radius: 10px;">
-        Tombol <b>LOMPAT</b> / <b>SPASI</b> untuk mengudara • Tombol <b>TUKIK</b> di lereng turunan
+        Tahan <b>TUKIK</b> di lereng turunan • Tekan <b>LOMPAT</b> di puncak bukit • Ambil bintang untuk tambah waktu
       </div>
-      <button class="btn" id="start-btn" type="button">Terbangkan Paralayang</button>
+      <button class="btn" id="start-btn" type="button">Terbangkan Paralayang 🚀</button>
     </div>
 
     <!-- Over Modal -->
     <div class="modal" id="over-modal" style="display: none;">
-      <div style="font-size: 48px; margin-bottom: 8px;">💨🏜️</div>
-      <h2 class="title" style="color: #f59e0b;">Paralayang Mendarat!</h2>
-      <p class="subtitle">Pendaratan mulus di hamparan pasir berbisik Gunung Bromo.</p>
+      <div style="font-size: 48px; margin-bottom: 8px;" id="over-icon">🏜️💨</div>
+      <h2 class="title" style="color: #f59e0b;" id="over-title">Penerbangan Berakhir!</h2>
+      <p class="subtitle" id="over-desc">Momentum terbang habis di hamparan pasir berbisik Gunung Bromo.</p>
       <div style="font-size: 26px; font-weight: 900; color: #00f0ff; margin-top: 12px;" id="final-score">0 pts</div>
       <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;" id="final-dist">Jarak Jelajah: 0 m</div>
-      <button class="btn" id="restart-btn" type="button">Terbangkan Kembali 🚀</button>
+      <button class="btn" id="restart-btn" type="button">Terbangkan Kembali 🔄</button>
     </div>
   </div>
 
@@ -162,8 +168,12 @@
     const ctx = canvas.getContext('2d');
     const distVal = document.getElementById('dist-val');
     const scoreVal = document.getElementById('score-val');
+    const timeVal = document.getElementById('time-val');
     const startModal = document.getElementById('start-modal');
     const overModal = document.getElementById('over-modal');
+    const overIcon = document.getElementById('over-icon');
+    const overTitle = document.getElementById('over-title');
+    const overDesc = document.getElementById('over-desc');
     const finalScore = document.getElementById('final-score');
     const finalDist = document.getElementById('final-dist');
     const startBtn = document.getElementById('start-btn');
@@ -212,6 +222,19 @@
         osc.start(); osc.stop(actx.currentTime + 0.2);
       } catch(e){}
     }
+    function playCrashSound() {
+      initAudio();
+      try {
+        const osc = actx.createOscillator(), gain = actx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(120, actx.currentTime);
+        osc.frequency.linearRampToValueAtTime(40, actx.currentTime + 0.25);
+        gain.gain.setValueAtTime(0.3, actx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, actx.currentTime + 0.25);
+        osc.connect(gain); gain.connect(actx.destination);
+        osc.start(); osc.stop(actx.currentTime + 0.25);
+      } catch(e){}
+    }
 
     // State Variables
     let isPlaying = false;
@@ -220,6 +243,9 @@
     let cameraX = 0;
     let score = 0;
     let distance = 0;
+    let timeLeft = 60; // 60 seconds of daylight
+    let stoppedFrames = 0; // Tracks if glider came to complete stop on ground
+    let airJumps = 1; // Can do 1 mid-air jump until touching ground or star
     let coins = [];
     let clouds = [];
 
@@ -240,9 +266,13 @@
       overModal.style.display = 'none';
       score = 0;
       distance = 0;
+      timeLeft = 60;
+      stoppedFrames = 0;
+      airJumps = 1;
+
       glider.x = 100;
       glider.y = getGroundY(100) - 130;
-      glider.vx = 5.5;
+      glider.vx = 6.0;
       glider.vy = 0;
       glider.angle = 0;
       glider.onGround = false;
@@ -253,24 +283,37 @@
       coins = [];
       for (let i = 1; i < 60; i++) {
         const cx = i * 240 + Math.sin(i) * 50;
-        coins.push({ x: cx, y: getGroundY(cx) - 100 - Math.random() * 60, collected: false });
+        coins.push({ x: cx, y: getGroundY(cx) - 80 - Math.random() * 70, collected: false });
       }
+
+      distVal.innerText = '0';
+      scoreVal.innerText = '0';
+      timeVal.innerText = '60';
 
       isPlaying = true;
     }
 
     function jump() {
       if (!isPlaying) return;
-      initAudio();
-      playUpdraft();
-      glider.vy = -6.8;
-      glider.vx = Math.max(glider.vx, 5.2);
-      glider.onGround = false;
+      // Allow jump if on ground OR if has air jump remaining
+      if (glider.onGround || airJumps > 0) {
+        if (!glider.onGround) airJumps--;
+        initAudio();
+        playUpdraft();
+        glider.vy = -6.5;
+        glider.vx = Math.max(glider.vx, 5.0);
+        glider.onGround = false;
+      }
     }
 
-    function gameOver() {
+    function triggerGameOver(reason, desc, icon="🏜️💨") {
       if (!isPlaying) return;
       isPlaying = false;
+      playCrashSound();
+
+      overIcon.innerText = icon;
+      overTitle.innerText = reason;
+      overDesc.innerText = desc;
       finalScore.innerText = Math.floor(score).toLocaleString('id-ID') + ' pts';
       finalDist.innerText = `Jarak Jelajah: ${Math.floor(distance)} m`;
       overModal.style.display = 'flex';
@@ -327,7 +370,6 @@
     canvas.addEventListener('pointerup', (e) => {
       if (!isPlaying) return;
       isDiving = false;
-      // Quick tap under 220ms is treated as a Jump!
       if (Date.now() - tapStartTime < 220) {
         jump();
       }
@@ -336,23 +378,37 @@
     startBtn.addEventListener('click', () => { initAudio(); init(); });
     restartBtn.addEventListener('click', () => { initAudio(); init(); });
 
-    // Main Game Loop (Guaranteed continuous animation)
-    function loop() {
+    // Main Game Loop (Continuous animation)
+    let lastTime = performance.now();
+
+    function loop(currentTime) {
       requestAnimationFrame(loop);
+
+      const dt = Math.min((currentTime - lastTime) / 1000, 0.1);
+      lastTime = currentTime;
 
       ctx.clearRect(0, 0, width, height);
 
-      // Sunrise Sky over Mount Bromo
+      // Sky gradient shifts with daylight time (Sunrise -> Sunset -> Twilight)
+      const daylightFactor = Math.max(0, Math.min(1, timeLeft / 60));
       const sky = ctx.createLinearGradient(0, 0, 0, height);
-      sky.addColorStop(0, '#070b19');
-      sky.addColorStop(0.4, '#1e293b');
-      sky.addColorStop(0.75, '#ea580c');
-      sky.addColorStop(1, '#f97316');
+      if (daylightFactor > 0.4) {
+        sky.addColorStop(0, '#070b19');
+        sky.addColorStop(0.4, '#1e293b');
+        sky.addColorStop(0.75, '#ea580c');
+        sky.addColorStop(1, '#f97316');
+      } else {
+        // Deep twilight sunset
+        sky.addColorStop(0, '#020617');
+        sky.addColorStop(0.5, '#1e1b4b');
+        sky.addColorStop(0.85, '#991b1b');
+        sky.addColorStop(1, '#7c2d12');
+      }
       ctx.fillStyle = sky;
       ctx.fillRect(0, 0, width, height);
 
       // Clouds
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+      ctx.fillStyle = daylightFactor > 0.3 ? 'rgba(255, 255, 255, 0.2)' : 'rgba(234, 88, 12, 0.15)';
       clouds.forEach(c => {
         ctx.beginPath();
         ctx.arc(c.x, c.y, 40 * c.s, 0, Math.PI * 2);
@@ -382,15 +438,27 @@
       ctx.fill();
 
       if (isPlaying) {
+        // Decrease daylight time
+        timeLeft = Math.max(0, timeLeft - dt);
+        timeVal.innerText = Math.ceil(timeLeft);
+
+        // Check Sunset game over
+        if (timeLeft <= 0) {
+          triggerGameOver("Senja Bromo Tiba! 🌅", "Matahari telah terbenam di lautan pasir Bromo.", "🌄✨");
+          return;
+        }
+
         // Physics update
         if (isDiving) {
-          glider.vy += 0.26; // Dive down to catch slope momentum
+          glider.vy += 0.26; // Dive down
           glider.vx += 0.04;
         } else {
           // Natural aerodynamic glide & lift
-          glider.vy += 0.11; // Gentler gravity
-          const lift = Math.min(glider.vx * 0.02, 0.18);
+          glider.vy += 0.11; // Gravity
+          const lift = Math.min(glider.vx * 0.018, 0.16);
           glider.vy -= lift;
+          // Air resistance slows down slightly
+          glider.vx = Math.max(0, glider.vx - 0.006);
         }
 
         glider.x += glider.vx;
@@ -400,38 +468,60 @@
         const groundY = getGroundY(glider.x);
         const slope = (getGroundY(glider.x + 8) - getGroundY(glider.x - 8)) / 16;
 
+        // Hard crash into steep uphill
+        if (isDiving && glider.vy > 4.5 && slope < -0.3 && glider.y >= groundY - 20) {
+          triggerGameOver("Menabrak Lereng Tebing! 💥", "Paralayang menukik tajam langsung ke tebing terjal.", "💥🌋");
+          return;
+        }
+
         // Collision with hills
         if (glider.y >= groundY - 14) {
           glider.y = groundY - 14;
           glider.onGround = true;
+          airJumps = 1; // Replenish air jump on ground contact
 
           // Downhill dive gives massive speed
           if (slope > 0.15 && isDiving) {
-            glider.vx = Math.min(glider.vx + 0.28, 14);
+            glider.vx = Math.min(glider.vx + 0.30, 14);
             glider.vy = slope * glider.vx;
+            stoppedFrames = 0;
           } else if (slope < -0.15) {
             // Hit uphill slope
-            if (glider.vx > 6.0) {
+            if (glider.vx > 5.5) {
               // Launch into the sky!
-              glider.vy = -Math.min(glider.vx * 0.75, 9);
+              glider.vy = -Math.min(glider.vx * 0.72, 9);
               glider.vx *= 0.88;
               playUpdraft();
               glider.onGround = false;
+              stoppedFrames = 0;
             } else {
-              // Gentle slide up
-              glider.vx = Math.max(glider.vx - 0.06, 3.8);
+              // Sliding uphill slows down
+              glider.vx = Math.max(0, glider.vx - 0.12);
               glider.vy = slope * glider.vx;
             }
           } else {
-            // Flat rolling
-            glider.vx = Math.max(glider.vx - 0.03, 4.0);
+            // Flat sand friction
+            glider.vx = Math.max(0, glider.vx - 0.06);
             glider.vy = 0;
+          }
+
+          // Check if speed has completely run out on the ground
+          if (glider.vx <= 0.8) {
+            stoppedFrames++;
+            // If stopped for more than 40 frames (~0.7s), game over!
+            if (stoppedFrames > 40) {
+              triggerGameOver("Momentum Terbang Habis! 🏜️", "Paralayang terhenti di hamparan pasir berbisik Gunung Bromo.");
+              return;
+            }
+          } else {
+            stoppedFrames = 0;
           }
         } else {
           glider.onGround = false;
+          stoppedFrames = 0;
         }
 
-        // Clamp altitude ceiling
+        // Altitude ceiling
         if (glider.y < 40) {
           glider.y = 40;
           glider.vy = Math.max(glider.vy, 0);
@@ -451,7 +541,6 @@
           coins.push({ x: cx, y: getGroundY(cx) - 80 - Math.random() * 70, collected: false });
         }
 
-        // Remove old coins behind camera
         if (coins.length > 80) {
           coins = coins.filter(c => c.x > cameraX - 200);
         }
@@ -460,6 +549,8 @@
           if (!c.collected && Math.hypot(glider.x - c.x, glider.y - c.y) < 32) {
             c.collected = true;
             score += 400;
+            timeLeft = Math.min(60, timeLeft + 3); // +3 seconds daylight bonus!
+            airJumps = 1; // Replenish air jump on star pickup
             playCoinSound();
           }
         });
@@ -470,7 +561,7 @@
       ctx.translate(-cameraX, 0);
 
       // Render Sinusoidal Bromo Hills (Terrain)
-      ctx.fillStyle = '#b45309'; // Sand Sea Dunes
+      ctx.fillStyle = daylightFactor > 0.3 ? '#b45309' : '#78350f'; // Darkens at dusk
       ctx.beginPath();
       ctx.moveTo(cameraX - 60, height);
       for (let x = cameraX - 60; x <= cameraX + width + 60; x += 12) {
@@ -481,7 +572,7 @@
       ctx.fill();
 
       // Hill savanna grass edge
-      ctx.strokeStyle = '#16a34a'; // Vibrant green savanna
+      ctx.strokeStyle = daylightFactor > 0.3 ? '#16a34a' : '#14532d';
       ctx.lineWidth = 7;
       ctx.beginPath();
       for (let x = cameraX - 60; x <= cameraX + width + 60; x += 12) {
@@ -489,7 +580,7 @@
       }
       ctx.stroke();
 
-      // Golden Coins
+      // Golden Coins / Stars
       coins.forEach(c => {
         if (!c.collected) {
           ctx.fillStyle = '#fbbf24';
@@ -554,8 +645,7 @@
       ctx.restore();
     }
 
-    // Start continuous animation loop
-    loop();
+    loop(performance.now());
   </script>
 </body>
 </html>
