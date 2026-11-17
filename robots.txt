@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /games/
+
+# Cegah duplikasi konten & halaman legacy/placeholder agar tidak merusak skor SEO
+Disallow: /cgi-bin/
+Disallow: /redesign/
+Disallow: /teknotama.com/
+Disallow: /index_old.html
+Disallow: /portfolio.html
+Disallow: /underconstructions.html
+Disallow: /underconstructions1.html
+
+Sitemap: https://teknotama.com/sitemap.xml
