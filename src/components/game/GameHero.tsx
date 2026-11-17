@@ -2,13 +2,29 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Game } from "@/types/game";
-import { ArrowDown, ArrowRight, Gamepad2, Play } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowRight,
+  Coffee,
+  Compass,
+  Gamepad2,
+  Play,
+  Puzzle,
+  Trophy,
+  Zap,
+} from "lucide-react";
 import { getCategoryLabel } from "@/lib/games-data";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/games";
-const logoSrc = `${basePath}/Teknogame_logo_only.png`;
+const featuredIcons = {
+  all: Gamepad2,
+  arcade: Gamepad2,
+  adventure: Compass,
+  puzzle: Puzzle,
+  action: Zap,
+  casual: Coffee,
+  sports: Trophy,
+};
 
 interface GameHeroProps {
   featuredGames: Game[];
@@ -18,6 +34,7 @@ export default function GameHero({ featuredGames }: GameHeroProps) {
   if (!featuredGames || featuredGames.length < 3) return null;
 
   const [mainHero, ...sideHeroes] = featuredGames.slice(0, 3);
+  const FeaturedIcon = featuredIcons[mainHero.category];
 
   return (
     <section className="mb-12 space-y-5">
@@ -69,19 +86,21 @@ export default function GameHero({ featuredGames }: GameHeroProps) {
           </div>
         </div>
 
-        <div
-          className="hero-art min-h-[19rem] sm:min-h-[25rem]"
-          aria-label="Logo Tekno Game"
+        <Link
+          href={`/play/${mainHero.slug}`}
+          aria-label={`Mainkan ${mainHero.title}`}
+          className="hero-art group min-h-[19rem] sm:min-h-[25rem]"
         >
-          <Image
-            src={logoSrc}
-            alt="Logo Tekno Game"
-            width={240}
-            height={240}
-            sizes="(max-width: 640px) 55vw, 240px"
-            priority
-            className="hero-emblem object-contain"
-          />
+          <div className="hero-featured-art">
+            <span className="hero-featured-icon">
+              <FeaturedIcon className="h-14 w-14" strokeWidth={1.4} />
+            </span>
+            <span className="section-kicker !text-[0.62rem]">
+              {getCategoryLabel(mainHero.category)}
+            </span>
+            <h2 className="hero-featured-title">{mainHero.title}</h2>
+          </div>
+
           <div className="hero-art-overlay">
             <div className="absolute left-4 top-4 z-10 rounded-full border border-white/10 bg-[#07111f]/70 px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.17em] text-slate-300 backdrop-blur">
               Sorotan utama · 01
@@ -91,27 +110,21 @@ export default function GameHero({ featuredGames }: GameHeroProps) {
               Siap dimainkan
             </div>
 
-            <Link
-              href={`/play/${mainHero.slug}`}
-              className="absolute bottom-4 left-4 right-4 z-10 flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-[#07111f]/80 p-3.5 backdrop-blur-md transition-colors hover:border-[#255dce]/50 sm:bottom-5 sm:left-5 sm:right-5 sm:p-4"
-            >
+            <div className="absolute bottom-4 left-4 right-4 z-10 flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-[#07111f]/80 p-3.5 backdrop-blur-md transition-colors group-hover:border-[#255dce]/50 sm:bottom-5 sm:left-5 sm:right-5 sm:p-4">
               <div className="min-w-0">
                 <span className="section-kicker !text-[0.58rem] !tracking-[0.16em]">
-                  Sorotan saat ini
+                  Permainan sorotan
                 </span>
                 <p className="mt-1 truncate text-sm font-bold text-white sm:text-base">
-                  {mainHero.title}
-                </p>
-                <p className="mt-0.5 truncate text-xs text-slate-400">
-                  {getCategoryLabel(mainHero.category)} · {mainHero.description}
+                  Mainkan sekarang
                 </p>
               </div>
               <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full btn-primary-clean">
                 <Play className="ml-0.5 h-4 w-4 fill-current" />
               </span>
-            </Link>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">

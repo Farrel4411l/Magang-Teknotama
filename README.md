@@ -8,7 +8,7 @@ Portal permainan web HTML5 PT Teknotama Prakarsa Mulia. Aplikasi menggunakan Nex
 - Halaman permainan dengan kendali layar penuh, muat ulang, bagikan, dan favorit.
 - Papan skor dan favorit yang disimpan secara lokal.
 - Slot iklan yang sudah ada, informasi layanan mitra, dan tata letak responsif.
-- Logo statis pada hero tanpa animasi 3D atau efek kursor berat.
+- Kartu permainan sorotan statis pada hero; dipilih untuk menuju halaman bermain tanpa memuat iframe di beranda.
 
 ## Menjalankan proyek
 

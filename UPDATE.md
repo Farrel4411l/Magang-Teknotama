@@ -8,6 +8,11 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, penambahan fitur,
 
 ---
 
+## [3.3.3] - 2026-11-18
+### Mengganti Logo Sorotan dengan Cover Permainan
+- Menghapus logo Tekno Game dari area sorotan beranda.
+- Menampilkan cover statis berdasarkan kategori dan judul permainan unggulan; klik cover membuka halaman permainan tanpa memuat iframe di beranda.
+
 ## [3.3.2] - 2026-11-18
 ### Optimasi Performa Hero dan Interaksi
 - Mengganti chip Three.js dengan logo statis dan menghapus loop render canvas 3D dari hero.

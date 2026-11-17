@@ -17,7 +17,7 @@ Gunakan cahaya sebagai penekanan, bukan ornamen berulang. Hindari motto, ticker,
 ## Susunan halaman
 
 1. Navigasi tetap dengan beranda, kategori, acak, papan skor, favorit, pencarian, dan tautan mitra.
-2. Hero dengan permainan pilihan, ajakan bermain, serta logo statis.
+2. Hero dengan permainan pilihan, ajakan bermain, serta cover sorotan berbasis kategori dan judul permainan.
 3. Ringkasan jumlah permainan, total permainan, akses gratis, dan penyimpanan skor.
 4. Filter kategori dan katalog responsif.
 5. Rekor skor lokal.
@@ -28,7 +28,7 @@ Kartu katalog menampilkan ilustrasi vektor, kategori, judul, deskripsi, jumlah p
 
 ## Gerak dan aksesibilitas
 
-- Hero menggunakan logo statis tanpa canvas 3D, loop render, aura kursor, kemiringan kartu, atau tarikan tombol.
+- Hero menampilkan cover permainan sorotan tanpa logo, canvas 3D, atau iframe. Cover mengarah ke halaman permainan agar beranda tetap ringan.
 - Hindari animasi dekoratif berulang; interaksi inti tetap jelas tanpa efek gerak.
 - Tombol penting memakai sasaran sentuh sedikitnya 44 piksel. Fokus papan ketik tetap terlihat.
 - Gerak dan cahaya tidak boleh menghalangi interaksi, navigasi, atau isi permainan.
