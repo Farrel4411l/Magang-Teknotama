@@ -14,13 +14,13 @@ export default function Footer() {
           {/* Kolom 1: Brand Info */}
           <div className="space-y-3">
             <Link href="/" className="inline-flex items-center gap-2.5 group select-none">
-              <div className="relative w-8 h-8 rounded-xl overflow-hidden border border-white/20 shrink-0 bg-[#121844]">
+              <div className="relative w-10 h-10 shrink-0">
                 <Image
                   src="/games/Teknogame_logo_only.png"
                   alt="Logo Tekno Game"
                   fill
-                  sizes="32px"
-                  className="object-contain p-1"
+                  sizes="40px"
+                  className="object-contain"
                 />
               </div>
               <div className="flex items-baseline gap-1">

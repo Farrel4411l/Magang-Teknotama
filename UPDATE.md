@@ -8,6 +8,12 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, penambahan fitur,
 
 ---
 
+## [3.3.1] - 2026-11-18
+### Pembaruan Logo Tekno Game
+- Mengganti aset logo utama dengan logo perisai GT beresolusi tinggi dan latar transparan.
+- Menghapus bingkai dan warna latar di belakang logo pada navigasi dan footer.
+- Memperbarui tampilan logo yang dipakai metadata, ikon tab, dan ilustrasi hero melalui aset kanonis yang sama.
+
 ## [3.2.0] - 2026-11-17
 ### Added & Standardized (Google AdSense Ready Display Slots & Clean Structure)
 - **Standardisasi Wadah Iklan Google AdSense ([GoogleAdSlot.tsx](src/components/ads/GoogleAdSlot.tsx)):**

@@ -87,13 +87,13 @@ export default function Navbar({
               className="flex items-center gap-3 group select-none"
               title="Tekno Game"
             >
-              <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden border border-white/20 group-hover:border-white/50 transition-all shrink-0 bg-[#141b47]">
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 shrink-0">
                 <Image
                   src="/games/Teknogame_logo_only.png"
                   alt="Logo Tekno Game"
                   fill
                   sizes="40px"
-                  className="object-contain p-1"
+                  className="object-contain"
                   priority
                 />
               </div>
