@@ -1,15 +1,15 @@
 1:"$Sreact.fragment"
 2:"static/chunks/342-09b82f536993903d.js"
-3:"static/chunks/582-a2348ee8275d7a3a.js"
-4:"static/chunks/app/layout-4c751bcedaccbd09.js"
-5:I[7199,["342","$2","582","$3","177","$4"],"default"]
+3:"static/chunks/257-8b10634ed90b14de.js"
+4:"static/chunks/app/layout-e745e84cd698bf62.js"
+5:I[658,["342","$2","257","$3","177","$4"],"default"]
 6:I[7121,[],""]
 7:I[4581,[],""]
 8:"static/chunks/app/not-found-35c136798eed2a64.js"
 9:I[5589,["342","$2","345","$8"],"default"]
 b:I[1304,[],"ClientPageRoot"]
-c:"static/chunks/app/page-096728e0e86447b0.js"
-d:I[9037,["342","$2","582","$3","974","$c"],"default"]
+c:"static/chunks/app/page-032f079c5f133310.js"
+d:I[6652,["342","$2","257","$3","974","$c"],"default"]
 10:I[484,[],"OutletBoundary"]
 11:"$Sreact.suspense"
 13:"ViewportBoundary"
@@ -17,9 +17,9 @@ d:I[9037,["342","$2","582","$3","974","$c"],"default"]
 16:"MetadataBoundary"
 17:I[484,[],"$16"]
 19:I[7123,[],"default",1]
-:HL["/games/_next/static/css/e4f94c5537ec6ef6.css","style"]
+:HL["/games/_next/static/css/eecc77e57b463418.css","style"]
 a:[["children",{"s":"__PAGE__","h":512,"d":{"r":["$","$1","c",{"children":[["$","$Lb",null,{"Component":"$d","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@e","$@f"]}}],null,["$","$L10",null,{"children":["$","$11",null,{"name":"Next.MetadataOutlet","children":"$@12"}]}]]}],"p":false,"v":null}}]]
-0:{"P":null,"c":["",""],"q":"","i":false,"t":{"t":{"s":"","h":528,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/games/_next/static/css/e4f94c5537ec6ef6.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"id","suppressHydrationWarning":true,"className":"__variable_8dde1a __variable_4b29c8 antialiased dark","children":[["$","head",null,{"children":[["$","link",null,{"rel":"preconnect","href":"https://pagead2.googlesyndication.com"}],["$","link",null,{"rel":"preconnect","href":"https://teknotama.com"}],["$","link",null,{"rel":"dns-prefetch","href":"https://pagead2.googlesyndication.com"}],["$","link",null,{"rel":"dns-prefetch","href":"https://teknotama.com"}],["$","link",null,{"rel":"icon","href":"/games/Teknogame_logo_only.png","type":"image/png"}],["$","link",null,{"rel":"shortcut icon","href":"/games/Teknogame_logo_only.png","type":"image/png"}],["$","link",null,{"rel":"apple-touch-icon","href":"/games/Teknogame_logo_only.png"}]]}],["$","body",null,{"className":"min-h-full bg-[#010B2E] text-[#F8FAFC]","suppressHydrationWarning":true,"children":["$","$L5",null,{"children":["$","$L6",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L7",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","$L9",null,{}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]]}]]}],"p":false,"v":null},"c":"$Qa"},"h":{"r":["$","$1","h",{"children":[null,["$","$L14",null,{"children":"$L15"}],["$","$L17",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$11",null,{"name":"Next.Metadata","children":"$L18"}]}],null]}],null]}],"p":false,"v":null}},"m":"$undefined","G":["$19",[]],"S":true,"r":"$undefined","s":"$undefined","a":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"h-Z6vXvvzX3WQYAkhx8VS"}
+0:{"P":null,"c":["",""],"q":"","i":false,"t":{"t":{"s":"","h":528,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/games/_next/static/css/eecc77e57b463418.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"id","suppressHydrationWarning":true,"className":"__variable_8dde1a __variable_4b29c8 antialiased dark","children":[["$","head",null,{"children":[["$","link",null,{"rel":"preconnect","href":"https://pagead2.googlesyndication.com"}],["$","link",null,{"rel":"preconnect","href":"https://teknotama.com"}],["$","link",null,{"rel":"dns-prefetch","href":"https://pagead2.googlesyndication.com"}],["$","link",null,{"rel":"dns-prefetch","href":"https://teknotama.com"}],["$","link",null,{"rel":"icon","href":"/games/Teknogame_logo_only.png","type":"image/png"}],["$","link",null,{"rel":"shortcut icon","href":"/games/Teknogame_logo_only.png","type":"image/png"}],["$","link",null,{"rel":"apple-touch-icon","href":"/games/Teknogame_logo_only.png"}]]}],["$","body",null,{"className":"min-h-full text-[#F8FAFC]","suppressHydrationWarning":true,"children":["$","$L5",null,{"children":["$","$L6",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L7",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","$L9",null,{}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]]}]]}],"p":false,"v":null},"c":"$Qa"},"h":{"r":["$","$1","h",{"children":[null,["$","$L14",null,{"children":"$L15"}],["$","$L17",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$11",null,{"name":"Next.Metadata","children":"$L18"}]}],null]}],null]}],"p":false,"v":null}},"m":"$undefined","G":["$19",[]],"S":true,"r":"$undefined","s":"$undefined","a":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"quCtlNPjA-Bq9thwZun11"}
 e:{}
 f:"$a:0:1:d:r:props:children:0:props:serverProvidedParams:params"
 15:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, maximum-scale=5"}],["$","meta","2",{"name":"theme-color","content":"#021861"}]]

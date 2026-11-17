@@ -61,59 +61,59 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const getCategoryHeroIcon = (id: GameCategory) => {
     switch (id) {
       case "arcade":
-        return <Gamepad2 className="w-8 h-8 text-cyan-300" />;
+        return <Gamepad2 className="w-6 h-6 text-cyan-200" />;
       case "adventure":
-        return <Compass className="w-8 h-8 text-emerald-300" />;
+        return <Compass className="w-6 h-6 text-emerald-200" />;
       case "puzzle":
-        return <Puzzle className="w-8 h-8 text-sky-300" />;
+        return <Puzzle className="w-6 h-6 text-sky-200" />;
       case "action":
-        return <Zap className="w-8 h-8 text-purple-300" />;
+        return <Zap className="w-6 h-6 text-rose-200" />;
       case "casual":
-        return <Coffee className="w-8 h-8 text-amber-300" />;
+        return <Coffee className="w-6 h-6 text-amber-200" />;
       case "sports":
-        return <Trophy className="w-8 h-8 text-yellow-300" />;
+        return <Trophy className="w-6 h-6 text-yellow-200" />;
       default:
-        return <Gamepad2 className="w-8 h-8 text-blue-300" />;
+        return <Gamepad2 className="w-6 h-6 text-blue-200" />;
     }
   };
 
   return (
     <div className="pt-6 space-y-6">
-      {/* Navigasi Breadcrumb */}
+      {/* Breadcrumb */}
       <nav
         aria-label="Breadcrumb"
-        className="flex items-center gap-2 text-xs font-semibold text-slate-400"
+        className="flex items-center gap-2 text-xs font-medium text-slate-300"
       >
         <Link
           href="/"
-          className="inline-flex items-center gap-1 hover:text-cyan-300 transition-colors"
+          className="inline-flex items-center gap-1 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Semua Game</span>
         </Link>
         <span>/</span>
-        <span className="text-white font-bold uppercase tracking-wide">
+        <span className="text-white font-semibold capitalize">
           {validCat.label}
         </span>
       </nav>
 
       {/* Header Banner Kategori */}
-      <div className="bg-gradient-to-r from-[#021861] via-[#010B2E] to-[#255dce]/40 text-white rounded-3xl p-6 sm:p-8 border border-[#255dce]/50 shadow-2xl flex items-center justify-between">
-        <div className="space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-[#021861] border border-[#255dce]/60 flex items-center justify-center shadow-md">
+      <div className="rounded-2xl card-natural p-6 sm:p-8 flex items-center justify-between">
+        <div className="space-y-1.5">
+          <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-2">
             {getCategoryHeroIcon(validCat.id)}
           </div>
           <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-white">
-            Katalog Game: {validCat.label}
+            Kategori: {validCat.label}
           </h1>
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
-            Jelajahi dan mainkan beragam game web {validCat.label.toLowerCase()} seru pilihan Tekno Game secara gratis langsung di browser Anda.
+            Jelajahi dan mainkan beragam game web {validCat.label.toLowerCase()} seru di Tekno Game secara gratis langsung di browser Anda.
           </p>
         </div>
       </div>
 
       {/* Grid Katalog */}
-      <GameGrid games={games} title={`Daftar Game ${validCat.label}`} />
+      <GameGrid games={games} title={`Game ${validCat.label}`} />
     </div>
   );
 }

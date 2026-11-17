@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ExternalLink, ShieldCheck, Cpu, Database, Network } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 interface AdSkyscraperProps {
   position: "left" | "right";
@@ -13,67 +13,48 @@ export default function AdSkyscraper({ position }: AdSkyscraperProps) {
 
   return (
     <aside
-      className={`hidden 2xl:block fixed top-24 z-30 w-[160px] ${
-        isLeft ? "left-3" : "right-3"
+      className={`hidden min-[1680px]:block fixed top-24 z-20 w-[160px] ${
+        isLeft
+          ? "left-[calc((100vw-1280px)/2-180px)]"
+          : "right-[calc((100vw-1280px)/2-180px)]"
       }`}
-      aria-label={`Iklan Sponsor ${isLeft ? "Kiri" : "Kanan"}`}
+      aria-label={`Sponsor ${isLeft ? "Kiri" : "Kanan"}`}
     >
       <div className="flex flex-col items-center">
-        {/* Label Transparansi Google Ads */}
-        <div className="flex items-center gap-1 text-[9px] uppercase font-bold tracking-widest text-slate-400 mb-1">
-          <ShieldCheck className="w-2.5 h-2.5 text-[#255dce]" />
-          <span>SPONSOR RESMI</span>
-        </div>
+        <span className="text-[10px] uppercase font-semibold tracking-wider text-white/50 mb-1.5">
+          Sponsor
+        </span>
 
         {/* Container Banner 160x600 Anti-CLS */}
         <div
           style={{ width: "160px", minHeight: "600px", height: "600px" }}
-          className="w-[160px] h-[600px] min-h-[600px] bg-gradient-to-b from-[#021861] via-[#010B2E] to-[#255dce]/20 rounded-2xl border border-[#255dce]/40 shadow-2xl overflow-hidden flex flex-col justify-between p-3.5 relative group"
+          className="w-[160px] h-[600px] min-h-[600px] rounded-2xl card-natural p-4 flex flex-col justify-between text-center relative overflow-hidden"
         >
-          {/* Subtle Ambient Radial */}
-          <div className="absolute inset-0 bg-radial from-[#255dce]/15 via-transparent to-transparent pointer-events-none" />
-
-          {/* Top Header */}
-          <div className="relative z-10 text-center">
-            <span className="inline-block px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-[#255dce]/20 text-[#3b82f6] border border-[#255dce]/40 mb-2">
-              PT TEKNOTAMA
+          <div>
+            <span className="text-[10px] font-bold text-white/70 uppercase tracking-wide block mb-1">
+              PT Teknotama
             </span>
-            <h4 className="text-white text-xs font-bold leading-tight">
-              {isLeft ? "Infrastruktur IT & Cloud System" : "Data Security & Custom Software"}
+            <h4 className="text-white text-xs font-bold leading-snug">
+              {isLeft ? "Infrastruktur & Cloud System" : "Keamanan Data Enterprise"}
             </h4>
-            <p className="text-slate-300 text-[10px] mt-1.5 leading-snug">
+            <p className="text-slate-300 text-[11px] mt-2 leading-relaxed">
               {isLeft
-                ? "Perancangan arsitektur jaringan andal dan skalabel untuk perusahaan."
-                : "Keamanan data tingkat enterprise dan software kustom siap pakai."}
+                ? "Solusi arsitektur jaringan handal dan terintegrasi untuk bisnis."
+                : "Pengembangan software kustom dan keamanan data digital."}
             </p>
           </div>
 
-          {/* Icon Tech Visualization */}
-          <div className="relative z-10 flex flex-col items-center justify-center my-auto">
-            <div className="w-20 h-20 rounded-2xl bg-[#021861]/80 border border-[#255dce]/50 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
-              {isLeft ? (
-                <Network className="w-9 h-9 text-[#3b82f6]" />
-              ) : (
-                <Database className="w-9 h-9 text-[#3b82f6]" />
-              )}
-            </div>
-            <span className="mt-3 px-2 py-0.5 rounded text-[9px] font-extrabold uppercase tracking-wide bg-[#255dce]/30 text-cyan-300 border border-[#255dce]/40">
-              {isLeft ? "CLOUD & NETWORK" : "CYBER DEFENSE"}
-            </span>
-          </div>
-
-          {/* Bottom CTA */}
-          <div className="relative z-10 text-center">
+          <div>
             <a
               href="https://teknotama.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full py-2.5 px-3 rounded-xl btn-burgundy text-[11px] font-black text-center shadow-md active:scale-95 transition-all cursor-pointer"
+              className="block w-full py-2.5 px-2 rounded-xl btn-sponsor-clean text-xs font-bold shadow-md cursor-pointer transition-all"
             >
-              <span>Pelajari Solusi</span>
+              <span>Kunjungi Kami</span>
               <ExternalLink className="w-3 h-3 inline ml-1" />
             </a>
-            <span className="text-[9px] text-slate-400 block mt-1.5 font-medium">
+            <span className="text-[10px] text-white/50 block mt-2">
               teknotama.com
             </span>
           </div>

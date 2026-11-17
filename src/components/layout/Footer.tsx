@@ -3,55 +3,51 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Gamepad2, Trophy, ExternalLink, ShieldCheck, Heart, Sparkles, Compass } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { CATEGORIES } from "@/lib/games-data";
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-[#021861] via-[#010B2E] to-[#010B2E] text-slate-400 text-xs border-t border-[#255dce]/40 mt-20 pt-14 pb-28 shadow-2xl relative overflow-hidden">
-      {/* Decorative Top Accent Line (Cobalt Blue to Burgundy) */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#255dce] via-[#8A0045] to-[#255dce]" />
-
+    <footer className="bg-black/30 border-t border-white/10 text-slate-300 text-xs mt-20 pt-12 pb-24 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-[#255dce]/20">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-white/10">
           {/* Kolom 1: Brand Info */}
-          <div className="space-y-3.5">
-            <Link href="/" className="inline-flex items-center gap-3 group select-none">
-              <div className="relative w-9 h-9 rounded-xl overflow-hidden border border-[#255dce]/60 shrink-0 bg-[#010B2E]">
+          <div className="space-y-3">
+            <Link href="/" className="inline-flex items-center gap-2.5 group select-none">
+              <div className="relative w-8 h-8 rounded-xl overflow-hidden border border-white/20 shrink-0 bg-[#121844]">
                 <Image
                   src="/games/Teknogame_logo_only.png"
-                  alt="Logo Resmi Tekno Game"
+                  alt="Logo Tekno Game"
                   fill
-                  sizes="40px"
+                  sizes="32px"
                   className="object-contain p-1"
                 />
               </div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="font-heading text-xl font-bold tracking-tight text-white group-hover:text-cyan-300 transition-colors">
+              <div className="flex items-baseline gap-1">
+                <span className="font-heading text-lg font-bold text-white">
                   Tekno
                 </span>
-                <span className="font-heading text-xl font-bold tracking-tight bg-gradient-to-r from-[#255dce] to-[#38bdf8] bg-clip-text text-transparent">
+                <span className="font-heading text-lg font-bold text-rose-300">
                   Game
                 </span>
               </div>
             </Link>
             <p className="text-slate-300 text-xs leading-relaxed">
-              Portal game web HTML5 instan resmi persembahan PT Teknotama Prakarsa Mulia. Nikmati sensasi bermain ratusan game terbaik tanpa instalasi, bebas hambatan, dan gratis langsung di browsermu!
+              Portal game web HTML5 resmi persembahan PT Teknotama Prakarsa Mulia. Mainkan game seru gratis tanpa install langsung di browser Anda.
             </p>
           </div>
 
-          {/* Kolom 2: Arena Game Populer */}
+          {/* Kolom 2: Kategori Permainan */}
           <div>
-            <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-3.5 flex items-center gap-1.5">
-              <Gamepad2 className="w-3.5 h-3.5 text-[#3b82f6]" />
-              <span>Kategori Permainan</span>
+            <h4 className="text-white text-xs font-semibold uppercase tracking-wider mb-3">
+              Kategori
             </h4>
             <ul className="space-y-2">
               {CATEGORIES.slice(0, 5).map((cat) => (
                 <li key={cat.id}>
                   <Link
                     href={cat.id === "all" ? "/" : `/category/${cat.id}`}
-                    className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
+                    className="hover:text-white transition-colors"
                   >
                     <span>{cat.label}</span>
                   </Link>
@@ -60,65 +56,59 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Kolom 3: Fitur Unggulan */}
+          {/* Kolom 3: Navigasi Cepat */}
           <div>
-            <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-3.5 flex items-center gap-1.5">
-              <Trophy className="w-3.5 h-3.5 text-amber-400" />
-              <span>Fitur Platform</span>
+            <h4 className="text-white text-xs font-semibold uppercase tracking-wider mb-3">
+              Navigasi
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/" className="hover:text-cyan-300 transition-colors">
-                  Katalog Game Instan HTML5
+                <Link href="/" className="hover:text-white transition-colors">
+                  Beranda
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-cyan-300 transition-colors">
-                  Mode Main Acak Cepat
+                <Link href="/" className="hover:text-white transition-colors">
+                  Katalog Game
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-cyan-300 transition-colors">
-                  Papan Rekor Skor Offline
-                </Link>
-              </li>
-              <li>
-                <Link href="/" className="hover:text-cyan-300 transition-colors">
-                  Daftar Game Favorit Pribadi
-                </Link>
-              </li>
-              <li>
-                <Link href="/" className="hover:text-cyan-300 transition-colors">
-                  Responsif Layar HP, Tablet, &amp; Desktop
-                </Link>
+                <a
+                  href="https://teknotama.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors flex items-center gap-1"
+                >
+                  <span>Website Utama Teknotama</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               </li>
             </ul>
           </div>
 
           {/* Kolom 4: Partner Resmi & Teks Wajib */}
-          <div className="space-y-2.5">
-            <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-cyan-400" />
-              <span>Partner Teknologi Resmi</span>
+          <div className="space-y-2">
+            <h4 className="text-white text-xs font-semibold uppercase tracking-wider mb-2">
+              Partner Teknologi Resmi
             </h4>
             <p className="text-slate-300 text-xs leading-relaxed">
-              Didukung oleh <strong className="text-white font-bold">PT Teknotama Prakarsa Mulia</strong>. Penyedia solusi infrastruktur IT, cloud system, data security, dan custom software development untuk akselerasi bisnis Anda.
+              Didukung oleh <strong className="text-white font-semibold">PT Teknotama Prakarsa Mulia</strong>. Penyedia solusi infrastruktur IT, cloud system, data security, dan custom software development untuk akselerasi bisnis Anda.
             </p>
             <div className="pt-2">
               <a
                 href="https://teknotama.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg btn-sponsor text-xs font-bold text-white shadow-md cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg btn-sponsor-clean text-xs font-medium shadow-sm cursor-pointer"
               >
                 <span>Kunjungi teknotama.com</span>
-                <ExternalLink className="w-3.5 h-3.5" />
+                <ExternalLink className="w-3 h-3" />
               </a>
             </div>
           </div>
         </div>
 
-        {/* Baris Bawah: Hak Cipta & Tautan Induk */}
+        {/* Baris Bawah */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-400 text-[11px]">
           <p>© 2026 Tekno Game. Seluruh hak cipta dilindungi undang-undang.</p>
           <div className="flex items-center gap-4">
@@ -126,9 +116,9 @@ export default function Footer() {
               href="https://teknotama.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#3b82f6] hover:text-cyan-300 transition-colors flex items-center gap-1 font-semibold"
+              className="text-rose-200 hover:text-white transition-colors flex items-center gap-1"
             >
-              <span>Portal Induk: teknotama.com</span>
+              <span>PT Teknotama Prakarsa Mulia</span>
               <ExternalLink className="w-3 h-3" />
             </a>
           </div>

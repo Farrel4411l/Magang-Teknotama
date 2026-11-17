@@ -106,7 +106,7 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/games/Teknogame_logo_only.png" type="image/png" />
         <link rel="apple-touch-icon" href="/games/Teknogame_logo_only.png" />
       </head>
-      <body className="min-h-full bg-[#010B2E] text-[#F8FAFC]" suppressHydrationWarning>
+      <body className="min-h-full text-[#F8FAFC]" suppressHydrationWarning>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

@@ -6,15 +6,7 @@ import { getGameBySlug, INITIAL_GAMES } from "@/lib/games-data";
 import GameFrame from "@/components/game/GameFrame";
 import AdCompanion from "@/components/ads/AdCompanion";
 import GameCard from "@/components/game/GameCard";
-import {
-  ArrowLeft,
-  Keyboard,
-  Smartphone,
-  Info,
-  ExternalLink,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react";
+import { ArrowLeft, Keyboard, Smartphone, Info, ExternalLink } from "lucide-react";
 
 interface PlayPageProps {
   params: Promise<{ slug: string }>;
@@ -83,7 +75,6 @@ export default async function PlayPage({ params }: PlayPageProps) {
     (g) => g.id !== game.id && (g.category === game.category || g.featured)
   ).slice(0, 4);
 
-  // JSON-LD Skema VideoGame & BreadcrumbList
   const jsonLdGame = {
     "@context": "https://schema.org",
     "@type": "VideoGame",
@@ -139,7 +130,6 @@ export default async function PlayPage({ params }: PlayPageProps) {
 
   return (
     <div className="pt-6 space-y-6">
-      {/* Skrip Structured Data JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdGame) }}
@@ -152,11 +142,11 @@ export default async function PlayPage({ params }: PlayPageProps) {
       {/* Navigasi Breadcrumb */}
       <nav
         aria-label="Breadcrumb"
-        className="flex items-center gap-2 text-xs font-semibold text-slate-400"
+        className="flex items-center gap-2 text-xs font-medium text-slate-300"
       >
         <Link
           href="/"
-          className="inline-flex items-center gap-1 hover:text-cyan-300 transition-colors"
+          className="inline-flex items-center gap-1 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Semua Game</span>
@@ -164,25 +154,24 @@ export default async function PlayPage({ params }: PlayPageProps) {
         <span>/</span>
         <Link
           href={`/category/${game.category}`}
-          className="uppercase text-[#3b82f6] hover:text-cyan-300 font-bold transition-colors"
+          className="capitalize hover:text-white transition-colors"
         >
           {game.category}
         </Link>
         <span>/</span>
-        <span className="text-white font-bold truncate max-w-xs">{game.title}</span>
+        <span className="text-white font-semibold truncate max-w-xs">{game.title}</span>
       </nav>
 
-      {/* Tata Letak Gameplay: Layar Game + Sidebar Companion */}
+      {/* Tata Letak Gameplay */}
       <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-        {/* Kolom Kiri: Iframe Container (Span 3) */}
         <div className="xl:col-span-3 space-y-6">
           <GameFrame game={game} />
 
-          {/* Kartu Informasi & Panduan Tombol Kendali */}
-          <div className="rounded-3xl card-elevated p-6 shadow-xl space-y-4 text-slate-300">
+          {/* Kartu Informasi & Panduan Kendali */}
+          <div className="rounded-2xl card-natural p-6 space-y-4 text-slate-300">
             <div>
-              <h3 className="font-heading text-base sm:text-lg font-bold text-white flex items-center gap-2">
-                <Info className="w-4 h-4 text-cyan-400" />
+              <h3 className="font-heading text-base font-bold text-white flex items-center gap-2">
+                <Info className="w-4 h-4 text-rose-200" />
                 <span>Tentang {game.title}</span>
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
@@ -190,19 +179,17 @@ export default async function PlayPage({ params }: PlayPageProps) {
               </p>
             </div>
 
-            {/* Petunjuk Kontrol */}
             {game.controlsGuide && (
-              <div className="pt-4 border-t border-[#255dce]/30">
-                <h4 className="text-xs font-bold text-cyan-300 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                  <Keyboard className="w-3.5 h-3.5" />
-                  <span>Petunjuk Kontrol Permainan</span>
+              <div className="pt-4 border-t border-white/10">
+                <h4 className="text-xs font-semibold text-white uppercase tracking-wider mb-3">
+                  Panduan Tombol
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                   {game.controlsGuide.keyboard && (
-                    <div className="bg-[#010B2E] p-3.5 rounded-2xl border border-[#255dce]/40">
-                      <span className="font-bold text-white flex items-center gap-1.5 mb-1.5">
-                        <Keyboard className="w-3.5 h-3.5 text-[#3b82f6]" />
-                        <span>Keyboard Komputer:</span>
+                    <div className="bg-black/20 p-3.5 rounded-xl border border-white/10">
+                      <span className="font-semibold text-white flex items-center gap-1.5 mb-1.5">
+                        <Keyboard className="w-3.5 h-3.5 text-slate-300" />
+                        <span>Keyboard:</span>
                       </span>
                       <ul className="list-disc list-inside space-y-1 text-slate-300">
                         {game.controlsGuide.keyboard.map((k, idx) => (
@@ -212,9 +199,9 @@ export default async function PlayPage({ params }: PlayPageProps) {
                     </div>
                   )}
                   {game.controlsGuide.touch && (
-                    <div className="bg-[#010B2E] p-3.5 rounded-2xl border border-[#255dce]/40">
-                      <span className="font-bold text-white flex items-center gap-1.5 mb-1.5">
-                        <Smartphone className="w-3.5 h-3.5 text-cyan-400" />
+                    <div className="bg-black/20 p-3.5 rounded-xl border border-white/10">
+                      <span className="font-semibold text-white flex items-center gap-1.5 mb-1.5">
+                        <Smartphone className="w-3.5 h-3.5 text-slate-300" />
                         <span>Layar Sentuh (Smartphone / Tablet):</span>
                       </span>
                       <p className="text-slate-300 leading-relaxed">
@@ -228,27 +215,26 @@ export default async function PlayPage({ params }: PlayPageProps) {
           </div>
         </div>
 
-        {/* Kolom Kanan: Companion Ad (300x250) + Showcase Sponsor Teknotama */}
+        {/* Sidebar Kanan: Companion Ad & Sponsor Card */}
         <div className="xl:col-span-1 space-y-6 flex flex-col items-center xl:items-start">
           <AdCompanion />
 
-          {/* Kartu Promo Solusi IT Teknotama */}
-          <div className="w-[300px] rounded-2xl card-elevated p-5 shadow-xl space-y-3">
-            <span className="text-[10px] uppercase font-black bg-[#255dce]/30 text-cyan-300 px-2.5 py-0.5 rounded-full inline-block border border-[#255dce]/50">
-              SPONSOR RESMI
+          <div className="w-[300px] rounded-2xl card-natural p-5 space-y-2.5">
+            <span className="text-[10px] uppercase font-semibold text-rose-200 tracking-wider">
+              Sponsor Resmi
             </span>
-            <h4 className="font-heading text-sm font-bold leading-tight text-white">
-              Solusi IT &amp; Transformasi Digital Enterprise
+            <h4 className="font-heading text-sm font-bold text-white leading-snug">
+              PT Teknotama Prakarsa Mulia
             </h4>
             <p className="text-xs text-slate-300 leading-relaxed">
-              Konsultasikan kebutuhan infrastruktur jaringan, sistem cloud, keamanan data, dan pembuatan aplikasi kustom bisnis bersama PT Teknotama Prakarsa Mulia.
+              Konsultasikan solusi infrastruktur IT, cloud system, keamanan data, dan custom software bersama tim profesional kami.
             </p>
             <div className="pt-1">
               <a
                 href="https://teknotama.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full py-2.5 text-center rounded-xl btn-sponsor text-xs font-black text-white shadow-md cursor-pointer"
+                className="block w-full py-2.5 text-center rounded-xl btn-sponsor-clean text-xs font-semibold shadow-sm cursor-pointer"
               >
                 <span>Kunjungi teknotama.com</span>
                 <ExternalLink className="w-3.5 h-3.5 inline ml-1" />
@@ -258,11 +244,10 @@ export default async function PlayPage({ params }: PlayPageProps) {
         </div>
       </div>
 
-      {/* Rekomendasi Game Pilihan Lainnya */}
-      <section className="pt-8">
-        <h3 className="font-heading text-lg font-bold text-white mb-4 flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
-          <span>Game Seru Lainnya Untuk Anda</span>
+      {/* Rekomendasi Game Lainnya */}
+      <section className="pt-6">
+        <h3 className="font-heading text-base sm:text-lg font-bold text-white mb-4">
+          Game Lainnya Untuk Anda
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-5">
           {relatedGames.map((g) => (

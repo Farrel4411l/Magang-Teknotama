@@ -6,37 +6,28 @@
   --font-heading: var(--font-heading), "Space Grotesk", sans-serif;
   --font-sans: var(--font-sans), "Plus Jakarta Sans", sans-serif;
 
-  --color-void: #010B2E;
-  --color-midnight: #021861;
-  --color-cobalt: #255dce;
-  --color-cobalt-light: #3b82f6;
-  --color-burgundy: #660033;
-  --color-burgundy-light: #8A0045;
-  --color-burgundy-glow: rgba(138, 0, 69, 0.45);
+  --color-brand-navy: #1b2563;
+  --color-brand-indigo: #29347a;
+  --color-brand-purple: #501d5a;
+  --color-brand-burgundy: #821448;
+  --color-brand-magenta: #9e1354;
 }
 
 :root {
   --font-heading: "Space Grotesk", sans-serif;
   --font-sans: "Plus Jakarta Sans", sans-serif;
-
-  /* 60% Dominan: Midnight Navy & Deep Void */
-  --bg-void: #010B2E;
-  --bg-midnight: #021861;
-
-  /* 30% Sekunder: Cobalt Blue */
-  --color-cobalt: #255dce;
-  --color-cobalt-border: rgba(37, 93, 206, 0.5);
-
-  /* 10% Aksen: Burgundy */
-  --color-burgundy: #660033;
-  --color-burgundy-light: #8A0045;
 }
 
 body {
-  background-color: #010B2E;
+  /* Gradient halus sesuai referensi foto user: Navy/Indigo di kiri ke Burgundy/Magenta di kanan */
+  background: #141b47;
+  background-image: linear-gradient(135deg, #18225e 0%, #242e75 25%, #4c1b54 55%, #7a1240 82%, #961250 100%);
+  background-attachment: fixed;
+  background-size: cover;
   color: #F8FAFC;
   font-family: var(--font-sans);
-  line-height: 1.625;
+  line-height: 1.6;
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -46,126 +37,83 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
 }
 
-/* Pola Cyber Grid / Mesh CSS Ringan */
-.cyber-grid {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(37, 93, 206, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(37, 93, 206, 0.07) 1px, transparent 1px);
+/* Kartu Alami & Modern (Natural UI, Bebas AI Slop) */
+.card-natural {
+  background: rgba(20, 26, 70, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Ambient Glow Efek Visual */
-.ambient-glow {
-  background: radial-gradient(circle 800px at 50% -100px, rgba(37, 93, 206, 0.28), rgba(2, 24, 97, 0.45) 50%, transparent 80%);
+.card-natural:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.55);
 }
 
-/* Solid Elevated Card (30% Cobalt Blue) */
-.card-elevated {
-  background: linear-gradient(145deg, rgba(37, 93, 206, 0.22), rgba(2, 24, 97, 0.88));
-  border: 1px solid rgba(37, 93, 206, 0.5);
-  box-shadow: 0 10px 30px -10px rgba(1, 11, 46, 0.8), 0 0 15px -3px rgba(37, 93, 206, 0.15);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card-elevated:hover {
-  transform: translateY(-6px);
-  border-color: rgba(37, 93, 206, 0.85);
-  box-shadow: 0 18px 35px -8px rgba(1, 11, 46, 0.9), 0 0 25px 2px rgba(37, 93, 206, 0.35);
-}
-
-/* Selective Glassmorphism (Navbar, Dropdown, Modal/Toast) */
-.glass-nav {
-  background: rgba(2, 24, 97, 0.85);
+/* Glassmorphism Halus untuk Navbar & Modal */
+.glass-nav-clean {
+  background: rgba(18, 24, 68, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(37, 93, 206, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.glass-dropdown {
-  background: rgba(2, 24, 97, 0.95);
+.glass-modal-clean {
+  background: rgba(20, 26, 72, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(37, 93, 206, 0.45);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
 }
 
-.glass-modal {
-  background: rgba(2, 24, 97, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(37, 93, 206, 0.45);
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(37, 93, 206, 0.25);
-}
-
-/* 10% Aksen Burgundy CTA Buttons */
-.btn-burgundy {
-  background: linear-gradient(135deg, #8A0045 0%, #660033 100%);
+/* Tombol CTA Alami & Elegan */
+.btn-primary-clean {
+  background: linear-gradient(135deg, #8a1347 0%, #680e34 100%);
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 15px rgba(102, 0, 51, 0.45);
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
 }
 
-.btn-burgundy:hover {
-  background: linear-gradient(135deg, #A00052 0%, #7A003D 100%);
-  box-shadow: 0 6px 22px rgba(138, 0, 69, 0.65), 0 0 15px rgba(255, 255, 255, 0.2);
+.btn-primary-clean:hover {
+  background: linear-gradient(135deg, #a11855 0%, #7d1241 100%);
+  box-shadow: 0 4px 16px rgba(138, 19, 71, 0.4);
   transform: translateY(-1px);
 }
 
-.btn-burgundy:active {
+.btn-primary-clean:active {
   transform: translateY(1px);
 }
 
-/* Sponsor Highlight Button */
-.btn-sponsor {
-  background: linear-gradient(135deg, #8A0045 0%, #660033 100%);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 0 15px rgba(138, 0, 69, 0.5);
-  transition: all 0.25s ease;
+/* Tombol Sponsor teknotama.com */
+.btn-sponsor-clean {
+  background: linear-gradient(135deg, #961250 0%, #6f0e38 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  transition: all 0.2s ease;
 }
 
-.btn-sponsor:hover {
-  background: linear-gradient(135deg, #A30055 0%, #73003B 100%);
-  box-shadow: 0 0 22px rgba(138, 0, 69, 0.8), 0 0 8px rgba(255, 255, 255, 0.3);
+.btn-sponsor-clean:hover {
+  background: linear-gradient(135deg, #b01760 0%, #821244 100%);
+  box-shadow: 0 4px 16px rgba(176, 23, 96, 0.45);
   transform: translateY(-1px);
 }
 
-/* Ticker Animation */
-@keyframes ticker {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.animate-ticker {
-  display: inline-flex;
-  white-space: nowrap;
-  animation: ticker 40s linear infinite;
-}
-
-.animate-ticker:hover {
-  animation-play-state: paused;
-}
-
-/* Modern Dark Scrollbar */
+/* Clean Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #010B2E;
+  background: rgba(18, 24, 68, 0.6);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #255dce;
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 9999px;
-  border: 2px solid #010B2E;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3b82f6;
+  background: rgba(255, 255, 255, 0.35);
 }
