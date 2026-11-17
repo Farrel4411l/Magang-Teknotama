@@ -212,10 +212,28 @@
 
     let lastComputedBoq = null;
     let attachBoqToBooking = false;
-    let chatHistory = [];
+    let chatHistory = loadPersistedChatHistory();
     let isChatBusy = false;
     let widgetOpen = false;
     let widgetActiveTab = 'home'; // 'home' | 'chat'
+
+    function loadPersistedChatHistory() {
+        try {
+            const raw = sessionStorage.getItem('tkt_chat_history_v1');
+            const parsed = raw ? JSON.parse(raw) : [];
+            return Array.isArray(parsed) ? parsed.slice(-16) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function savePersistedChatHistory() {
+        try {
+            sessionStorage.setItem('tkt_chat_history_v1', JSON.stringify(chatHistory.slice(-16)));
+        } catch (e) {
+            // Abaikan jika browser memblokir sessionStorage
+        }
+    }
 
     /* ========================================================================
      * 2. UTILITAS UMUM & MARKDOWN PARSER AMAN
@@ -814,6 +832,11 @@
 
     function initCalculator() {
         const modeQuickBtn = document.getElementById('calc-mode-quick-btn');
+        if (!modeQuickBtn) {
+            // Halaman sub-layanan tidak memiliki kalkulator; tetap siapkan baseline context untuk AI
+            lastComputedBoq = computeEngineeringBoq(calcState);
+            return;
+        }
         const modeTechBtn = document.getElementById('calc-mode-tech-btn');
         const panelQuick = document.getElementById('calc-panel-quick');
         const panelTech = document.getElementById('calc-panel-tech');
@@ -1114,12 +1137,25 @@
 
             container.querySelectorAll('.chat-sync-btn').forEach(function (btn) {
                 btn.addEventListener('click', function () {
-                    syncContextToBookingForm(true);
-                    const kontak = document.getElementById('kontak');
-                    if (kontak) kontak.scrollIntoView({ behavior: 'smooth' });
+                    navigateOrSyncBooking();
                 });
             });
         });
+    }
+
+    function navigateOrSyncBooking() {
+        const kontak = document.getElementById('kontak');
+        if (kontak && document.getElementById('form-message')) {
+            syncContextToBookingForm(true);
+            kontak.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            try {
+                sessionStorage.setItem('tkt_pending_booking_sync', '1');
+            } catch (e) {
+                // ignore
+            }
+            window.location.href = 'index.html#kontak';
+        }
     }
 
     async function sendChatMessage(rawText) {
@@ -1127,6 +1163,7 @@
         if (!message || isChatBusy) return;
 
         chatHistory.push({ role: 'user', content: message });
+        savePersistedChatHistory();
         isChatBusy = true;
         renderChatFeeds();
 
@@ -1152,7 +1189,8 @@
                     gemini: 'TeknoAssist AI • Gemini Engine',
                     openrouter: 'TeknoAssist AI • OpenRouter',
                     cohere: 'TeknoAssist AI • Cohere',
-                    local_expert: 'TeknoAssist SOP Engine'
+                    local_expert: 'TeknoAssist SOP Engine',
+                    guardrail_shield: 'TeknoAssist • AI Safety & Guardrail Shield'
                 };
                 chatHistory.push({
                     role: 'assistant',
@@ -1175,6 +1213,7 @@
             });
         } finally {
             isChatBusy = false;
+            savePersistedChatHistory();
             renderChatFeeds();
         }
     }
@@ -1268,17 +1307,16 @@
         if (resetChatBtn) {
             resetChatBtn.addEventListener('click', function () {
                 chatHistory = [];
+                savePersistedChatHistory();
                 renderChatFeeds();
                 showToast('Percakapan AI direset.');
             });
         }
         if (syncFormBtn) {
             syncFormBtn.addEventListener('click', function () {
-                syncContextToBookingForm(true);
                 widgetOpen = false;
                 updateWidgetVisibility();
-                const kontak = document.getElementById('kontak');
-                if (kontak) kontak.scrollIntoView({ behavior: 'smooth' });
+                navigateOrSyncBooking();
             });
         }
 
@@ -1476,11 +1514,73 @@
      * 7. INISIALISASI SAAT DOM SIAP
      * ======================================================================== */
 
+    function ensureFloatingWidgetDom() {
+        if (!document.getElementById('ai-widget-container')) {
+            const wrap = document.createElement('div');
+            wrap.innerHTML = '<div id="ai-widget-container" class="fixed bottom-4 left-3 right-3 sm:left-auto sm:bottom-5 sm:right-5 z-[55] no-print flex flex-col items-end pointer-events-none">'
+                + '<div id="ai-widget-panel" class="hidden pointer-events-auto mb-3 bg-[#090d16] rounded-3xl overflow-hidden flex flex-col relative">'
+                + '<button id="widget-close-btn" type="button" aria-label="Tutup Asisten AI" class="absolute top-3.5 right-3.5 z-20 w-8 h-8 rounded-full bg-black/40 hover:bg-brand-600 text-slate-200 hover:text-white flex items-center justify-center transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>'
+                + '<div id="widget-view-home" class="flex-1 flex flex-col overflow-hidden">'
+                + '<div class="bg-gradient-to-br from-[#12080d] via-[#1c0b12] to-[#090d16] p-5 pr-12 border-b border-red-950/70">'
+                + '<div class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>TeknoAssist AI • Field Engineer Online</div>'
+                + '<h3 class="text-xl font-extrabold text-white">Halo! &#128075;</h3>'
+                + '<p class="text-xs text-slate-300 mt-1 leading-relaxed">Butuh konsultasi SOP teknis lapangan, review BOQ, atau persiapan Site Survey Teknotama?</p>'
+                + '</div>'
+                + '<div class="flex-1 overflow-y-auto tkt-scroll p-4 space-y-3 bg-[#080c15]">'
+                + '<div class="bg-[#11192b] border border-red-950/80 rounded-2xl p-3.5 space-y-2.5">'
+                + '<div class="flex items-center justify-between"><span class="text-xs font-bold text-white">Pusat Bantuan SOP Lapangan</span><span class="text-[10px] text-brand-400 font-mono">8 Panduan</span></div>'
+                + '<div class="relative"><i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i><input id="widget-help-search" type="text" placeholder="Cari SOP (TIA-568, FO, Fluke, SLA)..." class="w-full pl-8 pr-3 py-2 rounded-xl bg-[#080d1a] border border-red-950 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500"></div>'
+                + '<div id="widget-help-results" class="space-y-2 pt-1"></div>'
+                + '</div>'
+                + '<button id="widget-start-conversation" type="button" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-brand-600/40 rounded-2xl p-4 flex items-center justify-between gap-3 transition-all group"><div><span class="block text-xs font-bold text-white group-hover:text-brand-400 transition-colors">Mulai Konsultasi AI Engineer</span><span class="block text-[11px] text-slate-400 mt-0.5">Respons instan teknis lapangan &amp; arsitektur IT</span></div><div class="w-9 h-9 rounded-xl bg-brand-600 text-white flex items-center justify-center flex-shrink-0 shadow-md shadow-brand-600/30"><i data-lucide="send" class="w-4 h-4"></i></div></button>'
+                + '<a href="index.html#kalkulator" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-red-950/80 rounded-2xl p-3.5 flex items-center justify-between gap-3 transition-all"><div><span class="block text-xs font-bold text-brand-400">Buka Kalkulator BOQ Teknis</span><span class="block text-[11px] text-slate-300 mt-0.5">Hitung kebutuhan Switch PoE, Kabel &amp; UPS</span></div><i data-lucide="cpu" class="w-4 h-4 text-brand-400 flex-shrink-0"></i></a>'
+                + '</div></div>'
+                + '<div id="widget-view-chat" class="hidden flex-1 flex flex-col overflow-hidden">'
+                + '<div class="bg-[#11192b] px-4 py-3.5 pr-12 border-b border-red-950/80 flex items-center justify-between gap-2">'
+                + '<div class="flex items-center gap-2.5 min-w-0"><div class="w-8 h-8 rounded-xl bg-brand-600 flex items-center justify-center text-white flex-shrink-0"><i data-lucide="bot" class="w-4 h-4"></i></div><div class="min-w-0"><h4 class="text-xs font-bold text-white truncate">TeknoAssist AI Engineer</h4><p class="text-[10px] text-emerald-400 font-medium truncate">Paham SOP Eksekusi Lapangan</p></div></div>'
+                + '<div class="flex items-center gap-1.5 flex-shrink-0"><button id="widget-sync-booking" type="button" title="Terapkan ke Form Booking" class="px-2 py-1 rounded-lg bg-brand-600/20 border border-brand-500/40 text-brand-300 hover:bg-brand-600 hover:text-white text-[10px] font-bold transition-colors">Ke Form</button><button id="widget-reset-chat" type="button" title="Reset Obrolan" class="p-1.5 rounded-lg bg-[#080d1a] text-slate-400 hover:text-white transition-colors"><i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i></button></div>'
+                + '</div>'
+                + '<div id="widget-chat-messages" class="flex-1 overflow-y-auto tkt-scroll p-4 space-y-3 bg-[#080c15]"></div>'
+                + '<div class="px-3 pt-2 pb-1 bg-[#0b101b] border-t border-red-950/60 flex gap-1.5 overflow-x-auto tkt-scroll">'
+                + '<button type="button" data-prompt="Bagaimana SOP penarikan kabel Cat6/Cat6A dan Fiber Optic antar lantai?" class="ai-quick-chip whitespace-nowrap text-[10px] px-2.5 py-1 rounded-full bg-[#11192b] border border-red-950 text-slate-300 hover:border-brand-500 hover:text-white">SOP Kabel &amp; FO</button>'
+                + '<button type="button" data-prompt="Bagaimana cara kerja malam/akhir pekan tanpa mengganggu operasional kantor?" class="ai-quick-chip whitespace-nowrap text-[10px] px-2.5 py-1 rounded-full bg-[#11192b] border border-red-950 text-slate-300 hover:border-brand-500 hover:text-white">Zero-Downtime</button>'
+                + '</div>'
+                + '<form id="widget-chat-form" class="p-3 bg-[#0b101b] flex gap-2"><input id="widget-chat-input" type="text" placeholder="Ketik pertanyaan teknis Anda..." class="flex-1 px-3.5 py-2 rounded-xl bg-[#080d1a] border border-red-950 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500"><button type="submit" class="px-3.5 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs flex items-center justify-center transition-colors"><i data-lucide="send" class="w-4 h-4"></i></button></form>'
+                + '</div>'
+                + '<div class="grid grid-cols-2 border-t border-red-950/80 bg-[#0d1424] h-12 flex-shrink-0">'
+                + '<button id="widget-tab-home" type="button" class="flex items-center justify-center gap-1.5 text-xs font-bold text-brand-400 hover:bg-white/5 transition-colors"><i data-lucide="home" class="w-4 h-4"></i><span>Beranda</span></button>'
+                + '<button id="widget-tab-chat" type="button" class="flex items-center justify-center gap-1.5 text-xs font-bold text-slate-400 hover:bg-white/5 transition-colors border-l border-red-950/60"><i data-lucide="message-square" class="w-4 h-4"></i><span>Chat AI</span></button>'
+                + '</div></div>'
+                + '<button id="ai-widget-toggle" type="button" aria-label="Buka Konsultasi AI Teknotama" class="pointer-events-auto group flex items-center gap-2.5 bg-gradient-to-r from-brand-700 via-brand-600 to-brand-500 hover:from-brand-600 hover:to-brand-400 text-white font-bold px-4 py-3.5 rounded-full shadow-2xl shadow-brand-600/40 border border-brand-400/30 transition-all transform hover:-translate-y-0.5"><span id="widget-icon-open" class="flex items-center gap-2"><i data-lucide="bot" class="w-5 h-5"></i><span class="hidden sm:inline text-xs tracking-wide">Tanya AI Teknis</span></span><span id="widget-icon-close" class="hidden flex items-center gap-1.5"><i data-lucide="chevron-down" class="w-5 h-5"></i></span></button>'
+                + '</div>';
+            while (wrap.firstChild) {
+                document.body.appendChild(wrap.firstChild);
+            }
+        }
+        if (!document.getElementById('tkt-toast')) {
+            const toast = document.createElement('div');
+            toast.id = 'tkt-toast';
+            toast.className = 'hidden opacity-0 fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-[#11192b] border border-brand-500/60 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-2xl transition-opacity duration-200 no-print';
+            document.body.appendChild(toast);
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
+        ensureFloatingWidgetDom();
         initNavigationAndStaticSections();
         initCalculator();
         initChatbotInterfaces();
         initBookingForm();
+
+        try {
+            if (sessionStorage.getItem('tkt_pending_booking_sync') === '1' && document.getElementById('form-message')) {
+                sessionStorage.removeItem('tkt_pending_booking_sync');
+                syncContextToBookingForm(true);
+            }
+        } catch (e) {
+            // ignore
+        }
+
         refreshIcons();
     });
 })();

@@ -197,6 +197,18 @@ function teknotama_handle_chat($config, $input)
         $userMessage = substr($userMessage, 0, 2000);
     }
 
+    // Layer 1: Deterministic Pre-LLM Input Guardrails (OWASP LLM Top 10 & MLCommons Safety)
+    $guardrailBlock = teknotama_evaluate_input_guardrails($userMessage);
+    if ($guardrailBlock !== null) {
+        teknotama_send_json(array(
+            'ok' => true,
+            'reply' => $guardrailBlock['reply'],
+            'engine' => 'guardrail_shield',
+            'model' => $guardrailBlock['category'],
+            'suggested_actions' => array('scroll_to_calculator'),
+        ), 200);
+    }
+
     $history = teknotama_sanitize_history(isset($input['history']) ? $input['history'] : array());
     $calcContext = isset($input['calculator_context']) && is_array($input['calculator_context'])
         ? $input['calculator_context']
@@ -256,6 +268,9 @@ function teknotama_handle_chat($config, $input)
         $usedEngine = 'local_expert';
         $usedModel = 'teknotama-sop-engine-v1';
     }
+
+    // Layer 3: Post-LLM Output Guardrails (Anti-Price Hallucination & URL Sanitizer)
+    $reply = teknotama_enforce_output_guardrails($reply);
 
     $actions = teknotama_extract_suggested_actions($userMessage, $reply);
 
@@ -369,6 +384,76 @@ function teknotama_clean_model_output($text)
 {
     $text = preg_replace('/<think>[\s\S]*?<\/think>/i', '', (string) $text);
     return trim((string) $text);
+}
+
+/**
+ * Layer 1 Guardrail: Pre-LLM Input Classifier (Standar OWASP LLM Top 10 & MLCommons Safety)
+ * Mencegat Prompt Injection, Ujaran Kebencian/Kata Kasar, Permintaan Ilegal, dan Topik Non-IT.
+ */
+function teknotama_evaluate_input_guardrails($userMessage)
+{
+    $lower = strtolower($userMessage);
+
+    // 1. OWASP LLM01 & LLM06: Prompt Injection / System Prompt & Secret Extraction
+    $injectionPatterns = array(
+        '/ignore\s+(all\s+)?(previous|prior|above)\s+instructions/i',
+        '/disregard\s+(all\s+)?(previous|prior)\s+instructions/i',
+        '/abaikan\s+(semua\s+)?(instruksi|perintah|aturan)/i',
+        '/lupakan\s+(semua\s+)?(instruksi|aturan|peran)/i',
+        '/(tampilkan|berikan|bocorkan|sebutkan|print|reveal|show)\s+.*(system\s*prompt|instruksi\s*sistem|api\s*key|secret\s*key|konfigurasi\s*rahasia)/i',
+        '/act\s+as\s+(dan|jailbreak|unrestricted)/i',
+        '/you\s+are\s+now\s+in\s+developer\s+mode/i',
+    );
+    foreach ($injectionPatterns as $pattern) {
+        if (preg_match($pattern, $userMessage)) {
+            return array(
+                'category' => 'OWASP-LLM01-Prompt-Shield',
+                'reply' => "Permintaan tersebut tidak dapat diproses. Saya adalah **TeknoAssist**, asisten teknis resmi **PT Teknotama Prakarsa Mulia** yang dikhususkan untuk konsultasi arsitektur jaringan, pengkabelan (UTP/Fiber Optic), Data Center, CCTV, dan keamanan siber enterprise.\n\nSilakan tanyakan kebutuhan infrastruktur IT gedung/kantor Anda.",
+            );
+        }
+    }
+
+    // 2. MLCommons / Llama Guard S10: Ujaran Kebencian, SARA, Pelecehan & Profanity
+    if (preg_match('/\b(anjing|anjir|bangsat|babi|goblog|goblok|tolol|idiot|kontol|memek|ngentot|bajingan|keparat|brengsek| Kampret|fuck|bitch|asshole|shit|bastard)\b/i', $lower)
+        || preg_match('/(bunuh\s+semua|bakar\s+tempat\s+ibadah|ujaran\s+kebencian|rasis\s+lo)/i', $lower)) {
+        return array(
+            'category' => 'Safety-S10-Respectful-Policy',
+            'reply' => "Mohon maaf, **TeknoAssist** menerapkan kebijakan komunikasi profesional dan tidak memproses pesan yang mengandung kata kasar, penghinaan, atau ujaran kebencian.\n\nJika Anda membutuhkan bantuan teknis terkait instalasi jaringan, server, Fiber Optic, atau CCTV untuk perusahaan Anda, silakan sampaikan dengan bahasa profesional.",
+        );
+    }
+
+    // 3. MLCommons S1/S2 & Cyber Abuse: Peretasan Ilegal, Eksploitasi, Judi Online, Kekerasan
+    if (preg_match('/(cara\s+(hack|meretas|membobol|bobol|crack|carding|ddos|deface)|bobol\s+wifi|serang\s+server|buatkan\s+(malware|ransomware|trojan|virus|phishing)|judi\s+online|slot\s+gacor|cara\s+merakit\s+bom)/i', $lower)) {
+        return array(
+            'category' => 'Safety-Cyber-Ethics-Shield',
+            'reply' => "Permintaan ditolak. **PT Teknotama Prakarsa Mulia** hanya menyediakan layanan **keamanan siber defensif yang sah dan legal** (seperti implementasi Next-Gen Firewall Fortinet/Palo Alto, enkripsi VPN, serta audit keamanan resmi untuk perusahaan).\n\nKami tidak melayani aktivitas peretasan ilegal, eksploitasi tanpa izin, maupun konten terlarang.",
+        );
+    }
+
+    // 4. Out-of-Domain / Topik Tidak Relevan (Memasak, Politik, Asmara, Hiburan, PR Sekolah)
+    $hasItContext = preg_match('/\b(jaringan|network|kabel|cat6|cat6a|fiber|fo|switch|router|mikrotik|cisco|fortinet|firewall|vpn|wifi|access\s*point|ap|server|cloud|vmware|proxmox|nas|rack|ups|cctv|nvr|kamera|fluke|otdr|conduit|tray|lantai|gedung|kantor|survei|survey|boq|teknotama|sla|it|lan|vlan|data\s*center|telepon|pabx|erp)\b/i', $lower);
+    if (!$hasItContext && preg_match('/(resep\s+masak|cara\s+memasak|nasi\s+goreng|rendang|pilpres|capres|partai\s+politik|ramalan\s+zodiak|skor\s+bola|liga\s+inggris|buatkan\s+puisi|cerpen|dongeng|tips\s+pacaran|putus\s+cinta|chord\s+gitar|lirik\s+lagu)/i', $lower)) {
+        return array(
+            'category' => 'Domain-Scope-Guardrail',
+            'reply' => "Mohon maaf, pertanyaan tersebut berada di luar lingkup layanan kami. Saya adalah **TeknoAssist**, asisten teknis **PT Teknotama Prakarsa Mulia**.\n\nSaya siap membantu Anda dalam:\n- **Perancangan Jaringan & Pengkabelan** (UTP Cat6/Cat6A & Fiber Optic Backbone)\n- **SOP Eksekusi Lapangan Tanpa Downtime** & Uji Sertifikasi Fluke/OTDR\n- **Keamanan Jaringan (NGFW Firewall/VPN)**, **Data Center/Server**, & **IP CCTV**\n\nApakah ada rencana instalasi atau pembaruan infrastruktur IT di kantor Anda?",
+        );
+    }
+
+    return null;
+}
+
+/**
+ * Layer 3 Guardrail: Post-LLM Output Sanitizer
+ * Mencegah halusinasi nominal harga Rupiah, URL palsu, atau tag script berbahaya.
+ */
+function teknotama_enforce_output_guardrails($reply)
+{
+    $clean = preg_replace('/<script\b[^>]*>([\s\S]*?)<\/script>/i', '', (string) $reply);
+    // Cegah kebocoran nominal harga Rupiah spesifik (sesuai aturan BOQ tanpa nominal)
+    $clean = preg_replace('/\b(Rp\.?\s?\d[\d\.,]*(\s?(ribu|juta|miliar|jt|rb))?|IDR\s?\d[\d\.,]*)/i', '[Harga Resmi Setelah Site Survey]', (string) $clean);
+    // Cegah URL sub-path yang tidak ada
+    $clean = str_replace(array('https://teknotama.com/survey', 'http://teknotama.com/survey', 'www.teknotama.com/survey'), 'Formulir Survei (#kontak)', (string) $clean);
+    return trim((string) $clean);
 }
 
 function teknotama_call_groq($apiKey, $systemPrompt, $history, $userMessage)
