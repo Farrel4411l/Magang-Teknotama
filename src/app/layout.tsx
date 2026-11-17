@@ -1,47 +1,88 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/layout/ClientLayout";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-heading",
   subsets: ["latin"],
+  weight: ["600", "700"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#070B14",
+  themeColor: "#021861",
 };
 
 export const metadata: Metadata = {
-  title: "TeknoGame - Play. Evolve. Conquer.",
+  metadataBase: new URL("https://teknotama.com"),
+  title: {
+    default: "Tekno Game - Portal Game Web HTML5 Resmi PT Teknotama Prakarsa Mulia",
+    template: "%s | Tekno Game",
+  },
   description:
-    "Portal game web HTML5 instan terkemuka! Mainkan ratusan game aksi, petualangan, balap, arcade, dan puzzle seru gratis tanpa install di TeknoGame.",
+    "Portal resmi game web HTML5 instan persembahan PT Teknotama Prakarsa Mulia. Mainkan game petualangan, arcade, puzzle, dan aksi gratis langsung di browser tanpa instalasi.",
   keywords: [
-    "teknogame",
+    "Tekno Game",
     "game web",
     "game online gratis",
-    "game friv",
-    "game poki",
-    "html5 games",
-    "play evolve conquer",
-    "free web games",
+    "game html5 indonesia",
+    "teknotama game",
+    "PT Teknotama Prakarsa Mulia",
+    "game browser gratis",
+    "game tanpa install",
   ],
-  authors: [{ name: "TeknoGame Studio" }],
+  authors: [{ name: "PT Teknotama Prakarsa Mulia", url: "https://teknotama.com" }],
+  creator: "PT Teknotama Prakarsa Mulia",
+  publisher: "PT Teknotama Prakarsa Mulia",
+  alternates: {
+    canonical: "/games",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: [
-      { url: "/games/teknogame-icon.png?v=3", type: "image/png" },
-      { url: "/games/favicon.ico?v=3", sizes: "any" },
+      { url: "/games/Teknogame_logo_only.png", type: "image/png" },
+      { url: "/games/favicon.ico", sizes: "any" },
     ],
-    shortcut: "/games/teknogame-icon.png?v=3",
-    apple: "/games/teknogame-icon.png?v=3",
+    shortcut: "/games/Teknogame_logo_only.png",
+    apple: "/games/Teknogame_logo_only.png",
+  },
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: "https://teknotama.com/games",
+    siteName: "Tekno Game",
+    title: "Tekno Game - Portal Game Web HTML5 Resmi PT Teknotama Prakarsa Mulia",
+    description:
+      "Mainkan aneka game web HTML5 seru dan gratis di Tekno Game, sub-portal resmi PT Teknotama Prakarsa Mulia.",
+    images: [
+      {
+        url: "/games/Teknogame_logo_only.png",
+        width: 800,
+        height: 800,
+        alt: "Logo Resmi Tekno Game",
+      },
+    ],
   },
 };
 
@@ -54,14 +95,18 @@ export default function RootLayout({
     <html
       lang="id"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+      className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} antialiased dark`}
     >
       <head>
-        <link rel="icon" href="/games/teknogame-icon.png?v=3" type="image/png" />
-        <link rel="shortcut icon" href="/games/teknogame-icon.png?v=3" type="image/png" />
-        <link rel="apple-touch-icon" href="/games/teknogame-icon.png?v=3" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="preconnect" href="https://teknotama.com" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://teknotama.com" />
+        <link rel="icon" href="/games/Teknogame_logo_only.png" type="image/png" />
+        <link rel="shortcut icon" href="/games/Teknogame_logo_only.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/games/Teknogame_logo_only.png" />
       </head>
-      <body className="min-h-full bg-[#070B14] text-[#F8FAFC]" suppressHydrationWarning>
+      <body className="min-h-full bg-[#010B2E] text-[#F8FAFC]" suppressHydrationWarning>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

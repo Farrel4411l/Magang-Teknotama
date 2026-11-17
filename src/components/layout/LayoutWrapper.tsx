@@ -7,18 +7,17 @@ interface LayoutWrapperProps {
 
 export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   return (
-    <div className="relative min-h-screen flex flex-col pb-28">
-      {/* Skyscraper Kiri (Hanya muncul di desktop lebar >= 1440px) */}
+    <div className="relative min-h-screen flex flex-col pb-28 cyber-grid">
+      {/* Floating Side Ads Kiri (Melayang Permanen di Desktop, Aman dari Konten Utama) */}
       <AdSkyscraper position="left" />
 
-      {/* Main Content Area */}
+      {/* Kontainer Konten Utama */}
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {children}
       </main>
 
-      {/* Skyscraper Kanan (Hanya muncul di desktop lebar >= 1440px) */}
+      {/* Floating Side Ads Kanan (Melayang Permanen di Desktop, Aman dari Konten Utama) */}
       <AdSkyscraper position="right" />
     </div>
   );
 }
-

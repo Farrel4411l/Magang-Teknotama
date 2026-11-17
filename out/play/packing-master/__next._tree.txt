@@ -1,5 +1,5 @@
-:HL["/games/_next/static/css/503d9650bd74ff7c.css","style"]
+:HL["/games/_next/static/css/e4f94c5537ec6ef6.css","style"]
 3:[["children",{"s":"__PAGE__","h":160}]]
 2:[["children",{"s":{"n":"slug","t":"d","k":"packing-master","s":[]},"h":96,"c":"$Q3"}]]
 1:[["children",{"s":"play","h":96,"c":"$Q2"}]]
-0:{"b":"mMUKanDbcjaq-rHiVwWTP","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"h-Z6vXvvzX3WQYAkhx8VS","t":{"t":{"s":"","h":80,"c":"$Q1"}}}

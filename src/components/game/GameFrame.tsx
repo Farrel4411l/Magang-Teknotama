@@ -9,9 +9,10 @@ import {
   Heart,
   Share2,
   Trophy,
-  Sparkles,
   Check,
   X,
+  Gamepad2,
+  Sparkles,
 } from "lucide-react";
 import {
   toggleLocalFavorite,
@@ -30,7 +31,8 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   const [lastScore, setLastScore] = useState<number | null>(null);
 
   // Initialize favorite and record recent play
@@ -54,27 +56,39 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
     return () => window.removeEventListener("message", handleMessage);
   }, [game.id]);
 
-  // Auto-close score popup banner after 2 seconds (2000ms)
+  // Auto-close score banner
   useEffect(() => {
     if (lastScore !== null) {
       const timer = setTimeout(() => {
         setLastScore(null);
-      }, 2000);
+      }, 3500);
       return () => clearTimeout(timer);
     }
   }, [lastScore]);
 
+  // Fullscreen change listener
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
   const handleToggleFavorite = () => {
     const next = toggleLocalFavorite(game.id);
     setIsFavorite(next);
+    setToastMessage(next ? "Game berhasil ditambahkan ke daftar Favorit!" : "Game dihapus dari Favorit.");
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2500);
   };
 
   const handleFullscreen = () => {
     if (!containerRef.current) return;
     if (!document.fullscreenElement) {
-      containerRef.current.requestFullscreen().then(() => setIsFullscreen(true));
+      containerRef.current.requestFullscreen().catch(() => {});
     } else {
-      document.exitFullscreen().then(() => setIsFullscreen(false));
+      document.exitFullscreen().catch(() => {});
     }
   };
 
@@ -85,51 +99,67 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
   };
 
   const handleShare = () => {
+    const shareUrl = typeof window !== "undefined" ? window.location.href : `https://teknotama.com/games/play/${game.slug}`;
     if (navigator.share) {
-      navigator.share({
-        title: `${game.title} - TeknoGame`,
-        text: `Ayo mainkan game seru ${game.title} di TeknoGame sekarang!`,
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      navigator
+        .share({
+          title: `${game.title} - Tekno Game`,
+          text: `Ayo mainkan game seru ${game.title} di Tekno Game resmi PT Teknotama Prakarsa Mulia!`,
+          url: shareUrl,
+        })
+        .catch(() => {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareUrl);
+      setToastMessage("Tautan game berhasil disalin ke clipboard!");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2500);
     }
   };
 
+  // Base path prefix for HTML5 game assets
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/games";
+  const gameSrc = `${basePath}${game.gamePath.startsWith("/") ? game.gamePath : `/${game.gamePath}`}`;
+
   return (
-    <div className="flex flex-col gap-3">
-      {/* Game Iframe Wrapper (Cyber Theater Mode) */}
+    <div className="flex flex-col gap-3 relative">
+      {/* Toast Notifikasi Glassmorphism Berbahasa Indonesia */}
+      {showToast && (
+        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50 glass-modal px-4 py-2.5 rounded-2xl border border-[#255dce]/60 text-white text-xs font-bold shadow-2xl flex items-center gap-2 animate-in fade-in slide-in-from-top-4 duration-200">
+          <Check className="w-4 h-4 text-emerald-400" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
+
+      {/* Kontainer Layar Permainan (Game Iframe) */}
       <div
         ref={containerRef}
-        className={`relative w-full rounded-3xl overflow-hidden bg-slate-950 border border-cyan-500/30 shadow-[0_0_35px_rgba(0,240,255,0.12)] transition-all ${
+        className={`relative w-full rounded-3xl overflow-hidden bg-[#010B2E] border border-[#255dce]/50 shadow-2xl transition-all ${
           isFullscreen ? "h-screen rounded-none" : "h-[450px] sm:h-[540px] md:h-[600px]"
         }`}
       >
         <iframe
           ref={iframeRef}
-          src={`/games${game.gamePath.startsWith("/") ? game.gamePath : `/${game.gamePath}`}`}
+          src={gameSrc}
           title={game.title}
           className="w-full h-full border-0 select-none"
           allow="autoplay; fullscreen; pointer-lock"
           sandbox="allow-scripts allow-same-origin allow-pointer-lock"
         />
 
-        {/* Score Achievement Banner Overlay (When Game Over Emitted) */}
+        {/* Overlay Banner Pencapaian Skor */}
         {lastScore !== null && (
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 bg-[#0B1222]/95 border border-cyan-500/80 rounded-2xl p-4 shadow-[0_0_30px_rgba(0,240,255,0.3)] text-white flex flex-col sm:flex-row items-center gap-4 backdrop-blur-md animate-in slide-in-from-top duration-300">
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 glass-modal border border-[#255dce]/80 rounded-2xl p-4 shadow-2xl text-white flex flex-col sm:flex-row items-center gap-4 animate-in slide-in-from-top duration-300">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 flex items-center justify-center text-xl shrink-0 shadow-lg">
-                🏆
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#8A0045] to-[#660033] text-amber-300 flex items-center justify-center text-xl shrink-0 shadow-lg">
+                <Trophy className="w-5 h-5 text-amber-300" />
               </div>
               <div>
-                <span className="text-xs text-slate-300 block">Game Selesai! Skor Kamu:</span>
-                <span className="text-lg font-black bg-gradient-to-r from-cyan-300 to-amber-400 bg-clip-text text-transparent">
-                  {lastScore.toLocaleString("id-ID")} pts
+                <span className="text-xs text-slate-300 block">Permainan Selesai! Skor Anda:</span>
+                <span className="text-lg font-black bg-gradient-to-r from-cyan-300 to-amber-300 bg-clip-text text-transparent">
+                  {lastScore.toLocaleString("id-ID")} Poin
                 </span>
                 <span className="text-[11px] text-emerald-400 block font-medium">
-                  ✓ Tersimpan di rekor browsermu
+                  Tersimpan otomatis di rekor browser
                 </span>
               </div>
             </div>
@@ -138,14 +168,14 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
               <button
                 type="button"
                 onClick={() => onOpenLeaderboard?.()}
-                className="px-3.5 py-1.5 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 text-xs font-black rounded-xl shadow-[0_0_12px_rgba(0,240,255,0.4)] cursor-pointer transition-all"
+                className="px-3.5 py-1.5 btn-burgundy text-xs font-bold rounded-xl shadow-md cursor-pointer transition-all"
               >
                 Lihat Rekor
               </button>
               <button
                 type="button"
                 onClick={() => setLastScore(null)}
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
+                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
                 aria-label="Tutup Banner Skor"
               >
                 <X className="w-4 h-4" />
@@ -155,69 +185,81 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
         )}
       </div>
 
-      {/* Control Utility Toolbar */}
-      <div className="bg-[#0B1222] rounded-2xl border border-slate-800 p-3.5 shadow-xl flex items-center justify-between gap-3">
-        {/* Left: Game Title & Category */}
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center text-xl shrink-0">
-            🎮
+      {/* Bilah Kontrol Modern Berikon Lucide React */}
+      <div className="rounded-2xl card-elevated p-3.5 shadow-xl flex items-center justify-between gap-3">
+        {/* Sisi Kiri: Judul Game & Kategori */}
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-10 h-10 rounded-xl bg-[#021861] border border-[#255dce]/60 text-[#3b82f6] flex items-center justify-center shrink-0 shadow-sm">
+            <Gamepad2 className="w-5 h-5 text-cyan-300" />
           </div>
-          <div>
-            <h1 className="text-sm sm:text-base font-black text-white leading-tight">
+          <div className="min-w-0">
+            <h1 className="font-heading text-sm sm:text-base font-bold text-white leading-tight truncate">
               {game.title}
             </h1>
-            <span className="text-[11px] font-bold text-cyan-400 uppercase">
+            <span className="text-[11px] font-bold text-cyan-300 uppercase tracking-wide">
               Kategori: {game.category}
             </span>
           </div>
         </div>
 
-        {/* Right: Actions */}
-        <div className="flex items-center gap-2">
-          {/* Favorite */}
+        {/* Sisi Kanan: Kontrol Aksi (Fullscreen, Share, Favorit, Reload) */}
+        <div className="flex items-center gap-2 shrink-0">
+          {/* 3. Tombol Favorit (Heart Icon) dengan transisi warna ke Burgundy */}
           <button
+            type="button"
             onClick={handleToggleFavorite}
-            aria-label="Simpan ke Favorit"
-            className={`p-2 rounded-xl border transition-colors cursor-pointer ${
+            aria-label={isFavorite ? "Hapus dari Favorit" : "Simpan ke Favorit"}
+            title={isFavorite ? "Game Favorit Aktif" : "Tambah ke Favorit"}
+            className={`min-h-[44px] min-w-[44px] p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-center ${
               isFavorite
-                ? "bg-rose-950/80 border-rose-500/50 text-rose-400"
-                : "bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:border-slate-700"
+                ? "bg-gradient-to-r from-[#8A0045] to-[#660033] border-rose-400/80 text-white shadow-[0_0_15px_rgba(138,0,69,0.6)]"
+                : "bg-[#010B2E] border-[#255dce]/40 text-slate-300 hover:text-white hover:bg-[#255dce]/20"
             }`}
           >
-            <Heart className={`w-4 h-4 ${isFavorite ? "fill-rose-500 text-rose-500" : ""}`} />
+            <Heart
+              className={`w-4 h-4 transition-transform ${
+                isFavorite ? "fill-white text-white scale-110" : ""
+              }`}
+            />
           </button>
 
-          {/* Share */}
+          {/* 2. Tombol Bagikan (Share) */}
           <button
+            type="button"
             onClick={handleShare}
-            aria-label="Bagikan Game"
-            className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:border-cyan-500/40 transition-colors cursor-pointer"
+            aria-label="Bagikan Tautan Game"
+            title="Bagikan Tautan Game"
+            className="min-h-[44px] min-w-[44px] p-2.5 rounded-xl bg-[#010B2E] border border-[#255dce]/40 text-slate-300 hover:text-white hover:bg-[#255dce]/20 transition-all cursor-pointer flex items-center justify-center"
           >
-            {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Share2 className="w-4 h-4" />}
+            <Share2 className="w-4 h-4 text-[#3b82f6]" />
           </button>
 
-          {/* Reload Game */}
+          {/* Tombol Muat Ulang Permainan */}
           <button
+            type="button"
             onClick={handleReload}
-            aria-label="Ulangi Permainan"
-            className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:border-cyan-500/40 transition-colors cursor-pointer"
+            aria-label="Muat Ulang Permainan"
+            title="Muat Ulang Permainan"
+            className="min-h-[44px] min-w-[44px] p-2.5 rounded-xl bg-[#010B2E] border border-[#255dce]/40 text-slate-300 hover:text-white hover:bg-[#255dce]/20 transition-all cursor-pointer flex items-center justify-center"
           >
-            <RotateCcw className="w-4 h-4" />
+            <RotateCcw className="w-4 h-4 text-slate-300" />
           </button>
 
-          {/* Fullscreen Toggle */}
+          {/* 1. Tombol Layar Penuh (Fullscreen) */}
           <button
+            type="button"
             onClick={handleFullscreen}
-            className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 text-xs font-black transition-all shadow-md flex items-center gap-1.5 cursor-pointer shadow-[0_0_15px_rgba(0,240,255,0.3)]"
+            aria-label={isFullscreen ? "Keluar Layar Penuh" : "Mode Layar Penuh"}
+            className="min-h-[44px] px-4 py-2 rounded-xl btn-burgundy text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
           >
             {isFullscreen ? (
               <>
-                <Minimize className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Normal</span>
+                <Minimize className="w-4 h-4" />
+                <span className="hidden sm:inline">Layar Normal</span>
               </>
             ) : (
               <>
-                <Maximize className="w-3.5 h-3.5" />
+                <Maximize className="w-4 h-4" />
                 <span className="hidden sm:inline">Layar Penuh</span>
               </>
             )}

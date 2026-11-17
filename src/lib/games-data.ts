@@ -1,13 +1,13 @@
 import { Game, CategoryInfo } from "@/types/game";
 
 export const CATEGORIES: CategoryInfo[] = [
-  { id: "all", label: "Semua Game", icon: "🎮", colorClass: "bg-red-500" },
-  { id: "arcade", label: "Arcade", icon: "🕹️", colorClass: "bg-amber-500" },
-  { id: "adventure", label: "Petualangan", icon: "🧭", colorClass: "bg-emerald-500" },
-  { id: "puzzle", label: "Puzzle", icon: "🧩", colorClass: "bg-sky-500" },
-  { id: "action", label: "Aksi", icon: "⚡", colorClass: "bg-purple-500" },
-  { id: "casual", label: "Santai", icon: "☕", colorClass: "bg-pink-500" },
-  { id: "sports", label: "Olahraga", icon: "⚽", colorClass: "bg-blue-500" },
+  { id: "all", label: "Semua Game", icon: "Gamepad2", colorClass: "bg-blue-600" },
+  { id: "arcade", label: "Arcade", icon: "Gamepad", colorClass: "bg-indigo-600" },
+  { id: "adventure", label: "Petualangan", icon: "Compass", colorClass: "bg-cyan-600" },
+  { id: "puzzle", label: "Puzzle", icon: "Puzzle", colorClass: "bg-sky-600" },
+  { id: "action", label: "Aksi", icon: "Zap", colorClass: "bg-blue-700" },
+  { id: "casual", label: "Santai", icon: "Coffee", colorClass: "bg-slate-600" },
+  { id: "sports", label: "Olahraga", icon: "Trophy", colorClass: "bg-cobalt-600" },
 ];
 
 export const INITIAL_GAMES: Game[] = [

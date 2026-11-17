@@ -2,32 +2,135 @@
 @source "../**/*.{js,ts,jsx,tsx,mdx}";
 @source "../../src/**/*.{js,ts,jsx,tsx,mdx}";
 
-@layer base {
-  :root {
-    --color-tekno-cyan: #00F0FF;
-    --color-tekno-cyan-light: #38BDF8;
-    --color-tekno-blue: #2563EB;
-    --color-tekno-blue-deep: #1D4ED8;
-    --color-tekno-void: #070B14;
-    --color-tekno-surface: #0B1222;
-    --color-tekno-card: #0F172A;
-    --color-tekno-card-hover: #162238;
-    --color-tekno-border: #1E293B;
-    --color-tekno-glow-border: #0284C7;
-    --color-tekno-text-main: #F8FAFC;
-    --color-tekno-text-muted: #94A3B8;
-    --color-tekno-amber: #FACC15;
-    --color-tekno-green: #10B981;
-  }
+@theme {
+  --font-heading: var(--font-heading), "Space Grotesk", sans-serif;
+  --font-sans: var(--font-sans), "Plus Jakarta Sans", sans-serif;
 
-  body {
-    background-color: #070B14;
-    color: #F8FAFC;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  }
+  --color-void: #010B2E;
+  --color-midnight: #021861;
+  --color-cobalt: #255dce;
+  --color-cobalt-light: #3b82f6;
+  --color-burgundy: #660033;
+  --color-burgundy-light: #8A0045;
+  --color-burgundy-glow: rgba(138, 0, 69, 0.45);
 }
 
-/* Custom Marquis Animation for Tekno Live Radar */
+:root {
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+
+  /* 60% Dominan: Midnight Navy & Deep Void */
+  --bg-void: #010B2E;
+  --bg-midnight: #021861;
+
+  /* 30% Sekunder: Cobalt Blue */
+  --color-cobalt: #255dce;
+  --color-cobalt-border: rgba(37, 93, 206, 0.5);
+
+  /* 10% Aksen: Burgundy */
+  --color-burgundy: #660033;
+  --color-burgundy-light: #8A0045;
+}
+
+body {
+  background-color: #010B2E;
+  color: #F8FAFC;
+  font-family: var(--font-sans);
+  line-height: 1.625;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+/* Pola Cyber Grid / Mesh CSS Ringan */
+.cyber-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(37, 93, 206, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(37, 93, 206, 0.07) 1px, transparent 1px);
+}
+
+/* Ambient Glow Efek Visual */
+.ambient-glow {
+  background: radial-gradient(circle 800px at 50% -100px, rgba(37, 93, 206, 0.28), rgba(2, 24, 97, 0.45) 50%, transparent 80%);
+}
+
+/* Solid Elevated Card (30% Cobalt Blue) */
+.card-elevated {
+  background: linear-gradient(145deg, rgba(37, 93, 206, 0.22), rgba(2, 24, 97, 0.88));
+  border: 1px solid rgba(37, 93, 206, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(1, 11, 46, 0.8), 0 0 15px -3px rgba(37, 93, 206, 0.15);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-elevated:hover {
+  transform: translateY(-6px);
+  border-color: rgba(37, 93, 206, 0.85);
+  box-shadow: 0 18px 35px -8px rgba(1, 11, 46, 0.9), 0 0 25px 2px rgba(37, 93, 206, 0.35);
+}
+
+/* Selective Glassmorphism (Navbar, Dropdown, Modal/Toast) */
+.glass-nav {
+  background: rgba(2, 24, 97, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(37, 93, 206, 0.35);
+}
+
+.glass-dropdown {
+  background: rgba(2, 24, 97, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(37, 93, 206, 0.45);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+}
+
+.glass-modal {
+  background: rgba(2, 24, 97, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(37, 93, 206, 0.45);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(37, 93, 206, 0.25);
+}
+
+/* 10% Aksen Burgundy CTA Buttons */
+.btn-burgundy {
+  background: linear-gradient(135deg, #8A0045 0%, #660033 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 15px rgba(102, 0, 51, 0.45);
+  transition: all 0.25s ease;
+}
+
+.btn-burgundy:hover {
+  background: linear-gradient(135deg, #A00052 0%, #7A003D 100%);
+  box-shadow: 0 6px 22px rgba(138, 0, 69, 0.65), 0 0 15px rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.btn-burgundy:active {
+  transform: translateY(1px);
+}
+
+/* Sponsor Highlight Button */
+.btn-sponsor {
+  background: linear-gradient(135deg, #8A0045 0%, #660033 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 15px rgba(138, 0, 69, 0.5);
+  transition: all 0.25s ease;
+}
+
+.btn-sponsor:hover {
+  background: linear-gradient(135deg, #A30055 0%, #73003B 100%);
+  box-shadow: 0 0 22px rgba(138, 0, 69, 0.8), 0 0 8px rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Ticker Animation */
 @keyframes ticker {
   0% {
     transform: translate3d(0, 0, 0);
@@ -40,29 +143,29 @@
 .animate-ticker {
   display: inline-flex;
   white-space: nowrap;
-  animation: ticker 35s linear infinite;
+  animation: ticker 40s linear infinite;
 }
 
 .animate-ticker:hover {
   animation-play-state: paused;
 }
 
-/* Custom Sleek Dark Scrollbar for Gamers */
+/* Modern Dark Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0B1222;
+  background: #010B2E;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1E293B;
+  background: #255dce;
   border-radius: 9999px;
-  border: 2px solid #0B1222;
+  border: 2px solid #010B2E;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0284C7;
+  background: #3b82f6;
 }

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Search, X, Play, Star, Flame, Zap } from "lucide-react";
+import { Search, X, Play, Star, Gamepad2, ArrowRight } from "lucide-react";
 import { INITIAL_GAMES } from "@/lib/games-data";
 import { Game } from "@/types/game";
 
@@ -43,21 +43,23 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="w-full max-w-xl bg-[#0B1222] rounded-3xl shadow-[0_0_50px_rgba(0,240,255,0.2)] border border-cyan-500/40 overflow-hidden text-white">
+      <div className="w-full max-w-xl glass-modal rounded-3xl overflow-hidden text-white shadow-2xl">
         {/* Search Input Bar */}
-        <div className="p-4 border-b border-slate-800 flex items-center gap-3 bg-[#070B14]">
+        <div className="p-4 border-b border-[#255dce]/40 flex items-center gap-3 bg-[#010B2E]">
           <Search className="w-5 h-5 text-cyan-400 shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Cari game seru (misal: runner, drift, stacker, puzzle)..."
-            className="w-full text-sm font-bold text-white placeholder-slate-500 focus:outline-none bg-transparent"
+            placeholder="Cari game seru (misal: runner, drift, stacker, kapal)..."
+            className="w-full text-sm font-semibold text-white placeholder-slate-400 focus:outline-none bg-transparent"
           />
           <button
+            type="button"
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-white rounded-full hover:bg-slate-800 transition-colors"
+            className="p-1.5 text-slate-400 hover:text-white rounded-full hover:bg-white/10 transition-colors cursor-pointer"
+            aria-label="Tutup Pencarian"
           >
             <X className="w-5 h-5" />
           </button>
@@ -66,8 +68,8 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
         {/* Search Results List */}
         <div className="p-3 max-h-[380px] overflow-y-auto space-y-1.5">
           {results.length === 0 ? (
-            <div className="py-8 text-center text-slate-400 text-xs">
-              Tidak ada game yang cocok dengan &quot;{query}&quot;. Coba kata kunci lain!
+            <div className="py-10 text-center text-slate-400 text-xs">
+              Tidak ada game yang cocok dengan &quot;{query}&quot;. Silakan coba kata kunci lain!
             </div>
           ) : (
             results.map((game) => (
@@ -75,23 +77,28 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 key={game.id}
                 href={`/play/${game.slug}`}
                 onClick={onClose}
-                className="flex items-center justify-between p-3 rounded-2xl hover:bg-[#0F172A] border border-transparent hover:border-cyan-500/30 transition-all group"
+                className="flex items-center justify-between p-3 rounded-2xl bg-[#010B2E]/60 hover:bg-[#255dce]/20 border border-[#255dce]/30 transition-all group cursor-pointer"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
-                    🎮
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#021861] border border-[#255dce]/50 text-[#3b82f6] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <Gamepad2 className="w-5 h-5 text-cyan-400" />
                   </div>
-                  <div>
-                    <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-cyan-400 transition-colors">
+                  <div className="min-w-0">
+                    <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-cyan-300 transition-colors truncate">
                       {game.title}
                     </h4>
-                    <span className="text-[10px] text-slate-400 uppercase font-semibold">
-                      {game.category} • ⭐ {game.rating.toFixed(1)}
+                    <span className="text-[10px] text-slate-400 uppercase font-semibold flex items-center gap-1.5">
+                      <span>{game.category}</span>
+                      <span>•</span>
+                      <span className="inline-flex items-center gap-0.5 text-amber-300">
+                        <Star className="w-3 h-3 fill-amber-300" />
+                        <span>{game.rating.toFixed(1)}</span>
+                      </span>
                     </span>
                   </div>
                 </div>
 
-                <span className="w-8 h-8 rounded-full bg-cyan-500/10 group-hover:bg-cyan-500 group-hover:text-slate-950 text-cyan-400 flex items-center justify-center transition-all">
+                <span className="w-8 h-8 rounded-xl btn-burgundy text-white flex items-center justify-center transition-all shrink-0">
                   <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
                 </span>
               </Link>
@@ -99,13 +106,9 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
           )}
         </div>
 
-        {/* Modal Footer Tip */}
-        <div className="p-3 bg-[#070B14] border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
-          <span className="flex items-center gap-1">
-            <Zap className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Tekan game untuk langsung mulai bermain instan.</span>
-          </span>
-          <span className="hidden sm:inline text-slate-600">Tekan ESC untuk menutup</span>
+        {/* Modal Footer */}
+        <div className="p-3 bg-[#010B2E] border-t border-[#255dce]/30 text-right text-xs text-slate-400">
+          <span>Menampilkan {results.length} hasil game</span>
         </div>
       </div>
     </div>

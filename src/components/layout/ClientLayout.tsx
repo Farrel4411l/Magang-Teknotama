@@ -8,6 +8,7 @@ import LayoutWrapper from "./LayoutWrapper";
 import AdBottomAnchor from "../ads/AdBottomAnchor";
 import SearchModal from "../game/SearchModal";
 import LeaderboardModal from "../game/LeaderboardModal";
+import FavoritesModal from "../game/FavoritesModal";
 
 interface ClientLayoutProps {
   children: React.ReactNode;
@@ -16,32 +17,38 @@ interface ClientLayoutProps {
 export default function ClientLayout({ children }: ClientLayoutProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
+  const [favoritesOpen, setFavoritesOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#070B14] text-[#F8FAFC] selection:bg-cyan-500 selection:text-slate-950">
-      {/* Tier 1: Main Gamer Navbar */}
+    <div className="min-h-screen flex flex-col bg-[#010B2E] text-[#F8FAFC] selection:bg-[#8A0045] selection:text-white">
+      {/* 1. Header & Navbar Utama */}
       <Navbar
         onOpenSearch={() => setSearchOpen(true)}
         onOpenLeaderboard={() => setLeaderboardOpen(true)}
+        onOpenFavorites={() => setFavoritesOpen(true)}
       />
 
-      {/* Tier 2: Cyber Live Radar Ticker */}
+      {/* 2. Radar Ticker Berita & Live Event */}
       <BreakingTicker />
 
-      {/* Main Page Layout Wrapper with Skyscraper Gutters */}
+      {/* 3. Layout Wrapper Utama dengan Floating Side Ads di Desktop */}
       <LayoutWrapper>{children}</LayoutWrapper>
 
-      {/* Sticky Bottom Anchor Ad */}
+      {/* 4. Sticky Bottom Anchor Ad (Khusus Layar HP / Mobile dengan tombol Sembunyikan) */}
       <AdBottomAnchor />
 
-      {/* Modals */}
+      {/* 5. Modals Interaktif */}
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
       <LeaderboardModal
         isOpen={leaderboardOpen}
         onClose={() => setLeaderboardOpen(false)}
       />
+      <FavoritesModal
+        isOpen={favoritesOpen}
+        onClose={() => setFavoritesOpen(false)}
+      />
 
-      {/* Footer */}
+      {/* 6. Footer Resmi Partner Sponsor */}
       <Footer />
     </div>
   );
