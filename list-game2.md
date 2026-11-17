@@ -33,6 +33,8 @@ Untuk memastikan game dapat dimuat dalam waktu kurang dari 0.5 detik bahkan pada
 | 7 | **Pasar Terapung: Fruit Catch** | Arcade / Falling Catcher | Unicode Emoji + Canvas 2D | 0 File (100% Code) | ~15 KB | 1 Hari |
 | 8 | **Kamus Kelana: Kata Tersembunyi**| Puzzle / Word Connect | Pure HTML/CSS + JS Matrix | 0 File (100% Code) | ~25 KB | 1-2 Hari |
 
+
+
 ---
 
 ## 3. Rincian Detail Konsep & Daftar Aset yang Dibutuhkan

@@ -230,6 +230,42 @@ export const INITIAL_GAMES: Game[] = [
       touch: "Oper perangkat ke tiap pemain secara bergiliran",
     },
   },
+  // 13. Cyber Bird
+  {
+    id: "cyber-bird",
+    slug: "cyber-bird",
+    title: "Cyber Bird: Sky Dash",
+    description: "Terbang dan kepakkan sayap melintasi pilar sirkuit neon! Kecepatan semakin kencang seiring bertambahnya poin.",
+    category: "arcade",
+    thumbnailUrl: "/images/games/cyber-bird.webp",
+    gamePath: "/games/cyber-bird/index.html",
+    playCount: 4230,
+    likesCount: 390,
+    rating: 4.8,
+    badge: "BARU",
+    controlsGuide: {
+      keyboard: ["Spasi / Panah Atas : Terbang / Kepak Sayap"],
+      touch: "Tap di mana saja pada layar untuk terbang",
+    },
+  },
+  // 14. Tekno Memory
+  {
+    id: "tekno-memory",
+    slug: "tekno-memory",
+    title: "Tekno Memory: Matrix Match",
+    description: "Asah daya ingatmu! Cocokkan kartu simbol teknologi sebelum waktu habis. Jumlah kartu bertambah di setiap level.",
+    category: "casual",
+    thumbnailUrl: "/images/games/tekno-memory.webp",
+    gamePath: "/games/tekno-memory/index.html",
+    playCount: 5120,
+    likesCount: 440,
+    rating: 4.9,
+    badge: "BARU",
+    controlsGuide: {
+      keyboard: ["Klik Kartu untuk membuka simbol"],
+      touch: "Tap kartu untuk mencocokkan pasangan",
+    },
+  },
 ];
 
 export function getGameBySlug(slug: string): Game | undefined {

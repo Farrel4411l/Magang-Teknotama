@@ -55,6 +55,10 @@ export default function GameCard({ game }: GameCardProps) {
         return "🗺️";
       case "werewolf":
         return "🐺";
+      case "cyber-bird":
+        return "🐦";
+      case "tekno-memory":
+        return "🧠";
       default:
         switch (game.category) {
           case "arcade":
