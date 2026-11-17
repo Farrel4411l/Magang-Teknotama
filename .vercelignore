@@ -1,0 +1,16 @@
+# Local secrets & environment files (CRITICAL: never upload to Vercel)
+teknotama_secrets.php
+teknotama_secrets.example.php
+.env
+.env.*
+
+# Server / FTP / VCS artifacts
+.git
+.gitignore
+.htaccess
+.vercel
+cgi-bin
+teknotama.com
+*.log
+.DS_Store
+Thumbs.db

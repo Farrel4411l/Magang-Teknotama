@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "functions": {
+    "api/*.php": {
+      "runtime": "vercel-php@0.8.0"
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "headers": {
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "Referrer-Policy": "strict-origin-when-cross-origin"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/$|^/.*\\.html$",
+      "headers": {
+        "Cache-Control": "no-cache, must-revalidate"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/(teknotama_secrets(?:\\.example)?\\.php|\\.htaccess|\\.gitignore|teknotama\\.com(?:/.*)?|cgi-bin(?:/.*)?)$",
+      "status": 403
+    },
+    {
+      "src": "^/teknotama_api\\.php$",
+      "dest": "/api/teknotama_api.php"
+    },
+    {
+      "src": "^/games/?$",
+      "dest": "/games/index.html",
+      "check": true
+    },
+    {
+      "src": "^/(games/(?:category|play)/[^./]+)/?$",
+      "dest": "/$1.html",
+      "check": true
+    },
+    {
+      "src": "^/(games/games/[^./]+)/?$",
+      "dest": "/$1/index.html",
+      "check": true
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "handle": "miss"
+    },
+    {
+      "src": "^/games/.*",
+      "status": 404,
+      "dest": "/games/404.html",
+      "check": true
+    }
+  ]
+}

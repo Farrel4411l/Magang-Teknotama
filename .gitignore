@@ -3,3 +3,4 @@ teknotama_secrets.php
 *.log
 .DS_Store
 Thumbs.db
+.vercel
