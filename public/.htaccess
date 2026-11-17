@@ -1,0 +1,21 @@
+# 1. BLOKIR TOTAL AGAR USER TIDAK BISA MELIHAT ISI FOLDER (ANTI DIRECTORY LISTING)
+Options -Indexes
+
+# 2. REWRITE ROUTING NEXT.JS STATIC EXPORT
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /games/
+
+  # Jika user membuka URL trailing slash folder /play/[slug]/ otomatis baca file [slug].html
+  RewriteCond %{DOCUMENT_ROOT}/games/play/$1.html -f
+  RewriteRule ^play/([^/]+)/?$ /games/play/$1.html [L]
+
+  # Jika user membuka URL /play/[slug] tanpa trailing slash
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{DOCUMENT_ROOT}/games/$1.html -f
+  RewriteRule ^(.*)$ /games/$1.html [L]
+
+  # Fallback 404 Custom TeknoGame
+  ErrorDocument 404 /games/404.html
+</IfModule>
