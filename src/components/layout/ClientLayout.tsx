@@ -8,6 +8,7 @@ import AdBottomAnchor from "../ads/AdBottomAnchor";
 import SearchModal from "../game/SearchModal";
 import LeaderboardModal from "../game/LeaderboardModal";
 import FavoritesModal from "../game/FavoritesModal";
+import CursorTracker from "./CursorTracker";
 
 interface ClientLayoutProps {
   children: React.ReactNode;
@@ -19,21 +20,23 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   const [favoritesOpen, setFavoritesOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col selection:bg-[#961250] selection:text-white">
-      {/* 1. Header & Navbar Utama (Tanpa ticker yang bergeser) */}
+    <div className="min-h-screen flex flex-col selection:bg-[#255dce]/30 selection:text-white">
+      <CursorTracker />
+
+      {/* Navbar */}
       <Navbar
         onOpenSearch={() => setSearchOpen(true)}
         onOpenLeaderboard={() => setLeaderboardOpen(true)}
         onOpenFavorites={() => setFavoritesOpen(true)}
       />
 
-      {/* 2. Layout Wrapper Utama (Bebas tabrakan konten) */}
+      {/* Main Content */}
       <LayoutWrapper>{children}</LayoutWrapper>
 
-      {/* 3. Sticky Bottom Anchor Ad (Mobile Only) */}
+      {/* Mobile Anchor Ad */}
       <AdBottomAnchor />
 
-      {/* 4. Modals Interaktif */}
+      {/* Modals */}
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
       <LeaderboardModal
         isOpen={leaderboardOpen}
@@ -44,7 +47,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
         onClose={() => setFavoritesOpen(false)}
       />
 
-      {/* 5. Footer Resmi Partner Sponsor */}
+      {/* Footer */}
       <Footer />
     </div>
   );

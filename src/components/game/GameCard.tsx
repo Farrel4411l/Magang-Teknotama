@@ -12,46 +12,47 @@ import {
   Coffee,
   Trophy,
 } from "lucide-react";
+import { getCategoryLabel } from "@/lib/games-data";
 
 interface GameCardProps {
   game: Game;
 }
 
 export default function GameCard({ game }: GameCardProps) {
-  const getGameVectorIcon = (game: Game) => {
-    switch (game.slug) {
+  const getGameVectorIcon = (item: Game) => {
+    switch (item.slug) {
       case "nusantara-runner":
       case "kapal-feri":
       case "lembah-bromo":
       case "pasar-terapung":
       case "kamus-kelana":
-        return <Compass className="w-10 h-10 text-cyan-200" />;
+        return <Compass className="h-9 w-9 text-[#c2d1f6]" strokeWidth={1.6} />;
       case "packing-master":
       case "batik-flow":
-        return <Puzzle className="w-10 h-10 text-sky-200" />;
+        return <Puzzle className="h-9 w-9 text-sky-100" strokeWidth={1.6} />;
       case "becak-drift":
       case "werewolf":
-        return <Zap className="w-10 h-10 text-amber-200" />;
+        return <Zap className="h-9 w-9 text-amber-100" strokeWidth={1.6} />;
       case "candi-stacker":
       case "kopi-klotok":
       case "layangan-sanur":
-        return <Coffee className="w-10 h-10 text-rose-200" />;
+        return <Coffee className="h-9 w-9 text-amber-100" strokeWidth={1.6} />;
       default:
-        switch (game.category) {
+        switch (item.category) {
           case "arcade":
-            return <Gamepad2 className="w-10 h-10 text-cyan-200" />;
+            return <Gamepad2 className="h-9 w-9 text-[#c2d1f6]" strokeWidth={1.6} />;
           case "adventure":
-            return <Compass className="w-10 h-10 text-emerald-200" />;
+            return <Compass className="h-9 w-9 text-emerald-100" strokeWidth={1.6} />;
           case "puzzle":
-            return <Puzzle className="w-10 h-10 text-sky-200" />;
+            return <Puzzle className="h-9 w-9 text-sky-100" strokeWidth={1.6} />;
           case "action":
-            return <Zap className="w-10 h-10 text-rose-200" />;
+            return <Zap className="h-9 w-9 text-amber-100" strokeWidth={1.6} />;
           case "casual":
-            return <Coffee className="w-10 h-10 text-amber-200" />;
+            return <Coffee className="h-9 w-9 text-amber-100" strokeWidth={1.6} />;
           case "sports":
-            return <Trophy className="w-10 h-10 text-yellow-200" />;
+            return <Trophy className="h-9 w-9 text-emerald-100" strokeWidth={1.6} />;
           default:
-            return <Gamepad2 className="w-10 h-10 text-blue-200" />;
+            return <Gamepad2 className="h-9 w-9 text-blue-100" strokeWidth={1.6} />;
         }
     }
   };
@@ -59,37 +60,32 @@ export default function GameCard({ game }: GameCardProps) {
   return (
     <Link
       href={`/play/${game.slug}`}
-      className="group relative rounded-2xl overflow-hidden card-natural flex flex-col justify-between aspect-square select-none cursor-pointer p-4 transition-all duration-200"
+      data-tilt
+      className="game-card group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0e1728] transition-all duration-200 hover:border-[#255dce]/50 hover:shadow-[0_16px_40px_rgba(0,0,0,0.28)]"
     >
-      {/* Background Subtle Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-black/30 group-hover:from-white/[0.08] transition-colors" />
-
-      {/* Top Header: Hanya Kategori (Tanpa Rating & Tanpa Badge Hot/Baru) */}
-      <div className="relative z-10 flex items-center justify-between w-full">
-        <span className="text-[11px] font-medium text-slate-300 capitalize">
-          {game.category}
+      <div className="game-card-art" data-category={game.category}>
+        <span className="absolute left-3 top-3 z-10 rounded-full border border-white/15 bg-[#07111f]/70 px-2.5 py-1 text-[0.62rem] font-semibold capitalize text-slate-100 backdrop-blur">
+          {getCategoryLabel(game.category)}
+        </span>
+        <span className="game-icon-tile">
+          {getGameVectorIcon(game)}
+        </span>
+        <span className="absolute bottom-3 right-3 z-10 grid h-8 w-8 place-items-center rounded-full border border-white/15 bg-[#07111f]/70 text-white opacity-0 backdrop-blur transition-opacity group-hover:opacity-100">
+          <Play className="ml-0.5 h-3.5 w-3.5 fill-current" />
         </span>
       </div>
 
-      {/* Center Icon Illustration */}
-      <div className="relative z-10 flex flex-col items-center justify-center my-auto transition-transform duration-200 group-hover:scale-105">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shadow-md">
-          {getGameVectorIcon(game)}
-        </div>
-      </div>
-
-      {/* Bottom Info & Play Action Button */}
-      <div className="relative z-10 w-full pt-2">
-        <div className="flex items-center justify-between gap-2">
-          <div className="min-w-0 flex-1">
-            <h4 className="font-heading text-sm font-semibold text-white group-hover:text-rose-200 transition-colors truncate">
-              {game.title}
-            </h4>
-          </div>
-
-          <div className="shrink-0 w-7 h-7 rounded-lg btn-primary-clean flex items-center justify-center shadow-sm opacity-90 group-hover:opacity-100 transition-opacity">
-            <Play className="w-3.5 h-3.5 fill-white text-white ml-0.5" />
-          </div>
+      <div className="flex flex-1 flex-col p-3.5 sm:p-4">
+        <h4 className="line-clamp-1 text-sm font-bold text-white transition-colors group-hover:text-[#c2d1f6] sm:text-[0.95rem]">
+          {game.title}
+        </h4>
+        <p className="mt-1.5 line-clamp-2 min-h-9 text-xs leading-5 text-slate-400">
+          {game.description}
+        </p>
+        <div className="mt-3 flex items-center justify-between border-t border-white/[0.08] pt-3">
+          <span className="font-mono text-[0.65rem] text-slate-500">
+            {game.playCount.toLocaleString("id-ID")} kali dimainkan
+          </span>
         </div>
       </div>
     </Link>

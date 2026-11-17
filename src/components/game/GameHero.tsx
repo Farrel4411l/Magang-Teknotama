@@ -2,9 +2,10 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Game } from "@/types/game";
-import { Play, ExternalLink } from "lucide-react";
+import { ArrowDown, ArrowRight, Gamepad2, Play } from "lucide-react";
+import HeroChipStage from "@/components/three/HeroChipStage";
+import { getCategoryLabel } from "@/lib/games-data";
 
 interface GameHeroProps {
   featuredGames: Game[];
@@ -13,150 +14,123 @@ interface GameHeroProps {
 export default function GameHero({ featuredGames }: GameHeroProps) {
   if (!featuredGames || featuredGames.length < 3) return null;
 
-  const mainHero = featuredGames[0];
-  const sideHeroes = featuredGames.slice(1, 3);
+  const [mainHero, ...sideHeroes] = featuredGames.slice(0, 3);
 
   return (
-    <section className="mb-10 space-y-6">
-      {/* 1. Hero Banner Utama dengan Gradient Alami dari Foto Referensi */}
-      <div className="relative rounded-3xl overflow-hidden p-6 sm:p-8 md:p-10 shadow-xl border border-white/10"
-        style={{
-          background: "linear-gradient(135deg, rgba(27, 37, 99, 0.95) 0%, rgba(41, 52, 122, 0.9) 25%, rgba(80, 29, 90, 0.9) 55%, rgba(130, 20, 72, 0.9) 80%, rgba(158, 19, 84, 0.95) 100%)"
-        }}
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Kolom Kiri: Branding & Pengantar Tekno Game */}
-          <div className="lg:col-span-7 space-y-4">
-            <div className="flex items-center gap-3.5">
-              <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden border border-white/20 shrink-0 bg-[#121844] shadow-md">
-                <Image
-                  src="/games/Teknogame_logo_only.png"
-                  alt="Logo Tekno Game"
-                  fill
-                  sizes="56px"
-                  className="object-contain p-1"
-                  priority
-                />
-              </div>
-              <div>
-                <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
-                  Tekno <span className="text-rose-200">Game</span>
-                </h1>
-                <p className="text-xs sm:text-sm text-white/80">
-                  Portal Game Web HTML5 Resmi PT Teknotama Prakarsa Mulia
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white/90 leading-relaxed max-w-xl">
-              Mainkan aneka pilihan game petualangan, arcade, dan asah otak langsung di browser Anda. Cepat, ringan, dan gratis tanpa perlu instalasi aplikasi tambahan.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <Link
-                href={`/play/${mainHero.slug}`}
-                className="px-6 py-2.5 rounded-xl btn-primary-clean text-sm font-semibold flex items-center gap-2 shadow-md cursor-pointer"
-              >
-                <Play className="w-4 h-4 fill-white" />
-                <span>Mulai Bermain</span>
-              </Link>
-
-              <a
-                href="https://teknotama.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-medium flex items-center gap-2 transition-colors cursor-pointer"
-              >
-                <span>Tentang Teknotama</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
-
-          {/* Kolom Kanan: Partner Resmi Teknotama */}
-          <div className="lg:col-span-5">
-            <div className="rounded-2xl bg-black/25 border border-white/10 p-5 sm:p-6 space-y-3">
-              <span className="text-xs font-semibold text-rose-200 uppercase tracking-wide block">
-                Partner Teknologi Resmi
-              </span>
-              <h3 className="font-heading text-base sm:text-lg font-bold text-white">
-                PT Teknotama Prakarsa Mulia
-              </h3>
-              <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
-                Penyedia solusi infrastruktur IT, cloud system, data security, dan custom software development untuk akselerasi bisnis Anda.
-              </p>
-              <div className="pt-2">
-                <a
-                  href="https://teknotama.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-200 hover:text-white transition-colors"
-                >
-                  <span>Kunjungi teknotama.com</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Spotlight Game Pilihan (Tanpa Rating, Tanpa Badge Hot/Baru/Populer) */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* Game Utama */}
-        <div className="lg:col-span-2 rounded-2xl card-natural p-6 flex flex-col justify-between group">
-          <div className="space-y-2">
-            <span className="text-xs font-medium text-slate-300 capitalize">
-              {mainHero.category}
+    <section className="mb-12 space-y-5">
+      <div className="home-hero grid items-center gap-8 p-5 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:p-11">
+        <div className="relative z-10 max-w-2xl">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#255dce]/30 bg-[#021861]/30 px-3 py-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
+            <span className="section-kicker !text-[0.62rem] !tracking-[0.16em]">
+              Permainan web pilihan · Gratis · Tanpa memasang aplikasi
             </span>
-            <h2 className="font-heading text-xl sm:text-2xl font-bold text-white">
-              {mainHero.title}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
-              {mainHero.description}
-            </p>
           </div>
 
-          <div className="pt-6">
+          <p className="section-kicker mb-3">Tekno Game / Portal bermain</p>
+          <h1 className="max-w-xl text-4xl font-bold leading-[1.04] tracking-[-0.06em] text-white sm:text-5xl lg:text-6xl">
+            Mainkan cerita.
+            <br />
+            <span className="text-[#8caeff]">Tantang rekor.</span>
+          </h1>
+          <p className="mt-5 max-w-lg text-sm leading-7 text-slate-300 sm:text-base">
+            Pilih permainan favorit dan langsung main di peramban. Petualangan
+            lokal, tantangan arkade, dan teka-teki seru siap menemani waktu jedamu.
+          </p>
+
+          <div className="mt-7 flex flex-wrap items-center gap-3">
             <Link
               href={`/play/${mainHero.slug}`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl btn-primary-clean text-xs sm:text-sm font-semibold shadow-md cursor-pointer"
+              data-magnetic
+              className="inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-3 text-sm font-bold btn-primary-clean"
             >
-              <Play className="w-4 h-4 fill-white" />
-              <span>Main Sekarang</span>
+              <Play className="h-4 w-4 fill-current" />
+              Mainkan {mainHero.title.split(":")[0]}
+              <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
+            <Link
+              href="#catalog"
+              data-magnetic
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-slate-200 transition-colors hover:border-[#255dce]/50 hover:text-white"
+            >
+              Jelajahi katalog
+              <ArrowDown className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/10 pt-5 text-xs text-slate-400">
+            <span className="inline-flex items-center gap-2">
+              <Gamepad2 className="h-4 w-4 text-[#8caeff]" />
+              {featuredGames.length} permainan sorotan
+            </span>
+            <span>Skor tersimpan di peramban</span>
+            <span>Persembahan PT Teknotama</span>
           </div>
         </div>
 
-        {/* 2 Game Sampingan */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-          {sideHeroes.map((hero) => (
-            <Link
-              key={hero.id}
-              href={`/play/${hero.slug}`}
-              className="rounded-2xl card-natural p-5 flex flex-col justify-between group cursor-pointer"
-            >
-              <div>
-                <span className="text-[11px] font-medium text-slate-400 capitalize block">
-                  {hero.category}
-                </span>
-                <h3 className="font-heading text-base font-semibold text-white group-hover:text-rose-200 transition-colors mt-0.5">
-                  {hero.title}
-                </h3>
-              </div>
+        <HeroChipStage>
+          <div className="hero-chip-overlay">
+            <div className="absolute left-4 top-4 z-10 rounded-full border border-white/10 bg-[#07111f]/70 px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.17em] text-slate-300 backdrop-blur">
+              Sorotan utama · 01
+            </div>
+            <div className="absolute right-4 top-4 z-10 flex items-center gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.15em] text-[#c2d1f6]/70">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#8caeff]" />
+              Siap dimainkan
+            </div>
 
-              <div className="pt-4 flex items-center justify-between text-xs">
-                <span className="text-slate-400 font-normal">
-                  Mainkan di browser
+            <Link
+              href={`/play/${mainHero.slug}`}
+              data-magnetic
+              className="absolute bottom-4 left-4 right-4 z-10 flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-[#07111f]/80 p-3.5 backdrop-blur-md transition-colors hover:border-[#255dce]/50 sm:bottom-5 sm:left-5 sm:right-5 sm:p-4"
+            >
+              <div className="min-w-0">
+                <span className="section-kicker !text-[0.58rem] !tracking-[0.16em]">
+                  Sorotan saat ini
                 </span>
-                <span className="font-medium text-rose-300 flex items-center gap-1">
-                  <span>Buka</span>
-                  <Play className="w-3 h-3 fill-current ml-0.5" />
-                </span>
+                <p className="mt-1 truncate text-sm font-bold text-white sm:text-base">
+                  {mainHero.title}
+                </p>
+                <p className="mt-0.5 truncate text-xs text-slate-400">
+                  {getCategoryLabel(mainHero.category)} · {mainHero.description}
+                </p>
               </div>
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full btn-primary-clean">
+                <Play className="ml-0.5 h-4 w-4 fill-current" />
+              </span>
             </Link>
-          ))}
-        </div>
+          </div>
+        </HeroChipStage>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        {sideHeroes.map((game, index) => (
+          <Link
+            key={game.id}
+            href={`/play/${game.slug}`}
+            data-tilt
+            className="spotlight-card group flex items-center justify-between gap-4 p-4 sm:p-5"
+          >
+            <div className="flex min-w-0 items-center gap-3.5">
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-[#255dce]/20 bg-[#255dce]/10 text-[#8caeff]">
+                <span className="font-mono text-sm font-semibold">
+                  0{index + 2}
+                </span>
+              </span>
+              <span className="min-w-0">
+                <span className="section-kicker !text-[0.58rem]">
+                  {getCategoryLabel(game.category)}
+                </span>
+                <span className="mt-0.5 block truncate text-sm font-bold text-white sm:text-base">
+                  {game.title}
+                </span>
+                <span className="mt-1 block truncate text-xs text-slate-400">
+                  {game.description}
+                </span>
+              </span>
+            </div>
+            <ArrowRight className="h-4 w-4 shrink-0 text-[#8caeff] transition-transform group-hover:translate-x-1" />
+          </Link>
+        ))}
       </div>
     </section>
   );

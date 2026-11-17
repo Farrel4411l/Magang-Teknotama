@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { X, Play, Trash2, Trophy, Gamepad2 } from "lucide-react";
 import { getLocalScores, clearLocalScores } from "@/lib/local-storage";
-import { INITIAL_GAMES } from "@/lib/games-data";
+import { getCategoryLabel, INITIAL_GAMES } from "@/lib/games-data";
 
 interface LeaderboardModalProps {
   isOpen: boolean;
@@ -29,7 +29,7 @@ export default function LeaderboardModal({ isOpen, onClose }: LeaderboardModalPr
         gameId,
         score,
         title: gameInfo?.title || gameId.replace(/-/g, " "),
-        category: gameInfo?.category || "game",
+        category: gameInfo ? getCategoryLabel(gameInfo.category) : "Permainan",
         slug: gameInfo?.slug || gameId,
       };
     })
@@ -39,7 +39,7 @@ export default function LeaderboardModal({ isOpen, onClose }: LeaderboardModalPr
   const bestScore = scoreEntries.length > 0 ? scoreEntries[0].score : 0;
 
   const handleClear = () => {
-    if (window.confirm("Hapus seluruh catatan skor pribadi di browser ini?")) {
+    if (window.confirm("Hapus seluruh catatan skor pribadi di peramban ini?")) {
       clearLocalScores();
       setLocalScores({});
     }
@@ -58,14 +58,14 @@ export default function LeaderboardModal({ isOpen, onClose }: LeaderboardModalPr
                 Papan Rekor Saya
               </h3>
               <p className="text-[11px] text-slate-300">
-                Skor tertinggi yang tersimpan di browser ini
+                Skor tertinggi yang tersimpan di peramban ini
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
             aria-label="Tutup"
           >
             <X className="w-5 h-5" />
@@ -74,8 +74,8 @@ export default function LeaderboardModal({ isOpen, onClose }: LeaderboardModalPr
 
         <div className="grid grid-cols-2 p-3 bg-black/15 border-b border-white/10 text-center gap-2">
           <div className="bg-white/[0.04] py-2 px-3 rounded-xl border border-white/5">
-            <span className="text-[10px] text-slate-400 uppercase font-medium block">Game Dimainkan</span>
-            <span className="text-sm font-bold text-white">{totalPlayed} Game</span>
+            <span className="text-[10px] text-slate-400 uppercase font-medium block">Permainan Tercatat</span>
+            <span className="text-sm font-bold text-white">{totalPlayed} judul</span>
           </div>
           <div className="bg-white/[0.04] py-2 px-3 rounded-xl border border-white/5">
             <span className="text-[10px] text-slate-400 uppercase font-medium block">Skor Tertinggi</span>
@@ -95,7 +95,7 @@ export default function LeaderboardModal({ isOpen, onClose }: LeaderboardModalPr
                 Belum Ada Catatan Skor
               </h4>
               <p className="text-xs text-slate-400 max-w-xs mx-auto">
-                Mainkan game di Tekno Game hingga selesai dan skor Anda akan otomatis tercatat di sini.
+                Selesaikan permainan di Tekno Game agar skor Anda tercatat otomatis di sini.
               </p>
             </div>
           ) : (
@@ -129,7 +129,7 @@ export default function LeaderboardModal({ isOpen, onClose }: LeaderboardModalPr
                   <Link
                     href={`/play/${entry.slug}`}
                     onClick={onClose}
-                    className="p-1.5 rounded-lg btn-primary-clean text-white"
+                    className="flex min-h-11 min-w-11 items-center justify-center rounded-lg btn-primary-clean text-white"
                     title="Mainkan lagi"
                   >
                     <Play className="w-3.5 h-3.5 fill-current" />

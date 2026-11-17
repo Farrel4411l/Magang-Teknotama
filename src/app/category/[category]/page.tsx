@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getGamesByCategory, CATEGORIES } from "@/lib/games-data";
+import { getGamePortalPath } from "@/lib/site";
 import GameGrid from "@/components/game/GameGrid";
 import GoogleAdSlot from "@/components/ads/GoogleAdSlot";
 import { ArrowLeft, Gamepad2, Compass, Puzzle, Zap, Coffee, Trophy } from "lucide-react";
@@ -26,16 +27,16 @@ export async function generateMetadata({
 
   if (!validCat) {
     return {
-      title: "Kategori Tidak Ditemukan | Tekno Game",
+      title: "Kategori Tidak Ditemukan",
       robots: { index: false, follow: true },
     };
   }
 
   return {
-    title: `Game Kategori ${validCat.label} - Tekno Game`,
-    description: `Mainkan aneka pilihan game kategori ${validCat.label} terbaik dan gratis tanpa install di portal resmi Tekno Game oleh PT Teknotama Prakarsa Mulia.`,
+    title: `Permainan Kategori ${validCat.label}`,
+    description: `Mainkan aneka permainan kategori ${validCat.label} secara gratis di portal resmi Tekno Game oleh PT Teknotama Prakarsa Mulia.`,
     alternates: {
-      canonical: `/games/category/${validCat.id}`,
+      canonical: getGamePortalPath(`/category/${validCat.id}`),
     },
     robots: {
       index: true,
@@ -62,7 +63,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const getCategoryHeroIcon = (id: GameCategory) => {
     switch (id) {
       case "arcade":
-        return <Gamepad2 className="w-6 h-6 text-cyan-200" />;
+        return <Gamepad2 className="w-6 h-6 text-[#8caeff]" />;
       case "adventure":
         return <Compass className="w-6 h-6 text-emerald-200" />;
       case "puzzle":
@@ -82,7 +83,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     <div className="pt-6 space-y-6">
       {/* Breadcrumb */}
       <nav
-        aria-label="Breadcrumb"
+        aria-label="Jejak navigasi"
         className="flex items-center gap-2 text-xs font-medium text-slate-300"
       >
         <Link
@@ -90,7 +91,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           className="inline-flex items-center gap-1 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Semua Game</span>
+          <span>Semua Permainan</span>
         </Link>
         <span>/</span>
         <span className="text-white font-semibold capitalize">
@@ -108,7 +109,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             Kategori: {validCat.label}
           </h1>
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
-            Jelajahi dan mainkan beragam game web {validCat.label.toLowerCase()} seru di Tekno Game secara gratis langsung di browser Anda.
+            Jelajahi beragam permainan web kategori {validCat.label.toLowerCase()} secara gratis langsung di peramban.
           </p>
         </div>
       </div>
@@ -120,7 +121,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       />
 
       {/* Grid Katalog */}
-      <GameGrid games={games} title={`Game ${validCat.label}`} />
+      <GameGrid games={games} title={`Permainan ${validCat.label}`} />
     </div>
   );
 }

@@ -1,14 +1,25 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ExternalLink, Trophy, Play } from "lucide-react";
+import {
+  Cloud,
+  Code2,
+  ExternalLink,
+  Gamepad2,
+  Network,
+  Play,
+  ShieldCheck,
+  Trophy,
+  Zap,
+} from "lucide-react";
 import GameHero from "@/components/game/GameHero";
 import CategoryChips from "@/components/game/CategoryChips";
 import GameGrid from "@/components/game/GameGrid";
 import GoogleAdSlot from "@/components/ads/GoogleAdSlot";
-import { INITIAL_GAMES } from "@/lib/games-data";
+import { CATEGORIES, INITIAL_GAMES } from "@/lib/games-data";
 import { GameCategory } from "@/types/game";
 import { getLocalScores } from "@/lib/local-storage";
+import { getGamePortalUrl } from "@/lib/site";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -36,6 +47,9 @@ export default function HomePage() {
   }, []);
 
   const featuredGames = INITIAL_GAMES.filter((g) => g.featured);
+  const selectedCategoryLabel =
+    CATEGORIES.find((category) => category.id === selectedCategory)?.label ??
+    "Semua Permainan";
   const displayGames =
     selectedCategory === "all"
       ? INITIAL_GAMES
@@ -45,25 +59,25 @@ export default function HomePage() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Tekno Game",
-    alternateName: "Tekno Game Web Portal",
-    url: "https://teknotama.com/games",
+    alternateName: "Portal Permainan Tekno Game",
+    url: getGamePortalUrl(),
     description:
-      "Portal game web HTML5 resmi persembahan PT Teknotama Prakarsa Mulia. Mainkan game seru gratis tanpa install.",
+      "Portal permainan web HTML5 resmi persembahan PT Teknotama Prakarsa Mulia. Mainkan permainan gratis tanpa instalasi.",
     publisher: {
       "@type": "Organization",
       name: "PT Teknotama Prakarsa Mulia",
       url: "https://teknotama.com",
-      logo: "https://teknotama.com/games/Teknogame_logo_only.png",
+      logo: getGamePortalUrl("/Teknogame_logo_only.png"),
     },
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://teknotama.com/games/?q={search_term_string}",
+      target: `${getGamePortalUrl()}/?q={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };
 
   return (
-    <div className="pt-6">
+    <div className="pt-5 sm:pt-8">
       {/* Skrip SEO JSON-LD Structured Data */}
       <script
         type="application/ld+json"
@@ -72,6 +86,51 @@ export default function HomePage() {
 
       {/* 1. Hero Section & Showcase Alami */}
       <GameHero featuredGames={featuredGames} />
+
+      <section
+        aria-label="Ringkasan Tekno Game"
+        className="stats-strip mb-8 grid grid-cols-2 divide-x divide-y divide-white/10 sm:grid-cols-4 sm:divide-y-0"
+      >
+        {[
+          {
+            icon: <Gamepad2 className="h-4 w-4 text-[#8caeff]" />,
+            value: INITIAL_GAMES.length,
+            label: "Permainan pilihan",
+          },
+          {
+            icon: <Zap className="h-4 w-4 text-amber-200" />,
+            value: INITIAL_GAMES.reduce((total, game) => total + game.playCount, 0).toLocaleString("id-ID"),
+            label: "Total permainan",
+          },
+          {
+            icon: <ShieldCheck className="h-4 w-4 text-emerald-200" />,
+            value: "100%",
+            label: "Gratis dimainkan",
+          },
+          {
+            icon: <Trophy className="h-4 w-4 text-[#8caeff]" />,
+            value: "Lokal",
+            label: "Skor tersimpan",
+          },
+        ].map((stat) => (
+          <div
+            key={stat.label}
+            className="flex items-center gap-3 px-4 py-4 sm:justify-center sm:px-3"
+          >
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04]">
+              {stat.icon}
+            </span>
+            <span>
+              <span className="block font-mono text-sm font-bold text-white">
+                {stat.value}
+              </span>
+              <span className="block text-[0.66rem] text-slate-400">
+                {stat.label}
+              </span>
+            </span>
+          </div>
+        ))}
+      </section>
 
       {/* 2. Slot Iklan Google AdSense Top Leaderboard (728x90) */}
       <GoogleAdSlot
@@ -90,8 +149,8 @@ export default function HomePage() {
         games={displayGames}
         title={
           selectedCategory === "all"
-            ? "Semua Koleksi Game"
-            : `Koleksi Game: ${selectedCategory.toUpperCase()}`
+            ? "Semua Koleksi Permainan"
+            : `Koleksi Permainan: ${selectedCategoryLabel}`
         }
       />
 
@@ -102,10 +161,10 @@ export default function HomePage() {
       />
 
       {/* 6. Rekor Skor Tertinggi Saya (Tersimpan Lokal di Browser) */}
-      <section className="mb-14 rounded-2xl card-natural p-6 sm:p-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5 border-b border-white/10 pb-4">
+      <section className="mb-10 rounded-2xl card-natural p-5 sm:p-7">
+        <div className="mb-5 flex flex-col items-start justify-between gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-amber-300 shrink-0">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-amber-200/20 bg-amber-100/[0.06] text-amber-300">
               <Trophy className="w-5 h-5 text-amber-300" />
             </div>
             <div>
@@ -120,9 +179,9 @@ export default function HomePage() {
         </div>
 
         {topScores.length === 0 ? (
-          <div className="py-8 text-center bg-white/[0.03] rounded-xl border border-white/10">
+          <div className="rounded-xl border border-white/10 bg-white/[0.025] py-8 text-center">
             <p className="text-xs sm:text-sm text-slate-300">
-              Belum ada skor yang dicatat. Mainkan salah satu game sekarang untuk mulai mencatat skor terbaik Anda.
+              Belum ada skor yang dicatat. Mainkan salah satu permainan untuk mulai mencatat rekor terbaik Anda.
             </p>
             <div className="mt-3">
               <Link
@@ -169,38 +228,104 @@ export default function HomePage() {
       </section>
 
       {/* 7. Section Branding Resmi Tekno Game */}
-      <section className="rounded-2xl card-natural p-6 sm:p-8 mb-8">
-        <h2 className="font-heading text-lg sm:text-xl font-bold text-white mb-2">
-          Tentang Tekno Game
-        </h2>
-        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-4xl">
-          Tekno Game adalah portal game web HTML5 resmi yang dioperasikan sebagai sub-direktori dari <strong className="text-white">PT Teknotama Prakarsa Mulia</strong> (<a href="https://teknotama.com" target="_blank" rel="noopener noreferrer" className="text-rose-200 underline font-medium">teknotama.com</a>). Portal ini menyajikan berbagai game web instan yang dapat dimainkan secara gratis langsung melalui browser tanpa memerlukan instalasi aplikasi.
+      <section className="mb-8 grid gap-5 rounded-2xl card-natural p-5 sm:p-7 md:grid-cols-[0.7fr_1.3fr] md:items-center">
+        <div>
+          <p className="section-kicker mb-2">Tentang portal</p>
+          <h2 className="section-heading">Dirancang untuk <span>langsung bermain.</span></h2>
+        </div>
+        <p className="max-w-3xl text-sm leading-7 text-slate-300">
+          Tekno Game adalah portal permainan web HTML5 resmi yang dioperasikan sebagai subdirektori dari <strong className="text-white">PT Teknotama Prakarsa Mulia</strong> (<a href="https://teknotama.com" target="_blank" rel="noopener noreferrer" className="font-medium text-[#8caeff] underline underline-offset-4">teknotama.com</a>). Portal ini menyajikan berbagai permainan yang dapat dimainkan secara gratis langsung melalui peramban tanpa perlu memasang aplikasi.
         </p>
       </section>
 
-      {/* 8. Section Kemitraan Resmi Teknotama */}
-      <section className="mb-8 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 border border-white/10 shadow-lg"
-        style={{
-          background: "linear-gradient(135deg, rgba(27, 37, 99, 0.75) 0%, rgba(80, 29, 90, 0.75) 60%, rgba(150, 18, 80, 0.8) 100%)"
-        }}
-      >
-        <div className="space-y-1.5 text-left max-w-2xl">
-          <span className="text-[11px] font-semibold text-rose-200 uppercase tracking-wide">
-            Partner Teknologi Resmi
-          </span>
-          <h3 className="font-heading text-lg sm:text-xl font-bold text-white">
-            Solusi Transformasi Digital Bersama PT Teknotama Prakarsa Mulia
-          </h3>
-          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
-            PT Teknotama Prakarsa Mulia menyediakan layanan infrastruktur jaringan, cloud system modern, keamanan data, serta pengembangan software kustom enterprise berkualitas tinggi.
-          </p>
-        </div>
-        <div className="shrink-0 w-full md:w-auto">
+      <section className="mb-8" aria-labelledby="partner-services-title">
+        <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="section-kicker mb-2">Layanan mitra</p>
+            <h2 id="partner-services-title" className="section-heading">
+              Teknologi untuk <span>bertumbuh.</span>
+            </h2>
+          </div>
           <a
             href="https://teknotama.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 w-full md:w-auto px-5 py-2.5 rounded-xl btn-sponsor-clean text-xs sm:text-sm font-semibold shadow-md cursor-pointer"
+            data-magnetic
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 px-4 text-xs font-semibold text-slate-200 transition-colors hover:border-[#255dce]/50 hover:text-white"
+          >
+            Lihat layanan Teknotama
+            <ExternalLink className="h-3.5 w-3.5" />
+          </a>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            {
+              icon: <Network className="h-5 w-5" />,
+              title: "Infrastruktur Jaringan",
+              description:
+                "Perencanaan dan pengelolaan jaringan yang andal untuk operasional bisnis.",
+            },
+            {
+              icon: <Cloud className="h-5 w-5" />,
+              title: "Sistem Awan",
+              description:
+                "Solusi komputasi awan yang fleksibel, aman, dan siap berkembang.",
+            },
+            {
+              icon: <ShieldCheck className="h-5 w-5" />,
+              title: "Keamanan Data",
+              description:
+                "Perlindungan data dan sistem untuk menjaga kelangsungan bisnis.",
+            },
+            {
+              icon: <Code2 className="h-5 w-5" />,
+              title: "Perangkat Lunak",
+              description:
+                "Pengembangan perangkat lunak khusus sesuai kebutuhan organisasi.",
+            },
+          ].map((service) => (
+            <a
+              key={service.title}
+              href="https://teknotama.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-tilt
+              className="partner-service-card group rounded-2xl border border-white/10 bg-white/[0.025] p-4 transition-colors hover:border-[#255dce]/40 hover:bg-white/[0.045]"
+            >
+              <span className="mb-4 grid h-10 w-10 place-items-center rounded-xl border border-[#255dce]/25 bg-[#021861]/30 text-[#8caeff] transition-colors group-hover:text-white">
+                {service.icon}
+              </span>
+              <span className="block text-sm font-bold text-white">
+                {service.title}
+              </span>
+              <span className="mt-2 block text-xs leading-5 text-slate-400">
+                {service.description}
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* 8. Section Kemitraan Resmi Teknotama */}
+      <section className="partner-panel mb-8 flex flex-col items-start justify-between gap-6 p-5 sm:p-7 md:flex-row md:items-center">
+        <div className="relative z-10 max-w-2xl space-y-2">
+          <span className="section-kicker">
+            Partner Teknologi Resmi
+          </span>
+          <h3 className="font-heading text-xl font-bold text-white sm:text-2xl">
+            Solusi Transformasi Digital Bersama PT Teknotama Prakarsa Mulia
+          </h3>
+          <p className="text-sm leading-6 text-slate-300">
+            PT Teknotama Prakarsa Mulia menyediakan layanan infrastruktur jaringan, sistem awan, keamanan data, serta pengembangan perangkat lunak khusus untuk perusahaan.
+          </p>
+        </div>
+        <div className="relative z-10 w-full shrink-0 md:w-auto">
+          <a
+            href="https://teknotama.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-magnetic
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold btn-sponsor-clean md:w-auto"
           >
             <span>Kunjungi teknotama.com</span>
             <ExternalLink className="w-4 h-4" />

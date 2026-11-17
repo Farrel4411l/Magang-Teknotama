@@ -2,8 +2,7 @@
 ## Dokumen Perencanaan UI/UX, Sistem Token Warna, & Arsitektur Portal Khusus Game
 **Dokumen:** `newdesign.md`  
 **Status:** Planning & Concept Phase (Belum masuk tahap coding)  
-**Brand Name:** **TeknoGame** (`TEKNO GAME`)  
-**Slogan:** *"PLAY. EVOLVE. CONQUER."*  
+**Brand Name:** **Tekno Game**  
 **Palet Utama:** **Electric Blue & Cyber Cyan (Gamer / Futuristic Dark Mode)**  
 **Aset Logo Resmi:** `TeknoGame_Logo.jpeg`
 
@@ -37,7 +36,6 @@ Berdasarkan analisis visual mendalam pada file logo `TeknoGame_Logo.jpeg`:
                     │      ▼───────────▼      │
                     └─────────────────────────┘
                        T E K N O   G A M E
-                     PLAY. EVOLVE. CONQUER.
 ```
 
 ### 2.1 Makna Elemen Visual Logo:
@@ -47,7 +45,6 @@ Berdasarkan analisis visual mendalam pada file logo `TeknoGame_Logo.jpeg`:
 4. **Kilat / Petir (Lightning Bolt):** Melambangkan kecepatan reaksi instan, daya ledak, dan keseruan bermain.
 5. **Jalur Sirkuit PCB (Circuit Traces & Hex Nodes):** Aksen teknologi komputasi masa depan (*cybernetics*).
 6. **Tipografi 'TEKNO GAME':** Font display futuristik bergaris tegas (*bold geometric sci-fi*) dengan gradasi cyan neon menyala dan outline navy tua.
-7. **Slogan 'PLAY. EVOLVE. CONQUER.':** Tiga pilar perjalanan gamer: Bermain (Play), Mengasah keahlian (Evolve), dan Menjadi juara (Conquer).
 
 ---
 
@@ -133,7 +130,7 @@ Menggantikan warna merah pariwisata sebelumnya, **TeknoGame berakar pada spektru
 |   └────────┘ └────────┘ └────────┘ └────────┘ └────────┘ └────────┘ └────────┘ └────────┘   |
 |                                                                                             |
 +─────────────────────────────────────────────────────────────────────────────────────────────+
-|  FOOTER: TEKNOGAME • PLAY. EVOLVE. CONQUER. • 100% Free HTML5 Web Games • No Install Needed |
+|  FOOTER: TEKNO GAME • Permainan web HTML5 gratis |
 +─────────────────────────────────────────────────────────────────────────────────────────────+
 ```
 
@@ -190,7 +187,7 @@ Menggantikan warna merah pariwisata sebelumnya, **TeknoGame berakar pada spektru
 | Aspek | Travelista Games (Lama) | TeknoGame (Baru) |
 | :--- | :--- | :--- |
 | **Identitas Brand** | Subdomain pariwisata `game.travelista.id` | Portal khusus gaming independen `TeknoGame` |
-| **Slogan Brand** | "Portal Wisata & Game Santai" | *"PLAY. EVOLVE. CONQUER."* |
+| **Motto Brand** | "Portal Wisata & Game Santai" | Tidak digunakan |
 | **Warna Primer** | Merah Cabai (`#E53935`) & Hijau Turis | Electric Blue (`#2563EB`) & Cyber Cyan (`#00F0FF`) |
 | **Latar Belakang** | Terang / Putih keabu-abuan (`#F8FAFC`) | Dark Mode Gamer / Cyber Space (`#070B14` & `#0B1222`) |
 | **Aset Logo** | `travelista-logo-light.png` (Teks oranye/ungu) | `TeknoGame_Logo.jpeg` (Shield GT, D-Pad, Lightning) |
@@ -224,10 +221,10 @@ Rencana kerja sistematis saat implementasi coding disetujui:
     ├─ GameCard & GameGrid: Efek hover neon cyan glow
     ├─ GameFrame: Cyber theater mode play screen
     ├─ LeaderboardModal: Tekno Hall of Fame
-    └─ Footer: Branding TeknoGame & slogan PLAY. EVOLVE. CONQUER.
+    └─ Footer: Identitas Tekno Game dan informasi mitra.
     │
 [TAHAP 5] Pembaruan Metadata & SEO
-    ├─ Title: "TeknoGame - Play. Evolve. Conquer."
+    ├─ Title: "Tekno Game - Portal Permainan Web"
     └─ Favicon baru & OpenGraph banner
     │
 [TAHAP 6] Pengujian Responsif & Verifikasi Build Bersih

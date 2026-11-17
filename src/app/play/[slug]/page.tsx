@@ -2,7 +2,12 @@ import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getGameBySlug, INITIAL_GAMES } from "@/lib/games-data";
+import {
+  getCategoryLabel,
+  getGameBySlug,
+  INITIAL_GAMES,
+} from "@/lib/games-data";
+import { getGamePortalPath, getGamePortalUrl } from "@/lib/site";
 import GameFrame from "@/components/game/GameFrame";
 import AdCompanion from "@/components/ads/AdCompanion";
 import GameCard from "@/components/game/GameCard";
@@ -26,16 +31,16 @@ export async function generateMetadata({
 
   if (!game) {
     return {
-      title: "Game Tidak Ditemukan | Tekno Game",
+      title: "Permainan Tidak Ditemukan",
       robots: { index: false, follow: true },
     };
   }
 
   return {
-    title: `${game.title} - Mainkan Gratis Tanpa Install di Tekno Game`,
-    description: `${game.description} Mainkan langsung di browser secara gratis di portal resmi Tekno Game oleh PT Teknotama Prakarsa Mulia.`,
+    title: `${game.title} - Mainkan Gratis Tanpa Instalasi`,
+    description: `${game.description} Mainkan langsung di peramban secara gratis di portal resmi Tekno Game oleh PT Teknotama Prakarsa Mulia.`,
     alternates: {
-      canonical: `/games/play/${game.slug}`,
+      canonical: getGamePortalPath(`/play/${game.slug}`),
     },
     robots: {
       index: true,
@@ -49,11 +54,11 @@ export async function generateMetadata({
     openGraph: {
       title: `${game.title} - Tekno Game`,
       description: game.description,
-      url: `https://teknotama.com/games/play/${game.slug}`,
+      url: getGamePortalUrl(`/play/${game.slug}`),
       type: "video.other",
       images: [
         {
-          url: "/games/Teknogame_logo_only.png",
+          url: getGamePortalUrl("/Teknogame_logo_only.png"),
           width: 800,
           height: 800,
           alt: game.title,
@@ -80,10 +85,10 @@ export default async function PlayPage({ params }: PlayPageProps) {
     "@type": "VideoGame",
     name: game.title,
     description: game.description,
-    genre: game.category,
+    genre: getCategoryLabel(game.category),
     applicationCategory: "Game",
-    operatingSystem: "Any Modern Web Browser (HTML5)",
-    url: `https://teknotama.com/games/play/${game.slug}`,
+    operatingSystem: "Peramban web modern yang mendukung HTML5",
+    url: getGamePortalUrl(`/play/${game.slug}`),
     inLanguage: "id",
     author: {
       "@type": "Organization",
@@ -111,19 +116,19 @@ export default async function PlayPage({ params }: PlayPageProps) {
         "@type": "ListItem",
         position: 2,
         name: "Tekno Game",
-        item: "https://teknotama.com/games",
+        item: getGamePortalUrl(),
       },
       {
         "@type": "ListItem",
         position: 3,
-        name: game.category.toUpperCase(),
-        item: `https://teknotama.com/games/category/${game.category}`,
+        name: getCategoryLabel(game.category),
+        item: getGamePortalUrl(`/category/${game.category}`),
       },
       {
         "@type": "ListItem",
         position: 4,
         name: game.title,
-        item: `https://teknotama.com/games/play/${game.slug}`,
+        item: getGamePortalUrl(`/play/${game.slug}`),
       },
     ],
   };
@@ -141,7 +146,7 @@ export default async function PlayPage({ params }: PlayPageProps) {
 
       {/* Navigasi Breadcrumb */}
       <nav
-        aria-label="Breadcrumb"
+        aria-label="Jejak navigasi"
         className="flex items-center gap-2 text-xs font-medium text-slate-300"
       >
         <Link
@@ -149,14 +154,14 @@ export default async function PlayPage({ params }: PlayPageProps) {
           className="inline-flex items-center gap-1 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Semua Game</span>
+          <span>Semua Permainan</span>
         </Link>
         <span>/</span>
         <Link
           href={`/category/${game.category}`}
           className="capitalize hover:text-white transition-colors"
         >
-          {game.category}
+          {getCategoryLabel(game.category)}
         </Link>
         <span>/</span>
         <span className="text-white font-semibold truncate max-w-xs">{game.title}</span>
@@ -189,7 +194,7 @@ export default async function PlayPage({ params }: PlayPageProps) {
                     <div className="bg-black/20 p-3.5 rounded-xl border border-white/10">
                       <span className="font-semibold text-white flex items-center gap-1.5 mb-1.5">
                         <Keyboard className="w-3.5 h-3.5 text-slate-300" />
-                        <span>Keyboard:</span>
+                        <span>Papan ketik:</span>
                       </span>
                       <ul className="list-disc list-inside space-y-1 text-slate-300">
                         {game.controlsGuide.keyboard.map((k, idx) => (
@@ -202,7 +207,7 @@ export default async function PlayPage({ params }: PlayPageProps) {
                     <div className="bg-black/20 p-3.5 rounded-xl border border-white/10">
                       <span className="font-semibold text-white flex items-center gap-1.5 mb-1.5">
                         <Smartphone className="w-3.5 h-3.5 text-slate-300" />
-                        <span>Layar Sentuh (Smartphone / Tablet):</span>
+                        <span>Layar sentuh (ponsel / tablet):</span>
                       </span>
                       <p className="text-slate-300 leading-relaxed">
                         {game.controlsGuide.touch}
@@ -227,14 +232,15 @@ export default async function PlayPage({ params }: PlayPageProps) {
               PT Teknotama Prakarsa Mulia
             </h4>
             <p className="text-xs text-slate-300 leading-relaxed">
-              Konsultasikan solusi infrastruktur IT, cloud system, keamanan data, dan custom software bersama tim profesional kami.
+              Konsultasikan solusi infrastruktur teknologi informasi, sistem awan, keamanan data, dan perangkat lunak khusus bersama tim kami.
             </p>
             <div className="pt-1">
               <a
                 href="https://teknotama.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full py-2.5 text-center rounded-xl btn-sponsor-clean text-xs font-semibold shadow-sm cursor-pointer"
+                data-magnetic
+                className="block min-h-11 w-full rounded-full py-3 text-center btn-sponsor-clean text-xs font-semibold shadow-sm"
               >
                 <span>Kunjungi teknotama.com</span>
                 <ExternalLink className="w-3.5 h-3.5 inline ml-1" />
@@ -247,7 +253,7 @@ export default async function PlayPage({ params }: PlayPageProps) {
       {/* Rekomendasi Game Lainnya */}
       <section className="pt-6">
         <h3 className="font-heading text-base sm:text-lg font-bold text-white mb-4">
-          Game Lainnya Untuk Anda
+          Permainan Lainnya Untuk Anda
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-5">
           {relatedGames.map((g) => (

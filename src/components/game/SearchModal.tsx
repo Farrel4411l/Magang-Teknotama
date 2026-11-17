@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Search, X, Play, Gamepad2 } from "lucide-react";
-import { INITIAL_GAMES } from "@/lib/games-data";
+import { getCategoryLabel, INITIAL_GAMES, searchGames } from "@/lib/games-data";
 import { Game } from "@/types/game";
 
 interface SearchModalProps {
@@ -29,14 +29,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
       setResults(INITIAL_GAMES.slice(0, 6));
       return;
     }
-    const q = query.toLowerCase();
-    const filtered = INITIAL_GAMES.filter(
-      (g) =>
-        g.title.toLowerCase().includes(q) ||
-        g.description.toLowerCase().includes(q) ||
-        g.category.toLowerCase().includes(q)
-    );
-    setResults(filtered);
+    setResults(searchGames(query));
   }, [query]);
 
   if (!isOpen) return null;
@@ -51,13 +44,13 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Cari game (misal: runner, drift, stacker, kapal)..."
+            placeholder="Cari permainan, misalnya: runner, drift, kapal..."
             className="w-full text-sm font-medium text-white placeholder-slate-400 focus:outline-none bg-transparent"
           />
           <button
             type="button"
             onClick={onClose}
-            className="p-1 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
             aria-label="Tutup"
           >
             <X className="w-4 h-4" />
@@ -67,7 +60,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
         <div className="p-3 max-h-[380px] overflow-y-auto space-y-1">
           {results.length === 0 ? (
             <div className="py-8 text-center text-slate-400 text-xs">
-              Tidak ada game yang cocok dengan &quot;{query}&quot;. Coba kata kunci lain.
+              Tidak ada permainan yang cocok dengan &quot;{query}&quot;. Coba kata kunci lain.
             </div>
           ) : (
             results.map((game) => (
@@ -75,7 +68,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 key={game.id}
                 href={`/play/${game.slug}`}
                 onClick={onClose}
-                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-white/10 transition-colors group cursor-pointer"
+                className="flex min-h-11 items-center justify-between rounded-xl p-2.5 hover:bg-white/10 transition-colors group"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
@@ -86,7 +79,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       {game.title}
                     </h4>
                     <span className="text-[10px] text-slate-400 capitalize block">
-                      {game.category}
+                      {getCategoryLabel(game.category)}
                     </span>
                   </div>
                 </div>

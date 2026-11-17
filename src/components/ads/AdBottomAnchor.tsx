@@ -10,7 +10,7 @@ export default function AdBottomAnchor() {
   return (
     <aside
       className={`fixed bottom-0 left-0 right-0 z-40 flex flex-col items-center pointer-events-none transition-transform duration-200 md:hidden ${
-        isCollapsed ? "translate-y-[calc(100%-28px)]" : "translate-y-0"
+        isCollapsed ? "translate-y-[calc(100%-44px)]" : "translate-y-0"
       }`}
       aria-label="Iklan Bawah Layar"
     >
@@ -18,11 +18,11 @@ export default function AdBottomAnchor() {
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           aria-label={isCollapsed ? "Tampilkan Iklan" : "Sembunyikan Iklan"}
-          className="h-7 px-3 rounded-t-lg bg-[#18225e] hover:bg-[#242e75] text-slate-200 text-[10px] font-medium border-t border-x border-white/10 shadow-md flex items-center gap-1.5 cursor-pointer transition-colors"
+          className="min-h-11 rounded-t-xl bg-[#18225e] px-3 text-[10px] font-medium text-slate-200 border-t border-x border-white/10 shadow-md flex items-center gap-1.5 cursor-pointer transition-colors hover:bg-[#242e75]"
         >
           {isCollapsed ? (
             <>
-              <Eye className="w-3 h-3 text-cyan-300" />
+              <Eye className="w-3 h-3 text-[#8caeff]" />
               <span>Tampilkan Iklan</span>
               <ChevronUp className="w-3 h-3 text-slate-400" />
             </>

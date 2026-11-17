@@ -18,7 +18,7 @@ export default function AdSkyscraper({ position }: AdSkyscraperProps) {
           ? "left-[calc((100vw-1280px)/2-180px)]"
           : "right-[calc((100vw-1280px)/2-180px)]"
       }`}
-      aria-label={`Advertisement ${isLeft ? "Kiri" : "Kanan"}`}
+      aria-label={`Iklan sisi ${isLeft ? "kiri" : "kanan"}`}
     >
       <GoogleAdSlot
         slotType="skyscraper-160x600"

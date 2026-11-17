@@ -1,39 +1,34 @@
-# TeknoGame - PLAY. EVOLVE. CONQUER.
+# Tekno Game
 
-Platform game web HTML5 instan terkemuka bergaya Friv & Poki dengan tema **Cyberpunk / Esports Dark Mode**. Platform ini menghadirkan pengalaman bermain cepat, imersif, dan bebas hambatan langsung dari browser tanpa perlu download atau instalasi.
+Portal permainan web HTML5 PT Teknotama Prakarsa Mulia. Aplikasi menggunakan Next.js App Router, mendukung jalur `/games`, dan mempertahankan skor serta favorit secara lokal di peramban.
 
----
+## Fitur
 
-## 🎮 Fitur Utama
-* **100% Bebas Database (Zero-Database Architecture):** Performa ultra-cepat tanpa query delay atau ketergantungan koneksi server backend.
-* **11 Game HTML5 Mandiri:** Koleksi game arcade, petualangan, aksi, balap malam, dan puzzle asah otak.
-* **Tekno Hall of Fame:** Papan rekor skor terbaik pribadi yang tersimpan secara instan di `LocalStorage` browser.
-* **Cyber Live Radar Ticker:** Menampilkan info aktivitas gamer, pemecahan rekor skor, dan rekomendasi game.
-* **The Tekno Matrix Grid:** Tampilan grid responsif dengan efek interaktif *neon cyan glow*.
-* **Cyber Theater Mode:** Layar bermain game imersif lengkap dengan kontrol Fullscreen, Reload, Favorit, dan Share.
+- Katalog permainan dengan kategori, pencarian, dan permainan acak.
+- Halaman permainan dengan kendali layar penuh, muat ulang, bagikan, dan favorit.
+- Papan skor dan favorit yang disimpan secara lokal.
+- Slot iklan yang sudah ada, informasi layanan mitra, dan tata letak responsif.
+- Panggung chip Three.js pada hero, dengan ilustrasi logo sebagai tampilan cadangan.
 
----
+## Menjalankan proyek
 
-## 🛠️ Tech Stack
-* **Framework:** Next.js 16 (App Router, Standalone output)
-* **Library:** React 19, TypeScript
-* **Styling:** Tailwind CSS v4 (Cyber Cyan `#00F0FF`, Electric Blue `#2563EB`, Void Black `#070B14`)
-* **Icons:** Lucide React
+Pasang dependensi, lalu jalankan:
 
----
-
-## 🚀 Menjalankan Proyek
-
-### 1. Mode Development
 ```bash
-cd game
 npm run dev
 ```
-Buka [http://localhost:3000](http://localhost:3000) di browser.
 
-### 2. Build Production
+Server pengembangan tersedia di `http://localhost:3000/games`.
+
+## Pemeriksaan
+
 ```bash
-cd game
+npm run lint
 npm run build
-npm start
 ```
+
+Build memakai ekspor statis dan `basePath` bawaan `/games`. Nilainya dapat diubah melalui `NEXT_PUBLIC_BASE_PATH`.
+
+## Batas aset permainan
+
+Berkas inti permainan berada di `public/games/`. Jangan mengubah direktori tersebut ketika mengerjakan desain antarmuka.

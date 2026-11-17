@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { X, Heart, Play, Gamepad2 } from "lucide-react";
 import { getLocalFavorites, toggleLocalFavorite } from "@/lib/local-storage";
-import { INITIAL_GAMES } from "@/lib/games-data";
+import { getCategoryLabel, INITIAL_GAMES } from "@/lib/games-data";
 import { Game } from "@/types/game";
 
 interface FavoritesModalProps {
@@ -42,17 +42,17 @@ export default function FavoritesModal({ isOpen, onClose }: FavoritesModalProps)
             </div>
             <div>
               <h3 className="font-heading text-base font-bold text-white">
-                Game Favorit Saya
+                Permainan Favorit Saya
               </h3>
               <p className="text-[11px] text-slate-300">
-                Daftar game yang Anda simpan
+                Daftar permainan yang Anda simpan
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
             aria-label="Tutup"
           >
             <X className="w-5 h-5" />
@@ -66,10 +66,10 @@ export default function FavoritesModal({ isOpen, onClose }: FavoritesModalProps)
                 <Gamepad2 className="w-6 h-6" />
               </div>
               <h4 className="text-xs sm:text-sm font-semibold text-slate-200">
-                Belum Ada Game Favorit
+                Belum Ada Permainan Favorit
               </h4>
               <p className="text-xs text-slate-400 max-w-xs mx-auto">
-                Tekan tombol hati pada game apa pun untuk menyimpannya ke daftar favorit ini.
+                Tekan tombol hati pada permainan untuk menyimpannya ke daftar favorit ini.
               </p>
             </div>
           ) : (
@@ -87,7 +87,7 @@ export default function FavoritesModal({ isOpen, onClose }: FavoritesModalProps)
                       {game.title}
                     </h4>
                     <span className="text-[10px] text-slate-400 capitalize block">
-                      {game.category}
+                      {getCategoryLabel(game.category)}
                     </span>
                   </div>
                 </div>
@@ -97,7 +97,7 @@ export default function FavoritesModal({ isOpen, onClose }: FavoritesModalProps)
                     type="button"
                     onClick={(e) => handleRemoveFavorite(game.id, e)}
                     title="Hapus dari Favorit"
-                    className="p-1.5 text-rose-300 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                    className="flex min-h-11 min-w-11 items-center justify-center rounded-lg text-rose-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
                     aria-label="Hapus"
                   >
                     <Heart className="w-4 h-4 fill-rose-400" />
@@ -106,7 +106,7 @@ export default function FavoritesModal({ isOpen, onClose }: FavoritesModalProps)
                   <Link
                     href={`/play/${game.slug}`}
                     onClick={onClose}
-                    className="px-3 py-1.5 rounded-lg btn-primary-clean text-xs font-semibold flex items-center gap-1 shadow-sm"
+                    className="flex min-h-11 items-center gap-1 rounded-full px-3 btn-primary-clean text-xs font-semibold shadow-sm"
                   >
                     <span>Main</span>
                     <Play className="w-3 h-3 fill-current ml-0.5" />
@@ -118,7 +118,7 @@ export default function FavoritesModal({ isOpen, onClose }: FavoritesModalProps)
         </div>
 
         <div className="p-3 bg-black/20 border-t border-white/10 flex items-center justify-between text-xs text-slate-300">
-          <span>{favoriteGames.length} Game Tersimpan</span>
+          <span>{favoriteGames.length} Permainan Tersimpan</span>
           <button
             type="button"
             onClick={onClose}

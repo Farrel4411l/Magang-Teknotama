@@ -1,14 +1,18 @@
-import { Game, CategoryInfo } from "@/types/game";
+import { Game, CategoryInfo, GameCategory } from "@/types/game";
 
 export const CATEGORIES: CategoryInfo[] = [
-  { id: "all", label: "Semua Game", icon: "Gamepad2", colorClass: "bg-blue-600" },
-  { id: "arcade", label: "Arcade", icon: "Gamepad", colorClass: "bg-indigo-600" },
-  { id: "adventure", label: "Petualangan", icon: "Compass", colorClass: "bg-cyan-600" },
-  { id: "puzzle", label: "Puzzle", icon: "Puzzle", colorClass: "bg-sky-600" },
+  { id: "all", label: "Semua Permainan", icon: "Gamepad2", colorClass: "bg-blue-600" },
+  { id: "arcade", label: "Arkade", icon: "Gamepad", colorClass: "bg-indigo-600" },
+  { id: "adventure", label: "Petualangan", icon: "Compass", colorClass: "bg-[#255dce]" },
+  { id: "puzzle", label: "Teka-teki", icon: "Puzzle", colorClass: "bg-sky-600" },
   { id: "action", label: "Aksi", icon: "Zap", colorClass: "bg-blue-700" },
   { id: "casual", label: "Santai", icon: "Coffee", colorClass: "bg-slate-600" },
   { id: "sports", label: "Olahraga", icon: "Trophy", colorClass: "bg-cobalt-600" },
 ];
+
+export function getCategoryLabel(category: GameCategory): string {
+  return CATEGORIES.find((item) => item.id === category)?.label ?? "Permainan";
+}
 
 export const INITIAL_GAMES: Game[] = [
   // 1. Nusantara Runner (Hero Featured)
@@ -286,6 +290,6 @@ export function searchGames(query: string): Game[] {
     (g) =>
       g.title.toLowerCase().includes(q) ||
       g.description.toLowerCase().includes(q) ||
-      g.category.toLowerCase().includes(q)
+      getCategoryLabel(g.category).toLowerCase().includes(q)
   );
 }

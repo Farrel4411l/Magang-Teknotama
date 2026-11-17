@@ -2,6 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/layout/ClientLayout";
+import {
+  GAME_BASE_PATH,
+  getGamePortalUrl,
+  SITE_URL,
+} from "@/lib/site";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-heading",
@@ -21,32 +26,32 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#021861",
+  themeColor: "#0B0E17",
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://teknotama.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Tekno Game - Portal Game Web HTML5 Resmi PT Teknotama Prakarsa Mulia",
+    default: "Tekno Game - Portal Permainan Web HTML5 Resmi PT Teknotama Prakarsa Mulia",
     template: "%s | Tekno Game",
   },
   description:
-    "Portal resmi game web HTML5 instan persembahan PT Teknotama Prakarsa Mulia. Mainkan game petualangan, arcade, puzzle, dan aksi gratis langsung di browser tanpa instalasi.",
+    "Portal resmi permainan web HTML5 persembahan PT Teknotama Prakarsa Mulia. Mainkan petualangan, arkade, teka-teki, dan aksi gratis langsung di peramban tanpa instalasi.",
   keywords: [
     "Tekno Game",
-    "game web",
-    "game online gratis",
-    "game html5 indonesia",
-    "teknotama game",
+    "permainan web",
+    "permainan daring gratis",
+    "permainan html5 indonesia",
+    "Tekno Game Teknotama",
     "PT Teknotama Prakarsa Mulia",
-    "game browser gratis",
-    "game tanpa install",
+    "permainan peramban gratis",
+    "permainan tanpa instalasi",
   ],
   authors: [{ name: "PT Teknotama Prakarsa Mulia", url: "https://teknotama.com" }],
   creator: "PT Teknotama Prakarsa Mulia",
   publisher: "PT Teknotama Prakarsa Mulia",
   alternates: {
-    canonical: "/games",
+    canonical: GAME_BASE_PATH || "/",
   },
   robots: {
     index: true,
@@ -60,27 +65,24 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [
-      { url: "/games/Teknogame_logo_only.png", type: "image/png" },
-      { url: "/games/favicon.ico", sizes: "any" },
-    ],
-    shortcut: "/games/Teknogame_logo_only.png",
-    apple: "/games/Teknogame_logo_only.png",
+    icon: [{ url: `${GAME_BASE_PATH}/Teknogame_logo_only.png`, type: "image/png" }],
+    shortcut: `${GAME_BASE_PATH}/Teknogame_logo_only.png`,
+    apple: `${GAME_BASE_PATH}/Teknogame_logo_only.png`,
   },
   openGraph: {
     type: "website",
     locale: "id_ID",
-    url: "https://teknotama.com/games",
+    url: getGamePortalUrl(),
     siteName: "Tekno Game",
-    title: "Tekno Game - Portal Game Web HTML5 Resmi PT Teknotama Prakarsa Mulia",
+    title: "Tekno Game - Portal Permainan Web HTML5 Resmi PT Teknotama Prakarsa Mulia",
     description:
-      "Mainkan aneka game web HTML5 seru dan gratis di Tekno Game, sub-portal resmi PT Teknotama Prakarsa Mulia.",
+      "Mainkan aneka permainan web HTML5 gratis di Tekno Game, sub-portal resmi PT Teknotama Prakarsa Mulia.",
     images: [
       {
-        url: "/games/Teknogame_logo_only.png",
+        url: getGamePortalUrl("/Teknogame_logo_only.png"),
         width: 800,
         height: 800,
-        alt: "Logo Resmi Tekno Game",
+        alt: "Logo resmi Tekno Game",
       },
     ],
   },
@@ -102,9 +104,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://teknotama.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://teknotama.com" />
-        <link rel="icon" href="/games/Teknogame_logo_only.png" type="image/png" />
-        <link rel="shortcut icon" href="/games/Teknogame_logo_only.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/games/Teknogame_logo_only.png" />
       </head>
       <body className="min-h-full text-[#F8FAFC]" suppressHydrationWarning>
         <ClientLayout>{children}</ClientLayout>

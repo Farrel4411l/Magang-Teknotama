@@ -1,11 +1,10 @@
 # PRODUCT REQUIREMENTS DOCUMENT (PRD)
-## Project: Platform Game Web TeknoGame (PLAY. EVOLVE. CONQUER.)
+## Project: Platform Permainan Web Tekno Game
 
 * **Versi Dokumen:** 2.1.0 (TeknoGame Rebranding, Cyber Blue Theme, & Zero-Database Architecture)
 * **Status:** Final - Production Ready
-* **Brand Name:** **TeknoGame** (`TEKNO GAME`)
-* **Slogan:** *"PLAY. EVOLVE. CONQUER."*
-* **Aset Logo Utama:** `TeknoGame_Logo.jpeg` (Shield GT, D-Pad, Lightning, Circuits)
+* **Brand Name:** **Tekno Game**
+* **Aset Logo Utama:** `public/Teknogame_logo_only.png`
 * **Infrastruktur Hosting:** Hostdata.id (DirectAdmin + LiteSpeed + CloudLinux Node.js Selector / Standalone Mode - **100% Database-Free**)
 
 ---
@@ -120,7 +119,7 @@ travelista-game/
         │   ├── layout/           # Komponen Rangka Halaman
         │   │   ├── Navbar.tsx             # Main Cyber Nav (Logo GT, pills, search, hall of fame)
         │   │   ├── BreakingTicker.tsx     # Cyber Live Radar Bar (Statistik aktivitas gamer)
-        │   │   ├── Footer.tsx             # Footer TeknoGame & slogan PLAY. EVOLVE. CONQUER.
+        │   │   ├── Footer.tsx             # Footer Tekno Game dan informasi mitra
         │   │   └── LayoutWrapper.tsx      # Penata gutter kiri & kanan untuk Skyscraper Ad
         │   │
         │   ├── ads/              # Komponen Unit Iklan & Sponsor Tekno Gear
@@ -155,7 +154,7 @@ travelista-game/
 
 ### 5.1 Modul Navigasi & Identitas TeknoGame
 * **Navbar Tier-1 (Main Bar - Tinggi 68px):**
-  * Logo resmi: Perisai `GT` emblem dengan efek border cyan menyala + teks `TEKNO GAME` dan slogan micro `PLAY. EVOLVE. CONQUER.`.
+  * Logo resmi: Berkas `public/Teknogame_logo_only.png` dipadukan dengan teks Tekno Game.
   * Menu navigasi kategori: *Semua Game, Arcade, Petualangan, Puzzle, Santai*.
   * Action Badges Gamer:
     * `[ ⚡ Main Acak ]` -> Memilih dan membuka game acak secara instan dengan aksen cyan glow.

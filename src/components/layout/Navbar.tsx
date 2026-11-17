@@ -62,29 +62,29 @@ export default function Navbar({
   const getCategoryIcon = (id: GameCategory) => {
     switch (id) {
       case "arcade":
-        return <Gamepad2 className="w-4 h-4 text-cyan-400" />;
+        return <Gamepad2 className="w-4 h-4 text-[#8caeff]" />;
       case "adventure":
         return <Compass className="w-4 h-4 text-emerald-400" />;
       case "puzzle":
         return <Puzzle className="w-4 h-4 text-sky-400" />;
       case "action":
-        return <Zap className="w-4 h-4 text-rose-400" />;
+        return <Zap className="w-4 h-4 text-purple-400" />;
       case "casual":
         return <Coffee className="w-4 h-4 text-amber-400" />;
       default:
-        return <Gamepad2 className="w-4 h-4 text-blue-400" />;
+        return <Gamepad2 className="w-4 h-4 text-[#8caeff]" />;
     }
   };
 
   return (
-    <header className="sticky top-0 z-50 glass-nav-clean">
+    <header className="sticky top-0 z-50 glass-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-[68px]">
-          {/* 1. Brand Logo Tekno Game */}
+          {/* Brand */}
           <div className="flex items-center shrink-0">
             <Link
               href="/"
-              className="flex items-center gap-3 group select-none"
+              className="flex items-center gap-2.5 group select-none"
               title="Tekno Game"
             >
               <div className="relative w-9 h-9 sm:w-10 sm:h-10 shrink-0">
@@ -97,60 +97,61 @@ export default function Navbar({
                   priority
                 />
               </div>
-              <div className="flex items-baseline gap-1">
-                <span className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-white">
-                  Tekno
-                </span>
-                <span className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-rose-300">
-                  Game
-                </span>
+              <div className="leading-tight">
+                <div className="flex items-baseline gap-1">
+                  <span className="font-heading text-xl font-bold tracking-tight text-white sm:text-[1.35rem]">
+                    Tekno
+                  </span>
+                  <span className="font-heading text-xl font-bold tracking-tight text-[#8caeff] sm:text-[1.35rem]">
+                    Game
+                  </span>
+                </div>
               </div>
             </Link>
           </div>
 
-          {/* 2. Desktop Navigation Center */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-medium text-slate-200">
-            {/* 3. Beranda */}
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-medium text-slate-300">
             <Link
               href="/"
-              className="px-3.5 py-2 rounded-xl hover:text-white hover:bg-white/10 transition-colors"
+              className="px-3.5 py-2 rounded-xl hover:text-white hover:bg-white/8 transition-colors"
             >
               Beranda
             </Link>
 
-            {/* 4. Kategori Game (Dropdown) */}
+            {/* Pilihan kategori */}
             <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-1 px-3.5 py-2 rounded-xl hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                className="flex items-center gap-1 px-3.5 py-2 rounded-xl hover:text-white hover:bg-white/8 transition-colors cursor-pointer"
                 aria-expanded={dropdownOpen}
               >
                 <span>Kategori</span>
                 <ChevronDown
-                  className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
+                  className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${
                     dropdownOpen ? "rotate-180" : ""
                   }`}
                 />
               </button>
 
               {dropdownOpen && (
-                <div className="absolute top-full left-0 mt-1.5 w-52 rounded-2xl glass-modal-clean p-1.5 z-50 animate-in fade-in duration-150">
+                <div className="absolute top-full left-0 mt-1.5 w-52 rounded-2xl glass-modal p-1.5 z-50">
                   <Link
                     href="/"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-white hover:bg-white/8 transition-colors"
                   >
-                    <Gamepad2 className="w-4 h-4 text-cyan-400" />
-                    <span>Semua Game</span>
+                    <Gamepad2 className="w-4 h-4 text-[#8caeff]" />
+                    <span>Semua Permainan</span>
                   </Link>
-                  <div className="h-px bg-white/10 my-1" />
+                  <div className="h-px bg-white/8 my-1" />
                   {CATEGORIES.filter((c) => c.id !== "all").map((cat) => (
                     <Link
                       key={cat.id}
                       href={`/category/${cat.id}`}
                       onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:text-white hover:bg-white/8 transition-colors"
                     >
                       {getCategoryIcon(cat.id)}
                       <span>{cat.label}</span>
@@ -160,67 +161,63 @@ export default function Navbar({
               )}
             </div>
 
-            {/* 5. Main Acak */}
             <button
               type="button"
               onClick={handleRandomPlay}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              data-magnetic
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl hover:text-white hover:bg-white/8 transition-colors cursor-pointer"
             >
-              <Dices className="w-4 h-4 text-slate-300" />
+              <Dices className="w-4 h-4 text-slate-400" />
               <span>Main Acak</span>
             </button>
 
-            {/* 6. Papan Skor */}
             <button
               type="button"
               onClick={onOpenLeaderboard}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl hover:text-white hover:bg-white/8 transition-colors cursor-pointer"
             >
-              <Trophy className="w-4 h-4 text-amber-300" />
+              <Trophy className="w-4 h-4 text-amber-400" />
               <span>Papan Skor</span>
             </button>
 
-            {/* 7. Favorit */}
             <button
               type="button"
               onClick={onOpenFavorites}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl hover:text-white hover:bg-white/8 transition-colors cursor-pointer"
             >
               <Heart className="w-4 h-4 text-rose-400" />
               <span>Favorit</span>
             </button>
           </nav>
 
-          {/* Sisi Kanan: Search Bar + 8. Link Sponsor teknotama.com */}
+          {/* Pencarian dan mitra */}
           <div className="flex items-center gap-2.5">
-            {/* 2. Search Bar Trigger */}
             <button
               type="button"
               onClick={onOpenSearch}
-              aria-label="Cari Game"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-slate-300 hover:text-white transition-colors cursor-pointer text-xs"
+              aria-label="Cari Permainan"
+              className="flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 text-xs text-slate-300 transition-colors hover:border-[#255dce]/50 hover:text-white"
             >
               <Search className="w-3.5 h-3.5" />
-              <span className="hidden md:inline font-normal">Cari game...</span>
+              <span className="hidden font-normal md:inline">Cari permainan...</span>
             </button>
 
-            {/* 8. Link Penghubung Sponsor teknotama.com */}
             <a
               href="https://teknotama.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl btn-sponsor-clean text-xs font-semibold shadow-sm cursor-pointer"
+              data-magnetic
+              className="hidden min-h-11 items-center gap-1.5 rounded-full px-3.5 text-xs font-semibold shadow-sm transition sm:inline-flex btn-sponsor"
             >
               <span>teknotama.com</span>
               <ExternalLink className="w-3 h-3 text-white/80" />
             </a>
 
-            {/* Mobile Menu Button */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl bg-white/10 border border-white/15 text-slate-300 hover:text-white cursor-pointer"
-              aria-label="Menu"
+              className="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-slate-300 transition-colors hover:text-white lg:hidden"
+              aria-label="Menu navigasi"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -230,18 +227,18 @@ export default function Navbar({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-white/10 bg-[#121844] px-4 py-4 space-y-2 shadow-xl animate-in slide-in-from-top-2 duration-150">
+        <div className="lg:hidden border-t border-[#255dce]/10 bg-[#0a0e1a] px-4 py-4 space-y-2 shadow-xl">
           <Link
             href="/"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
+            className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-white hover:bg-white/8 transition-colors"
           >
-            <Gamepad2 className="w-4 h-4 text-cyan-400" />
+            <Gamepad2 className="w-4 h-4 text-[#8caeff]" />
             <span>Beranda</span>
           </Link>
 
-          <div className="pt-2 text-xs font-semibold text-slate-400 px-3">
-            Kategori Game
+          <div className="pt-2 text-xs font-semibold text-slate-500 px-3">
+            Kategori Permainan
           </div>
           <div className="grid grid-cols-2 gap-1 px-1">
             {CATEGORIES.map((cat) => (
@@ -249,7 +246,7 @@ export default function Navbar({
                 key={cat.id}
                 href={cat.id === "all" ? "/" : `/category/${cat.id}`}
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-slate-200 hover:bg-white/10 transition-colors"
+                className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-white/8 transition-colors"
               >
                 {getCategoryIcon(cat.id)}
                 <span>{cat.label}</span>
@@ -257,12 +254,13 @@ export default function Navbar({
             ))}
           </div>
 
-          <div className="h-px bg-white/10 my-2" />
+          <div className="h-px bg-white/8 my-2" />
 
           <button
             type="button"
             onClick={handleRandomPlay}
-            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-200 hover:bg-white/10 transition-colors cursor-pointer"
+            data-magnetic
+            className="flex min-h-11 w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-semibold text-slate-200 transition-colors hover:bg-white/8"
           >
             <Dices className="w-4 h-4" />
             <span>Main Acak</span>
@@ -274,9 +272,9 @@ export default function Navbar({
               setMobileMenuOpen(false);
               onOpenLeaderboard?.();
             }}
-            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-200 hover:bg-white/10 transition-colors cursor-pointer"
+            className="flex min-h-11 w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-semibold text-slate-200 transition-colors hover:bg-white/8"
           >
-            <Trophy className="w-4 h-4 text-amber-300" />
+            <Trophy className="w-4 h-4 text-amber-400" />
             <span>Papan Skor</span>
           </button>
 
@@ -286,7 +284,7 @@ export default function Navbar({
               setMobileMenuOpen(false);
               onOpenFavorites?.();
             }}
-            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-200 hover:bg-white/10 transition-colors cursor-pointer"
+            className="flex min-h-11 w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-semibold text-slate-200 transition-colors hover:bg-white/8"
           >
             <Heart className="w-4 h-4 text-rose-400" />
             <span>Favorit</span>
@@ -297,7 +295,8 @@ export default function Navbar({
               href="https://teknotama.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl btn-sponsor-clean text-xs font-semibold shadow-md cursor-pointer"
+              data-magnetic
+              className="flex min-h-11 w-full items-center justify-between rounded-full px-4 py-2.5 text-xs font-semibold shadow-md btn-sponsor"
             >
               <span>Kunjungi teknotama.com</span>
               <ExternalLink className="w-4 h-4" />

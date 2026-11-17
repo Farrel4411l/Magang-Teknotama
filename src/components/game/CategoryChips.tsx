@@ -49,7 +49,7 @@ export default function CategoryChips({
             <button
               key={cat.id}
               onClick={() => onSelectCategory(cat.id)}
-              className={`shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium transition-all duration-150 cursor-pointer select-none ${
+              className={`min-h-11 shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium transition-all duration-150 cursor-pointer select-none ${
                 isSelected
                   ? "btn-primary-clean text-white shadow-sm"
                   : "bg-white/10 hover:bg-white/15 border border-white/10 text-slate-200 hover:text-white"

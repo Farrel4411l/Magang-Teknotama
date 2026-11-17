@@ -13,6 +13,7 @@ import {
   X,
   Gamepad2,
 } from "lucide-react";
+import { getCategoryLabel } from "@/lib/games-data";
 import {
   toggleLocalFavorite,
   getLocalFavorites,
@@ -147,7 +148,7 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
               <Trophy className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-xs text-white/70 block">Permainan Selesai! Skor:</span>
+              <span className="text-xs text-white/70 block">Permainan selesai! Skor:</span>
               <span className="text-lg font-bold text-amber-300">
                 {lastScore.toLocaleString("id-ID")} Poin
               </span>
@@ -156,7 +157,7 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
               <button
                 type="button"
                 onClick={() => onOpenLeaderboard?.()}
-                className="px-3 py-1.5 btn-primary-clean text-xs font-semibold rounded-lg shadow-sm cursor-pointer"
+                className="min-h-11 px-3 btn-primary-clean text-xs font-semibold rounded-lg shadow-sm cursor-pointer"
               >
                 Lihat Rekor
               </button>
@@ -177,14 +178,14 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
       <div className="rounded-2xl card-natural p-3 sm:p-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0">
           <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center shrink-0 text-white">
-            <Gamepad2 className="w-5 h-5 text-cyan-200" />
+            <Gamepad2 className="w-5 h-5 text-[#8caeff]" />
           </div>
           <div className="min-w-0">
             <h1 className="font-heading text-sm sm:text-base font-semibold text-white leading-tight truncate">
               {game.title}
             </h1>
             <span className="text-[11px] text-white/60 capitalize">
-              {game.category}
+              {getCategoryLabel(game.category)}
             </span>
           </div>
         </div>
@@ -195,7 +196,7 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
             type="button"
             onClick={handleToggleFavorite}
             aria-label={isFavorite ? "Hapus dari Favorit" : "Tambah ke Favorit"}
-            className={`min-h-[40px] min-w-[40px] p-2.5 rounded-xl border transition-colors cursor-pointer flex items-center justify-center ${
+            className={`min-h-11 min-w-11 p-2.5 rounded-xl border transition-colors cursor-pointer flex items-center justify-center ${
               isFavorite
                 ? "bg-[#8a1347] border-rose-300 text-white"
                 : "bg-white/10 border-white/10 text-slate-300 hover:text-white hover:bg-white/15"
@@ -212,8 +213,8 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
           <button
             type="button"
             onClick={handleShare}
-            aria-label="Bagikan Tautan Game"
-            className="min-h-[40px] min-w-[40px] p-2.5 rounded-xl bg-white/10 border border-white/10 text-slate-300 hover:text-white hover:bg-white/15 transition-colors cursor-pointer flex items-center justify-center"
+            aria-label="Bagikan Tautan Permainan"
+            className="min-h-11 min-w-11 p-2.5 rounded-xl bg-white/10 border border-white/10 text-slate-300 hover:text-white hover:bg-white/15 transition-colors cursor-pointer flex items-center justify-center"
           >
             <Share2 className="w-4 h-4" />
           </button>
@@ -223,7 +224,7 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
             type="button"
             onClick={handleReload}
             aria-label="Muat Ulang"
-            className="min-h-[40px] min-w-[40px] p-2.5 rounded-xl bg-white/10 border border-white/10 text-slate-300 hover:text-white hover:bg-white/15 transition-colors cursor-pointer flex items-center justify-center"
+            className="min-h-11 min-w-11 p-2.5 rounded-xl bg-white/10 border border-white/10 text-slate-300 hover:text-white hover:bg-white/15 transition-colors cursor-pointer flex items-center justify-center"
           >
             <RotateCcw className="w-4 h-4" />
           </button>
@@ -233,12 +234,12 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
             type="button"
             onClick={handleFullscreen}
             aria-label={isFullscreen ? "Keluar Layar Penuh" : "Layar Penuh"}
-            className="min-h-[40px] px-3.5 py-2 rounded-xl btn-primary-clean text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
+            className="min-h-11 min-w-11 px-3.5 py-2 rounded-xl btn-primary-clean text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
           >
             {isFullscreen ? (
               <>
                 <Minimize className="w-4 h-4" />
-                <span className="hidden sm:inline">Normal</span>
+                <span className="hidden sm:inline">Keluar layar penuh</span>
               </>
             ) : (
               <>
