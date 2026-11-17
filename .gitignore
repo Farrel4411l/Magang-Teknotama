@@ -1,0 +1,5 @@
+# Secret API keys & local logs (do not push to GitHub)
+teknotama_secrets.php
+*.log
+.DS_Store
+Thumbs.db
