@@ -17,7 +17,7 @@ export default function NotFound() {
 
   return (
     <div className="min-h-[55vh] flex flex-col items-center justify-center text-center px-4 py-16">
-      <div className="w-20 h-20 rounded-3xl bg-[#021861] border border-[#255dce]/60 text-[#8caeff] flex items-center justify-center text-3xl shadow-[0_0_30px_rgba(37,93,206,0.4)] mb-6 animate-pulse">
+      <div className="w-20 h-20 rounded-3xl bg-[#021861] border border-[#255dce]/60 text-[#8caeff] flex items-center justify-center text-3xl shadow-[0_0_30px_rgba(37,93,206,0.4)] mb-6">
         <Compass className="w-10 h-10 text-[#8caeff]" />
       </div>
 
@@ -40,7 +40,6 @@ export default function NotFound() {
       <div className="flex flex-wrap items-center justify-center gap-3">
         <Link
           href="/"
-          data-magnetic
           className="min-h-11 rounded-full px-6 btn-burgundy text-white font-bold text-sm flex items-center gap-2 shadow-lg active:scale-95 cursor-pointer"
         >
           <Home className="w-4 h-4" />

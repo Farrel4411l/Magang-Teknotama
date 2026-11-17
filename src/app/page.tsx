@@ -250,7 +250,6 @@ export default function HomePage() {
             href="https://teknotama.com"
             target="_blank"
             rel="noopener noreferrer"
-            data-magnetic
             className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 px-4 text-xs font-semibold text-slate-200 transition-colors hover:border-[#255dce]/50 hover:text-white"
           >
             Lihat layanan Teknotama
@@ -289,7 +288,6 @@ export default function HomePage() {
               href="https://teknotama.com"
               target="_blank"
               rel="noopener noreferrer"
-              data-tilt
               className="partner-service-card group rounded-2xl border border-white/10 bg-white/[0.025] p-4 transition-colors hover:border-[#255dce]/40 hover:bg-white/[0.045]"
             >
               <span className="mb-4 grid h-10 w-10 place-items-center rounded-xl border border-[#255dce]/25 bg-[#021861]/30 text-[#8caeff] transition-colors group-hover:text-white">
@@ -324,7 +322,6 @@ export default function HomePage() {
             href="https://teknotama.com"
             target="_blank"
             rel="noopener noreferrer"
-            data-magnetic
             className="inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold btn-sponsor-clean md:w-auto"
           >
             <span>Kunjungi teknotama.com</span>

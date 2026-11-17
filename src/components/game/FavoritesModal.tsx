@@ -33,7 +33,7 @@ export default function FavoritesModal({ isOpen, onClose }: FavoritesModalProps)
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
       <div className="w-full max-w-lg glass-modal-clean rounded-2xl overflow-hidden flex flex-col text-white shadow-2xl">
         <div className="p-4 flex items-center justify-between border-b border-white/10 bg-black/20">
           <div className="flex items-center gap-2.5">

@@ -60,7 +60,6 @@ export default function GameCard({ game }: GameCardProps) {
   return (
     <Link
       href={`/play/${game.slug}`}
-      data-tilt
       className="game-card group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0e1728] transition-all duration-200 hover:border-[#255dce]/50 hover:shadow-[0_16px_40px_rgba(0,0,0,0.28)]"
     >
       <div className="game-card-art" data-category={game.category}>

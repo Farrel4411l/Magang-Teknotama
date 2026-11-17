@@ -164,7 +164,6 @@ export default function Navbar({
             <button
               type="button"
               onClick={handleRandomPlay}
-              data-magnetic
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl hover:text-white hover:bg-white/8 transition-colors cursor-pointer"
             >
               <Dices className="w-4 h-4 text-slate-400" />
@@ -206,7 +205,6 @@ export default function Navbar({
               href="https://teknotama.com"
               target="_blank"
               rel="noopener noreferrer"
-              data-magnetic
               className="hidden min-h-11 items-center gap-1.5 rounded-full px-3.5 text-xs font-semibold shadow-sm transition sm:inline-flex btn-sponsor"
             >
               <span>teknotama.com</span>
@@ -259,7 +257,6 @@ export default function Navbar({
           <button
             type="button"
             onClick={handleRandomPlay}
-            data-magnetic
             className="flex min-h-11 w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-semibold text-slate-200 transition-colors hover:bg-white/8"
           >
             <Dices className="w-4 h-4" />
@@ -295,7 +292,6 @@ export default function Navbar({
               href="https://teknotama.com"
               target="_blank"
               rel="noopener noreferrer"
-              data-magnetic
               className="flex min-h-11 w-full items-center justify-between rounded-full px-4 py-2.5 text-xs font-semibold shadow-md btn-sponsor"
             >
               <span>Kunjungi teknotama.com</span>

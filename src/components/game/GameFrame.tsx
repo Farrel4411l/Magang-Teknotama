@@ -119,7 +119,7 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
     <div className="flex flex-col gap-3 relative">
       {/* Toast Notifikasi */}
       {showToast && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 glass-modal-clean px-4 py-2 rounded-xl text-white text-xs font-medium shadow-xl flex items-center gap-2 animate-in fade-in duration-150">
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 glass-modal-clean px-4 py-2 rounded-xl text-white text-xs font-medium shadow-xl flex items-center gap-2">
           <Check className="w-4 h-4 text-emerald-400" />
           <span>{toastMessage}</span>
         </div>
@@ -143,7 +143,7 @@ export default function GameFrame({ game, onOpenLeaderboard }: GameFrameProps) {
 
         {/* Overlay Skor Selesai */}
         {lastScore !== null && (
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 glass-modal-clean rounded-2xl p-4 shadow-xl text-white flex items-center gap-4 animate-in fade-in duration-200">
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 glass-modal-clean rounded-2xl p-4 shadow-xl text-white flex items-center gap-4">
             <div className="w-10 h-10 rounded-xl bg-white/10 text-amber-300 flex items-center justify-center shrink-0">
               <Trophy className="w-5 h-5" />
             </div>

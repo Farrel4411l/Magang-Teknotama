@@ -8,6 +8,13 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, penambahan fitur,
 
 ---
 
+## [3.3.2] - 2026-11-18
+### Optimasi Performa Hero dan Interaksi
+- Mengganti chip Three.js dengan logo statis dan menghapus loop render canvas 3D dari hero.
+- Menghapus aura kursor, kemiringan kartu, tarikan tombol, serta animasi masuk dekoratif.
+- Menghapus dependensi Three.js yang tidak lagi digunakan tanpa mengubah navigasi atau fitur permainan.
+- Memperbarui README dan panduan desain agar sesuai dengan perilaku antarmuka yang baru.
+
 ## [3.3.1] - 2026-11-18
 ### Pembaruan Logo Tekno Game
 - Mengganti aset logo utama dengan logo perisai GT beresolusi tinggi dan latar transparan.

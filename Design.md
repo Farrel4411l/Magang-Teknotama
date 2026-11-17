@@ -17,7 +17,7 @@ Gunakan cahaya sebagai penekanan, bukan ornamen berulang. Hindari motto, ticker,
 ## Susunan halaman
 
 1. Navigasi tetap dengan beranda, kategori, acak, papan skor, favorit, pencarian, dan tautan mitra.
-2. Hero dengan permainan pilihan, ajakan bermain, serta panggung chip 3D berlogo.
+2. Hero dengan permainan pilihan, ajakan bermain, serta logo statis.
 3. Ringkasan jumlah permainan, total permainan, akses gratis, dan penyimpanan skor.
 4. Filter kategori dan katalog responsif.
 5. Rekor skor lokal.
@@ -28,9 +28,8 @@ Kartu katalog menampilkan ilustrasi vektor, kategori, judul, deskripsi, jumlah p
 
 ## Gerak dan aksesibilitas
 
-- `CursorTracker` memperbarui aura, sorotan batas, kemiringan kartu, dan tarikan tombol melalui `requestAnimationFrame` tanpa render React per gerakan.
-- Perangkat sentuh memakai cahaya ambient ringan; pengguna yang memilih pengurangan gerak mendapatkan animasi minimum.
-- Panggung Three.js dimuat tanpa SSR, dibatasi pada DPR 2, dan menghentikan render saat di luar area pandang.
+- Hero menggunakan logo statis tanpa canvas 3D, loop render, aura kursor, kemiringan kartu, atau tarikan tombol.
+- Hindari animasi dekoratif berulang; interaksi inti tetap jelas tanpa efek gerak.
 - Tombol penting memakai sasaran sentuh sedikitnya 44 piksel. Fokus papan ketik tetap terlihat.
 - Gerak dan cahaya tidak boleh menghalangi interaksi, navigasi, atau isi permainan.
 

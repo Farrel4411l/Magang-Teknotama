@@ -99,7 +99,6 @@ export default function Footer() {
                 href="https://teknotama.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                data-magnetic
                 className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 py-1.5 btn-sponsor-clean text-xs font-medium shadow-sm"
               >
                 <span>Kunjungi teknotama.com</span>

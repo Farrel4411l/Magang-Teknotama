@@ -218,61 +218,17 @@ input:focus-visible {
   z-index: 1;
   width: min(58%, 15rem);
   aspect-ratio: 1;
-  filter: drop-shadow(0 0 32px rgba(37, 93, 206, 0.38));
-  mix-blend-mode: screen;
-  animation: emblem-float 7s ease-in-out infinite;
 }
 
-.hero-chip-stage {
-  width: 100%;
-  min-width: 0;
-  touch-action: pan-y;
-}
-
-.hero-chip-canvas {
-  position: absolute !important;
-  z-index: 1;
-  inset: 0;
-}
-
-.hero-chip-fallback {
+.hero-art-overlay {
   position: absolute;
   z-index: 2;
   inset: 0;
-  display: grid;
-  place-items: center;
-  transition: opacity 240ms ease;
-}
-
-.hero-chip-fallback.is-hidden {
-  opacity: 0;
-}
-
-.hero-chip-overlay {
-  position: absolute;
-  z-index: 3;
-  inset: 0;
   pointer-events: none;
 }
 
-.hero-chip-overlay a {
+.hero-art-overlay a {
   pointer-events: auto;
-}
-
-.cursor-aura {
-  position: fixed;
-  z-index: 5;
-  top: var(--mouse-y, 50vh);
-  left: var(--mouse-x, 50vw);
-  width: 34rem;
-  height: 34rem;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(37, 93, 206, 0.13), rgba(102, 0, 51, 0.07) 34%, transparent 70%);
-  filter: blur(12px);
-  opacity: 0;
-  pointer-events: none;
-  transform: translate3d(-50%, -50%, 0);
-  will-change: transform;
 }
 
 .spotlight-card {
@@ -282,12 +238,10 @@ input:focus-visible {
   border: 1px solid rgba(176, 201, 230, 0.15);
   border-radius: 1.15rem;
   background: #101a2d;
-  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
-  transform: perspective(900px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg)) translateY(var(--card-lift, 0));
+  transition: border-color 220ms ease, box-shadow 220ms ease;
 }
 
 .spotlight-card:hover {
-  --card-lift: -4px;
   border-color: rgba(37, 93, 206, 0.48);
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(37, 93, 206, 0.3);
 }
@@ -295,45 +249,6 @@ input:focus-visible {
 .game-card {
   position: relative;
   isolation: isolate;
-  transform: perspective(900px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg)) translateY(var(--card-lift, 0));
-  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
-}
-
-.partner-service-card[data-tilt] {
-  position: relative;
-  isolation: isolate;
-  transform: perspective(900px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg));
-  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
-}
-
-.game-card:hover {
-  --card-lift: -4px;
-}
-
-.game-card::after,
-.spotlight-card::after,
-[data-tilt]::after {
-  position: absolute;
-  z-index: 4;
-  inset: 0;
-  border: 1px solid rgba(37, 93, 206, 0.45);
-  border-radius: inherit;
-  background: radial-gradient(260px circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(37, 93, 206, 0.2), transparent 72%);
-  content: "";
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 180ms ease;
-}
-
-.game-card:hover::after,
-.spotlight-card:hover::after,
-[data-tilt]:hover::after {
-  opacity: 1;
-}
-
-[data-magnetic] {
-  translate: var(--magnet-x, 0px) var(--magnet-y, 0px);
-  transition: translate 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .partner-services {
@@ -405,11 +320,6 @@ input:focus-visible {
   border-radius: 1.35rem;
   background: rgba(9, 20, 36, 0.52);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25), inset 0 1px rgba(255, 255, 255, 0.08);
-  transition: transform 220ms ease;
-}
-
-.game-card:hover .game-icon-tile {
-  transform: translateY(-3px) scale(1.04);
 }
 
 .stats-strip {
@@ -468,37 +378,14 @@ input:focus-visible {
   background: rgba(37, 93, 206, 0.55);
 }
 
-@media (hover: none), (pointer: coarse) {
-  .cursor-aura {
-    opacity: 0.32;
-    animation: aura-breathe 8s ease-in-out infinite alternate;
-  }
-}
-
 ::selection {
   background: rgba(37, 93, 206, 0.3);
   color: #ffffff;
 }
 
-@keyframes emblem-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-9px); }
-}
-
-@keyframes aura-breathe {
-  from { opacity: 0.25; transform: translate3d(-50%, -50%, 0) scale(0.9); }
-  to { opacity: 0.55; transform: translate3d(-50%, -50%, 0) scale(1.05); }
-}
-
 @media (min-width: 640px) {
   .partner-services {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cursor-aura {
-    animation: none !important;
   }
 }
 

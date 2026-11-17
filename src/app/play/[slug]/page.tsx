@@ -239,7 +239,6 @@ export default async function PlayPage({ params }: PlayPageProps) {
                 href="https://teknotama.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                data-magnetic
                 className="block min-h-11 w-full rounded-full py-3 text-center btn-sponsor-clean text-xs font-semibold shadow-sm"
               >
                 <span>Kunjungi teknotama.com</span>

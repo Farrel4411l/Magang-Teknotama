@@ -8,7 +8,6 @@ import AdBottomAnchor from "../ads/AdBottomAnchor";
 import SearchModal from "../game/SearchModal";
 import LeaderboardModal from "../game/LeaderboardModal";
 import FavoritesModal from "../game/FavoritesModal";
-import CursorTracker from "./CursorTracker";
 
 interface ClientLayoutProps {
   children: React.ReactNode;
@@ -21,8 +20,6 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
 
   return (
     <div className="min-h-screen flex flex-col selection:bg-[#255dce]/30 selection:text-white">
-      <CursorTracker />
-
       {/* Navbar */}
       <Navbar
         onOpenSearch={() => setSearchOpen(true)}

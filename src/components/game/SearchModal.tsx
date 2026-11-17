@@ -35,7 +35,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/75 backdrop-blur-sm">
       <div className="w-full max-w-xl glass-modal-clean rounded-2xl overflow-hidden text-white shadow-2xl">
         <div className="p-3.5 border-b border-white/10 flex items-center gap-2.5 bg-black/20">
           <Search className="w-4 h-4 text-slate-300 shrink-0" />

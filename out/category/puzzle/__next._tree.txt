@@ -1,5 +1,5 @@
-:HL["/games/_next/static/css/d328b3187a2866a2.css","style"]
+:HL["/games/_next/static/css/596f8108c0bf3c01.css","style"]
 3:[["children",{"s":"__PAGE__","h":160}]]
 2:[["children",{"s":{"n":"category","t":"d","k":"puzzle","s":[]},"h":96,"c":"$Q3"}]]
 1:[["children",{"s":"category","h":96,"c":"$Q2"}]]
-0:{"b":"S5p78pOY8IGETZc4eWgV4","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"w1vNdBe2R_m2_PzPdW8Gi","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
