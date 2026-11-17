@@ -85,11 +85,18 @@ function teknotama_load_config()
         'whatsapp_number'    => '6285167694457',
     );
 
-    $secretsFile = __DIR__ . '/teknotama_secrets.php';
-    if (is_file($secretsFile) && is_readable($secretsFile)) {
-        $loaded = include $secretsFile;
-        if (is_array($loaded)) {
-            $defaults = array_merge($defaults, $loaded);
+    // Cek di folder saat ini (/public_html/teknotama_secrets.php) maupun 1 tingkat di atasnya (/teknotama_secrets.php)
+    $candidatePaths = array(
+        __DIR__ . '/teknotama_secrets.php',
+        dirname(__DIR__) . '/teknotama_secrets.php',
+    );
+    foreach ($candidatePaths as $secretsFile) {
+        if (is_file($secretsFile) && is_readable($secretsFile)) {
+            $loaded = include $secretsFile;
+            if (is_array($loaded)) {
+                $defaults = array_merge($defaults, $loaded);
+                break;
+            }
         }
     }
 

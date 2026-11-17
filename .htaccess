@@ -2,15 +2,14 @@
 # PT Teknotama Prakarsa Mulia - Production SEO, Speed & Security Rules
 # ==============================================================================
 
-# 1. Canonical HTTPS & www Redirect (mengecualikan .well-known untuk AutoSSL)
+# 1. Pastikan koneksi HTTPS aman (tanpa memaksa ubah www / non-www agar sesuai sistem lama)
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteCond %{REQUEST_URI} !^/\.well-known/ [NC]
-  RewriteCond %{HTTP_HOST} ^teknotama\.com$ [OR]
   RewriteCond %{HTTPS} !=on
   RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
   RewriteCond %{HTTP_HOST} ^(?:www\.)?teknotama\.com$ [NC]
-  RewriteRule ^ https://www.teknotama.com%{REQUEST_URI} [L,R=301,NE]
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
 </IfModule>
 
 # 2. Proteksi File Konfigurasi Sensitif

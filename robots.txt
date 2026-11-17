@@ -14,4 +14,4 @@ Disallow: /teknotama_api.php
 Disallow: /teknotama_secrets.php
 Disallow: /teknotama_secrets.example.php
 
-Sitemap: https://www.teknotama.com/sitemap.xml
+Sitemap: https://teknotama.com/sitemap.xml
