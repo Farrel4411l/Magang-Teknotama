@@ -1,11 +1,24 @@
-
 # CHANGELOG & UPDATE LOG (teknotama.com/games)
 
 Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, penambahan fitur, dan audit pembersihan visual pada project **Tekno Game** (`https://teknotama.com/games/`) dengan format standar **Semantic Versioning (SemVer: `MAJOR.MINOR.PATCH`)**:
 
-- **MAJOR (`X.0.0`):** Perubahan besar pada arsitektur sistem, desain/redesign total, struktur URL/SEO, atau breaking changes.
-- **MINOR (`0.X.0`):** Penambahan fitur baru, halaman baru, atau pembaruan fungsionalitas yang backward-compatible.
-- **PATCH (`0.0.X`):** Perbaikan bug, hotfix styling, optimasi performa, atau perbaikan minor.
+* **MAJOR (`X.0.0`):** Perubahan besar pada arsitektur sistem, desain/redesign total, struktur URL/SEO, atau breaking changes.
+* **MINOR (`0.X.0`):** Penambahan fitur baru, halaman baru, atau pembaruan fungsionalitas yang backward-compatible.
+* **PATCH (`0.0.X`):** Perbaikan bug, hotfix styling, optimasi performa, atau perbaikan minor.
+
+---
+
+## [3.2.0] - 2026-11-17
+### Added & Standardized (Google AdSense Ready Display Slots & Clean Structure)
+- **Standardisasi Wadah Iklan Google AdSense ([GoogleAdSlot.tsx](src/components/ads/GoogleAdSlot.tsx)):**
+  - Mengimplementasikan slot iklan universal Google AdSense yang langsung siap pakai dengan tag `<ins className="adsbygoogle" />`, parameter `data-ad-client` dan `data-ad-slot`, serta dukungan variabel lingkungan (`NEXT_PUBLIC_ADSENSE_CLIENT_ID`).
+  - Menampilkan visual slot iklan profesional dengan dimensi terkunci ketat anti-CLS di seluruh titik strategis:
+    1. **Top & Mid Leaderboard Banner (728 × 90)** di halaman Beranda ([page.tsx](src/app/page.tsx)) dan Kategori ([page.tsx](src/app/category/[category]/page.tsx)).
+    2. **In-Feed Native Ad Tile** di dalam grid katalog game ([AdNativeTile.tsx](src/components/ads/AdNativeTile.tsx)).
+    3. **Medium Rectangle Ad (300 × 250)** di sidebar halaman pemutar game ([AdCompanion.tsx](src/components/ads/AdCompanion.tsx)).
+    4. **Mobile Anchor Banner (320 × 50)** di bagian bawah layar smartphone ([AdBottomAnchor.tsx](src/components/ads/AdBottomAnchor.tsx)).
+    5. **Skyscraper Banner (160 × 600)** di margin luar desktop layar ultra-lebar ([AdSkyscraper.tsx](src/components/ads/AdSkyscraper.tsx)).
+  - Menghapus seluruh teks tiruan atau elemen visual berlebih sehingga slot terlihat bersih, autentik, dan langsung siap tayang saat script unit Google AdSense dimasukkan.
 
 ---
 
@@ -25,14 +38,10 @@ Dokumen ini mencatat seluruh riwayat pembaruan, perbaikan bug, penambahan fitur,
 
 ---
 
-
 ## [3.0.0] - 2026-11-17
-
 ### Major Redesign Total Frontend (UI/UX) & Technical SEO Sub-Direktori (`teknotama.com/games/`)
 
-
 #### 1. Audit & Pembersihan Visual Usang (Visual Cleanup)
-
 Daftar lengkap elemen visual lama yang dihapus dari antarmuka:
 
 | No | Elemen Visual / Teks yang Dihapus | Lokasi File Asal | Alasan Penghapusan | Solusi & Elemen Pengganti Baru |
@@ -49,10 +58,7 @@ Daftar lengkap elemen visual lama yang dihapus dari antarmuka:
 
 ---
 
-
 ## [2.6.3] - 2026-11-17
-
 ### Changed & Deployed (Include `out/` Build Folder in Git Tracking)
-
 - **Mengaktifkan Git Tracking untuk Folder `out/` ([.gitignore](.gitignore)):**
   - Menghapus `/out/` dari `.gitignore` agar artefak hasil build produksi Next.js tersimpan langsung di branch GitHub `games`.

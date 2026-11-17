@@ -5,6 +5,7 @@ import { ExternalLink, Trophy, Play } from "lucide-react";
 import GameHero from "@/components/game/GameHero";
 import CategoryChips from "@/components/game/CategoryChips";
 import GameGrid from "@/components/game/GameGrid";
+import GoogleAdSlot from "@/components/ads/GoogleAdSlot";
 import { INITIAL_GAMES } from "@/lib/games-data";
 import { GameCategory } from "@/types/game";
 import { getLocalScores } from "@/lib/local-storage";
@@ -72,13 +73,19 @@ export default function HomePage() {
       {/* 1. Hero Section & Showcase Alami */}
       <GameHero featuredGames={featuredGames} />
 
-      {/* 2. Jelajahi Kategori Filter Chips */}
+      {/* 2. Slot Iklan Google AdSense Top Leaderboard (728x90) */}
+      <GoogleAdSlot
+        slotType="leaderboard-728x90"
+        adSlot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_TOP || ""}
+      />
+
+      {/* 3. Jelajahi Kategori Filter Chips */}
       <CategoryChips
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
       />
 
-      {/* 3. The Tekno Game Catalog Grid (2 Kolom Mobile, 3 Kolom Tablet, 4 Kolom Desktop) */}
+      {/* 4. The Tekno Game Catalog Grid (2 Kolom Mobile, 3 Kolom Tablet, 4 Kolom Desktop) */}
       <GameGrid
         games={displayGames}
         title={
@@ -88,7 +95,13 @@ export default function HomePage() {
         }
       />
 
-      {/* 4. Rekor Skor Tertinggi Saya (Tersimpan Lokal di Browser) */}
+      {/* 5. Slot Iklan Google AdSense Mid Leaderboard (728x90) */}
+      <GoogleAdSlot
+        slotType="leaderboard-728x90"
+        adSlot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_MID || ""}
+      />
+
+      {/* 6. Rekor Skor Tertinggi Saya (Tersimpan Lokal di Browser) */}
       <section className="mb-14 rounded-2xl card-natural p-6 sm:p-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5 border-b border-white/10 pb-4">
           <div className="flex items-center gap-3">
@@ -155,7 +168,7 @@ export default function HomePage() {
         )}
       </section>
 
-      {/* 5. Section Branding Resmi Tekno Game */}
+      {/* 7. Section Branding Resmi Tekno Game */}
       <section className="rounded-2xl card-natural p-6 sm:p-8 mb-8">
         <h2 className="font-heading text-lg sm:text-xl font-bold text-white mb-2">
           Tentang Tekno Game
@@ -165,7 +178,7 @@ export default function HomePage() {
         </p>
       </section>
 
-      {/* 6. Section Kemitraan Resmi Teknotama */}
+      {/* 8. Section Kemitraan Resmi Teknotama */}
       <section className="mb-8 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 border border-white/10 shadow-lg"
         style={{
           background: "linear-gradient(135deg, rgba(27, 37, 99, 0.75) 0%, rgba(80, 29, 90, 0.75) 60%, rgba(150, 18, 80, 0.8) 100%)"

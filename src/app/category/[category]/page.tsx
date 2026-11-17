@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getGamesByCategory, CATEGORIES } from "@/lib/games-data";
 import GameGrid from "@/components/game/GameGrid";
+import GoogleAdSlot from "@/components/ads/GoogleAdSlot";
 import { ArrowLeft, Gamepad2, Compass, Puzzle, Zap, Coffee, Trophy } from "lucide-react";
 import { GameCategory } from "@/types/game";
 
@@ -111,6 +112,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </p>
         </div>
       </div>
+
+      {/* Slot Iklan Google AdSense Top Leaderboard (728x90) */}
+      <GoogleAdSlot
+        slotType="leaderboard-728x90"
+        adSlot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_CATEGORY || ""}
+      />
 
       {/* Grid Katalog */}
       <GameGrid games={games} title={`Game ${validCat.label}`} />
