@@ -13,7 +13,7 @@
 </IfModule>
 
 # 2. Proteksi File Konfigurasi Sensitif
-<FilesMatch "^(teknotama_secrets(\.example)?\.php|\.gitignore)$">
+<FilesMatch "^(teknotama_secrets(\.example)?\.php|testimonials_data\.json|\.gitignore)$">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>

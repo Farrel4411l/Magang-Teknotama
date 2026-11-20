@@ -371,17 +371,17 @@
             });
         }
 
-        // Filter Portfolio
+        // Filter Portfolio (Light Corporate Pill Styling)
         const filterBtns = document.querySelectorAll('.portfolio-btn');
         const portfolioItems = document.querySelectorAll('.portfolio-item');
         filterBtns.forEach(function (btn) {
             btn.addEventListener('click', function () {
                 filterBtns.forEach(function (b) {
-                    b.classList.remove('bg-brand-600', 'text-white');
-                    b.classList.add('bg-[#0c121e]', 'text-slate-300');
+                    b.classList.remove('bg-[#d9141d]', 'bg-brand-600', 'text-white');
+                    b.classList.add('bg-slate-100', 'text-slate-700');
                 });
-                btn.classList.remove('bg-[#0c121e]', 'text-slate-300');
-                btn.classList.add('bg-brand-600', 'text-white');
+                btn.classList.remove('bg-slate-100', 'text-slate-700');
+                btn.classList.add('bg-[#d9141d]', 'text-white');
 
                 const filter = btn.getAttribute('data-filter');
                 portfolioItems.forEach(function (item) {
@@ -392,6 +392,49 @@
                     }
                 });
             });
+        });
+
+        const viewAllPortfolioBtn = document.getElementById('toggle-portfolio-filters');
+        if (viewAllPortfolioBtn) {
+            viewAllPortfolioBtn.addEventListener('click', function () {
+                const allBtn = document.querySelector('.portfolio-btn[data-filter="all"]');
+                if (allBtn) allBtn.click();
+                const grid = document.getElementById('portfolio-grid');
+                if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        }
+
+        // Baca Selengkapnya di Section Tentang Teknotama
+        const aboutReadMoreBtn = document.getElementById('about-readmore-btn');
+        const aboutMorePanel = document.getElementById('about-more-panel');
+        const aboutReadMoreLabel = document.getElementById('about-readmore-label');
+        if (aboutReadMoreBtn && aboutMorePanel) {
+            aboutReadMoreBtn.addEventListener('click', function () {
+                const isHidden = aboutMorePanel.classList.toggle('hidden');
+                if (aboutReadMoreLabel) {
+                    aboutReadMoreLabel.textContent = isHidden ? 'Baca Selengkapnya' : 'Ringkas Tampilan';
+                }
+            });
+        }
+
+        // Toggle / Focus Kalkulator IT di Banner Hitam
+        const toggleCalcBtn = document.getElementById('toggle-calculator-btn');
+        const calcWorkbench = document.getElementById('kalkulator-workbench');
+        if (toggleCalcBtn && calcWorkbench) {
+            toggleCalcBtn.addEventListener('click', function () {
+                calcWorkbench.classList.remove('hidden');
+                calcWorkbench.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        }
+
+        // Trigger Tekno AI dari Navbar & Footer
+        ['nav-open-ai-btn', 'footer-open-ai-btn'].forEach(function (id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('click', function () {
+                    openWidgetToChat();
+                });
+            }
         });
 
         // FAQ Accordion
@@ -523,15 +566,15 @@
         // A. Perangkat Aktif Jaringan & Keamanan
         items.push({
             category: 'A. Jaringan & Keamanan',
-            name: 'Gateway Router / NGFW Security',
-            spec: tier.router + ' • ' + s.wanCount + 'x WAN Failover' + (s.vpnBranches > 0 ? ' • ' + s.vpnBranches + ' Cabang IPsec VPN' : ''),
+            name: 'Gateway Router / NGFW Security (Pengatur Internet & Tameng Keamanan)',
+            spec: tier.router + ' • ' + s.wanCount + 'x WAN ISP Failover' + (s.vpnBranches > 0 ? ' • ' + s.vpnBranches + ' Cabang IPsec VPN' : ''),
             qty: (s.vendorTier === 'tier3' ? '2 Unit (HA Pair)' : '1 Unit')
         });
 
         if (needDistributionCore) {
             items.push({
                 category: 'A. Jaringan & Keamanan',
-                name: 'Core / Distribution Switch 10G',
+                name: 'Core / Distribution Switch 10G (Sakelar Pusat Penghubung Lantai)',
                 spec: tier.coreSwitch + ' (L3 Managed SFP+ Backbone)',
                 qty: '1 Unit'
             });
@@ -539,14 +582,14 @@
 
         items.push({
             category: 'A. Jaringan & Keamanan',
-            name: 'Access Switch Gigabit PoE+',
-            spec: (accessSwitchSize === 48 ? tier.accessSwitch48 : tier.accessSwitch24) + ' • Total Beban PoE ~' + poeWatts + 'W',
+            name: 'Access Switch Gigabit PoE+ (Pembagi Port LAN & Daya Wi-Fi/CCTV)',
+            spec: (accessSwitchSize === 48 ? tier.accessSwitch48 : tier.accessSwitch24) + ' • Total Beban PoE ~' + poeWatts + 'W (+20% Spare Port)',
             qty: accessSwitchQty + ' Unit'
         });
 
         items.push({
             category: 'A. Jaringan & Keamanan',
-            name: 'Access Point Wi-Fi 6 Enterprise',
+            name: 'Access Point Wi-Fi 6 Enterprise (Pemancar Wi-Fi Bebas Blank-Spot)',
             spec: tier.ap + ' • Dual-Band Seamless Roaming (' + totalArea.toLocaleString('id-ID') + ' m²)',
             qty: apCount + ' Unit'
         });
@@ -554,7 +597,7 @@
         if (sfpQty > 0) {
             items.push({
                 category: 'A. Jaringan & Keamanan',
-                name: 'SFP / SFP+ Optical Transceiver',
+                name: 'SFP / SFP+ Optical Transceiver (Modul Konektor Laser Fiber Optic)',
                 spec: (s.foType === 'os2' ? 'Singlemode 1310nm LC Duplex' : 'Multimode 850nm 10G-SR'),
                 qty: sfpQty + ' Pcs'
             });
@@ -564,14 +607,14 @@
         const cableLabel = s.cableType === 'cat6a' ? 'UTP Cat6A Shielded (10G Full)' : 'UTP Cat6 LSZH/PVC (TIA-568)';
         items.push({
             category: 'B. Kabel & Rack Pasif',
-            name: 'Kabel Horizontal ' + (s.cableType === 'cat6a' ? 'Cat6A' : 'Cat6'),
-            spec: cableLabel + ' • Rata-rata tarikan ' + avgHorizontalRun + 'm/titik (~' + totalUtpMeters + 'm total)',
+            name: 'Kabel LAN Horizontal ' + (s.cableType === 'cat6a' ? 'Cat6A' : 'Cat6') + ' (Jalur Data ke Meja/AP/CCTV)',
+            spec: cableLabel + ' • Rata-rata tarikan ' + avgHorizontalRun + 'm/titik (~' + totalUtpMeters + 'm total, maks 90m TIA-568)',
             qty: utpBoxes + ' Box (@305m)'
         });
 
         items.push({
             category: 'B. Kabel & Rack Pasif',
-            name: 'Patch Panel Modular 24-Port + RJ45',
+            name: 'Patch Panel Modular 24-Port + RJ45 (Terminal Perapihan Ujung Kabel)',
             spec: '24-Port Modular Patch Panel + ' + patchCordQty + 'x Factory Patch Cord + Faceplate/Outbow',
             qty: patchPanelQty + ' Panel'
         });
@@ -579,7 +622,7 @@
         if (needFiberBackbone) {
             items.push({
                 category: 'B. Kabel & Rack Pasif',
-                name: 'Fiber Optic Backbone & OTB',
+                name: 'Fiber Optic Backbone & OTB (Kabel Utama Penghubung Antar Lantai)',
                 spec: (s.foType === 'os2' ? 'FO Singlemode OS2 ' : 'FO Multimode OM3/OM4 ') + foCores + '-Core (~' + foMeters + 'm) + ' + otbQty + 'x OTB & Pigtail',
                 qty: foMeters + ' Meter'
             });
@@ -587,7 +630,7 @@
 
         items.push({
             category: 'B. Kabel & Rack Pasif',
-            name: 'Proteksi Jalur & Rack Server MDF/IDF',
+            name: 'Pelindung Pipa Conduit & Lemari Rack Server (MDF/IDF)',
             spec: conduitPipes + ' Btg Conduit 20mm' + (cableTrayMeters > 0 ? ' + ' + cableTrayMeters + 'm Cable Tray' : '') + ' • Close Rack MDF ' + mdfRackSize + (idfRackQty > 0 ? ' + ' + idfRackQty + 'x Wallmount IDF 9U' : ''),
             qty: '1 Paket'
         });
@@ -596,14 +639,14 @@
         if (totalCams > 0) {
             items.push({
                 category: 'C. CCTV & Akses Kontrol',
-                name: 'IP Camera Surveillance (' + s.cctvRes.toUpperCase() + ')',
+                name: 'IP Camera Surveillance ' + s.cctvRes.toUpperCase() + ' (Kamera Pengawas Dalam & Luar Ruang)',
                 spec: indoorCams + 'x Indoor Dome + ' + outdoorCams + 'x Outdoor Weatherproof PoE (Codec H.265+)',
                 qty: totalCams + ' Unit'
             });
             items.push({
                 category: 'C. CCTV & Akses Kontrol',
-                name: 'Central NVR & Surveillance HDD',
-                spec: tier.nvr + ' (' + nvrChannels + '-Ch) + ' + hddCount + 'x ' + hddSizeTB + 'TB Surveillance HDD (Retensi ' + retentionDays + ' Hari / ' + storageTB + ' TB)',
+                name: 'Central NVR & Harddisk Rekaman CCTV',
+                spec: tier.nvr + ' (' + nvrChannels + '-Ch) + ' + hddCount + 'x ' + hddSizeTB + 'TB Surveillance HDD (Simpan ' + retentionDays + ' Hari / ' + storageTB + ' TB)',
                 qty: '1 Sistem'
             });
         }
@@ -611,7 +654,7 @@
         if (accessDoors > 0) {
             items.push({
                 category: 'C. CCTV & Akses Kontrol',
-                name: 'Biometric / RFID Door Access Control',
+                name: 'Biometric / RFID Door Access Control (Kunci Pintu Kartu & Sidik Jari)',
                 spec: 'Reader RFID/Fingerprint + Magnetic Drop Lock + Push Exit Button + Controller',
                 qty: accessDoors + ' Pintu'
             });
@@ -623,14 +666,14 @@
                 : (s.serverMode === 'single_host' ? 'Single Host Virtualization (VMware ESXi / Proxmox)' : 'Centralized Rackmount NAS File Server');
             items.push({
                 category: 'C. Server & Backup Daya',
-                name: 'Server / Storage Lokal',
+                name: 'Server / Penyimpanan Data Terpusat (NAS/Virtualisasi)',
                 spec: tier.server + ' • ' + serverModeLabel + (s.cloudBackup ? ' + Cloud Offsite DR Replication' : ''),
                 qty: (s.serverMode === 'ha_cluster' ? '2 Node' : '1 Unit')
             });
         } else if (s.cloudBackup) {
             items.push({
                 category: 'C. Server & Backup Daya',
-                name: 'Cloud Backup & Disaster Recovery',
+                name: 'Cloud Backup & Disaster Recovery (Cadangan Data Awan Otomatis)',
                 spec: 'Automated Encrypted Offsite Backup Policy',
                 qty: '1 Sistem'
             });
@@ -638,23 +681,23 @@
 
         items.push({
             category: 'C. Server & Backup Daya',
-            name: 'UPS Online Double-Conversion Sinewave',
-            spec: 'Kapasitas ' + upsSpecVA + ' • Estimasi beban rack ~' + activeGearWatts + 'W (Backup ~' + s.upsMinutes + ' mnt)',
+            name: 'UPS Online Sinewave (Cadangan Listrik Otomatis Saat PLN Padam)',
+            spec: 'Kapasitas ' + upsSpecVA + ' • Estimasi beban rack ~' + activeGearWatts + 'W (Tahan ~' + s.upsMinutes + ' mnt)',
             qty: '1 Unit'
         });
 
         // D. Jasa Eksekusi Lapangan & Sertifikasi
         items.push({
             category: 'D. Jasa Eksekusi Lapangan',
-            name: 'Staging, Instalasi, Terminasi & Labeling',
-            spec: 'Pre-config workshop, tarikan rapi TIA-606-B thermal label, cutover di luar jam kerja (Zero-Downtime)',
+            name: 'Instalasi Rapi, Penomoran Label & Pasang Tanpa Ganggu Jam Kerja',
+            spec: 'Pre-config workshop, tarikan rapi TIA-606-B thermal label, cutover malam/akhir pekan (Zero-Downtime)',
             qty: fieldDaysMin + '–' + fieldDaysMax + ' Hari'
         });
 
         if (s.flukeTest) {
             items.push({
                 category: 'D. Jasa Eksekusi Lapangan',
-                name: 'Uji Sertifikasi & As-Built Documentation',
+                name: 'Uji Sertifikasi Alat Fluke/OTDR & Dokumen Denah Jaringan (As-Built)',
                 spec: 'Fluke Cable Certifier (' + horizontalPoints + ' titik)' + (needFiberBackbone ? ' + OTDR/OPM Fiber Test' : '') + ' + Topologi As-Built & UAT',
                 qty: '1 Paket'
             });
@@ -780,6 +823,31 @@
         if (printMeta) {
             printMeta.textContent = 'Profil: ' + result.summary + ' | Tanggal Simulasi: ' + new Date().toLocaleDateString('id-ID');
         }
+
+        savePersistedCalcState();
+        updateWhatsAppLinksWithContext();
+    }
+
+    function savePersistedCalcState() {
+        try {
+            sessionStorage.setItem('tkt_calc_state_v1', JSON.stringify(calcState));
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    function loadPersistedCalcState() {
+        try {
+            const raw = sessionStorage.getItem('tkt_calc_state_v1');
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === 'object') {
+                    Object.assign(calcState, parsed);
+                }
+            }
+        } catch (e) {
+            // ignore
+        }
     }
 
     function syncControlValuesToDom() {
@@ -831,10 +899,16 @@
     }
 
     function initCalculator() {
+        loadPersistedCalcState();
         const modeQuickBtn = document.getElementById('calc-mode-quick-btn');
         if (!modeQuickBtn) {
-            // Halaman sub-layanan tidak memiliki kalkulator; tetap siapkan baseline context untuk AI
+            // Halaman utama / sub-layanan merujuk ke kalkulator-boq-it.html; tetap siapkan konteks BOQ tersimpan untuk AI & Form Booking
             lastComputedBoq = computeEngineeringBoq(calcState);
+            const aiCtxBadge = document.getElementById('ai-calc-context-badge');
+            if (aiCtxBadge && lastComputedBoq) {
+                aiCtxBadge.textContent = 'Konteks BOQ Aktif: ' + lastComputedBoq.metrics.users + ' User • ' + lastComputedBoq.metrics.floors + ' Lantai • ' + lastComputedBoq.metrics.apCount + ' AP';
+            }
+            updateWhatsAppLinksWithContext();
             return;
         }
         const modeTechBtn = document.getElementById('calc-mode-tech-btn');
@@ -998,9 +1072,8 @@
         const bookBtn = document.getElementById('boq-book-btn');
         if (bookBtn) {
             bookBtn.addEventListener('click', function () {
-                syncContextToBookingForm(true);
-                const target = document.getElementById('kontak');
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
+                savePersistedCalcState();
+                navigateOrSyncBooking();
             });
         }
 
@@ -1015,6 +1088,7 @@
     function buildCalculatorContextPayload() {
         if (!lastComputedBoq) return {};
         return {
+            summary: lastComputedBoq.summary,
             preset_label: BUILDING_PRESETS[calcState.preset] ? BUILDING_PRESETS[calcState.preset].label : 'Custom',
             users: lastComputedBoq.metrics.users,
             floors: lastComputedBoq.metrics.floors,
@@ -1035,6 +1109,40 @@
             mdf_rack: lastComputedBoq.metrics.mdfRackSize,
             est_field_days: lastComputedBoq.metrics.fieldDaysMin + '-' + lastComputedBoq.metrics.fieldDaysMax + ' hari'
         };
+    }
+
+    const OFFICIAL_WA_NUMBER = '6285167694457';
+
+    function buildWhatsAppCsUrl(customNote) {
+        const boqLine = lastComputedBoq && lastComputedBoq.summary
+            ? '\n[Konteks Simulasi BOQ: ' + lastComputedBoq.summary + ']'
+            : '';
+        const noteLine = (customNote && customNote.toLowerCase() !== 'cs')
+            ? '\nTopik: ' + customNote
+            : '';
+        const text = 'Halo CS & Tim Teknis PT Teknotama Prakarsa Mulia, saya ingin berkonsultasi langsung mengenai kebutuhan infrastruktur IT perusahaan kami.'
+            + boqLine
+            + noteLine;
+        return 'https://wa.me/' + OFFICIAL_WA_NUMBER + '?text=' + encodeURIComponent(text);
+    }
+
+    function updateWhatsAppLinksWithContext() {
+        const waUrl = buildWhatsAppCsUrl('');
+        ['widget-wa-direct-card', 'widget-header-wa-btn', 'floating-wa-direct-btn'].forEach(function (id) {
+            const el = document.getElementById(id);
+            if (el) el.setAttribute('href', waUrl);
+        });
+    }
+
+    function isDirectCsCommand(rawText) {
+        const clean = (rawText || '').trim().toLowerCase();
+        if (/^\/?(cs|wa|whatsapp|admin|live\s*cs|chat\s*cs|hubungi\s*cs|kontak\s*cs|cs\s*wa|wa\s*cs|admin\s*wa|nomor\s*wa|no\s*wa)[.!?]*$/i.test(clean)) {
+            return true;
+        }
+        if (/\b(sambungkan|hubungkan|alihkan|direct|lanjut|bicara|chat|hubungi)\s+(saya\s+)?(langsung\s+)?(ke\s+|dengan\s+)?(cs|customer\s*service|whatsapp|wa|admin\s*wa)\b/i.test(clean)) {
+            return true;
+        }
+        return false;
     }
 
     function renderHelpCenterArticles(query) {
@@ -1114,12 +1222,16 @@
                         + escapeHtml(msg.content)
                         + '</div></div>';
                 } else {
+                    const waActionHtml = msg.whatsappUrl
+                        ? '<div class="mt-2.5"><a href="' + escapeHtml(msg.whatsappUrl) + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold text-[11px] px-3.5 py-2 rounded-xl shadow-md transition-all">Chat Langsung via WhatsApp CS (+62 851-6769-4457) &rarr;</a></div>'
+                        : '';
                     const engineTag = msg.engineLabel
                         ? '<div class="mt-2 pt-1.5 border-t border-red-950/60 flex items-center justify-between text-[10px] text-slate-500 font-mono"><span>' + escapeHtml(msg.engineLabel) + '</span><button type="button" class="chat-sync-btn text-brand-400 hover:text-brand-300 font-sans font-semibold">Salin ke Form &rarr;</button></div>'
                         : '';
                     html += '<div class="flex justify-start">'
                         + '<div class="max-w-[92%] bg-[#0d1424] border border-red-950/80 text-slate-200 text-xs leading-relaxed px-3.5 py-2.5 rounded-2xl rounded-bl-sm chat-markdown">'
                         + renderSafeMarkdown(msg.content)
+                        + waActionHtml
                         + engineTag
                         + '</div></div>';
                 }
@@ -1158,9 +1270,49 @@
         }
     }
 
+    function buildClientSideFallbackReply(userMessage) {
+        const q = (userMessage || '').toLowerCase();
+        const m = lastComputedBoq ? lastComputedBoq.metrics : { users: 60, floors: 2, apCount: 8, totalPortsWithSpare: 101, utpBoxes: 8, foMeters: 77 };
+
+        if (/limbah|sampah|lingkungan|nexustech/i.test(q)) {
+            return 'Perlu kami informasikan bahwa website ini adalah **PT Teknotama Prakarsa Mulia (`teknotama.com`)** yang berkantor di **Infiniti Office, Belleza BSA Lt. 1 Unit 106, Jakarta Selatan**.\n\nKami bergerak khusus di bidang **Infrastruktur IT & Jaringan Enterprise** (Instalasi Kabel LAN Cat6/Cat6A, Splicing Fiber Optic, Server Data Center, Firewall Fortinet/Cisco/MikroTik, Managed IT NOC 24/7, dan IP CCTV), bukan perusahaan pengolahan limbah/lingkungan.';
+        }
+        if (/kabel|fiber|cat6|fluke|otdr|conduit|tray/i.test(q)) {
+            return 'Berdasarkan **SOP Pengkabelan PT Teknotama Prakarsa Mulia**:\n\n- **Penjelasan Singkat**: Untuk jarak di dalam satu lantai (maksimal 90 meter), kami memakai kabel **UTP Cat6/Cat6A**. Sedangkan untuk menghubungkan antar lantai atau jarak lebih dari 90 meter, wajib memakai **Fiber Optic Backbone** agar kecepatan tidak turun.\n- **Standar Teknis Lapangan**: Seluruh jalur dilindungi **Pipa Conduit High-Impact 20/25mm** atau **Cable Tray**, berjarak minimal 30 cm dari kabel listrik, diberi **Thermal Label TIA-606-B** di kedua ujung, dan diuji sertifikasi **Fluke & OTDR** sebelum serah terima.';
+        }
+        if (/downtime|malam|jam kerja|sabtu|minggu|cutover/i.test(q)) {
+            return 'Kami menerapkan metode **Zero-Downtime Execution** agar aktivitas kantor Anda tidak terganggu sama sekali:\n\n1. **Setting di Workshop**: Seluruh perangkat (Router, Switch, Wi-Fi, NVR) sudah kami konfigurasi lebih dulu di workshop Teknotama.\n2. **Kerja di Luar Jam Kantor**: Pengeboran dan penarikan kabel plafon dilakukan pada **malam hari atau akhir pekan** sesuai izin gedung.\n3. **Garansi & SLA**: Garansi kerapihan kabel 1 tahun, garansi hardware resmi 1–3 tahun, dan respons emergency **< 2 jam** (Jabodetabek).';
+        }
+        return 'Berdasarkan simulasi aktif Anda (**' + m.users + ' User, ' + m.floors + ' Lantai**), sistem merekomendasikan **' + m.totalPortsWithSpare + ' port switch PoE+**, **' + m.apCount + ' unit Wi-Fi 6 AP**, serta **' + m.utpBoxes + ' box kabel LAN' + (m.foMeters > 0 ? ' + ' + m.foMeters + 'm Fiber Optic Backbone' : '') + '**.\n\nSilakan klik tombol **Terapkan Ringkasan AI & BOQ ke Formulir Booking** agar tim engineer PT Teknotama Prakarsa Mulia menjadwalkan **Site Survey Gratis** dan mengirimkan penawaran resmi dari `admin@teknotama.com`.';
+    }
+
     async function sendChatMessage(rawText) {
         const message = (rawText || '').trim();
         if (!message || isChatBusy) return;
+
+        // Direct Trigger: ketik "cs" / "wa" / "whatsapp" / "hubungi cs" -> Langsung buka WhatsApp CS
+        if (isDirectCsCommand(message)) {
+            const waUrl = buildWhatsAppCsUrl(message);
+            chatHistory.push({ role: 'user', content: message });
+            chatHistory.push({
+                role: 'assistant',
+                content: '**Mengalihkan Anda langsung ke WhatsApp Customer Service & NOC PT Teknotama Prakarsa Mulia (+62 851-6769-4457)...**\n\n- Jendela WhatsApp resmi kami sedang dibuka secara otomatis beserta konteks simulasi BOQ Anda.\n- Jika tertahan pengaturan *pop-up* browser, silakan klik tombol **Chat Langsung via WhatsApp CS** di bawah ini.',
+                engineLabel: 'TeknoAssist • Direct WhatsApp CS Handoff',
+                whatsappUrl: waUrl
+            });
+            savePersistedChatHistory();
+            renderChatFeeds();
+            showToast('Mengalihkan langsung ke WhatsApp CS PT Teknotama...');
+            try {
+                const win = window.open(waUrl, '_blank', 'noopener,noreferrer');
+                if (!win) {
+                    // Jika pop-up diblokir, tetap aman dengan tombol klik langsung di chat
+                }
+            } catch (e) {
+                // ignore
+            }
+            return;
+        }
 
         chatHistory.push({ role: 'user', content: message });
         savePersistedChatHistory();
@@ -1175,12 +1327,17 @@
             calculator_context: buildCalculatorContextPayload()
         };
 
+        const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+        const timeoutId = controller ? setTimeout(function () { controller.abort(); }, 16000) : null;
+
         try {
             const resp = await fetch('teknotama_api.php?action=chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
+                signal: controller ? controller.signal : undefined
             });
+            if (timeoutId) clearTimeout(timeoutId);
 
             const data = await resp.json();
             if (resp.ok && data && data.ok && data.reply) {
@@ -1190,26 +1347,35 @@
                     openrouter: 'TeknoAssist AI • OpenRouter',
                     cohere: 'TeknoAssist AI • Cohere',
                     local_expert: 'TeknoAssist SOP Engine',
-                    guardrail_shield: 'TeknoAssist • AI Safety & Guardrail Shield'
+                    guardrail_shield: 'TeknoAssist • AI Safety & Guardrail Shield',
+                    whatsapp_cs_direct: 'TeknoAssist • Direct WhatsApp CS Handoff'
                 };
                 chatHistory.push({
                     role: 'assistant',
                     content: data.reply,
-                    engineLabel: labelMap[data.engine] || 'TeknoAssist AI'
+                    engineLabel: labelMap[data.engine] || 'TeknoAssist AI',
+                    whatsappUrl: data.whatsapp_url || ''
                 });
+                if (data.redirect_whatsapp && data.whatsapp_url) {
+                    try {
+                        window.open(data.whatsapp_url, '_blank', 'noopener,noreferrer');
+                    } catch (e) {
+                        // ignore
+                    }
+                }
             } else {
-                const errMsg = (data && data.error) ? data.error : 'Koneksi AI sedang sibuk. Anda dapat melanjutkan pengisian Formulir Survei di bawah.';
                 chatHistory.push({
                     role: 'assistant',
-                    content: errMsg,
-                    engineLabel: 'System Notice'
+                    content: buildClientSideFallbackReply(message),
+                    engineLabel: 'TeknoAssist SOP Engine'
                 });
             }
         } catch (err) {
+            if (timeoutId) clearTimeout(timeoutId);
             chatHistory.push({
                 role: 'assistant',
-                content: 'Endpoint backend PHP (`teknotama_api.php`) belum aktif di server saat ini. Pastikan website dijalankan melalui server PHP/cPanel agar AI Engineer & pengiriman email ke `admin@teknotama.com` berjalan penuh.',
-                engineLabel: 'Offline Preview Notice'
+                content: buildClientSideFallbackReply(message),
+                engineLabel: 'TeknoAssist Instant SOP Engine'
             });
         } finally {
             isChatBusy = false;
@@ -1258,6 +1424,7 @@
         const closeBtn = document.getElementById('widget-close-btn');
         const tabHomeBtn = document.getElementById('widget-tab-home');
         const tabChatBtn = document.getElementById('widget-tab-chat');
+        const tabWaBtn = document.getElementById('widget-tab-wa');
         const startConvCard = document.getElementById('widget-start-conversation');
         const reviewBoqCard = document.getElementById('widget-review-boq-card');
         const helpSearch = document.getElementById('widget-help-search');
@@ -1286,6 +1453,13 @@
             tabChatBtn.addEventListener('click', function () {
                 widgetActiveTab = 'chat';
                 updateWidgetVisibility();
+            });
+        }
+        if (tabWaBtn) {
+            tabWaBtn.addEventListener('click', function () {
+                widgetActiveTab = 'chat';
+                updateWidgetVisibility();
+                sendChatMessage('cs');
             });
         }
         if (startConvCard) {
@@ -1362,6 +1536,7 @@
             });
         }
 
+        updateWhatsAppLinksWithContext();
         renderHelpCenterArticles('');
         renderChatFeeds();
         updateWidgetVisibility();
@@ -1400,7 +1575,7 @@
                 ? 'Kebutuhan simulasi awal: ' + lastComputedBoq.summary + '.'
                 : '';
             const lastUserNotes = chatHistory
-                .filter(function (m) { return m.role === 'user'; })
+                .filter(function (m) { return m.role === 'user' && !isDirectCsCommand(m.content); })
                 .slice(-2)
                 .map(function (m) { return '- ' + m.content; })
                 .join('\n');
@@ -1415,6 +1590,12 @@
             } else {
                 msgBox.value = existing + '\n\n' + parts.join('\n\n');
             }
+            msgBox.scrollTop = 0;
+            try {
+                msgBox.setSelectionRange(0, 0);
+            } catch (e) {
+                // ignore
+            }
             msgBox.focus();
         }
 
@@ -1424,6 +1605,12 @@
     function initBookingForm() {
         const form = document.getElementById('contact-form');
         const clearAttachmentBtn = document.getElementById('clear-booking-attachment');
+        const surveyDateInput = document.getElementById('form-survey-date');
+
+        if (surveyDateInput) {
+            const todayIso = new Date().toISOString().split('T')[0];
+            surveyDateInput.setAttribute('min', todayIso);
+        }
 
         if (clearAttachmentBtn) {
             clearAttachmentBtn.addEventListener('click', function () {
@@ -1479,10 +1666,10 @@
                 const data = await resp.json();
                 if (resp.ok && data && data.ok) {
                     if (alertBox) {
-                        alertBox.className = 'mb-6 p-4 rounded-xl text-xs sm:text-sm font-medium bg-emerald-950/60 text-emerald-300 border border-emerald-500/40 space-y-3';
+                        alertBox.className = 'mb-6 p-4 rounded-xl text-xs sm:text-sm font-medium bg-emerald-50 text-emerald-900 border border-emerald-300 space-y-3';
                         alertBox.innerHTML = '<div><strong>Permintaan Terkirim!</strong> ' + escapeHtml(data.message) + '</div>'
                             + (data.whatsapp_url
-                                ? '<div><a href="' + escapeHtml(data.whatsapp_url) + '" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2 rounded-lg transition-all">Kirim Salinan Cepat via WhatsApp NOC &rarr;</a></div>'
+                                ? '<div><a href="' + escapeHtml(data.whatsapp_url) + '" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2 rounded-full transition-all">Kirim Salinan Cepat via WhatsApp NOC &rarr;</a></div>'
                                 : '');
                         alertBox.classList.remove('hidden');
                     }
@@ -1495,7 +1682,7 @@
                 }
             } catch (err) {
                 if (alertBox) {
-                    alertBox.className = 'mb-6 p-4 rounded-xl text-xs sm:text-sm font-medium bg-red-950/80 text-brand-300 border border-brand-500/50';
+                    alertBox.className = 'mb-6 p-4 rounded-xl text-xs sm:text-sm font-medium bg-red-50 text-red-900 border border-red-300';
                     alertBox.innerHTML = '<strong>Perhatian:</strong> ' + escapeHtml(err.message || 'Gagal terhubung ke server.')
                         + ' Anda tetap dapat menghubungi langsung <strong>admin@teknotama.com</strong> atau WhatsApp <strong>+62 851-6769-4457</strong>.';
                     alertBox.classList.remove('hidden');
@@ -1511,47 +1698,434 @@
     }
 
     /* ========================================================================
+     * 6B. CMS TESTIMONIALS (GOOGLE MAPS REVIEW STYLE + ADMIN CMS MODAL)
+     * ======================================================================== */
+
+    let testimonialsList = [];
+    let activeTestimonialFilter = 'all';
+
+    function getAvatarInitials(name) {
+        const parts = (name || 'Klien Teknotama').replace(/[^a-zA-Z0-9\s]/g, '').trim().split(/\s+/);
+        if (parts.length >= 2) {
+            return (parts[0][0] + parts[1][0]).toUpperCase();
+        }
+        return (parts[0] || 'KT').slice(0, 2).toUpperCase();
+    }
+
+    function buildStarsHtml(rating) {
+        const r = Math.max(1, Math.min(5, Number(rating) || 5));
+        let stars = '';
+        for (let i = 1; i <= 5; i++) {
+            stars += i <= r ? '&#9733;' : '<span class="text-slate-300">&#9733;</span>';
+        }
+        return stars;
+    }
+
+    function updateTestimonialSectionVisibility() {
+        const hasReviews = Array.isArray(testimonialsList) && testimonialsList.length > 0;
+        const sectionEl = document.getElementById('testimoni');
+        if (sectionEl) {
+            sectionEl.classList.toggle('hidden', !hasReviews);
+        }
+        document.querySelectorAll('.nav-testimoni-link').forEach(function (el) {
+            el.classList.toggle('hidden', !hasReviews);
+        });
+    }
+
+    function renderTestimonialsGrid() {
+        updateTestimonialSectionVisibility();
+        const grid = document.getElementById('testimonials-grid');
+        if (!grid) return;
+
+        if (!Array.isArray(testimonialsList) || testimonialsList.length === 0) {
+            grid.innerHTML = '';
+            return;
+        }
+
+        const filtered = testimonialsList.filter(function (item) {
+            if (activeTestimonialFilter === 'all') return true;
+            return (item.service_category || '') === activeTestimonialFilter;
+        });
+
+        if (filtered.length === 0) {
+            grid.innerHTML = '<div class="col-span-full bg-white rounded-2xl p-8 text-center border border-slate-200 text-xs text-slate-500">Belum ada ulasan pada kategori ini. Klik <strong>Tulis / CMS Ulasan</strong> untuk menambahkan.</div>';
+            return;
+        }
+
+        const avatarColors = ['bg-[#d9141d]', 'bg-slate-900', 'bg-red-800', 'bg-slate-800', 'bg-red-700', 'bg-slate-950'];
+
+        grid.innerHTML = filtered.map(function (item, idx) {
+            const initials = getAvatarInitials(item.author_name);
+            const colorClass = avatarColors[idx % avatarColors.length];
+            const subtitle = [item.author_role, item.company_name].filter(Boolean).join(' • ');
+            const replyHtml = item.owner_reply
+                ? '<div class="mt-4 pt-3 border-t border-slate-100 bg-slate-50/90 -mx-5 -mb-5 p-3.5 rounded-b-2xl">'
+                    + '<p class="text-[10px] font-bold text-slate-800">Respon dari pemilik (PT Teknotama Prakarsa Mulia)</p>'
+                    + '<p class="text-[11px] text-slate-500 mt-0.5 leading-snug">' + escapeHtml(item.owner_reply) + '</p>'
+                    + '</div>'
+                : '';
+
+            return '<article class="corp-card rounded-2xl p-5 flex flex-col justify-between bg-white" data-testimonial-id="' + escapeHtml(item.id || '') + '">'
+                + '<div>'
+                + '<div class="flex items-start justify-between gap-3">'
+                + '<div class="flex items-center gap-3 min-w-0">'
+                + '<div class="w-10 h-10 rounded-full ' + colorClass + ' text-white font-extrabold text-xs flex items-center justify-center flex-shrink-0">' + escapeHtml(initials) + '</div>'
+                + '<div class="min-w-0">'
+                + '<h3 class="text-sm font-extrabold text-slate-900 truncate">' + escapeHtml(item.author_name || 'Klien Korporasi') + '</h3>'
+                + '<p class="text-[11px] text-slate-500 truncate">' + escapeHtml(subtitle || 'Mitra B2B Teknotama') + '</p>'
+                + '</div>'
+                + '</div>'
+                + '<span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full flex-shrink-0">Verified</span>'
+                + '</div>'
+                + '<div class="flex flex-wrap items-center gap-2 mt-3">'
+                + '<span class="text-amber-400 text-sm tracking-tight" aria-label="' + escapeHtml(String(item.rating || 5)) + ' Bintang">' + buildStarsHtml(item.rating) + '</span>'
+                + '<span class="text-[11px] text-slate-400">• ' + escapeHtml(item.date_label || 'Baru saja') + '</span>'
+                + '<span class="text-[10px] font-semibold text-[#d9141d] bg-red-50 px-2 py-0.5 rounded-md ml-auto">' + escapeHtml(item.service_category || 'Infrastruktur IT') + '</span>'
+                + '</div>'
+                + '<p class="text-xs text-slate-600 mt-3 leading-relaxed">"' + escapeHtml(item.comment || '') + '"</p>'
+                + '</div>'
+                + replyHtml
+                + '</article>';
+        }).join('');
+    }
+
+    function updateTestimonialsStatsUi(stats) {
+        const avgEl = document.getElementById('testimonial-avg-score');
+        const countEl = document.getElementById('testimonial-total-count');
+        if (avgEl && stats && typeof stats.average_rating !== 'undefined') {
+            avgEl.textContent = Number(stats.average_rating).toFixed(1);
+        }
+        if (countEl && stats && typeof stats.total !== 'undefined') {
+            countEl.textContent = String(stats.total);
+        }
+    }
+
+    function renderCmsManageList() {
+        const listEl = document.getElementById('cms-testimonial-manage-list');
+        if (!listEl) return;
+
+        if (testimonialsList.length === 0) {
+            listEl.innerHTML = '<div class="text-xs text-slate-400 p-4 text-center">Belum ada testimoni tersimpan.</div>';
+            return;
+        }
+
+        listEl.innerHTML = testimonialsList.map(function (item) {
+            return '<div class="p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white transition-all flex items-start justify-between gap-3">'
+                + '<div class="min-w-0 flex-1">'
+                + '<div class="flex items-center gap-2">'
+                + '<span class="text-xs font-extrabold text-slate-900 truncate">' + escapeHtml(item.author_name) + '</span>'
+                + '<span class="text-amber-400 text-xs">' + buildStarsHtml(item.rating) + '</span>'
+                + '</div>'
+                + '<p class="text-[11px] text-slate-500 truncate">' + escapeHtml((item.author_role || '') + ' • ' + (item.company_name || '')) + '</p>'
+                + '<p class="text-[11px] text-slate-600 mt-1 line-clamp-2">"' + escapeHtml(item.comment) + '"</p>'
+                + '</div>'
+                + '<div class="flex flex-col gap-1.5 flex-shrink-0">'
+                + '<button type="button" data-cms-edit="' + escapeHtml(item.id) + '" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-700 text-white text-[10px] font-bold transition-colors">Edit</button>'
+                + '<button type="button" data-cms-delete="' + escapeHtml(item.id) + '" class="px-2.5 py-1 rounded-lg bg-red-50 hover:bg-[#d9141d] text-[#d9141d] hover:text-white border border-red-200 text-[10px] font-bold transition-colors">Hapus</button>'
+                + '</div>'
+                + '</div>';
+        }).join('');
+
+        listEl.querySelectorAll('[data-cms-edit]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const targetId = btn.getAttribute('data-cms-edit');
+                const found = testimonialsList.find(function (it) { return it.id === targetId; });
+                if (!found) return;
+                const setField = function (id, val) {
+                    const el = document.getElementById(id);
+                    if (el) el.value = val || '';
+                };
+                setField('cms-rev-id', found.id);
+                setField('cms-rev-author', found.author_name);
+                setField('cms-rev-role', found.author_role);
+                setField('cms-rev-company', found.company_name);
+                setField('cms-rev-category', found.service_category || 'Fiber Optic & LAN');
+                setField('cms-rev-comment', found.comment);
+                setField('cms-rev-reply', found.owner_reply || '');
+                setStarPickerValue(found.rating || 5);
+
+                const heading = document.getElementById('cms-form-heading');
+                if (heading) heading.textContent = 'Edit Testimoni: ' + found.author_name;
+                const resetBtn = document.getElementById('cms-reset-form-btn');
+                if (resetBtn) resetBtn.classList.remove('hidden');
+                const submitLabel = document.getElementById('cms-rev-submit-label');
+                if (submitLabel) submitLabel.textContent = 'Perbarui Testimoni (Butuh Kode Admin)';
+            });
+        });
+
+        listEl.querySelectorAll('[data-cms-delete]').forEach(function (btn) {
+            btn.addEventListener('click', async function () {
+                const targetId = btn.getAttribute('data-cms-delete');
+                const keyInput = document.getElementById('cms-rev-admin-key');
+                const adminKey = keyInput ? keyInput.value.trim() : '';
+                const alertBox = document.getElementById('cms-testimonial-alert');
+
+                if (!adminKey) {
+                    if (alertBox) {
+                        alertBox.className = 'mb-3 p-3 rounded-xl text-xs font-semibold bg-amber-50 text-amber-900 border border-amber-300';
+                        alertBox.textContent = 'Masukkan Kode Akses Admin CMS terlebih dahulu pada kolom di bawah untuk menghapus testimoni.';
+                        alertBox.classList.remove('hidden');
+                    }
+                    if (keyInput) keyInput.focus();
+                    return;
+                }
+
+                try {
+                    const resp = await fetch('teknotama_api.php?action=testimonials_delete', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: targetId, admin_key: adminKey })
+                    });
+                    const data = await resp.json();
+                    if (resp.ok && data && data.ok) {
+                        testimonialsList = data.items || [];
+                        renderTestimonialsGrid();
+                        renderCmsManageList();
+                        updateTestimonialsStatsUi(data.stats);
+                        showToast('Testimoni berhasil dihapus dari CMS.');
+                        if (alertBox) {
+                            alertBox.className = 'mb-3 p-3 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-900 border border-emerald-300';
+                            alertBox.textContent = 'Testimoni berhasil dihapus.';
+                            alertBox.classList.remove('hidden');
+                        }
+                    } else {
+                        throw new Error((data && data.error) ? data.error : 'Gagal menghapus testimoni.');
+                    }
+                } catch (err) {
+                    if (alertBox) {
+                        alertBox.className = 'mb-3 p-3 rounded-xl text-xs font-semibold bg-red-50 text-red-900 border border-red-300';
+                        alertBox.textContent = err.message || 'Gagal menghapus testimoni.';
+                        alertBox.classList.remove('hidden');
+                    }
+                }
+            });
+        });
+    }
+
+    function setStarPickerValue(val) {
+        const rating = Math.max(1, Math.min(5, Number(val) || 5));
+        const input = document.getElementById('cms-rev-rating');
+        if (input) input.value = String(rating);
+        const labelMap = {
+            1: '1.0 / 5 (Kurang Puas)',
+            2: '2.0 / 5 (Cukup)',
+            3: '3.0 / 5 (Baik)',
+            4: '4.0 / 5 (Puas)',
+            5: '5.0 / 5 (Sangat Puas)'
+        };
+        const label = document.getElementById('cms-star-label');
+        if (label) label.textContent = labelMap[rating] || '5.0 / 5';
+        document.querySelectorAll('.cms-star-btn').forEach(function (btn) {
+            const s = Number(btn.getAttribute('data-star'));
+            btn.classList.toggle('text-amber-400', s <= rating);
+            btn.classList.toggle('text-slate-300', s > rating);
+        });
+    }
+
+    function resetCmsTestimonialForm() {
+        const form = document.getElementById('cms-testimonial-form');
+        if (form) form.reset();
+        const idField = document.getElementById('cms-rev-id');
+        if (idField) idField.value = '';
+        setStarPickerValue(5);
+        const heading = document.getElementById('cms-form-heading');
+        if (heading) heading.textContent = 'Tulis / Tambah Testimoni Baru';
+        const resetBtn = document.getElementById('cms-reset-form-btn');
+        if (resetBtn) resetBtn.classList.add('hidden');
+        const submitLabel = document.getElementById('cms-rev-submit-label');
+        if (submitLabel) submitLabel.textContent = 'Simpan & Tampilkan Testimoni';
+    }
+
+    async function initTestimonialsCms() {
+        const grid = document.getElementById('testimonials-grid');
+        if (!grid) return;
+
+        // Filter buttons
+        const filterBtns = document.querySelectorAll('.testimonial-filter-btn');
+        filterBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                activeTestimonialFilter = btn.getAttribute('data-rev-filter') || 'all';
+                filterBtns.forEach(function (b) {
+                    b.className = 'testimonial-filter-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-white border border-slate-200 text-slate-700 hover:border-red-300 transition-all';
+                });
+                btn.className = 'testimonial-filter-btn active px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#d9141d] text-white transition-all';
+                renderTestimonialsGrid();
+            });
+        });
+
+        // Modal open/close (bisa dibuka lewat tombol di section #testimoni, tombol CMS di Footer, atau URL hash #cms-testimoni)
+        const modal = document.getElementById('cms-testimonial-modal');
+        const closeBtn = document.getElementById('close-cms-testimonial-btn');
+        const resetFormBtn = document.getElementById('cms-reset-form-btn');
+
+        function openCmsModal() {
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            renderCmsManageList();
+            refreshIcons();
+        }
+
+        document.querySelectorAll('.open-cms-testimonial-trigger, #open-cms-testimonial-btn, #footer-open-cms-btn').forEach(function (trigger) {
+            trigger.addEventListener('click', function (e) {
+                e.preventDefault();
+                openCmsModal();
+            });
+        });
+
+        if (window.location.hash === '#cms-testimoni') {
+            openCmsModal();
+        }
+        window.addEventListener('hashchange', function () {
+            if (window.location.hash === '#cms-testimoni') {
+                openCmsModal();
+            }
+        });
+
+        if (closeBtn && modal) {
+            closeBtn.addEventListener('click', function () {
+                modal.classList.add('hidden');
+            });
+        }
+        if (modal) {
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) modal.classList.add('hidden');
+            });
+        }
+        if (resetFormBtn) {
+            resetFormBtn.addEventListener('click', function () {
+                resetCmsTestimonialForm();
+            });
+        }
+
+        // Star picker buttons
+        document.querySelectorAll('.cms-star-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                setStarPickerValue(btn.getAttribute('data-star'));
+            });
+        });
+
+        // Submit CMS Form
+        const form = document.getElementById('cms-testimonial-form');
+        if (form) {
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const alertBox = document.getElementById('cms-testimonial-alert');
+                const payload = {
+                    id: (document.getElementById('cms-rev-id') || {}).value || '',
+                    author_name: ((document.getElementById('cms-rev-author') || {}).value || '').trim(),
+                    author_role: ((document.getElementById('cms-rev-role') || {}).value || '').trim(),
+                    company_name: ((document.getElementById('cms-rev-company') || {}).value || '').trim(),
+                    service_category: (document.getElementById('cms-rev-category') || {}).value || 'Fiber Optic & LAN',
+                    rating: Number((document.getElementById('cms-rev-rating') || {}).value || 5),
+                    comment: ((document.getElementById('cms-rev-comment') || {}).value || '').trim(),
+                    owner_reply: ((document.getElementById('cms-rev-reply') || {}).value || '').trim(),
+                    admin_key: ((document.getElementById('cms-rev-admin-key') || {}).value || '').trim()
+                };
+
+                try {
+                    const resp = await fetch('teknotama_api.php?action=testimonials_save', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const data = await resp.json();
+                    if (resp.ok && data && data.ok) {
+                        testimonialsList = data.items || [];
+                        renderTestimonialsGrid();
+                        renderCmsManageList();
+                        updateTestimonialsStatsUi(data.stats);
+                        resetCmsTestimonialForm();
+                        showToast(data.mode === 'updated' ? 'Testimoni berhasil diperbarui di CMS!' : 'Testimoni baru berhasil ditambahkan!');
+                        if (alertBox) {
+                            alertBox.className = 'mb-3 p-3 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-900 border border-emerald-300';
+                            alertBox.textContent = data.mode === 'updated'
+                                ? 'Testimoni berhasil diperbarui dan langsung tampil di halaman.'
+                                : 'Testimoni baru berhasil disimpan dan langsung tampil di halaman!';
+                            alertBox.classList.remove('hidden');
+                        }
+                    } else {
+                        throw new Error((data && data.error) ? data.error : 'Gagal menyimpan testimoni.');
+                    }
+                } catch (err) {
+                    if (alertBox) {
+                        alertBox.className = 'mb-3 p-3 rounded-xl text-xs font-semibold bg-red-50 text-red-900 border border-red-300';
+                        alertBox.textContent = err.message || 'Gagal menyimpan testimoni.';
+                        alertBox.classList.remove('hidden');
+                    }
+                }
+            });
+        }
+
+        // Fetch initial testimonials from server CMS API
+        try {
+            const resp = await fetch('teknotama_api.php?action=testimonials_list');
+            const data = await resp.json();
+            if (resp.ok && data && data.ok && Array.isArray(data.items)) {
+                testimonialsList = data.items;
+                renderTestimonialsGrid();
+                renderCmsManageList();
+                updateTestimonialsStatsUi(data.stats);
+            }
+        } catch (err) {
+            // Keep static HTML fallback cards if offline
+        }
+    }
+
+    /* ========================================================================
      * 7. INISIALISASI SAAT DOM SIAP
      * ======================================================================== */
 
     function ensureFloatingWidgetDom() {
         if (!document.getElementById('ai-widget-container')) {
+            const waHref = buildWhatsAppCsUrl('');
+            const hasCalculatorOnPage = Boolean(document.getElementById('boq-table'));
+            const boqCardHtml = hasCalculatorOnPage
+                ? '<button id="widget-review-boq-card" type="button" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-red-950/80 rounded-2xl p-3 flex items-center justify-between gap-3 transition-all"><div><span class="block text-xs font-bold text-brand-400">Review Simulasi Kalkulator BOQ</span><span id="ai-calc-context-badge" class="block text-[11px] text-slate-300 mt-0.5">Konteks BOQ Aktif: 60 User • 2 Lantai</span></div><i data-lucide="cpu" class="w-4 h-4 text-brand-400 flex-shrink-0"></i></button>'
+                : '<a href="kalkulator-boq-it.html" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-red-950/80 rounded-2xl p-3 flex items-center justify-between gap-3 transition-all"><div><span class="block text-xs font-bold text-brand-400">Buka Kalkulator BOQ Teknis</span><span class="block text-[11px] text-slate-300 mt-0.5">Hitung kebutuhan Switch PoE, Kabel &amp; UPS</span></div><i data-lucide="cpu" class="w-4 h-4 text-brand-400 flex-shrink-0"></i></a>';
+            const waIconSvg = '<svg class="w-4 h-4 fill-current flex-shrink-0" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12 0 2.126.556 4.122 1.534 5.854l-1.534 5.611 5.752-1.509c1.682.905 3.604 1.419 5.647 1.419 6.627 0 12-5.373 12-12 0-6.627-5.373-12-11.399-11.375z"/></svg>';
+
             const wrap = document.createElement('div');
             wrap.innerHTML = '<div id="ai-widget-container" class="fixed bottom-4 left-3 right-3 sm:left-auto sm:bottom-5 sm:right-5 z-[55] no-print flex flex-col items-end pointer-events-none">'
                 + '<div id="ai-widget-panel" class="hidden pointer-events-auto mb-3 bg-[#090d16] rounded-3xl overflow-hidden flex flex-col relative">'
-                + '<button id="widget-close-btn" type="button" aria-label="Tutup Asisten AI" class="absolute top-3.5 right-3.5 z-20 w-8 h-8 rounded-full bg-black/40 hover:bg-brand-600 text-slate-200 hover:text-white flex items-center justify-center transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>'
+                + '<button id="widget-close-btn" type="button" aria-label="Tutup Asisten AI & WhatsApp" class="absolute top-3.5 right-3.5 z-20 w-8 h-8 rounded-full bg-black/40 hover:bg-brand-600 text-slate-200 hover:text-white flex items-center justify-center transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>'
                 + '<div id="widget-view-home" class="flex-1 flex flex-col overflow-hidden">'
-                + '<div class="bg-gradient-to-br from-[#12080d] via-[#1c0b12] to-[#090d16] p-5 pr-12 border-b border-red-950/70">'
-                + '<div class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>TeknoAssist AI • Field Engineer Online</div>'
-                + '<h3 class="text-xl font-extrabold text-white">Halo! &#128075;</h3>'
-                + '<p class="text-xs text-slate-300 mt-1 leading-relaxed">Butuh konsultasi SOP teknis lapangan, review BOQ, atau persiapan Site Survey Teknotama?</p>'
+                + '<div class="bg-gradient-to-br from-[#12080d] via-[#1c0b12] to-[#090d16] p-4 pr-12 border-b border-red-950/70">'
+                + '<div class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>TeknoAssist AI &amp; WhatsApp CS • 1 Box Terpadu</div>'
+                + '<h3 class="text-lg font-extrabold text-white">Halo! Ada yang bisa dibantu? &#128075;</h3>'
+                + '<p class="text-[11px] text-slate-300 mt-0.5 leading-relaxed">Konsultasi instan dengan AI Field Engineer atau terhubung langsung ke WhatsApp CS resmi kami.</p>'
                 + '</div>'
-                + '<div class="flex-1 overflow-y-auto tkt-scroll p-4 space-y-3 bg-[#080c15]">'
-                + '<div class="bg-[#11192b] border border-red-950/80 rounded-2xl p-3.5 space-y-2.5">'
+                + '<div class="flex-1 overflow-y-auto tkt-scroll p-3.5 space-y-2.5 bg-[#080c15]">'
+                + '<button id="widget-start-conversation" type="button" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-brand-600/40 rounded-2xl p-3.5 flex items-center justify-between gap-3 transition-all group"><div><span class="block text-xs font-bold text-white group-hover:text-brand-400 transition-colors">Mulai Konsultasi AI Engineer</span><span class="block text-[11px] text-slate-400 mt-0.5">Ketik <strong class="text-emerald-400">&quot;cs&quot;</strong> di chat untuk langsung ke WhatsApp</span></div><div class="w-9 h-9 rounded-xl bg-brand-600 text-white flex items-center justify-center flex-shrink-0 shadow-md shadow-brand-600/30"><i data-lucide="bot" class="w-4 h-4"></i></div></button>'
+                + '<a id="widget-wa-direct-card" href="' + escapeHtml(waHref) + '" target="_blank" rel="noopener noreferrer" class="w-full text-left bg-emerald-950/50 hover:bg-emerald-900/60 border border-emerald-500/50 rounded-2xl p-3.5 flex items-center justify-between gap-3 transition-all group"><div><span class="block text-xs font-bold text-emerald-300 group-hover:text-white transition-colors">Chat Langsung CS via WhatsApp</span><span class="block text-[11px] text-emerald-200/80 mt-0.5">Official NOC &amp; Sales: +62 851-6769-4457</span></div><div class="w-9 h-9 rounded-xl bg-[#25D366] text-white flex items-center justify-center flex-shrink-0 shadow-md"><i data-lucide="phone-call" class="w-4 h-4"></i></div></a>'
+                + '<div class="bg-[#11192b] border border-red-950/80 rounded-2xl p-3 space-y-2">'
                 + '<div class="flex items-center justify-between"><span class="text-xs font-bold text-white">Pusat Bantuan SOP Lapangan</span><span class="text-[10px] text-brand-400 font-mono">8 Panduan</span></div>'
-                + '<div class="relative"><i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i><input id="widget-help-search" type="text" placeholder="Cari SOP (TIA-568, FO, Fluke, SLA)..." class="w-full pl-8 pr-3 py-2 rounded-xl bg-[#080d1a] border border-red-950 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500"></div>'
-                + '<div id="widget-help-results" class="space-y-2 pt-1"></div>'
+                + '<div class="relative"><i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i><input id="widget-help-search" type="text" placeholder="Cari SOP (TIA-568, FO, Fluke, SLA)..." class="w-full pl-8 pr-3 py-1.5 rounded-xl bg-[#080d1a] border border-red-950 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500"></div>'
+                + '<div id="widget-help-results" class="space-y-1.5 pt-1"></div>'
                 + '</div>'
-                + '<button id="widget-start-conversation" type="button" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-brand-600/40 rounded-2xl p-4 flex items-center justify-between gap-3 transition-all group"><div><span class="block text-xs font-bold text-white group-hover:text-brand-400 transition-colors">Mulai Konsultasi AI Engineer</span><span class="block text-[11px] text-slate-400 mt-0.5">Respons instan teknis lapangan &amp; arsitektur IT</span></div><div class="w-9 h-9 rounded-xl bg-brand-600 text-white flex items-center justify-center flex-shrink-0 shadow-md shadow-brand-600/30"><i data-lucide="send" class="w-4 h-4"></i></div></button>'
-                + '<a href="index.html#kalkulator" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-red-950/80 rounded-2xl p-3.5 flex items-center justify-between gap-3 transition-all"><div><span class="block text-xs font-bold text-brand-400">Buka Kalkulator BOQ Teknis</span><span class="block text-[11px] text-slate-300 mt-0.5">Hitung kebutuhan Switch PoE, Kabel &amp; UPS</span></div><i data-lucide="cpu" class="w-4 h-4 text-brand-400 flex-shrink-0"></i></a>'
+                + boqCardHtml
                 + '</div></div>'
                 + '<div id="widget-view-chat" class="hidden flex-1 flex flex-col overflow-hidden">'
-                + '<div class="bg-[#11192b] px-4 py-3.5 pr-12 border-b border-red-950/80 flex items-center justify-between gap-2">'
-                + '<div class="flex items-center gap-2.5 min-w-0"><div class="w-8 h-8 rounded-xl bg-brand-600 flex items-center justify-center text-white flex-shrink-0"><i data-lucide="bot" class="w-4 h-4"></i></div><div class="min-w-0"><h4 class="text-xs font-bold text-white truncate">TeknoAssist AI Engineer</h4><p class="text-[10px] text-emerald-400 font-medium truncate">Paham SOP Eksekusi Lapangan</p></div></div>'
-                + '<div class="flex items-center gap-1.5 flex-shrink-0"><button id="widget-sync-booking" type="button" title="Terapkan ke Form Booking" class="px-2 py-1 rounded-lg bg-brand-600/20 border border-brand-500/40 text-brand-300 hover:bg-brand-600 hover:text-white text-[10px] font-bold transition-colors">Ke Form</button><button id="widget-reset-chat" type="button" title="Reset Obrolan" class="p-1.5 rounded-lg bg-[#080d1a] text-slate-400 hover:text-white transition-colors"><i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i></button></div>'
+                + '<div class="bg-[#11192b] px-3.5 py-3 pr-12 border-b border-red-950/80 flex items-center justify-between gap-2">'
+                + '<div class="flex items-center gap-2 min-w-0"><div class="w-8 h-8 rounded-xl bg-brand-600 flex items-center justify-center text-white flex-shrink-0"><i data-lucide="bot" class="w-4 h-4"></i></div><div class="min-w-0"><h4 class="text-xs font-bold text-white truncate">TeknoAssist AI &amp; CS</h4><p class="text-[10px] text-emerald-400 font-medium truncate">Ketik &quot;cs&quot; &rarr; Direct WA</p></div></div>'
+                + '<div class="flex items-center gap-1 flex-shrink-0"><a id="widget-header-wa-btn" href="' + escapeHtml(waHref) + '" target="_blank" rel="noopener noreferrer" class="px-2 py-1 rounded-lg bg-[#25D366] hover:bg-[#1ebe5d] text-white text-[10px] font-bold transition-colors">WA CS</a><button id="widget-sync-booking" type="button" title="Terapkan ke Form Booking" class="px-2 py-1 rounded-lg bg-brand-600/20 border border-brand-500/40 text-brand-300 hover:bg-brand-600 hover:text-white text-[10px] font-bold transition-colors">Ke Form</button><button id="widget-reset-chat" type="button" title="Reset Obrolan" class="p-1.5 rounded-lg bg-[#080d1a] text-slate-400 hover:text-white transition-colors"><i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i></button></div>'
                 + '</div>'
                 + '<div id="widget-chat-messages" class="flex-1 overflow-y-auto tkt-scroll p-4 space-y-3 bg-[#080c15]"></div>'
                 + '<div class="px-3 pt-2 pb-1 bg-[#0b101b] border-t border-red-950/60 flex gap-1.5 overflow-x-auto tkt-scroll">'
+                + '<button type="button" data-prompt="cs" class="ai-quick-chip whitespace-nowrap text-[10px] px-2.5 py-1 rounded-full bg-emerald-950 border border-emerald-500/70 text-emerald-300 hover:bg-emerald-600 hover:text-white font-bold">Hubungi CS WA (Ketik: cs)</button>'
                 + '<button type="button" data-prompt="Bagaimana SOP penarikan kabel Cat6/Cat6A dan Fiber Optic antar lantai?" class="ai-quick-chip whitespace-nowrap text-[10px] px-2.5 py-1 rounded-full bg-[#11192b] border border-red-950 text-slate-300 hover:border-brand-500 hover:text-white">SOP Kabel &amp; FO</button>'
                 + '<button type="button" data-prompt="Bagaimana cara kerja malam/akhir pekan tanpa mengganggu operasional kantor?" class="ai-quick-chip whitespace-nowrap text-[10px] px-2.5 py-1 rounded-full bg-[#11192b] border border-red-950 text-slate-300 hover:border-brand-500 hover:text-white">Zero-Downtime</button>'
                 + '</div>'
-                + '<form id="widget-chat-form" class="p-3 bg-[#0b101b] flex gap-2"><input id="widget-chat-input" type="text" placeholder="Ketik pertanyaan teknis Anda..." class="flex-1 px-3.5 py-2 rounded-xl bg-[#080d1a] border border-red-950 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500"><button type="submit" class="px-3.5 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs flex items-center justify-center transition-colors"><i data-lucide="send" class="w-4 h-4"></i></button></form>'
+                + '<form id="widget-chat-form" class="p-3 bg-[#0b101b] flex gap-2"><input id="widget-chat-input" type="text" placeholder="Tanya teknis atau ketik \'cs\' langsung ke WA..." class="flex-1 px-3.5 py-2 rounded-xl bg-[#080d1a] border border-red-950 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500"><button type="submit" class="px-3.5 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs flex items-center justify-center transition-colors"><i data-lucide="send" class="w-4 h-4"></i></button></form>'
                 + '</div>'
-                + '<div class="grid grid-cols-2 border-t border-red-950/80 bg-[#0d1424] h-12 flex-shrink-0">'
-                + '<button id="widget-tab-home" type="button" class="flex items-center justify-center gap-1.5 text-xs font-bold text-brand-400 hover:bg-white/5 transition-colors"><i data-lucide="home" class="w-4 h-4"></i><span>Beranda</span></button>'
-                + '<button id="widget-tab-chat" type="button" class="flex items-center justify-center gap-1.5 text-xs font-bold text-slate-400 hover:bg-white/5 transition-colors border-l border-red-950/60"><i data-lucide="message-square" class="w-4 h-4"></i><span>Chat AI</span></button>'
+                + '<div class="grid grid-cols-3 border-t border-red-950/80 bg-[#0d1424] h-12 flex-shrink-0">'
+                + '<button id="widget-tab-home" type="button" class="flex items-center justify-center gap-1.5 text-xs font-bold text-brand-400 hover:bg-white/5 transition-colors"><i data-lucide="home" class="w-3.5 h-3.5"></i><span>Beranda</span></button>'
+                + '<button id="widget-tab-chat" type="button" class="flex items-center justify-center gap-1.5 text-xs font-bold text-slate-400 hover:bg-white/5 transition-colors border-x border-red-950/60"><i data-lucide="message-square" class="w-3.5 h-3.5"></i><span>Chat AI</span></button>'
+                + '<button id="widget-tab-wa" type="button" class="flex items-center justify-center gap-1.5 text-xs font-bold text-emerald-400 hover:bg-emerald-500/10 transition-colors"><i data-lucide="phone-call" class="w-3.5 h-3.5"></i><span>WhatsApp</span></button>'
                 + '</div></div>'
-                + '<button id="ai-widget-toggle" type="button" aria-label="Buka Konsultasi AI Teknotama" class="pointer-events-auto group flex items-center gap-2.5 bg-gradient-to-r from-brand-700 via-brand-600 to-brand-500 hover:from-brand-600 hover:to-brand-400 text-white font-bold px-4 py-3.5 rounded-full shadow-2xl shadow-brand-600/40 border border-brand-400/30 transition-all transform hover:-translate-y-0.5"><span id="widget-icon-open" class="flex items-center gap-2"><i data-lucide="bot" class="w-5 h-5"></i><span class="hidden sm:inline text-xs tracking-wide">Tanya AI Teknis</span></span><span id="widget-icon-close" class="hidden flex items-center gap-1.5"><i data-lucide="chevron-down" class="w-5 h-5"></i></span></button>'
+                + '<div id="unified-chat-wa-box" class="pointer-events-auto flex items-center gap-1.5 bg-[#090d16]/95 p-1.5 rounded-full shadow-2xl border border-slate-700/80 backdrop-blur-md">'
+                + '<button id="ai-widget-toggle" type="button" aria-label="Buka Konsultasi AI & CS Teknotama" class="group flex items-center gap-2 bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold px-4 py-2.5 rounded-full shadow-lg shadow-red-600/30 transition-all"><span id="widget-icon-open" class="flex items-center gap-2"><i data-lucide="bot" class="w-4 h-4"></i><span class="text-xs tracking-wide">Chat AI &amp; CS</span></span><span id="widget-icon-close" class="hidden flex items-center gap-1.5"><i data-lucide="chevron-down" class="w-4 h-4"></i><span class="text-xs">Tutup</span></span></button>'
+                + '<a id="floating-wa-direct-btn" href="' + escapeHtml(waHref) + '" target="_blank" rel="noopener noreferrer" aria-label="Chat Langsung WhatsApp CS Teknotama" class="flex items-center gap-1.5 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold px-3.5 py-2.5 rounded-full shadow-lg transition-all">' + waIconSvg + '<span class="text-xs">WA CS</span></a>'
+                + '</div>'
                 + '</div>';
             while (wrap.firstChild) {
                 document.body.appendChild(wrap.firstChild);
@@ -1571,6 +2145,7 @@
         initCalculator();
         initChatbotInterfaces();
         initBookingForm();
+        initTestimonialsCms();
 
         try {
             if (sessionStorage.getItem('tkt_pending_booking_sync') === '1' && document.getElementById('form-message')) {

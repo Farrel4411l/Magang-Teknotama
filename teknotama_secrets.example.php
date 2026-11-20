@@ -17,8 +17,9 @@ return array(
     // Cohere Trial Key dibatasi non-komersial oleh Cohere; set true hanya jika sudah memakai Production Key.
     'enable_cohere'        => false,
 
-    // Konfigurasi Email Tujuan Booking
+    // Konfigurasi Email Tujuan Booking, WhatsApp CS, & Kode Akses CMS Testimoni
     'booking_email_to'     => 'admin@teknotama.com',
     'booking_email_from'   => 'noreply@teknotama.com',
     'whatsapp_number'      => '6285167694457',
+    'cms_admin_key'        => 'GANTI_KODE_ADMIN_CMS_ANDA',
 );

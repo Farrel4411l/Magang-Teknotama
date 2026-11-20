@@ -1,42 +1,96 @@
 /**
- * Custom Stylesheet untuk PT Teknotama Prakarsa Mulia
- * Terpisah dari subfolder css/ lama agar tidak mengubah aset eksisting.
+ * PT Teknotama Prakarsa Mulia - Corporate UI/UX Stylesheet
+ * Disesuaikan dengan desain resmi Tim Frontend UI/UX (Clean Editorial Light & Crimson Red + High-Contrast Dark Bands).
  */
 
-/* Navbar & Glassmorphism */
+:root {
+    --tkt-red: #d9141d;
+    --tkt-red-dark: #b50e16;
+    --tkt-dark: #090b10;
+}
+
+/* Sticky White Navbar */
 .glass-nav {
-    background: rgba(9, 13, 22, 0.94);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     transform: translateZ(0);
     will-change: transform;
 }
 
+/* Dark Glass Card (dipakai di halaman sub-layanan atau panel kontras gelap) */
 .glass-card {
-    background: rgba(19, 27, 46, 0.72);
+    background: rgba(19, 27, 46, 0.78);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(220, 38, 38, 0.16);
+    border: 1px solid rgba(220, 38, 38, 0.2);
 }
 
-.glass-card:hover {
-    border-color: rgba(239, 68, 68, 0.42);
+/* Corporate Clean White Cards (Sesuai Mockup UI/UX) */
+.corp-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.05);
+    transition: all 0.22s ease;
+}
+
+.corp-card:hover {
+    border-color: #fca5a5;
+    box-shadow: 0 12px 28px -6px rgba(217, 20, 29, 0.1);
+}
+
+/* Eyebrow Red Lines (─── Tentang Teknotama ───) */
+.eyebrow-line {
+    display: inline-block;
+    width: 36px;
+    height: 2px;
+    background-color: #d9141d;
+    vertical-align: middle;
+}
+
+/* Hero Split Background dengan Blend Halus Kiri-ke-Kanan */
+.hero-split-bg {
+    background-color: #ffffff;
+    position: relative;
+}
+
+.hero-image-mask {
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.25) 18%, rgba(0, 0, 0, 1) 45%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.25) 18%, rgba(0, 0, 0, 1) 45%);
+}
+
+/* Masking Foto Engineer Melengkung di Kanan (Section Tentang Teknotama) */
+.about-photo-curve {
+    border-radius: 16px 150px 150px 16px;
+}
+
+@media (max-width: 768px) {
+    .about-photo-curve {
+        border-radius: 20px 80px 80px 20px;
+    }
+    .hero-image-mask {
+        mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 100%);
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 100%);
+    }
+}
+
+/* Banner Merah Skyline CTA */
+.cta-red-skyline {
+    background:
+        linear-gradient(135deg, rgba(165, 14, 22, 0.93) 0%, rgba(217, 20, 29, 0.91) 50%, rgba(136, 12, 19, 0.95) 100%),
+        url('https://images.unsplash.com/photo-1555899434-94d1368aa7af?auto=format&fit=crop&w=1600&q=75') center/cover no-repeat;
 }
 
 .tech-grid-bg {
-    background-image: radial-gradient(rgba(220, 38, 38, 0.15) 1px, transparent 0);
+    background-image: radial-gradient(rgba(220, 38, 38, 0.12) 1px, transparent 0);
     background-size: 32px 32px;
 }
 
-.red-glow-orb {
-    box-shadow: 0 0 100px 30px rgba(220, 38, 38, 0.2);
-}
-
 #logo_fixed {
-    width: 240px;
+    width: 175px;
     max-width: 100%;
     height: auto;
-    border-radius: 6px;
+    border-radius: 4px;
 }
 
 /* Custom Range Sliders (Kalkulator Teknis) */
@@ -44,10 +98,10 @@
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
-    height: 8px;
+    height: 7px;
     border-radius: 9999px;
-    background: #080d1a;
-    border: 1px solid rgba(127, 29, 29, 0.6);
+    background: #1e293b;
+    border: 1px solid rgba(220, 38, 38, 0.35);
     outline: none;
 }
 
@@ -57,48 +111,48 @@
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: #ef4444;
+    background: #d9141d;
     border: 2px solid #ffffff;
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+    box-shadow: 0 2px 8px rgba(217, 20, 29, 0.5);
     transition: transform 0.15s ease;
 }
 
 .tkt-range::-webkit-slider-thumb:hover {
-    transform: scale(1.15);
+    transform: scale(1.12);
 }
 
 .tkt-range::-moz-range-thumb {
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: #ef4444;
+    background: #d9141d;
     border: 2px solid #ffffff;
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+    box-shadow: 0 2px 8px rgba(217, 20, 29, 0.5);
 }
 
-/* Custom Scrollbar untuk BOQ & Chat */
+/* Custom Scrollbar */
 .tkt-scroll::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
 
 .tkt-scroll::-webkit-scrollbar-track {
-    background: rgba(8, 13, 26, 0.6);
+    background: rgba(15, 23, 42, 0.08);
     border-radius: 9999px;
 }
 
 .tkt-scroll::-webkit-scrollbar-thumb {
-    background: rgba(220, 38, 38, 0.45);
+    background: rgba(217, 20, 29, 0.45);
     border-radius: 9999px;
 }
 
 .tkt-scroll::-webkit-scrollbar-thumb:hover {
-    background: rgba(239, 68, 68, 0.75);
+    background: rgba(217, 20, 29, 0.75);
 }
 
-/* Chat Markdown Formatting */
+/* Chat Markdown Formatting (Clean Corporate Readability) */
 .chat-markdown p {
     margin-bottom: 0.45rem;
 }
@@ -126,13 +180,12 @@
 }
 
 .chat-markdown strong {
-    color: #ffffff;
     font-weight: 700;
 }
 
 .chat-markdown code {
-    background: rgba(220, 38, 38, 0.18);
-    color: #fecdd3;
+    background: rgba(239, 68, 68, 0.16);
+    color: #fca5a5;
     padding: 0.1rem 0.35rem;
     border-radius: 0.3rem;
     font-size: 0.85em;
@@ -141,7 +194,7 @@
 
 .chat-markdown h3,
 .chat-markdown h4 {
-    color: #f87171;
+    color: #d9141d;
     font-weight: 700;
     margin: 0.5rem 0 0.25rem;
 }
@@ -152,7 +205,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #f87171;
+    background: #d9141d;
     animation: tktPulseDot 1.3s infinite ease-in-out both;
 }
 
@@ -184,7 +237,7 @@
     width: 390px;
     max-width: 100%;
     height: min(580px, calc(100vh - 120px));
-    box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(220, 38, 38, 0.3);
+    box-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.32), 0 0 0 1px rgba(226, 232, 240, 0.9);
 }
 
 @media (max-width: 640px) {
@@ -193,7 +246,7 @@
         height: min(540px, calc(100vh - 156px));
     }
     #logo_fixed {
-        width: 190px;
+        width: 150px;
     }
 }
 
@@ -215,7 +268,10 @@
     #layanan,
     #alur-kerja,
     #portofolio,
+    #testimoni,
+    #cms-testimonial-modal,
     #faq,
+    #cta-banner,
     #kontak,
     footer,
     #ai-widget-container,
@@ -223,20 +279,24 @@
         display: none !important;
     }
 
-    #kalkulator {
+    #boq-output-panel .overflow-auto {
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    #kalkulator,
+    #kalkulator-workbench {
         display: block !important;
         background: #ffffff !important;
         padding: 0 !important;
         border: none !important;
     }
 
-    #kalkulator .glass-card,
     #boq-output-panel {
         background: #ffffff !important;
         border: 1px solid #cbd5e1 !important;
         color: #0f172a !important;
         box-shadow: none !important;
-        backdrop-filter: none !important;
     }
 
     #boq-controls-panel {

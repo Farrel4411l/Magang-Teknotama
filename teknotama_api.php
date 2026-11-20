@@ -38,7 +38,13 @@ if ($action === 'health') {
             'local_engine' => true,
         ),
         'booking_target' => $config['booking_email_to'],
+        'whatsapp_number' => $config['whatsapp_number'],
+        'cms_testimonials' => true,
     ), 200);
+}
+
+if ($action === 'testimonials_list' && ($_SERVER['REQUEST_METHOD'] === 'GET' || $_SERVER['REQUEST_METHOD'] === 'POST')) {
+    teknotama_handle_testimonials_list();
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -61,6 +67,10 @@ if ($action === 'chat') {
     teknotama_handle_chat($config, $input);
 } elseif ($action === 'booking') {
     teknotama_handle_booking($config, $input);
+} elseif ($action === 'testimonials_save') {
+    teknotama_handle_testimonials_save($config, $input);
+} elseif ($action === 'testimonials_delete') {
+    teknotama_handle_testimonials_delete($config, $input);
 } else {
     teknotama_send_json(array(
         'ok' => false,
@@ -83,6 +93,7 @@ function teknotama_load_config()
         'booking_email_to'   => 'admin@teknotama.com',
         'booking_email_from' => 'noreply@teknotama.com',
         'whatsapp_number'    => '6285167694457',
+        'cms_admin_key'      => getenv('TEKNOTAMA_CMS_KEY') ?: 'teknotama2026',
     );
 
     // Cek di folder saat ini (/public_html/teknotama_secrets.php) maupun 1 tingkat di atasnya (/teknotama_secrets.php)
@@ -221,15 +232,41 @@ function teknotama_handle_chat($config, $input)
         ? $input['calculator_context']
         : array();
 
+    // Direct Keyword Trigger: ketik "cs" / "wa" / "whatsapp" / "hubungi cs" -> Direct Redirect ke WhatsApp CS
+    if (teknotama_is_direct_cs_command($userMessage)) {
+        $boqSummary = isset($calcContext['summary']) ? trim((string) $calcContext['summary']) : '';
+        $waText = "Halo CS & Tim Teknis PT Teknotama Prakarsa Mulia, saya ingin berkonsultasi langsung mengenai kebutuhan infrastruktur IT perusahaan kami.";
+        if ($boqSummary !== '') {
+            $waText .= "\n\n[Konteks Simulasi BOQ: " . $boqSummary . "]";
+        }
+        $waUrl = 'https://wa.me/' . $config['whatsapp_number'] . '?text=' . rawurlencode($waText);
+
+        teknotama_send_json(array(
+            'ok' => true,
+            'reply' => "**Mengalihkan Anda langsung ke WhatsApp Customer Service & NOC PT Teknotama Prakarsa Mulia (+62 851-6769-4457)...**\n\n"
+                . "- **Status Pengalihan**: Jendela WhatsApp resmi kami sedang dibuka secara otomatis disertai konteks simulasi BOQ Anda.\n"
+                . "- **Layanan CS & Engineer**: Konsultasi teknis langsung, penjadwalan *Site Survey* gratis, atau bantuan *emergency ticket*.\n"
+                . "- Jika jendela WhatsApp belum terbuka di perangkat Anda, silakan klik tombol **Chat Langsung via WhatsApp CS** di bawah pesan ini.",
+            'engine' => 'whatsapp_cs_direct',
+            'model' => 'Direct-WhatsApp-Handoff',
+            'redirect_whatsapp' => true,
+            'whatsapp_url' => $waUrl,
+            'whatsapp_number' => '+62 851-6769-4457',
+            'suggested_actions' => array('open_whatsapp_cs'),
+        ), 200);
+    }
+
     $systemPrompt = teknotama_build_system_prompt($calcContext);
 
     $reply = null;
     $usedEngine = 'local_expert';
     $usedModel = 'teknotama-sop-engine-v1';
+    $startTime = microtime(true);
+    $maxCloudBudgetSec = 14.0;
 
     if (function_exists('curl_init')) {
         // 1. Primary: Groq (Sangat cepat & akurat untuk Bahasa Indonesia)
-        if ($reply === null && !empty($config['groq_api_key'])) {
+        if ($reply === null && !empty($config['groq_api_key']) && (microtime(true) - $startTime) < $maxCloudBudgetSec) {
             $res = teknotama_call_groq($config['groq_api_key'], $systemPrompt, $history, $userMessage);
             if ($res !== null) {
                 $reply = $res['text'];
@@ -239,7 +276,7 @@ function teknotama_handle_chat($config, $input)
         }
 
         // 2. Failover 1: Google Gemini
-        if ($reply === null && !empty($config['gemini_api_key'])) {
+        if ($reply === null && !empty($config['gemini_api_key']) && (microtime(true) - $startTime) < $maxCloudBudgetSec) {
             $res = teknotama_call_gemini($config['gemini_api_key'], $systemPrompt, $history, $userMessage);
             if ($res !== null) {
                 $reply = $res['text'];
@@ -249,7 +286,7 @@ function teknotama_handle_chat($config, $input)
         }
 
         // 3. Failover 2: OpenRouter Free Router
-        if ($reply === null && !empty($config['openrouter_api_key'])) {
+        if ($reply === null && !empty($config['openrouter_api_key']) && (microtime(true) - $startTime) < $maxCloudBudgetSec) {
             $res = teknotama_call_openrouter($config['openrouter_api_key'], $systemPrompt, $history, $userMessage);
             if ($res !== null) {
                 $reply = $res['text'];
@@ -259,7 +296,7 @@ function teknotama_handle_chat($config, $input)
         }
 
         // 4. Optional Failover 3: Cohere (hanya jika diaktifkan eksplisit)
-        if ($reply === null && !empty($config['enable_cohere']) && !empty($config['cohere_api_key'])) {
+        if ($reply === null && !empty($config['enable_cohere']) && !empty($config['cohere_api_key']) && (microtime(true) - $startTime) < $maxCloudBudgetSec) {
             $res = teknotama_call_cohere($config['cohere_api_key'], $systemPrompt, $history, $userMessage);
             if ($res !== null) {
                 $reply = $res['text'];
@@ -332,8 +369,10 @@ function teknotama_build_system_prompt($calcContext)
         . "5. **Eksekusi Zero-Downtime**: Perangkat (Router, Switch, Firewall, AP, NVR) di-*staging* & *pre-configure* lebih dulu di workshop Teknotama. Penarikan kasar/pengeboran berisik dikerjakan di luar jam operasional (*night shift*/akhir pekan) sehingga kantor tetap produktif.\n"
         . "6. **Testing & Serah Terima**: Wajib uji sertifikasi **Fluke Cable Certifier** (UTP) dan **OTDR + OPM** (Fiber Optic), pembuatan **As-Built Drawing Topologi & Rack Elevation**, serta penandatanganan **UAT (User Acceptance Test)**.\n"
         . "7. **Segregasi Keamanan & CCTV**: Pisahkan VLAN (Management, Staff, Guest, CCTV/IoT, Server). Perhitungan NVR memakai estimasi codec H.265+ agar hemat disk namun tetap tajam, serta **Online Sinewave UPS** untuk menjaga kestabilan perangkat.\n\n"
-        . "### ATURAN ADAPTASI USER & GUARDRAILS KETAT\n"
-        . "- **Adaptasi Profil Penanya**: Jika penanya awam/pemilik bisnis, jelaskan manfaat praktis dengan bahasa mudah dipahami terlebih dulu. Jika penanya IT Manager/Engineer, langsung bahas spesifikasi, port, PoE budget, VLAN, standar TIA/EIA, dan cutover. Jika Procurement, tekankan item BOQ (tanpa harga), deliverables dokumentasi, dan estimasi durasi.\n"
+        . "### ATURAN ADAPTASI USER, DISAMBIGUASI PERUSAHAAN & GUARDRAILS KETAT\n"
+        . "- **DISAMBIGUASI NAMA TEKNOTAMA (WAJIB)**: Di Indonesia ada beberapa perusahaan lain yang memiliki kata 'Teknotama' di bidang berbeda (seperti PT Teknotama Lingkungan Internusa di bidang limbah B3, atau perusahaan alat berat/konstruksi umum, maupun nama template lama NexusTech). Anda HANYA mewakili **PT Teknotama Prakarsa Mulia (`teknotama.com`)** yang bergerak khusus di **Enterprise IT Infrastructure, Jaringan Fiber Optic/LAN, Server Data Center, Cybersecurity Firewall, & IP CCTV**. Jangan pernah merujuk ke pengolahan limbah, alat berat, atau produk kompetitor.\n"
+        . "- **TOLERANSI TYPO & PERBANDINGAN KOMPETITOR**: Jika user salah ketik nama perusahaan (misal: *Teknotma, Tekno Tama, Technotama*) atau membandingkan dengan kompetitor IT lain (seperti Biznet, Lintasarta, Telkomsigma, Indonet, CBN, Datacomm), tetap jawab dengan sopan dan profesional tanpa menjelekkan kompetitor, serta jelaskan keunggulan eksekusi lapangan PT Teknotama Prakarsa Mulia (*Staging di Workshop, Zero-Downtime Night/Weekend Cutover, Sertifikasi Uji Fluke & OTDR, Garansi Kabel 1 Tahun & Hardware Resmi 1-3 Tahun, serta SLA Emergency < 2 Jam*).\n"
+        . "- **RAMAH AWAM SEKALIGUS TAJAM TEKNIS**: Setiap jawaban wajib dimulai dengan **penjelasan praktis yang sangat mudah dipahami orang awam/pemilik bisnis**, lalu diikuti **poin spesifikasi teknis & standar lapangan** (TIA-568, PoE+, VLAN, OTDR/Fluke) bagi tim IT/Procurement.\n"
         . "- **DILARANG MENYEBUT NOMINAL HARGA RUPIAH**: Teknotama tidak memberikan estimasi harga Rp di chat/kalkulator sebelum Site Survey karena kondisi jalur fisik gedung berbeda-beda. Fokus pada rincian teknis, kuantitas perangkat (BOQ), dan ajak user menjadwalkan Site Survey Gratis melalui Formulir Booking.\n"
         . "- **DILARANG MENGARANG URL/HALAMAN PALSU**: Jangan pernah membuat tautan seperti `/survey` atau halaman lain yang tidak ada. Arahkan user ke **Formulir Survei & Penawaran** di halaman ini (atau tombol **Terapkan ke Form Booking**), email `admin@teknotama.com`, atau WhatsApp `+62 851-6769-4457`.\n"
         . "- **TOLAK HAL DI LUAR KONTEKS IT**: Jika ditanya hal di luar infrastruktur IT/layanan Teknotama (politik, coding tugas sekolah tidak relevan, gosip, dll), tolak dengan sopan dan arahkan kembali ke konsultasi infrastruktur IT.\n"
@@ -363,8 +402,8 @@ function teknotama_http_post_json($url, $headers, $payload, $timeout)
         CURLOPT_POST => true,
         CURLOPT_POSTFIELDS => $body,
         CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_CONNECTTIMEOUT => 6,
-        CURLOPT_TIMEOUT => (int) $timeout,
+        CURLOPT_CONNECTTIMEOUT => 3,
+        CURLOPT_TIMEOUT => min(8, (int) $timeout),
         CURLOPT_SSL_VERIFYPEER => true,
         CURLOPT_SSL_VERIFYHOST => 2,
     );
@@ -437,8 +476,16 @@ function teknotama_evaluate_input_guardrails($userMessage)
         );
     }
 
-    // 4. Out-of-Domain / Topik Tidak Relevan (Memasak, Politik, Asmara, Hiburan, PR Sekolah)
-    $hasItContext = preg_match('/\b(jaringan|network|kabel|cat6|cat6a|fiber|fo|switch|router|mikrotik|cisco|fortinet|firewall|vpn|wifi|access\s*point|ap|server|cloud|vmware|proxmox|nas|rack|ups|cctv|nvr|kamera|fluke|otdr|conduit|tray|lantai|gedung|kantor|survei|survey|boq|teknotama|sla|it|lan|vlan|data\s*center|telepon|pabx|erp)\b/i', $lower);
+    // 4. Disambiguasi Perusahaan Lain yang Bernama Mirip "Teknotama" (Limbah B3 / Lingkungan / Alat Berat / NexusTech)
+    if (preg_match('/(teknotama\s+lingkungan|limbah\s+b3|pengolahan\s+limbah|incinerator|sampah\s+medis|ecostar|nexustech)/i', $lower)) {
+        return array(
+            'category' => 'Entity-Disambiguation-Shield',
+            'reply' => "Perlu kami luruskan bahwa website ini adalah milik **PT Teknotama Prakarsa Mulia (`teknotama.com`)** yang berkantor di **Infiniti Office, Belleza BSA Lt. 1 Unit 106, Jakarta Selatan**.\n\nKami bergerak **khusus di bidang Infrastruktur IT & Jaringan Enterprise** (Instalasi Kabel LAN Cat6/Cat6A, Splicing Fiber Optic, Server Data Center, Firewall Fortinet/Cisco/MikroTik, Managed IT NOC 24/7, dan IP CCTV), **bukan** perusahaan pengolahan limbah/lingkungan yang memiliki kemiripan nama.\n\nApakah ada kebutuhan instalasi jaringan, server, atau CCTV kantor yang dapat kami bantu?",
+        );
+    }
+
+    // 5. Out-of-Domain / Topik Tidak Relevan (Memasak, Politik, Asmara, Hiburan, PR Sekolah)
+    $hasItContext = preg_match('/\b(jaringan|network|kabel|cat6|cat6a|fiber|fo|switch|router|mikrotik|cisco|fortinet|firewall|vpn|wifi|access\s*point|ap|server|cloud|vmware|proxmox|nas|rack|ups|cctv|nvr|kamera|fluke|otdr|conduit|tray|lantai|gedung|kantor|survei|survey|boq|teknotama|teknotma|technotama|sla|it|lan|vlan|data\s*center|telepon|pabx|erp)\b/i', $lower);
     if (!$hasItContext && preg_match('/(resep\s+masak|cara\s+memasak|nasi\s+goreng|rendang|pilpres|capres|partai\s+politik|ramalan\s+zodiak|skor\s+bola|liga\s+inggris|buatkan\s+puisi|cerpen|dongeng|tips\s+pacaran|putus\s+cinta|chord\s+gitar|lirik\s+lagu)/i', $lower)) {
         return array(
             'category' => 'Domain-Scope-Guardrail',
@@ -451,13 +498,16 @@ function teknotama_evaluate_input_guardrails($userMessage)
 
 /**
  * Layer 3 Guardrail: Post-LLM Output Sanitizer
- * Mencegah halusinasi nominal harga Rupiah, URL palsu, atau tag script berbahaya.
+ * Mencegah halusinasi nominal harga Rupiah, pencampuran entitas kompetitor, URL palsu, atau tag script berbahaya.
  */
 function teknotama_enforce_output_guardrails($reply)
 {
     $clean = preg_replace('/<script\b[^>]*>([\s\S]*?)<\/script>/i', '', (string) $reply);
     // Cegah kebocoran nominal harga Rupiah spesifik (sesuai aturan BOQ tanpa nominal)
     $clean = preg_replace('/\b(Rp\.?\s?\d[\d\.,]*(\s?(ribu|juta|miliar|jt|rb))?|IDR\s?\d[\d\.,]*)/i', '[Harga Resmi Setelah Site Survey]', (string) $clean);
+    // Cegah pencampuran nama perusahaan lain yang mirip / nama template lama
+    $clean = preg_replace('/\b(PT\s+)?Teknotama\s+Lingkungan(\s+Internusa)?\b/i', 'PT Teknotama Prakarsa Mulia', (string) $clean);
+    $clean = preg_replace('/\b(PT\s+)?NexusTech(\s+Systems(\s+Indonesia)?)?\b/i', 'PT Teknotama Prakarsa Mulia', (string) $clean);
     // Cegah URL sub-path yang tidak ada
     $clean = str_replace(array('https://teknotama.com/survey', 'http://teknotama.com/survey', 'www.teknotama.com/survey'), 'Formulir Survei (#kontak)', (string) $clean);
     return trim((string) $clean);
@@ -666,6 +716,21 @@ function teknotama_local_technical_engine($userMessage, $calcContext)
             . "- **Network Segmentation**: Pemisahan VLAN Management, Staff, Guest Wi-Fi, dan IoT/CCTV.";
     }
 
+    if (strpos($q, 'server') !== false || strpos($q, 'vmware') !== false || strpos($q, 'proxmox') !== false || strpos($q, 'nas') !== false || strpos($q, 'ups') !== false || strpos($q, 'rack') !== false) {
+        return "Untuk **Data Center, Virtualisasi Server & Backup Daya (UPS)**, standar implementasi PT Teknotama Prakarsa Mulia meliputi:\n\n"
+            . "- **Penataan Rack MDF/IDF Presisi**: Menggunakan Standing Close Rack (20U/32U/42U) lengkap dengan *Patch Panel Modular*, *Cable Manager*, *Blank Panel* sirkulasi udara, dan PDU terukur.\n"
+            . "- **Virtualisasi & NAS Storage**: Konsolidasi server ke **VMware ESXi / Proxmox VE** dan penyimpanan terpusat **Synology / Dell NAS (RAID)** dengan strategi *3-2-1 Backup*.\n"
+            . "- **Kalkulasi UPS Online Sinewave**: Kapasitas UPS (VA/kVA) dihitung dari total beban daya aktif dibagi *Power Factor 0.8* + *30% safety headroom* agar server tetap menyala stabil saat listrik PLN padam.";
+    }
+
+    if (strpos($q, 'kompetitor') !== false || strpos($q, 'bedanya') !== false || strpos($q, 'keunggulan') !== false || strpos($q, 'teknotma') !== false || strpos($q, 'technotama') !== false || strpos($q, 'tekno tama') !== false || strpos($q, 'siapa') !== false) {
+        return "**PT Teknotama Prakarsa Mulia (`teknotama.com`)** adalah perusahaan integrator infrastruktur IT enterprise yang berkantor di **Infiniti Office, Belleza BSA Lt. 1 Unit 106, Jakarta Selatan**.\n\n"
+            . "Keunggulan utama eksekusi lapangan kami:\n"
+            . "1. **Zero-Downtime Execution**: Seluruh perangkat di-*staging* di workshop kami lebih dulu, dan pekerjaan fisik dikerjakan di luar jam operasional (*night shift*/akhir pekan).\n"
+            . "2. **Standar Internasional & Sertifikasi Uji**: Pengkabelan mengikuti ANSI/TIA-568, berlabel thermal TIA-606-B, serta diuji **Fluke Cable Certifier & OTDR** lengkap dengan *As-Built Drawing*.\n"
+            . "3. **Jaminan Purna Jual Nyata**: Garansi kerapihan kabel 1 tahun, garansi hardware resmi distributor 1–3 tahun, pemantauan NOC 24/7, dan respons emergency **< 2 jam** (Jabodetabek).";
+    }
+
     if (!empty($calcContext) && !empty($calcContext['users'])) {
         $u = (int) $calcContext['users'];
         $f = isset($calcContext['floors']) ? (int) $calcContext['floors'] : 1;
@@ -861,4 +926,237 @@ function teknotama_build_booking_email_html($data)
         . $aiSection
         . $boqSection
         . "</div></div></body></html>";
+}
+
+function teknotama_is_direct_cs_command($message)
+{
+    $clean = strtolower(trim((string) $message));
+    if (preg_match('/^\/?(cs|wa|whatsapp|admin|live\s*cs|chat\s*cs|hubungi\s*cs|kontak\s*cs|cs\s*wa|wa\s*cs|admin\s*wa|nomor\s*wa|no\s*wa)[.!?]*$/i', $clean)) {
+        return true;
+    }
+    if (preg_match('/\b(sambungkan|hubungkan|alihkan|direct|lanjut|bicara|chat|hubungi)\s+(saya\s+)?(langsung\s+)?(ke\s+|dengan\s+)?(cs|customer\s*service|whatsapp|wa|admin\s*wa)\b/i', $clean)) {
+        return true;
+    }
+    return false;
+}
+
+/* ============================================================================
+ * CMS TESTIMONIALS (GOOGLE MAPS REVIEW STYLE — ?action=testimonials_*)
+ * ============================================================================ */
+
+function teknotama_get_testimonials_file_path()
+{
+    return __DIR__ . '/testimonials_data.json';
+}
+
+function teknotama_default_testimonials()
+{
+    // Default kosong (0 dummy) sesuai kebijakan kejujuran B2B.
+    // Section #testimoni otomatis tersembunyi jika kosong dan otomatis tampil saat Admin menginput testimoni asli lewat CMS.
+    return array();
+}
+
+function teknotama_load_testimonials_store()
+{
+    $file = teknotama_get_testimonials_file_path();
+    if (is_file($file) && is_readable($file)) {
+        $raw = @file_get_contents($file);
+        if (is_string($raw) && trim($raw) !== '') {
+            $decoded = json_decode($raw, true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
+        }
+    }
+    $defaults = teknotama_default_testimonials();
+    @file_put_contents($file, json_encode($defaults, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), LOCK_EX);
+    return $defaults;
+}
+
+function teknotama_save_testimonials_store($items)
+{
+    $file = teknotama_get_testimonials_file_path();
+    $json = json_encode(array_values($items), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    return @file_put_contents($file, $json, LOCK_EX) !== false;
+}
+
+function teknotama_compute_testimonials_stats($items)
+{
+    $total = count($items);
+    if ($total === 0) {
+        return array('total' => 0, 'average_rating' => 5.0, 'five_star_pct' => 100);
+    }
+    $sum = 0;
+    $fiveStars = 0;
+    foreach ($items as $it) {
+        $r = isset($it['rating']) ? (int) $it['rating'] : 5;
+        if ($r < 1) {
+            $r = 1;
+        }
+        if ($r > 5) {
+            $r = 5;
+        }
+        $sum += $r;
+        if ($r === 5) {
+            $fiveStars++;
+        }
+    }
+    return array(
+        'total' => $total,
+        'average_rating' => round($sum / $total, 1),
+        'five_star_pct' => (int) round(($fiveStars / $total) * 100),
+    );
+}
+
+function teknotama_sanitize_testimonial_text($val, $maxLen)
+{
+    $raw = (string) $val;
+    $raw = preg_replace('#<(script|style|iframe|object|embed)\b[^>]*>.*?</\1>#is', '', $raw);
+    $clean = trim(strip_tags($raw));
+    $clean = preg_replace('/\s+/', ' ', $clean);
+    if (strlen($clean) > $maxLen) {
+        $clean = substr($clean, 0, $maxLen);
+    }
+    return $clean;
+}
+
+function teknotama_handle_testimonials_list()
+{
+    $items = teknotama_load_testimonials_store();
+    teknotama_send_json(array(
+        'ok' => true,
+        'items' => $items,
+        'stats' => teknotama_compute_testimonials_stats($items),
+    ), 200);
+}
+
+function teknotama_handle_testimonials_save($config, $input)
+{
+    if (!teknotama_check_rate_limit('cms_testimonials', 25, 600)) {
+        teknotama_send_json(array(
+            'ok' => false,
+            'error' => 'Terlalu banyak perubahan dalam waktu singkat. Silakan tunggu beberapa saat.',
+        ), 429);
+    }
+
+    $id = isset($input['id']) ? teknotama_sanitize_testimonial_text($input['id'], 40) : '';
+    $authorName = isset($input['author_name']) ? teknotama_sanitize_testimonial_text($input['author_name'], 80) : '';
+    $authorRole = isset($input['author_role']) ? teknotama_sanitize_testimonial_text($input['author_role'], 80) : 'IT & Operations Representative';
+    $companyName = isset($input['company_name']) ? teknotama_sanitize_testimonial_text($input['company_name'], 100) : '';
+    $serviceCategory = isset($input['service_category']) ? teknotama_sanitize_testimonial_text($input['service_category'], 60) : 'Fiber Optic & LAN';
+    $rating = isset($input['rating']) ? (int) $input['rating'] : 5;
+    $comment = isset($input['comment']) ? teknotama_sanitize_testimonial_text($input['comment'], 650) : '';
+    $projectTag = isset($input['project_tag']) ? teknotama_sanitize_testimonial_text($input['project_tag'], 80) : $serviceCategory;
+    $ownerReply = isset($input['owner_reply']) ? teknotama_sanitize_testimonial_text($input['owner_reply'], 400) : '';
+    $adminKey = isset($input['admin_key']) ? trim((string) $input['admin_key']) : '';
+
+    if ($authorName === '' || $comment === '' || strlen($comment) < 10) {
+        teknotama_send_json(array(
+            'ok' => false,
+            'error' => 'Nama pengulas dan komentar ulasan (minimal 10 karakter) wajib diisi.',
+        ), 422);
+    }
+
+    if ($rating < 1) {
+        $rating = 1;
+    }
+    if ($rating > 5) {
+        $rating = 5;
+    }
+
+    $isAdmin = ($adminKey !== '' && hash_equals((string) $config['cms_admin_key'], $adminKey));
+
+    // Edit existing item requires valid Admin CMS key
+    $items = teknotama_load_testimonials_store();
+    $foundIndex = -1;
+    if ($id !== '') {
+        foreach ($items as $idx => $existing) {
+            if (isset($existing['id']) && $existing['id'] === $id) {
+                $foundIndex = $idx;
+                break;
+            }
+        }
+    }
+
+    if ($foundIndex >= 0 && !$isAdmin) {
+        teknotama_send_json(array(
+            'ok' => false,
+            'error' => 'Kode Akses Admin CMS tidak valid untuk mengedit testimoni yang sudah ada.',
+        ), 403);
+    }
+
+    $record = array(
+        'id' => ($foundIndex >= 0) ? $id : ('tkt-rev-' . substr(md5(uniqid((string) mt_rand(), true)), 0, 8)),
+        'author_name' => $authorName,
+        'author_role' => $authorRole !== '' ? $authorRole : 'B2B Enterprise Client',
+        'company_name' => $companyName !== '' ? $companyName : 'Mitra Korporasi Teknotama',
+        'service_category' => $serviceCategory,
+        'rating' => $rating,
+        'comment' => $comment,
+        'project_tag' => $projectTag !== '' ? $projectTag : $serviceCategory,
+        'date_label' => ($foundIndex >= 0 && !empty($items[$foundIndex]['date_label'])) ? $items[$foundIndex]['date_label'] : 'Baru saja',
+        'verified' => true,
+        'owner_reply' => ($isAdmin && $ownerReply !== '')
+            ? $ownerReply
+            : (($foundIndex >= 0 && isset($items[$foundIndex]['owner_reply'])) ? $items[$foundIndex]['owner_reply'] : 'Terima kasih atas kepercayaan dan ulasan Anda terhadap layanan infrastruktur IT PT Teknotama Prakarsa Mulia.'),
+    );
+
+    if ($foundIndex >= 0) {
+        $items[$foundIndex] = $record;
+    } else {
+        array_unshift($items, $record);
+        if (count($items) > 30) {
+            $items = array_slice($items, 0, 30);
+        }
+    }
+
+    teknotama_save_testimonials_store($items);
+
+    teknotama_send_json(array(
+        'ok' => true,
+        'mode' => ($foundIndex >= 0) ? 'updated' : 'created',
+        'item' => $record,
+        'items' => $items,
+        'stats' => teknotama_compute_testimonials_stats($items),
+    ), 200);
+}
+
+function teknotama_handle_testimonials_delete($config, $input)
+{
+    $id = isset($input['id']) ? teknotama_sanitize_testimonial_text($input['id'], 40) : '';
+    $adminKey = isset($input['admin_key']) ? trim((string) $input['admin_key']) : '';
+
+    if ($adminKey === '' || !hash_equals((string) $config['cms_admin_key'], $adminKey)) {
+        teknotama_send_json(array(
+            'ok' => false,
+            'error' => 'Kode Akses Admin CMS tidak valid untuk menghapus testimoni.',
+        ), 403);
+    }
+
+    if ($id === '') {
+        teknotama_send_json(array(
+            'ok' => false,
+            'error' => 'ID testimoni tidak valid.',
+        ), 400);
+    }
+
+    $items = teknotama_load_testimonials_store();
+    $filtered = array();
+    $deleted = false;
+    foreach ($items as $item) {
+        if (isset($item['id']) && $item['id'] === $id) {
+            $deleted = true;
+            continue;
+        }
+        $filtered[] = $item;
+    }
+
+    teknotama_save_testimonials_store($filtered);
+
+    teknotama_send_json(array(
+        'ok' => true,
+        'deleted' => $deleted,
+        'items' => $filtered,
+        'stats' => teknotama_compute_testimonials_stats($filtered),
+    ), 200);
 }
