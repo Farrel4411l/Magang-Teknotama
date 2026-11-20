@@ -2,9 +2,13 @@ User-agent: *
 Allow: /
 Allow: /games/
 
-# Cegah perayapan direktori sistem & staging lama (file legacy root ditangani via 301 & X-Robots-Tag di .htaccess)
+# Cegah perayapan direktori sistem, staging lama, serta file backend/rahasia (file legacy HTML ditangani via 301 & X-Robots-Tag di .htaccess)
 Disallow: /cgi-bin/
 Disallow: /redesign/
 Disallow: /teknotama.com/
+Disallow: /teknotama_api.php
+Disallow: /teknotama_secrets.php
+Disallow: /teknotama_secrets.example.php
+Disallow: /testimonials_data.json
 
 Sitemap: https://teknotama.com/sitemap.xml

@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Landing Page Utama Company Profile & Kalkulator IT -->
+  <!-- Landing Page Utama Company Profile -->
   <url>
     <loc>https://teknotama.com/</loc>
     <lastmod>2026-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+
+  <!-- Dedicated Interactive IT & BOQ Configurator Page -->
+  <url>
+    <loc>https://teknotama.com/kalkulator-boq-it.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
   </url>
 
   <!-- Topic Cluster: Dedicated High-Intent B2B Service Pages -->
@@ -49,7 +57,7 @@
   <!-- Portal TeknoGame -->
   <url>
     <loc>https://teknotama.com/games/</loc>
-    <lastmod>2026-11-17</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -112,6 +120,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://teknotama.com/games/play/circuit-flow.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://teknotama.com/games/play/cyber-bird.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://teknotama.com/games/play/kamus-kelana.html</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
@@ -156,6 +176,18 @@
   <url>
     <loc>https://teknotama.com/games/play/pasar-terapung.html</loc>
     <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://teknotama.com/games/play/tekno-memory.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://teknotama.com/games/play/werewolf.html</loc>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

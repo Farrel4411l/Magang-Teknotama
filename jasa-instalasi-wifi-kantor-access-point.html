@@ -12,7 +12,7 @@
     <meta name="keywords" content="jasa pasang wifi kantor jakarta, jasa instalasi access point unifi, jasa setting wifi aruba cisco ruijie, survey heatmap wifi gedung, wifi roaming tanpa putus, jasa wifi gudang pabrik, PT Teknotama Prakarsa Mulia">
     <meta name="author" content="PT Teknotama Prakarsa Mulia">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="theme-color" content="#090d16">
+    <meta name="theme-color" content="#ffffff">
 
     <!-- Local SEO Geo Meta Tags (Jakarta Selatan) -->
     <meta name="geo.region" content="ID-JK">
@@ -108,168 +108,111 @@
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3146007647541379" crossorigin="anonymous"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#fff1f2',
-                            100: '#ffe4e6',
-                            200: '#fecdd3',
-                            400: '#f87171',
-                            500: '#ef4444',
-                            600: '#dc2626',
-                            700: '#b91c1c',
-                            800: '#991b1b',
-                            900: '#7f1d1d',
-                            950: '#450a0a',
-                        },
-                        tech: {
-                            dark: '#090d16',
-                            card: '#131b2e',
-                            border: '#2a151b',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .glass-nav {
-            background: rgba(9, 13, 22, 0.94);
-            backdrop-filter: blur(16px);
-        }
-        .glass-card {
-            background: rgba(19, 27, 46, 0.72);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(220, 38, 38, 0.16);
-        }
-        .glass-card:hover {
-            border-color: rgba(239, 68, 68, 0.42);
-        }
-        .tech-grid-bg {
-            background-image: radial-gradient(rgba(220, 38, 38, 0.15) 1px, transparent 0);
-            background-size: 32px 32px;
-        }
-        #logo_fixed {
-            width: 240px;
-            max-width: 100%;
-            height: auto;
-            border-radius: 6px;
-        }
-        @media (max-width: 640px) {
-            #logo_fixed {
-                width: 190px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#090d16] text-slate-100 font-sans antialiased selection:bg-brand-600 selection:text-white">
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-[#d9141d] selection:text-white">
 
-    <header class="fixed top-0 left-0 w-full z-50 glass-nav border-b border-red-950/60">
+    <!-- NAVBAR PUTIH KORPORAT -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-nav border-b border-slate-200/80 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <a href="/" class="flex items-center gap-3">
-                <img id="logo_fixed" src="img/teknotama_logo.jpeg" alt="PT Teknotama Prakarsa Mulia - Jasa Wi-Fi Kantor Enterprise" width="240" height="68" fetchpriority="high" decoding="async">
+                <img id="logo_fixed" src="img/teknotama_logo.jpeg" alt="PT Teknotama Prakarsa Mulia - Jasa Wi-Fi Kantor Enterprise" width="175" height="50" fetchpriority="high" decoding="async">
             </a>
-            <nav aria-label="Navigasi Utama" class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-300">
-                <a href="/" class="hover:text-brand-400 transition-colors">Beranda</a>
-                <a href="/#layanan" class="text-brand-400 font-semibold">Layanan IT</a>
-                <a href="/#kalkulator" class="hover:text-brand-400 transition-colors">Kalkulator IT</a>
-                <a href="/#portofolio" class="hover:text-brand-400 transition-colors">Portofolio</a>
-                <a href="/games/" class="hover:text-brand-400 transition-colors">Game</a>
+            <nav aria-label="Navigasi Utama" class="hidden lg:flex items-center gap-7 text-xs xl:text-sm font-semibold text-slate-700">
+                <a href="/" class="hover:text-[#d9141d] transition-colors">Beranda</a>
+                <a href="/#layanan" class="text-slate-950 font-bold border-b-2 border-[#d9141d] pb-1">Layanan IT</a>
+                <a href="kalkulator-boq-it.html" class="hover:text-[#d9141d] transition-colors">Kalkulator BOQ</a>
+                <a href="/#portofolio" class="hover:text-[#d9141d] transition-colors">Portofolio</a>
+                <a href="/games/" class="hover:text-[#d9141d] transition-colors">Tekno Game</a>
             </nav>
             <div class="hidden lg:flex items-center gap-3">
-                <a href="/#kontak" class="bg-gradient-to-r from-brand-700 to-brand-500 hover:from-brand-600 hover:to-brand-400 text-white font-bold text-sm px-5 py-2.5 rounded-xl shadow-md shadow-brand-600/25 flex items-center gap-2 transition-all">
+                <a href="/#kontak" class="bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold text-xs xl:text-sm px-6 py-2.5 rounded-full shadow-md shadow-red-600/20 flex items-center gap-2 transition-all">
                     <i data-lucide="calendar-check" class="w-4 h-4"></i> Booking Survey Heatmap
                 </a>
             </div>
-            <button id="mobile-menu-btn" type="button" class="lg:hidden p-2 text-slate-300 hover:text-white" aria-label="Toggle Menu">
+            <button id="mobile-menu-btn" type="button" class="lg:hidden p-2 text-slate-700 hover:text-[#d9141d]" aria-label="Toggle Menu">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
-        <div id="mobile-menu" class="hidden lg:hidden border-b border-red-950/60 bg-[#0c121e] px-4 pt-3 pb-6 space-y-2">
-            <a href="/" class="block text-slate-300 font-medium py-2 hover:text-brand-400">Beranda</a>
-            <a href="/#kalkulator" class="block text-slate-300 font-medium py-2 hover:text-brand-400">Kalkulator IT</a>
-            <a href="jasa-instalasi-jaringan-fiber-optic.html" class="block text-slate-300 font-medium py-2 hover:text-brand-400">Jaringan &amp; Fiber Optic</a>
-            <a href="jasa-server-data-center-cloud.html" class="block text-slate-300 font-medium py-2 hover:text-brand-400">Server &amp; Data Center</a>
-            <a href="jasa-firewall-keamanan-jaringan-vpn.html" class="block text-slate-300 font-medium py-2 hover:text-brand-400">Firewall &amp; VPN</a>
-            <a href="jasa-pasang-cctv-smart-office.html" class="block text-slate-300 font-medium py-2 hover:text-brand-400">IP CCTV &amp; Smart Office</a>
-            <a href="jasa-managed-it-support-maintenance-jakarta.html" class="block text-slate-300 font-medium py-2 hover:text-brand-400">Managed IT &amp; Maintenance</a>
-            <a href="/games/" class="block text-slate-300 font-medium py-2 hover:text-brand-400">Game</a>
-            <a href="/#kontak" class="block w-full text-center bg-brand-600 text-white font-bold py-2.5 rounded-xl mt-3">Booking Survei Gratis</a>
+        <div id="mobile-menu" class="hidden lg:hidden border-b border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg">
+            <a href="/" class="block text-slate-800 font-medium py-2 hover:text-[#d9141d]">Beranda</a>
+            <a href="kalkulator-boq-it.html" class="block text-slate-800 font-medium py-2 hover:text-[#d9141d]">Kalkulator BOQ</a>
+            <a href="jasa-instalasi-jaringan-fiber-optic.html" class="block text-slate-800 font-medium py-2 hover:text-[#d9141d]">Jaringan &amp; Fiber Optic</a>
+            <a href="jasa-server-data-center-cloud.html" class="block text-slate-800 font-medium py-2 hover:text-[#d9141d]">Server &amp; Data Center</a>
+            <a href="jasa-firewall-keamanan-jaringan-vpn.html" class="block text-slate-800 font-medium py-2 hover:text-[#d9141d]">Firewall &amp; VPN</a>
+            <a href="jasa-pasang-cctv-smart-office.html" class="block text-slate-800 font-medium py-2 hover:text-[#d9141d]">IP CCTV &amp; Smart Office</a>
+            <a href="jasa-managed-it-support-maintenance-jakarta.html" class="block text-slate-800 font-medium py-2 hover:text-[#d9141d]">Managed IT &amp; Maintenance</a>
+            <a href="/games/" class="block text-slate-800 font-medium py-2 hover:text-[#d9141d]">Tekno Game</a>
+            <a href="/#kontak" class="block w-full text-center bg-[#d9141d] text-white font-bold py-2.5 rounded-full mt-3">Booking Survei Gratis</a>
         </div>
     </header>
 
-    <main class="pt-32 pb-20 tech-grid-bg">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
+    <main class="pt-32 pb-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
 
-            <nav aria-label="Breadcrumb" class="text-xs text-slate-400 flex items-center gap-2">
-                <a href="/" class="hover:text-brand-400">Beranda</a>
+            <nav aria-label="Breadcrumb" class="text-xs text-slate-500 flex items-center gap-2">
+                <a href="/" class="hover:text-[#d9141d]">Beranda</a>
                 <span>/</span>
-                <a href="/#layanan" class="hover:text-brand-400">Layanan IT</a>
+                <a href="/#layanan" class="hover:text-[#d9141d]">Layanan IT</a>
                 <span>/</span>
-                <span class="text-brand-400 font-semibold">Wi-Fi Kantor &amp; Access Point</span>
+                <span class="text-[#d9141d] font-bold">Wi-Fi Kantor &amp; Access Point</span>
             </nav>
 
-            <section class="glass-card rounded-3xl p-8 sm:p-12 border border-brand-600/40 space-y-6">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-950/80 border border-brand-600/40 text-brand-400 text-xs font-bold uppercase tracking-wider">
+            <section class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm space-y-6">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-50 border border-red-200 text-[#d9141d] text-xs font-bold uppercase tracking-wider">
                     Wi-Fi 6 / Wi-Fi 7 Enterprise • RF Heatmap Survey • 802.11r Seamless Roaming
                 </div>
-                <h1 class="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
-                    Jasa Pasang <span class="text-brand-400">Wi-Fi Kantor Enterprise</span> &amp; Access Point Jakarta
+                <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-950 leading-tight">
+                    Jasa Pasang <span class="text-[#d9141d]">Wi-Fi Kantor Enterprise</span> &amp; Access Point Jakarta
                 </h1>
-                <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                <p class="text-slate-600 text-base sm:text-lg leading-relaxed">
                     Hilangkan dead-spot di ruang meeting, gudang high-bay, hingga area kantor bertingkat dengan arsitektur WLAN terkelola secara terpusat. Tim Teknotama menangani RF Heatmap Survey, tarikan kabel PoE+ Cat6/Cat6A, serta konfigurasi Access Point Ubiquiti UniFi, HPE Aruba, Cisco, maupun Ruijie di Jakarta &amp; Jabodetabek.
                 </p>
                 <div class="flex flex-wrap gap-3 pt-2">
-                    <a href="/#kalkulator" class="inline-flex items-center gap-2 bg-gradient-to-r from-brand-700 to-brand-500 hover:from-brand-600 hover:to-brand-400 text-white font-bold text-sm px-6 py-3.5 rounded-xl shadow-lg shadow-brand-600/30 transition-all">
-                        <i data-lucide="calculator" class="w-4 h-4"></i> Hitung Jumlah Titik Access Point
+                    <a href="kalkulator-boq-it.html" class="inline-flex items-center gap-2 bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold text-sm px-6 py-3.5 rounded-full shadow-lg shadow-red-600/25 transition-all">
+                        <i data-lucide="calculator" class="w-4 h-4"></i> Hitung Jumlah Titik Access Point (BOQ)
                     </a>
-                    <a href="/#kontak" class="inline-flex items-center gap-2 bg-[#080d1a] hover:bg-slate-900 border border-brand-700/50 text-slate-100 font-semibold text-sm px-6 py-3.5 rounded-xl transition-all">
-                        <i data-lucide="wifi" class="w-4 h-4 text-brand-400"></i> Jadwalkan Survey RF Heatmap Gratis
+                    <a href="/#kontak" class="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-900 font-bold text-sm px-6 py-3.5 rounded-full transition-all">
+                        <i data-lucide="wifi" class="w-4 h-4 text-[#d9141d]"></i> Jadwalkan Survey RF Heatmap Gratis
                     </a>
                 </div>
             </section>
 
             <!-- Matriks Access Point Enterprise -->
-            <section class="glass-card rounded-3xl p-6 sm:p-8 space-y-5">
-                <h2 class="text-2xl font-extrabold text-white">Panduan Pemilihan Access Point Enterprise</h2>
-                <p class="text-sm text-slate-400">Pemilihan tipe Access Point &amp; controller disesuaikan kepadatan user per ruangan, tinggi plafon, dan integrasi kebijakan keamanan VLAN.</p>
-                <div class="overflow-x-auto">
+            <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
+                <h2 class="text-2xl font-extrabold text-slate-950">Panduan Pemilihan Access Point Enterprise</h2>
+                <p class="text-sm text-slate-600">Pemilihan tipe Access Point &amp; controller disesuaikan kepadatan user per ruangan, tinggi plafon, dan integrasi kebijakan keamanan VLAN.</p>
+                <div class="overflow-x-auto tkt-scroll">
                     <table class="w-full text-left border-collapse text-xs sm:text-sm">
                         <thead>
-                            <tr class="bg-[#080d1a] border-b border-red-950 text-brand-400 uppercase text-[11px]">
-                                <th class="p-3.5">Platform / Brand AP</th>
+                            <tr class="bg-slate-900 text-white uppercase text-[11px]">
+                                <th class="p-3.5 rounded-tl-xl">Platform / Brand AP</th>
                                 <th class="p-3.5">Skenario Ideal</th>
                                 <th class="p-3.5">Keunggulan Teknis</th>
-                                <th class="p-3.5">Kapasitas Optimal / AP</th>
+                                <th class="p-3.5 rounded-tr-xl">Kapasitas Optimal / AP</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-red-950/60 text-slate-300">
+                        <tbody class="divide-y divide-slate-200 text-slate-700">
                             <tr>
-                                <td class="p-3.5 font-semibold text-white">Ubiquiti UniFi U6 / U7 Series</td>
+                                <td class="p-3.5 font-bold text-slate-950">Ubiquiti UniFi U6 / U7 Series</td>
                                 <td class="p-3.5">Kantor kreatif, co-working space, &amp; ritel</td>
                                 <td class="p-3.5">Controller terpusat tanpa biaya lisensi tahunan, Roaming mulus</td>
                                 <td class="p-3.5">50–120 client aktif stabil</td>
                             </tr>
                             <tr>
-                                <td class="p-3.5 font-semibold text-white">Ruijie Reyee / RG-AP Series</td>
+                                <td class="p-3.5 font-bold text-slate-950">Ruijie Reyee / RG-AP Series</td>
                                 <td class="p-3.5">Sekolah, klinik, gudang, &amp; kantor cabang</td>
                                 <td class="p-3.5">Cloud Management gratis, Mesh fleksibel, harga efisien</td>
                                 <td class="p-3.5">40–100 client aktif stabil</td>
                             </tr>
                             <tr>
-                                <td class="p-3.5 font-semibold text-white">HPE Aruba / Cisco Catalyst AP</td>
+                                <td class="p-3.5 font-bold text-slate-950">HPE Aruba / Cisco Catalyst AP</td>
                                 <td class="p-3.5">Gedung korporat CBD, pabrik, &amp; rumah sakit</td>
                                 <td class="p-3.5">High-density client, ClientMatch RF, sertifikasi enterprise SLA</td>
                                 <td class="p-3.5">100–250+ client high density</td>
@@ -280,42 +223,42 @@
             </section>
 
             <!-- FAQ Section -->
-            <section id="faq" class="space-y-5">
-                <h2 class="text-2xl font-extrabold text-white">Pertanyaan Sering Diajukan (FAQ) Wi-Fi Kantor</h2>
+            <section id="faq" class="space-y-4">
+                <h2 class="text-2xl font-extrabold text-slate-950">Pertanyaan Sering Diajukan (FAQ) Wi-Fi Kantor</h2>
                 <div class="space-y-3" id="faq-accordion">
-                    <div class="glass-card rounded-2xl overflow-hidden border border-red-950">
-                        <button type="button" aria-expanded="true" class="faq-btn w-full p-5 text-left flex justify-between items-center text-white font-bold text-sm sm:text-base focus:outline-none">
+                    <div class="rounded-2xl bg-white border border-red-300 shadow-sm overflow-hidden">
+                        <button type="button" aria-expanded="true" class="faq-btn w-full p-5 text-left flex justify-between items-center text-slate-950 font-bold text-sm sm:text-base focus:outline-none">
                             <span>Mengapa Wi-Fi kantor sering lambat dan terputus meskipun bandwidth ISP sudah besar?</span>
-                            <i data-lucide="chevron-down" class="w-5 h-5 text-brand-400 rotate-180 transition-transform duration-300 flex-shrink-0"></i>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-[#d9141d] rotate-180 transition-transform duration-300 flex-shrink-0"></i>
                         </button>
-                        <div class="faq-content px-5 pb-5 text-slate-400 text-xs sm:text-sm leading-relaxed border-t border-red-950/80 pt-3">
+                        <div class="faq-content px-5 pb-5 text-slate-600 text-xs sm:text-sm leading-relaxed border-t border-slate-100 pt-3">
                             Penyebab tersering adalah pemakaian router Wi-Fi rumahan yang tidak sanggup menampung ratusan koneksi bersamaan, penumpukan channel frekuensi 2.4 GHz/5 GHz (<em>co-channel interference</em>), serta absennya Fast Roaming 802.11r/k/v sehingga perangkat tetap nyangkut di Access Point jauh.
                         </div>
                     </div>
-                    <div class="glass-card rounded-2xl overflow-hidden border border-red-950">
-                        <button type="button" aria-expanded="false" class="faq-btn w-full p-5 text-left flex justify-between items-center text-white font-bold text-sm sm:text-base focus:outline-none">
+                    <div class="rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+                        <button type="button" aria-expanded="false" class="faq-btn w-full p-5 text-left flex justify-between items-center text-slate-950 font-bold text-sm sm:text-base focus:outline-none">
                             <span>Bagaimana Teknotama menentukan jumlah dan posisi titik Access Point di kantor atau gudang?</span>
-                            <i data-lucide="chevron-down" class="w-5 h-5 text-brand-400 transition-transform duration-300 flex-shrink-0"></i>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-600 transition-transform duration-300 flex-shrink-0"></i>
                         </button>
-                        <div class="faq-content hidden px-5 pb-5 text-slate-400 text-xs sm:text-sm leading-relaxed border-t border-red-950/80 pt-3">
+                        <div class="faq-content hidden px-5 pb-5 text-slate-600 text-xs sm:text-sm leading-relaxed border-t border-slate-100 pt-3">
                             Tim Network Engineer kami melakukan RF Site Survey menggunakan denah lantai gedung untuk mengukur sekat dinding beton/kaca, kepadatan user per zona meeting/workspace, dan ketinggian plafon sehingga setiap titik Access Point memiliki cakupan sinyal optimal tanpa dead-spot.
                         </div>
                     </div>
-                    <div class="glass-card rounded-2xl overflow-hidden border border-red-950">
-                        <button type="button" aria-expanded="false" class="faq-btn w-full p-5 text-left flex justify-between items-center text-white font-bold text-sm sm:text-base focus:outline-none">
+                    <div class="rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+                        <button type="button" aria-expanded="false" class="faq-btn w-full p-5 text-left flex justify-between items-center text-slate-950 font-bold text-sm sm:text-base focus:outline-none">
                             <span>Apakah SSID Wi-Fi Tamu bisa dipisahkan agar tidak dapat mengakses server perusahaan?</span>
-                            <i data-lucide="chevron-down" class="w-5 h-5 text-brand-400 transition-transform duration-300 flex-shrink-0"></i>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-600 transition-transform duration-300 flex-shrink-0"></i>
                         </button>
-                        <div class="faq-content hidden px-5 pb-5 text-slate-400 text-xs sm:text-sm leading-relaxed border-t border-red-950/80 pt-3">
+                        <div class="faq-content hidden px-5 pb-5 text-slate-600 text-xs sm:text-sm leading-relaxed border-t border-slate-100 pt-3">
                             Bisa. Kami memisahkan SSID Corporate/Karyawan dan SSID Guest ke dalam VLAN berbeda lengkap dengan firewall client isolation serta pembatasan bandwidth per user tamu atau portal voucher/Captive Portal.
                         </div>
                     </div>
-                    <div class="glass-card rounded-2xl overflow-hidden border border-red-950">
-                        <button type="button" aria-expanded="false" class="faq-btn w-full p-5 text-left flex justify-between items-center text-white font-bold text-sm sm:text-base focus:outline-none">
+                    <div class="rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+                        <button type="button" aria-expanded="false" class="faq-btn w-full p-5 text-left flex justify-between items-center text-slate-950 font-bold text-sm sm:text-base focus:outline-none">
                             <span>Apakah pemasangan Access Point termasuk penarikan kabel LAN PoE dan konduit plafon?</span>
-                            <i data-lucide="chevron-down" class="w-5 h-5 text-brand-400 transition-transform duration-300 flex-shrink-0"></i>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-600 transition-transform duration-300 flex-shrink-0"></i>
                         </button>
-                        <div class="faq-content hidden px-5 pb-5 text-slate-400 text-xs sm:text-sm leading-relaxed border-t border-red-950/80 pt-3">
+                        <div class="faq-content hidden px-5 pb-5 text-slate-600 text-xs sm:text-sm leading-relaxed border-t border-slate-100 pt-3">
                             Ya. Paket instalasi kami bersifat turnkey mencakup penarikan kabel UTP Cat6/Cat6A dari Switch PoE+ di rack menuju plafon atau dinding dengan pelindung pipa conduit rapi dan sertifikasi uji koneksi.
                         </div>
                     </div>
@@ -323,67 +266,44 @@
             </section>
 
             <!-- Topic Cluster Links -->
-            <section class="glass-card rounded-3xl p-6 sm:p-8 space-y-4">
-                <h2 class="text-lg font-bold text-white">Layanan Infrastruktur Terkait Lainnya</h2>
+            <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+                <h2 class="text-lg font-extrabold text-slate-950">Layanan Infrastruktur Terkait Lainnya</h2>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 text-xs">
-                    <a href="jasa-instalasi-jaringan-fiber-optic.html" class="p-4 rounded-2xl bg-[#080d1a] border border-red-950 hover:border-brand-500 transition-all block">
-                        <span class="font-bold text-brand-400 block mb-1">Jaringan &amp; Fiber Optic &rarr;</span>
-                        <span class="text-slate-400">Penarikan UTP Cat6/Cat6A, Splicing FO, &amp; uji Fluke/OTDR.</span>
+                    <a href="jasa-instalasi-jaringan-fiber-optic.html" class="corp-card p-4 rounded-2xl block">
+                        <span class="font-bold text-[#d9141d] block mb-1">Jaringan &amp; Fiber Optic &rarr;</span>
+                        <span class="text-slate-600">UTP Cat6/Cat6A, Splicing FO, &amp; uji Fluke/OTDR.</span>
                     </a>
-                    <a href="jasa-server-data-center-cloud.html" class="p-4 rounded-2xl bg-[#080d1a] border border-red-950 hover:border-brand-500 transition-all block">
-                        <span class="font-bold text-brand-400 block mb-1">Server &amp; Data Center &rarr;</span>
-                        <span class="text-slate-400">Rack MDF/IDF, VMware ESXi, Proxmox, NAS &amp; UPS.</span>
+                    <a href="jasa-server-data-center-cloud.html" class="corp-card p-4 rounded-2xl block">
+                        <span class="font-bold text-[#d9141d] block mb-1">Server &amp; Data Center &rarr;</span>
+                        <span class="text-slate-600">Rack MDF/IDF, VMware ESXi, Proxmox, NAS &amp; UPS.</span>
                     </a>
-                    <a href="jasa-firewall-keamanan-jaringan-vpn.html" class="p-4 rounded-2xl bg-[#080d1a] border border-red-950 hover:border-brand-500 transition-all block">
-                        <span class="font-bold text-brand-400 block mb-1">Firewall &amp; VPN &rarr;</span>
-                        <span class="text-slate-400">Fortinet, MikroTik, Dual-WAN Failover &amp; IPsec.</span>
+                    <a href="jasa-firewall-keamanan-jaringan-vpn.html" class="corp-card p-4 rounded-2xl block">
+                        <span class="font-bold text-[#d9141d] block mb-1">Firewall &amp; VPN &rarr;</span>
+                        <span class="text-slate-600">Fortinet, MikroTik, Dual-WAN Failover &amp; IPsec.</span>
                     </a>
-                    <a href="jasa-pasang-cctv-smart-office.html" class="p-4 rounded-2xl bg-[#080d1a] border border-red-950 hover:border-brand-500 transition-all block">
-                        <span class="font-bold text-brand-400 block mb-1">IP CCTV &amp; Access &rarr;</span>
-                        <span class="text-slate-400">Kamera 4K PoE, NVR H.265+, dan akses pintu RFID.</span>
+                    <a href="jasa-pasang-cctv-smart-office.html" class="corp-card p-4 rounded-2xl block">
+                        <span class="font-bold text-[#d9141d] block mb-1">IP CCTV &amp; Access &rarr;</span>
+                        <span class="text-slate-600">Kamera 4K PoE, NVR H.265+, dan akses pintu RFID.</span>
                     </a>
-                    <a href="jasa-managed-it-support-maintenance-jakarta.html" class="p-4 rounded-2xl bg-[#080d1a] border border-red-950 hover:border-brand-500 transition-all block">
-                        <span class="font-bold text-brand-400 block mb-1">Managed IT &amp; NOC &rarr;</span>
-                        <span class="text-slate-400">Maintenance IT bulanan, rapih rack &amp; SLA &lt; 2 jam.</span>
+                    <a href="jasa-managed-it-support-maintenance-jakarta.html" class="corp-card p-4 rounded-2xl block">
+                        <span class="font-bold text-[#d9141d] block mb-1">Managed IT &amp; NOC &rarr;</span>
+                        <span class="text-slate-600">Maintenance IT bulanan, rapih rack &amp; SLA &lt; 2 jam.</span>
                     </a>
                 </div>
             </section>
         </div>
     </main>
 
-    <footer class="bg-[#060910] text-slate-400 py-8 border-t border-red-950/80 text-center text-xs px-4 space-y-2">
+    <footer class="bg-[#060709] text-slate-400 py-8 border-t border-slate-900 text-center text-xs px-4 space-y-2">
         <p>&copy; <span id="year"></span> <strong>PT Teknotama Prakarsa Mulia</strong> • Infiniti Office, Belleza BSA 1st Floor Unit 106, Grogol Utara, Jakarta Selatan 12210</p>
         <p class="flex flex-wrap justify-center gap-x-4 gap-y-1">
-            <a href="tel:+622158905002" class="hover:text-brand-400">+62-21 58905002</a>
-            <a href="https://wa.me/6285167694457" target="_blank" rel="noopener noreferrer" class="hover:text-brand-400">WA NOC: +62 851-6769-4457</a>
-            <a href="mailto:admin@teknotama.com" class="text-brand-400 hover:underline">admin@teknotama.com</a>
-            <a href="https://maps.google.com/?q=Infiniti+Office+Belleza+BSA+Jakarta+Selatan" target="_blank" rel="noopener noreferrer" class="hover:text-brand-400">Google Maps</a>
+            <a href="tel:+622158905002" class="hover:text-white">+62-21 58905002</a>
+            <a href="https://wa.me/6285167694457" target="_blank" rel="noopener noreferrer" class="hover:text-white">WA NOC: +62 851-6769-4457</a>
+            <a href="mailto:admin@teknotama.com" class="text-red-400 hover:underline">admin@teknotama.com</a>
+            <a href="https://maps.google.com/?q=Infiniti+Office+Belleza+BSA+Jakarta+Selatan" target="_blank" rel="noopener noreferrer" class="hover:text-white">Google Maps</a>
         </p>
     </footer>
 
-    <script>
-        lucide.createIcons();
-        document.getElementById('year').textContent = new Date().getFullYear();
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-            });
-        }
-        document.querySelectorAll('.faq-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const content = btn.nextElementSibling;
-                const icon = btn.querySelector('i');
-                const expanded = btn.getAttribute('aria-expanded') === 'true';
-                btn.setAttribute('aria-expanded', String(!expanded));
-                content.classList.toggle('hidden');
-                if (icon) icon.classList.toggle('rotate-180');
-            });
-        });
-    </script>
+    <script src="script.js" defer></script>
 </body>
 </html>
