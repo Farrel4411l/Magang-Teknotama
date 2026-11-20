@@ -443,7 +443,10 @@
             btn.addEventListener('click', function () {
                 const content = btn.nextElementSibling;
                 const icon = btn.querySelector('i, svg');
-                if (content) content.classList.toggle('hidden');
+                if (content) {
+                    const isHidden = content.classList.toggle('hidden');
+                    btn.setAttribute('aria-expanded', String(!isHidden));
+                }
                 if (icon) icon.classList.toggle('rotate-180');
             });
         });
@@ -1266,7 +1269,7 @@
             } catch (e) {
                 // ignore
             }
-            window.location.href = 'index.html#kontak';
+            window.location.href = '/#kontak';
         }
     }
 

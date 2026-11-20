@@ -2,16 +2,13 @@ User-agent: *
 Allow: /
 Allow: /games/
 
-# Cegah duplikasi konten & halaman legacy/placeholder agar tidak merusak skor SEO
+# Cegah perayapan direktori sistem, staging lama, serta file backend/rahasia (file legacy HTML ditangani via 301 & X-Robots-Tag di .htaccess)
 Disallow: /cgi-bin/
 Disallow: /redesign/
 Disallow: /teknotama.com/
-Disallow: /index_old.html
-Disallow: /portfolio.html
-Disallow: /underconstructions.html
-Disallow: /underconstructions1.html
 Disallow: /teknotama_api.php
 Disallow: /teknotama_secrets.php
 Disallow: /teknotama_secrets.example.php
+Disallow: /testimonials_data.json
 
 Sitemap: https://teknotama.com/sitemap.xml

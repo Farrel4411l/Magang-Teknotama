@@ -93,7 +93,7 @@ function teknotama_load_config()
         'booking_email_to'   => 'admin@teknotama.com',
         'booking_email_from' => 'noreply@teknotama.com',
         'whatsapp_number'    => '6285167694457',
-        'cms_admin_key'      => getenv('TEKNOTAMA_CMS_KEY') ?: 'teknotama2026',
+        'cms_admin_key'      => getenv('TEKNOTAMA_CMS_KEY') ?: '',
     );
 
     // Cek di folder saat ini (/public_html/teknotama_secrets.php) maupun 1 tingkat di atasnya (/teknotama_secrets.php)
@@ -147,12 +147,8 @@ function teknotama_send_json($data, $statusCode)
 
 function teknotama_get_client_ip()
 {
-    if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+    if (!empty($_SERVER['HTTP_CF_RAY']) && !empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
         return (string) $_SERVER['HTTP_CF_CONNECTING_IP'];
-    }
-    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        $parts = explode(',', (string) $_SERVER['HTTP_X_FORWARDED_FOR']);
-        return trim($parts[0]);
     }
     return isset($_SERVER['REMOTE_ADDR']) ? (string) $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
 }
@@ -604,7 +600,7 @@ function teknotama_call_openrouter($apiKey, $systemPrompt, $history, $userMessag
     $headers = array(
         'Content-Type: application/json',
         'Authorization: Bearer ' . $apiKey,
-        'HTTP-Referer: https://www.teknotama.com',
+        'HTTP-Referer: https://teknotama.com',
         'X-Title: Teknotama Technical AI Assistant',
     );
     $res = teknotama_http_post_json('https://openrouter.ai/api/v1/chat/completions', $headers, $payload, 22);
@@ -1064,9 +1060,22 @@ function teknotama_handle_testimonials_save($config, $input)
         $rating = 5;
     }
 
-    $isAdmin = ($adminKey !== '' && hash_equals((string) $config['cms_admin_key'], $adminKey));
+    $configuredAdminKey = isset($config['cms_admin_key']) ? trim((string) $config['cms_admin_key']) : '';
+    if ($configuredAdminKey === '') {
+        teknotama_send_json(array(
+            'ok' => false,
+            'error' => 'CMS Admin Key belum dikonfigurasi pada server (teknotama_secrets.php).',
+        ), 403);
+    }
 
-    // Edit existing item requires valid Admin CMS key
+    $isAdmin = ($adminKey !== '' && hash_equals($configuredAdminKey, $adminKey));
+    if (!$isAdmin) {
+        teknotama_send_json(array(
+            'ok' => false,
+            'error' => 'Kode Akses Admin CMS tidak valid untuk menambah atau mengubah testimoni.',
+        ), 403);
+    }
+
     $items = teknotama_load_testimonials_store();
     $foundIndex = -1;
     if ($id !== '') {
@@ -1076,13 +1085,6 @@ function teknotama_handle_testimonials_save($config, $input)
                 break;
             }
         }
-    }
-
-    if ($foundIndex >= 0 && !$isAdmin) {
-        teknotama_send_json(array(
-            'ok' => false,
-            'error' => 'Kode Akses Admin CMS tidak valid untuk mengedit testimoni yang sudah ada.',
-        ), 403);
     }
 
     $record = array(
@@ -1125,8 +1127,9 @@ function teknotama_handle_testimonials_delete($config, $input)
 {
     $id = isset($input['id']) ? teknotama_sanitize_testimonial_text($input['id'], 40) : '';
     $adminKey = isset($input['admin_key']) ? trim((string) $input['admin_key']) : '';
+    $configuredAdminKey = isset($config['cms_admin_key']) ? trim((string) $config['cms_admin_key']) : '';
 
-    if ($adminKey === '' || !hash_equals((string) $config['cms_admin_key'], $adminKey)) {
+    if ($configuredAdminKey === '' || $adminKey === '' || !hash_equals($configuredAdminKey, $adminKey)) {
         teknotama_send_json(array(
             'ok' => false,
             'error' => 'Kode Akses Admin CMS tidak valid untuk menghapus testimoni.',

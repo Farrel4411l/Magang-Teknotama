@@ -2,14 +2,32 @@
 # PT Teknotama Prakarsa Mulia - Production SEO, Speed & Security Rules
 # ==============================================================================
 
-# 1. Pastikan koneksi HTTPS aman (tanpa memaksa ubah www / non-www agar sesuai sistem lama)
+# 1. Proteksi SSL AutoSSL, Konsolidasi Kanonik www -> non-www, & Redirect Halaman Legacy
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteCond %{REQUEST_URI} !^/\.well-known/ [NC]
+  RewriteBase /
+
+  # Jangan ganggu validasi SSL AutoSSL / Let's Encrypt
+  RewriteCond %{REQUEST_URI} ^/\.well-known/ [NC]
+  RewriteRule ^ - [L]
+
+  # Paksa seluruh traffic www.teknotama.com (HTTP maupun HTTPS) ke https://teknotama.com dalam 1 hop 301
+  RewriteCond %{HTTP_HOST} ^www\.teknotama\.com$ [NC]
+  RewriteRule ^ https://teknotama.com%{REQUEST_URI} [L,R=301,NE]
+
+  # Paksa HTTP -> HTTPS pada domain kanonik non-www
   RewriteCond %{HTTPS} !=on
   RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
-  RewriteCond %{HTTP_HOST} ^(?:www\.)?teknotama\.com$ [NC]
-  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+  RewriteCond %{HTTP_HOST} ^teknotama\.com$ [NC]
+  RewriteRule ^ https://teknotama.com%{REQUEST_URI} [L,R=301,NE]
+
+  # Redirect halaman legacy 2021 ("TIS" / placeholder) agar otoritas lama menyatu ke URL kanonik
+  RewriteRule ^(?:index_old|underconstructions1?|index_bak)\.html$ https://teknotama.com/ [L,R=301]
+  RewriteRule ^portfolio\.html$ https://teknotama.com/#portofolio [L,R=301,NE]
+
+  # Kanonikalisasi /index.html di root menjadi / (tanpa memengaruhi /games/index.html)
+  RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+  RewriteRule ^index\.html$ https://teknotama.com/ [L,R=301]
 </IfModule>
 
 # 2. Proteksi File Konfigurasi Sensitif
@@ -28,12 +46,12 @@
   AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css text/javascript application/javascript application/x-javascript application/json application/xml application/rss+xml image/svg+xml
 </IfModule>
 
-# 4. Browser Caching untuk Aset Statis (HTML tetap selalu fresh)
+# 4. Browser Caching untuk Aset Statis (HTML & XML Sitemap selalu fresh bagi crawler)
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType text/html "access plus 0 seconds"
-  ExpiresByType application/xml "access plus 1 hour"
-  ExpiresByType text/xml "access plus 1 hour"
+  ExpiresByType application/xml "access plus 0 seconds"
+  ExpiresByType text/xml "access plus 0 seconds"
   ExpiresByType text/css "access plus 7 days"
   ExpiresByType application/javascript "access plus 7 days"
   ExpiresByType text/javascript "access plus 7 days"
@@ -53,6 +71,12 @@
   Header set Referrer-Policy "strict-origin-when-cross-origin"
   <FilesMatch "\.(html|htm)$">
     Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "^(index_old|portfolio|underconstructions1?|index_bak)\.html$">
+    Header set X-Robots-Tag "noindex, nofollow"
+  </FilesMatch>
+  <FilesMatch "\.(css|js|xml|svg|txt)$">
+    Header append Vary Accept-Encoding
   </FilesMatch>
 </IfModule>
 
