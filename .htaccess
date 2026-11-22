@@ -75,6 +75,9 @@
   <FilesMatch "^(index_old|portfolio|underconstructions1?|index_bak)\.html$">
     Header set X-Robots-Tag "noindex, nofollow"
   </FilesMatch>
+  <FilesMatch "^admin-testimoni\.html$">
+    Header set X-Robots-Tag "noindex, nofollow, noarchive"
+  </FilesMatch>
   <FilesMatch "\.(css|js|xml|svg|txt)$">
     Header append Vary Accept-Encoding
   </FilesMatch>

@@ -1751,7 +1751,7 @@
         });
 
         if (filtered.length === 0) {
-            grid.innerHTML = '<div class="col-span-full bg-white rounded-2xl p-8 text-center border border-slate-200 text-xs text-slate-500">Belum ada ulasan pada kategori ini. Klik <strong>Tulis / CMS Ulasan</strong> untuk menambahkan.</div>';
+            grid.innerHTML = '<div class="col-span-full bg-white rounded-2xl p-8 text-center border border-slate-200 text-xs text-slate-500">Belum ada ulasan klien untuk kategori layanan ini.</div>';
             return;
         }
 
@@ -1795,11 +1795,26 @@
     function updateTestimonialsStatsUi(stats) {
         const avgEl = document.getElementById('testimonial-avg-score');
         const countEl = document.getElementById('testimonial-total-count');
+        const total = (stats && typeof stats.total !== 'undefined') ? Number(stats.total) : 0;
         if (avgEl && stats && typeof stats.average_rating !== 'undefined') {
             avgEl.textContent = Number(stats.average_rating).toFixed(1);
         }
         if (countEl && stats && typeof stats.total !== 'undefined') {
-            countEl.textContent = String(stats.total);
+            countEl.textContent = String(total);
+        }
+
+        const pill = document.getElementById('cms-status-pill');
+        const desc = document.getElementById('cms-status-desc');
+        if (pill && desc) {
+            if (total > 0) {
+                pill.className = 'text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200';
+                pill.textContent = 'Aktif & Tampil (' + total + ' Ulasan)';
+                desc.innerHTML = 'Section <code>#testimoni</code> saat ini <strong>aktif tampil</strong> di bawah Portofolio pada halaman utama (<code>index.html</code>).';
+            } else {
+                pill.className = 'text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200';
+                pill.textContent = 'Tersembunyi (0 Ulasan)';
+                desc.innerHTML = 'Karena belum ada testimoni asli, section <code>#testimoni</code> otomatis disembunyikan dari pengunjung. Begitu Anda menyimpan minimal 1 testimoni terverifikasi, section akan otomatis muncul di bawah Portofolio.';
+            }
         }
     }
 
@@ -1941,9 +1956,10 @@
 
     async function initTestimonialsCms() {
         const grid = document.getElementById('testimonials-grid');
-        if (!grid) return;
+        const form = document.getElementById('cms-testimonial-form');
+        if (!grid && !form) return;
 
-        // Filter buttons
+        // Filter buttons (hanya di halaman publik bila ada ulasan)
         const filterBtns = document.querySelectorAll('.testimonial-filter-btn');
         filterBtns.forEach(function (btn) {
             btn.addEventListener('click', function () {
@@ -1956,44 +1972,7 @@
             });
         });
 
-        // Modal open/close (bisa dibuka lewat tombol di section #testimoni, tombol CMS di Footer, atau URL hash #cms-testimoni)
-        const modal = document.getElementById('cms-testimonial-modal');
-        const closeBtn = document.getElementById('close-cms-testimonial-btn');
         const resetFormBtn = document.getElementById('cms-reset-form-btn');
-
-        function openCmsModal() {
-            if (!modal) return;
-            modal.classList.remove('hidden');
-            renderCmsManageList();
-            refreshIcons();
-        }
-
-        document.querySelectorAll('.open-cms-testimonial-trigger, #open-cms-testimonial-btn, #footer-open-cms-btn').forEach(function (trigger) {
-            trigger.addEventListener('click', function (e) {
-                e.preventDefault();
-                openCmsModal();
-            });
-        });
-
-        if (window.location.hash === '#cms-testimoni') {
-            openCmsModal();
-        }
-        window.addEventListener('hashchange', function () {
-            if (window.location.hash === '#cms-testimoni') {
-                openCmsModal();
-            }
-        });
-
-        if (closeBtn && modal) {
-            closeBtn.addEventListener('click', function () {
-                modal.classList.add('hidden');
-            });
-        }
-        if (modal) {
-            modal.addEventListener('click', function (e) {
-                if (e.target === modal) modal.classList.add('hidden');
-            });
-        }
         if (resetFormBtn) {
             resetFormBtn.addEventListener('click', function () {
                 resetCmsTestimonialForm();
@@ -2007,8 +1986,7 @@
             });
         });
 
-        // Submit CMS Form
-        const form = document.getElementById('cms-testimonial-form');
+        // Submit CMS Form (di halaman admin-testimoni.html)
         if (form) {
             form.addEventListener('submit', async function (e) {
                 e.preventDefault();
@@ -2042,8 +2020,8 @@
                         if (alertBox) {
                             alertBox.className = 'mb-3 p-3 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-900 border border-emerald-300';
                             alertBox.textContent = data.mode === 'updated'
-                                ? 'Testimoni berhasil diperbarui dan langsung tampil di halaman.'
-                                : 'Testimoni baru berhasil disimpan dan langsung tampil di halaman!';
+                                ? 'Testimoni berhasil diperbarui dan langsung tampil di homepage.'
+                                : 'Testimoni baru berhasil disimpan dan langsung tampil di homepage!';
                             alertBox.classList.remove('hidden');
                         }
                     } else {
@@ -2070,7 +2048,7 @@
                 updateTestimonialsStatsUi(data.stats);
             }
         } catch (err) {
-            // Keep static HTML fallback cards if offline
+            // Keep clean hidden state if offline
         }
     }
 
@@ -2079,6 +2057,9 @@
      * ======================================================================== */
 
     function ensureFloatingWidgetDom() {
+        if (document.body && document.body.getAttribute('data-no-widget') === '1') {
+            return;
+        }
         if (!document.getElementById('ai-widget-container')) {
             const waHref = buildWhatsAppCsUrl('');
             const hasCalculatorOnPage = Boolean(document.getElementById('boq-table'));

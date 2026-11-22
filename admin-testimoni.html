@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Console — CMS Testimoni Klien | PT Teknotama Prakarsa Mulia</title>
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="googlebot" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-no-widget="1" class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Top Admin Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3 min-w-0">
+                <a href="index.html" class="flex-shrink-0">
+                    <img src="img/teknotama_logo.jpeg" alt="PT Teknotama Prakarsa Mulia" class="h-9 w-auto rounded">
+                </a>
+                <div class="hidden sm:block h-6 w-px bg-slate-200"></div>
+                <div class="min-w-0">
+                    <span class="block text-xs font-extrabold text-slate-950 truncate">Internal CMS Testimoni Klien</span>
+                    <span class="block text-[11px] text-slate-500 truncate">No-Index Private Console (Google Review Style)</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2.5 flex-shrink-0">
+                <span class="hidden md:inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">
+                    <i data-lucide="shield-lock" class="w-3.5 h-3.5"></i>
+                    Private Admin Page
+                </span>
+                <a href="index.html" class="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-[#d9141d] text-white font-bold text-xs px-4 py-2 rounded-full transition-colors">
+                    <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                    <span>Kembali ke Website</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main CMS Workspace -->
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+
+        <!-- Live Visibility Status Banner -->
+        <div id="cms-visibility-banner" class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-start gap-3">
+                <div id="cms-status-icon-box" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="eye-off" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-sm sm:text-base font-extrabold text-slate-950">Status Section Testimoni di Homepage</h1>
+                        <span id="cms-status-pill" class="text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">Tersembunyi (0 Ulasan)</span>
+                    </div>
+                    <p id="cms-status-desc" class="text-xs text-slate-600 mt-1">
+                        Karena belum ada testimoni asli, section <code>#testimoni</code> otomatis disembunyikan dari pengunjung. Begitu Anda menyimpan minimal 1 testimoni terverifikasi, section akan otomatis muncul di bawah Portofolio.
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4 bg-slate-50 px-4 py-2 rounded-xl border border-slate-200">
+                <div class="text-center">
+                    <span id="testimonial-avg-score" class="block text-base font-extrabold text-slate-950">5.0</span>
+                    <span class="block text-[10px] text-slate-500">Rata-rata</span>
+                </div>
+                <div class="h-7 w-px bg-slate-200"></div>
+                <div class="text-center">
+                    <span id="testimonial-total-count" class="block text-base font-extrabold text-[#d9141d]">0</span>
+                    <span class="block text-[10px] text-slate-500">Ulasan Aktif</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2-Column CMS Editor & Active List -->
+        <div class="grid lg:grid-cols-12 gap-6 items-start">
+            <!-- Form Tambah / Edit -->
+            <section class="lg:col-span-6 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 id="cms-form-heading" class="text-base font-extrabold text-slate-950">Tulis / Tambah Testimoni Baru</h2>
+                    <button id="cms-reset-form-btn" type="button" class="hidden text-xs font-bold text-[#d9141d] hover:underline">Batal Edit</button>
+                </div>
+
+                <div id="cms-testimonial-alert" class="hidden mb-4 p-3 rounded-xl text-xs font-semibold"></div>
+
+                <form id="cms-testimonial-form" class="space-y-4">
+                    <input type="hidden" id="cms-rev-id" value="">
+
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-slate-700 mb-1.5">Rating Bintang (Google Review Format)</label>
+                        <div id="cms-star-picker" class="flex items-center gap-1.5">
+                            <button type="button" data-star="1" class="cms-star-btn text-2xl text-amber-400 hover:scale-110 transition-transform" aria-label="1 Bintang">&#9733;</button>
+                            <button type="button" data-star="2" class="cms-star-btn text-2xl text-amber-400 hover:scale-110 transition-transform" aria-label="2 Bintang">&#9733;</button>
+                            <button type="button" data-star="3" class="cms-star-btn text-2xl text-amber-400 hover:scale-110 transition-transform" aria-label="3 Bintang">&#9733;</button>
+                            <button type="button" data-star="4" class="cms-star-btn text-2xl text-amber-400 hover:scale-110 transition-transform" aria-label="4 Bintang">&#9733;</button>
+                            <button type="button" data-star="5" class="cms-star-btn text-2xl text-amber-400 hover:scale-110 transition-transform" aria-label="5 Bintang">&#9733;</button>
+                            <span id="cms-star-label" class="ml-2 text-xs font-bold text-slate-700">5.0 / 5 (Sangat Puas)</span>
+                        </div>
+                        <input type="hidden" id="cms-rev-rating" value="5">
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label for="cms-rev-author" class="block text-[11px] font-bold uppercase text-slate-700 mb-1">Nama Pengulas / Klien *</label>
+                            <input id="cms-rev-author" type="text" required placeholder="Bpk. Andi Setiawan" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white">
+                        </div>
+                        <div>
+                            <label for="cms-rev-role" class="block text-[11px] font-bold uppercase text-slate-700 mb-1">Jabatan / Divisi</label>
+                            <input id="cms-rev-role" type="text" placeholder="IT Manager / Head of GA" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white">
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label for="cms-rev-company" class="block text-[11px] font-bold uppercase text-slate-700 mb-1">Perusahaan / Industri</label>
+                            <input id="cms-rev-company" type="text" placeholder="PT Mitra Industri Cikarang" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white">
+                        </div>
+                        <div>
+                            <label for="cms-rev-category" class="block text-[11px] font-bold uppercase text-slate-700 mb-1">Kategori Layanan</label>
+                            <select id="cms-rev-category" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white">
+                                <option value="Fiber Optic & LAN">Fiber Optic &amp; LAN</option>
+                                <option value="Data Center & Cloud">Data Center &amp; Cloud</option>
+                                <option value="Firewall & Security">Firewall &amp; Security</option>
+                                <option value="CCTV & Smart Office">CCTV &amp; Smart Office</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="cms-rev-comment" class="block text-[11px] font-bold uppercase text-slate-700 mb-1">Isi Komentar / Testimoni Asli *</label>
+                        <textarea id="cms-rev-comment" rows="4" required placeholder="Salin ulasan asli klien dari Google Maps atau berita acara serah terima proyek..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white"></textarea>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-100 space-y-3">
+                        <div>
+                            <label for="cms-rev-reply" class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Respon Resmi Pemilik (Opsional)</label>
+                            <input id="cms-rev-reply" type="text" placeholder="Terima kasih atas kepercayaan Anda kepada tim Engineer PT Teknotama..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white">
+                        </div>
+                        <div>
+                            <label for="cms-rev-admin-key" class="block text-[11px] font-bold uppercase text-slate-700 mb-1">Kode Akses Admin CMS *</label>
+                            <input id="cms-rev-admin-key" type="password" required placeholder="Masukkan Kode Akses Admin CMS (dari teknotama_secrets.php)" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white">
+                        </div>
+                    </div>
+
+                    <button id="cms-rev-submit-btn" type="submit" class="w-full bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold py-3 px-4 rounded-full text-xs shadow-md shadow-red-600/20 transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="save" class="w-4 h-4"></i>
+                        <span id="cms-rev-submit-label">Simpan &amp; Publikasikan Testimoni</span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Daftar Testimoni Tersimpan -->
+            <section class="lg:col-span-6 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="text-base font-extrabold text-slate-950">Daftar Testimoni Aktif</h2>
+                        <p class="text-[11px] text-slate-500">Isi Kode Akses Admin di formulir sebelah sebelum klik Edit atau Hapus.</p>
+                    </div>
+                </div>
+                <div id="cms-testimonial-manage-list" class="max-h-[520px] overflow-y-auto tkt-scroll space-y-3 pr-1"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="tkt-toast" class="hidden opacity-0 fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-slate-900 border border-red-500/60 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-2xl transition-opacity duration-200 no-print"></div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
