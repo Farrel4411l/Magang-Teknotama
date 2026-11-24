@@ -1725,8 +1725,9 @@
     }
 
     function updateTestimonialSectionVisibility() {
-        const hasReviews = Array.isArray(testimonialsList) && testimonialsList.length > 0;
-        const sectionEl = document.getElementById('testimoni');
+        const hasReviews = (Array.isArray(testimonialsList) && testimonialsList.length > 0)
+            || Boolean(document.querySelector('#testimonials-grid .corp-card'));
+        const sectionEl = document.getElementById('testimoni2') || document.getElementById('testimoni');
         if (sectionEl) {
             sectionEl.classList.toggle('hidden', !hasReviews);
         }
@@ -1741,7 +1742,6 @@
         if (!grid) return;
 
         if (!Array.isArray(testimonialsList) || testimonialsList.length === 0) {
-            grid.innerHTML = '';
             return;
         }
 
@@ -2037,18 +2037,25 @@
             });
         }
 
-        // Fetch initial testimonials from server CMS API
+        // Fetch initial testimonials from server CMS API (dengan fallback ke testimonials_data.json)
         try {
-            const resp = await fetch('teknotama_api.php?action=testimonials_list');
+            let resp = await fetch('teknotama_api.php?action=testimonials_list');
+            if (!resp.ok) {
+                resp = await fetch('testimonials_data.json');
+            }
             const data = await resp.json();
-            if (resp.ok && data && data.ok && Array.isArray(data.items)) {
-                testimonialsList = data.items;
+            const items = Array.isArray(data) ? data : (data && data.items);
+            if (Array.isArray(items) && items.length > 0) {
+                testimonialsList = items;
                 renderTestimonialsGrid();
                 renderCmsManageList();
-                updateTestimonialsStatsUi(data.stats);
+                const total = items.length;
+                const sum = items.reduce(function (acc, it) { return acc + (Number(it.rating) || 5); }, 0);
+                const stats = (data && data.stats) ? data.stats : { total: total, average_rating: (sum / (total || 1)).toFixed(1) };
+                updateTestimonialsStatsUi(stats);
             }
         } catch (err) {
-            // Keep clean hidden state if offline
+            // Keep clean state or static pre-rendered cards if offline
         }
     }
 

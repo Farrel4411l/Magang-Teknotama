@@ -78,7 +78,7 @@
 .cta-red-skyline {
     background:
         linear-gradient(135deg, rgba(165, 14, 22, 0.93) 0%, rgba(217, 20, 29, 0.91) 50%, rgba(136, 12, 19, 0.95) 100%),
-        url('https://images.unsplash.com/photo-1555899434-94d1368aa7af?auto=format&fit=crop&w=1600&q=75') center/cover no-repeat;
+        url('assets/jakarta.jpg') center/cover no-repeat;
 }
 
 .tech-grid-bg {
@@ -250,9 +250,256 @@
     }
 }
 
+.testimonials-section {
+  background-color: #ffffff;
+  color: #111827;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 36px 24px 32px;
+}
+
+.testimonials-container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.testimonials-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.testimonials-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #d9141d;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.testimonials-line {
+  display: inline-block;
+  width: 36px;
+  height: 2px;
+  background-color: #d9141d;
+  border-radius: 999px;
+}
+
+.testimonials-title {
+  margin: 0;
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.testimonial-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 28px 24px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.05);
+  transition: all 0.25s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  border-color: #fca5a5;
+  box-shadow: 0 12px 28px -6px rgba(217, 20, 29, 0.12);
+}
+
+.testimonial-stars {
+  color: #d9141d;
+}
+
+.testimonial-text {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 450;
+  line-height: 1.6;
+  color: #334155;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .testimonials-section {
+    padding: 24px 18px;
+  }
+
+  .testimonials-header {
+    margin-bottom: 24px;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .testimonial-card {
+    min-height: auto;
+    padding: 22px 18px;
+  }
+}
+
 /* Print Stylesheet Khusus Dokumen Spesifikasi BOQ */
 .print-only-header {
     display: none;
+}
+
+.infra-banner {
+  position: relative;
+  background-color: #050608;
+  color: #ffffff;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Image container on the right side */
+.infra-banner__media {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 58%;
+  pointer-events: none;
+}
+
+.infra-banner__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+  display: block;
+}
+
+/* Smooth blend from solid black on the left into the image on the right */
+.infra-banner__fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #050608 0%,
+    rgba(5, 6, 8, 0.85) 20%,
+    rgba(5, 6, 8, 0.2) 50%,
+    transparent 100%
+  );
+}
+
+.infra-banner__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 32px;
+}
+
+.infra-banner__content {
+  max-width: 540px;
+}
+
+.infra-banner__accent {
+  display: block;
+  width: 36px;
+  height: 3px;
+  background-color: #d9141d;
+  border-radius: 9999px;
+  margin-bottom: 12px;
+}
+
+.infra-banner__title {
+  margin: 0 0 10px;
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 800;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.infra-banner__desc {
+  margin: 0 0 18px;
+  font-size: clamp(0.825rem, 1vw, 0.925rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: #cbd5e1;
+  max-width: 480px;
+}
+
+.infra-banner__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #d9141d;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 9999px;
+  box-shadow: 0 6px 18px -4px rgba(217, 20, 29, 0.35);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.infra-banner__cta:hover {
+  background-color: #b50e16;
+  transform: translateY(-1px);
+}
+
+.infra-banner__cta:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.infra-banner__arrow {
+  font-size: 1rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.infra-banner__cta:hover .infra-banner__arrow {
+  transform: translateX(3px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .infra-banner__media {
+    width: 100%;
+    opacity: 0.4;
+  }
+
+  .infra-banner__fade {
+    background: linear-gradient(
+      90deg,
+      rgba(5, 6, 8, 0.95) 0%,
+      rgba(5, 6, 8, 0.75) 100%
+    );
+  }
+}
+
+@media (max-width: 576px) {
+  .infra-banner__inner {
+    padding: 24px 20px;
+  }
 }
 
 @media print {
@@ -269,6 +516,7 @@
     #alur-kerja,
     #portofolio,
     #testimoni,
+    #testimoni2,
     #cms-testimonial-modal,
     #faq,
     #cta-banner,
