@@ -25,6 +25,42 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="TentangStyle.css">
+    <style>
+        /* ===== SCROLL REVEAL ANIMATIONS ===== */
+        .reveal,
+        .reveal-left,
+        .reveal-right,
+        .reveal-scale {
+            opacity: 0;
+        }
+        .reveal          { transform: translateY(30px); transition: opacity 0.65s ease, transform 0.65s ease; }
+        .reveal-left     { transform: translateX(-36px); transition: opacity 0.65s ease, transform 0.65s ease; }
+        .reveal-right    { transform: translateX(36px); transition: opacity 0.65s ease, transform 0.65s ease; }
+        .reveal-scale    { transform: scale(0.93); transition: opacity 0.55s ease, transform 0.55s cubic-bezier(.34,1.56,.64,1); }
+
+        .reveal.is-visible,
+        .reveal-left.is-visible,
+        .reveal-right.is-visible,
+        .reveal-scale.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Stagger delay helpers */
+        .reveal-d1 { transition-delay: 0.08s; }
+        .reveal-d2 { transition-delay: 0.18s; }
+        .reveal-d3 { transition-delay: 0.28s; }
+        .reveal-d4 { transition-delay: 0.38s; }
+
+        /* Respect user preference */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal-left, .reveal-right, .reveal-scale {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-[#d9141d] selection:text-white">
 
@@ -107,7 +143,7 @@
       <section class="about-hero">
         <div class="about-hero__image" aria-hidden="true"></div>
         <div class="about-hero__overlay"></div>
-        <div class="about-hero__content">
+        <div class="about-hero__content reveal">
           <nav aria-label="Breadcrumb" class="text-xs text-slate-500 flex items-center gap-2 mb-4">
               <a href="/" class="hover:text-[#d9141d] transition-colors">Beranda</a>
               <span>/</span>
@@ -120,20 +156,20 @@
       </section>
 
       <section class="about-stats section-wrap" aria-label="Pencapaian Teknotama">
-        <article class="about-stat"><strong data-count-target="99.9" data-count-decimals="1" data-count-suffix="%">99.9%</strong><span>SLA Uptime Network</span></article>
-        <article class="about-stat"><strong data-count-target="500" data-count-decimals="0" data-count-suffix="+">500+</strong><span>Proyek Terpasang</span></article>
-        <article class="about-stat"><strong data-count-target="24" data-count-decimals="0" data-count-suffix="/7">24/7</strong><span>NOC Support &amp; Patrol</span></article>
+        <article class="about-stat reveal reveal-d1"><strong data-count-target="99.9" data-count-decimals="1" data-count-suffix="%">99.9%</strong><span>SLA Uptime Network</span></article>
+        <article class="about-stat reveal reveal-d2"><strong data-count-target="500" data-count-decimals="0" data-count-suffix="+">500+</strong><span>Proyek Terpasang</span></article>
+        <article class="about-stat reveal reveal-d3"><strong data-count-target="24" data-count-decimals="0" data-count-suffix="/7">24/7</strong><span>NOC Support &amp; Patrol</span></article>
       </section>
 
       <section class="about-profile section-wrap" id="profil">
-        <div class="about-profile__visual">
+        <div class="about-profile__visual reveal-left">
           <img src="assets/work2-edited.jpeg" alt="Tim teknis Teknotama melakukan pekerjaan instalasi infrastruktur">
           <div class="about-image-caption">
             <span class="about-caption-icon"><i data-lucide="cpu" class="w-5 h-5"></i></span>
             <div><strong>Technology Infrastructure Partner</strong><small>Perencanaan · Implementasi · Pemeliharaan</small></div>
           </div>
         </div>
-        <div class="about-profile__copy">
+        <div class="about-profile__copy reveal-right">
           <span class="about-kicker"><i></i> PROFIL PERUSAHAAN</span>
           <h2>Integrator IT Handal untuk Infrastruktur &amp; Keamanan Jaringan Masa Depan</h2>
           <p><strong>PT Teknotama</strong> adalah penyedia solusi IT enterprise yang berspesialisasi dalam perancangan jaringan kabel Fiber Optic/LAN, pengelolaan Data Center, infrastruktur cloud, dan benteng pertahanan keamanan siber.</p>
@@ -153,31 +189,31 @@
 
       <section class="about-method">
         <div class="section-wrap">
-          <div class="about-section-heading">
+          <div class="about-section-heading reveal">
             <span class="about-kicker"><i></i> METODOLOGI KERJA</span>
             <h2>Tahapan Implementasi Arsitektur IT</h2>
             <p>Proses teruji untuk memastikan pengerjaan proyek tepat waktu tanpa mengganggu jaringan eksisting.</p>
           </div>
           <div class="about-steps">
-            <article class="about-step">
+            <article class="about-step reveal reveal-d1">
               <span class="about-step__number">01</span>
               <div class="about-step__icon"><i data-lucide="search" class="w-6 h-6"></i></div>
               <h3>Audit &amp; Site Survey</h3>
               <p>Inspeksi langsung lokasi gedung, analisis lalu lintas bandwidth, dan pengukuran jalur kabel.</p>
             </article>
-            <article class="about-step">
+            <article class="about-step reveal reveal-d2">
               <span class="about-step__number">02</span>
               <div class="about-step__icon"><i data-lucide="network" class="w-6 h-6"></i></div>
               <h3>Desain Topologi &amp; BOQ</h3>
               <p>Penyusunan blueprint arsitektur jaringan (Subnetting, VLAN) &amp; daftar rincian perangkat hardware.</p>
             </article>
-            <article class="about-step">
+            <article class="about-step reveal reveal-d3">
               <span class="about-step__number">03</span>
               <div class="about-step__icon"><i data-lucide="settings" class="w-6 h-6"></i></div>
               <h3>Penarikan Kabel &amp; Deploy</h3>
               <p>Pemasangan fisik, penataan kabel rack, labeling, crimping, serta konfigurasi Router &amp; Switch.</p>
             </article>
-            <article class="about-step">
+            <article class="about-step reveal reveal-d4">
               <span class="about-step__number">04</span>
               <div class="about-step__icon"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
               <h3>Testing &amp; SLA Support</h3>
@@ -188,29 +224,29 @@
       </section>
 
       <section class="vision-mission section-wrap" id="visi-misi">
-        <article class="vm-card">
+        <article class="vm-card reveal reveal-d1">
           <div class="vm-icon" aria-hidden="true"><i data-lucide="compass" class="w-6 h-6"></i></div>
           <div><h2>Visi Kami</h2><p>Menjadi perusahaan teknologi terdepan di Indonesia yang mendorong transformasi industri melalui inovasi dan kolaborasi berkelanjutan.</p></div>
         </article>
-        <article class="vm-card">
+        <article class="vm-card reveal reveal-d2">
           <div class="vm-icon target-icon" aria-hidden="true"><i data-lucide="target" class="w-6 h-6"></i></div>
           <div><h2>Misi Kami</h2><p>Menyediakan solusi teknologi yang inovatif, andal, dan berkelanjutan untuk mendukung kemajuan industri di Indonesia.</p></div>
         </article>
       </section>
 
       <section class="values section-wrap">
-        <div class="values-heading"><span class="eyebrow-line"></span><h2>Nilai-Nilai Kami</h2><p>Nilai-nilai yang menjadi landasan kami dalam setiap langkah.</p></div>
+        <div class="values-heading reveal"><span class="eyebrow-line"></span><h2>Nilai-Nilai Kami</h2><p>Nilai-nilai yang menjadi landasan kami dalam setiap langkah.</p></div>
         <div class="value-grid">
-          <article class="value-card"><div class="value-icon"><i data-lucide="lightbulb" class="w-6 h-6"></i></div><h3>Inovasi</h3><p>Selalu menghadirkan solusi terbaik melalui inovasi berkelanjutan.</p></article>
-          <article class="value-card"><div class="value-icon"><i data-lucide="users" class="w-6 h-6"></i></div><h3>Kolaborasi</h3><p>Bekerja bersama untuk mencapai tujuan bersama.</p></article>
-          <article class="value-card"><div class="value-icon"><i data-lucide="shield-check" class="w-6 h-6"></i></div><h3>Integritas</h3><p>Menjunjung tinggi kejujuran dan profesionalisme.</p></article>
-          <article class="value-card"><div class="value-icon"><i data-lucide="trending-up" class="w-6 h-6"></i></div><h3>Pertumbuhan</h3><p>Terus berkembang untuk memberikan dampak yang lebih besar.</p></article>
+          <article class="value-card reveal-scale reveal-d1"><div class="value-icon"><i data-lucide="lightbulb" class="w-6 h-6"></i></div><h3>Inovasi</h3><p>Selalu menghadirkan solusi terbaik melalui inovasi berkelanjutan.</p></article>
+          <article class="value-card reveal-scale reveal-d2"><div class="value-icon"><i data-lucide="users" class="w-6 h-6"></i></div><h3>Kolaborasi</h3><p>Bekerja bersama untuk mencapai tujuan bersama.</p></article>
+          <article class="value-card reveal-scale reveal-d3"><div class="value-icon"><i data-lucide="shield-check" class="w-6 h-6"></i></div><h3>Integritas</h3><p>Menjunjung tinggi kejujuran dan profesionalisme.</p></article>
+          <article class="value-card reveal-scale reveal-d4"><div class="value-icon"><i data-lucide="trending-up" class="w-6 h-6"></i></div><h3>Pertumbuhan</h3><p>Terus berkembang untuk memberikan dampak yang lebih besar.</p></article>
         </div>
       </section>
 
       <section class="cta-banner" id="kontak">
         <div class="cta-photo"></div>
-        <div class="cta-content">
+        <div class="cta-content reveal">
           <h2>Infrastruktur yang Tepat untuk Bisnis yang Terus Bertumbuh</h2>
           <p>Teknotama siap mendukung kebutuhan jaringan, data center, dan keamanan IT melalui perencanaan serta implementasi yang terukur.</p>
         </div>
@@ -333,6 +369,39 @@
             }, { threshold: 0.25 });
 
             observer.observe(statsSection);
+        })();
+    </script>
+
+    <!-- ===== SCROLL REVEAL OBSERVER ===== -->
+    <script>
+        (function () {
+            var SEL = '.reveal, .reveal-left, .reveal-right, .reveal-scale';
+            var els = document.querySelectorAll(SEL);
+            if (!els.length) return;
+
+            /* Respect prefers-reduced-motion — just show everything instantly */
+            var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduceMotion) {
+                els.forEach(function (el) { el.classList.add('is-visible'); });
+                return;
+            }
+
+            /* Fallback for old browsers */
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function (el) { el.classList.add('is-visible'); });
+                return;
+            }
+
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+            els.forEach(function (el) { observer.observe(el); });
         })();
     </script>
 </body>
