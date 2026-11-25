@@ -779,10 +779,10 @@
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-950">Implementasi Nyata untuk Bisnis Anda</h2>
                 </div>
-                <button id="toggle-portfolio-filters" type="button" class="inline-flex items-center gap-1 text-xs font-bold text-[#d9141d] hover:underline">
+                <!-- <button id="toggle-portfolio-filters" type="button" class="inline-flex items-center gap-1 text-xs font-bold text-[#d9141d] hover:underline">
                     <span>Lihat Semua Portofolio</span>
                     <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                </button>
+                </button> -->
             </div>
 
             <!-- Filter Tabs -->
@@ -802,9 +802,15 @@
                          width="700" height="466" loading="lazy" decoding="async"
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                          onerror="this.onerror=null; this.src='img/portfolio_pic1.jpg';">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-6">
+                    <!-- Default: gradient bawah, konten di bawah -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:opacity-0 transition-opacity duration-400 flex flex-col justify-end p-6 pointer-events-none">
                         <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug">Fiber Optic Backbone Gedung 25 Lantai</h3>
                         <p class="text-slate-200 text-xs mt-1.5 leading-relaxed opacity-90">Penarikan 5.000m kabel Fiber Optic &amp; Cat6A terstruktur untuk area perkantoran CBD Jakarta.</p>
+                    </div>
+                    <!-- Hover: gray box full, konten di tengah -->
+                    <div class="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col justify-center p-6 pointer-events-none">
+                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug">Fiber Optic Backbone Gedung 25 Lantai</h3>
+                        <p class="text-slate-200 text-xs mt-2 leading-relaxed">Penarikan 5.000m kabel Fiber Optic &amp; Cat6A terstruktur untuk area perkantoran CBD Jakarta.</p>
                     </div>
                 </div>
 
@@ -815,7 +821,13 @@
                          width="700" height="466" loading="lazy" decoding="async"
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                          onerror="this.onerror=null; this.src='img/portfolio_pic2.jpg';">
-                    <div class="absolute inset-0 bg-slate-950/75 group-hover:bg-slate-950/65 transition-colors flex flex-col justify-center p-6">
+                    <!-- Default: gradient bawah, konten di bawah -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:opacity-0 transition-opacity duration-400 flex flex-col justify-end p-6 pointer-events-none">
+                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug">UTM Fortinet Firewall 15 Cabang Bank</h3>
+                        <p class="text-slate-200 text-xs mt-1.5 leading-relaxed opacity-90">Konfigurasi Site-to-Site Encrypted VPN IPsec antar kantor cabang institusi perbankan daerah.</p>
+                    </div>
+                    <!-- Hover: gray box full, konten di tengah -->
+                    <div class="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col justify-center p-6 pointer-events-none">
                         <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug">UTM Fortinet Firewall 15 Cabang Bank</h3>
                         <p class="text-slate-200 text-xs mt-2 leading-relaxed">Konfigurasi Site-to-Site Encrypted VPN IPsec antar kantor cabang institusi perbankan daerah.</p>
                     </div>
@@ -828,9 +840,15 @@
                          width="700" height="466" loading="lazy" decoding="async"
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                          onerror="this.onerror=null; this.src='img/portfolio_pic3.jpg';">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-6">
+                    <!-- Default: gradient bawah, konten di bawah -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:opacity-0 transition-opacity duration-400 flex flex-col justify-end p-6 pointer-events-none">
                         <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug">Migrasi Private Cloud VMware Logistics</h3>
                         <p class="text-slate-200 text-xs mt-1.5 leading-relaxed opacity-90">Konsolidasi 20 physical server ke VMware ESXi cluster dengan sistem disaster recovery instan.</p>
+                    </div>
+                    <!-- Hover: gray box full, konten di tengah -->
+                    <div class="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col justify-center p-6 pointer-events-none">
+                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug">Migrasi Private Cloud VMware Logistics</h3>
+                        <p class="text-slate-200 text-xs mt-2 leading-relaxed">Konsolidasi 20 physical server ke VMware ESXi cluster dengan sistem disaster recovery instan.</p>
                     </div>
                 </div>
             </div>
