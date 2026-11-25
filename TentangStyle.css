@@ -33,7 +33,7 @@
 .about-hero p { max-width: 510px; margin: 0; color: #536075; font-size: 15px; line-height: 1.7; }
 .about-hero__corner { position: absolute; left: 0; bottom: 0; width: 105px; height: 62px; background: var(--about-red); clip-path: polygon(0 0,100% 100%,0 100%); }
 
-.about-stats { position: relative; z-index: 3; display: grid; grid-template-columns: repeat(3,1fr); margin-top: -1px; padding: 0; background: #fff; box-shadow: 0 12px 35px #14213b12; border: 1px solid #edf0f5; border-top: 3px solid var(--about-red); }
+.about-stats { position: relative; z-index: 3; display: grid; grid-template-columns: repeat(3,1fr); margin-top: 32px; padding: 0; background: #fff; box-shadow: 0 12px 35px #14213b12; border: 1px solid #edf0f5; border-top: 3px solid var(--about-red); border-radius: 12px; overflow: hidden; }
 .about-stat { min-height: 108px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; padding: 18px; text-align: center; }
 .about-stat + .about-stat { border-left: 1px solid #e8ebf1; }
 .about-stat strong { color: var(--about-navy); font-size: clamp(27px,3vw,36px); line-height: 1; font-weight: 800; letter-spacing: -1px; }
