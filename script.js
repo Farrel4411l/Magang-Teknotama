@@ -358,6 +358,35 @@
             yearEl.textContent = String(new Date().getFullYear());
         }
 
+        // ── Scroll-hide / scroll-show navbar ─────────────────────────────────
+        (function () {
+            const header = document.querySelector('header.glass-nav');
+            if (!header) return;
+            let lastScrollY = window.scrollY;
+            let ticking = false;
+            window.addEventListener('scroll', function () {
+                if (!ticking) {
+                    window.requestAnimationFrame(function () {
+                        const currentY = window.scrollY;
+                        if (currentY > lastScrollY && currentY > 80) {
+                            // Scrolling down — hide nav
+                            header.classList.add('glass-nav--hidden');
+                            // Also close mobile menu if open
+                            const mob = document.getElementById('mobile-menu');
+                            if (mob) mob.classList.add('hidden');
+                        } else {
+                            // Scrolling up — show nav
+                            header.classList.remove('glass-nav--hidden');
+                        }
+                        lastScrollY = currentY;
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+        }());
+        // ─────────────────────────────────────────────────────────────────────
+
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         if (mobileMenuBtn && mobileMenu) {
