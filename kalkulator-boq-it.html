@@ -14,6 +14,7 @@
     <title>Kalkulator Infrastruktur IT &amp; Simulasi BOQ Jaringan | PT Teknotama Prakarsa Mulia</title>
 
     <!-- Primary SEO Meta Tags -->
+    <meta name="i18n-title-en" content="IT Infrastructure &amp; BOQ Calculator | PT Teknotama Prakarsa Mulia">
     <meta name="description" content="Hitung estimasi kebutuhan infrastruktur IT kantor, pabrik, atau gedung Anda secara instan: jumlah titik kabel LAN Cat6/Cat6A, meteran Fiber Optic, Switch PoE+, Wi-Fi 6 AP, NVR CCTV (TB), dan UPS Server dalam format Bill of Quantities (BOQ Teknis).">
     <meta name="keywords" content="kalkulator boq jaringan, hitung kebutuhan kabel lan, simulasi infrastruktur it, kalkulator cctv storage nvr, estimasi titik wifi kantor, kalkulator server ups, PT Teknotama Prakarsa Mulia">
     <meta name="author" content="PT Teknotama Prakarsa Mulia">
@@ -236,18 +237,28 @@
                 </div>
             </nav>
 
-            <!-- CTA Desktop -->
-            <div class="hidden lg:flex items-center">
+            <!-- CTA Desktop & Language Toggle -->
+            <div class="hidden lg:flex items-center gap-3">
+                <div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 text-[11px] font-bold" role="group" aria-label="Language switch">
+                    <button type="button" data-lang-btn="id" class="lang-switch-btn px-2.5 py-1 rounded-full transition-all bg-white text-slate-900 shadow-sm">ID</button>
+                    <button type="button" data-lang-btn="en" class="lang-switch-btn px-2.5 py-1 rounded-full transition-all text-slate-500 hover:text-slate-900">EN</button>
+                </div>
                 <a href="kontak.html" class="bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold text-xs xl:text-sm px-6 py-2.5 rounded-full shadow-md shadow-red-600/20 hover:shadow-lg transition-all flex items-center gap-2">
                     <i data-lucide="headset" class="w-4 h-4"></i>
                     Konsultasi Gratis
                 </a>
             </div>
 
-            <!-- Mobile Menu Toggle -->
-            <button id="mobile-menu-btn" type="button" class="lg:hidden p-2 text-slate-700 hover:text-[#d9141d] focus:outline-none" aria-label="Toggle Navigation">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
+            <!-- Mobile Controls (Language + Menu Toggle) -->
+            <div class="flex lg:hidden items-center gap-2">
+                <div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 text-[11px] font-bold" role="group" aria-label="Language switch">
+                    <button type="button" data-lang-btn="id" class="lang-switch-btn px-2 py-0.5 rounded-full transition-all bg-white text-slate-900 shadow-sm">ID</button>
+                    <button type="button" data-lang-btn="en" class="lang-switch-btn px-2 py-0.5 rounded-full transition-all text-slate-500 hover:text-slate-900">EN</button>
+                </div>
+                <button id="mobile-menu-btn" type="button" class="p-2 text-slate-700 hover:text-[#d9141d] focus:outline-none" aria-label="Toggle Navigation">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile Drawer Menu -->
@@ -269,31 +280,31 @@
 
             <!-- Breadcrumb -->
             <nav aria-label="Breadcrumb" class="text-xs text-slate-500 flex items-center gap-2 no-print">
-                <a href="/" class="hover:text-[#d9141d]">Beranda</a>
+                <a href="/" class="hover:text-[#d9141d]" data-en="Home">Beranda</a>
                 <span>/</span>
-                <span class="text-[#d9141d] font-bold">Kalkulator Infrastruktur IT &amp; Simulasi BOQ</span>
+                <span class="text-[#d9141d] font-bold" data-en="IT Infrastructure &amp; BOQ Calculator">Kalkulator Infrastruktur IT &amp; Simulasi BOQ</span>
             </nav>
 
             <!-- Hero Topic -->
             <section class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm space-y-6 no-print">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-50 border border-red-200 text-[#d9141d] text-xs font-bold uppercase tracking-wider">
                     <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
-                    <span>Standar Engineering ANSI/TIA-568 &amp; IEEE 802.3at PoE+</span>
+                    <span data-en="ANSI/TIA-568 &amp; IEEE 802.3at PoE+ Engineering Standards">Standar Engineering ANSI/TIA-568 &amp; IEEE 802.3at PoE+</span>
                 </div>
-                <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-950 leading-tight">
+                <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-950 leading-tight" data-en-html="IT Infrastructure Calculator &amp; &lt;span class=&quot;text-[#d9141d]&quot;&gt;Technical BOQ Simulation&lt;/span&gt;">
                     Kalkulator Infrastruktur IT &amp; <span class="text-[#d9141d]">Simulasi BOQ Teknis</span>
                 </h1>
-                <p class="text-slate-600 text-base sm:text-lg leading-relaxed">
+                <p class="text-slate-600 text-base sm:text-lg leading-relaxed" data-en-html="Designed for &lt;strong&gt;Business Owners / Non-Technical Users&lt;/strong&gt; (use &lt;em&gt;Quick Mode&lt;/em&gt;) and &lt;strong&gt;IT Managers / Network Engineers&lt;/strong&gt; (use &lt;em&gt;Technical Mode&lt;/em&gt;). Get instant hardware and cabling quantity breakdowns, then forward directly to the &lt;strong&gt;Free Site Survey&lt;/strong&gt; form.">
                     Dirancang untuk <strong>Pemilik Bisnis / Non-Teknis</strong> (gunakan <em>Mode Cepat</em>) maupun <strong>IT Manager / Network Engineer</strong> (gunakan <em>Mode Teknis</em>). Dapatkan rincian kuantitas perangkat dan kabel secara instan, lalu teruskan langsung ke formulir <strong>Site Survey Gratis</strong>.
                 </p>
                 <div class="flex flex-wrap gap-3 pt-2">
                     <a href="/#kontak" class="inline-flex items-center gap-2 bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold text-sm px-6 py-3.5 rounded-full shadow-lg shadow-red-600/25 transition-all">
                         <i data-lucide="calendar-check" class="w-4 h-4"></i>
-                        <span>Langsung Booking Survei</span>
+                        <span data-en="Book Site Survey Now">Langsung Booking Survei</span>
                     </a>
                     <a href="/" class="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-900 font-bold text-sm px-6 py-3.5 rounded-full transition-all">
                         <i data-lucide="arrow-left" class="w-4 h-4 text-[#d9141d]"></i>
-                        <span>Kembali ke Beranda</span>
+                        <span data-en="Back to Home">Kembali ke Beranda</span>
                     </a>
                 </div>
             </section>
@@ -317,10 +328,10 @@
                     <div id="boq-controls-panel" class="lg:col-span-5 min-w-0 space-y-5 no-print">
                         <!-- Mode Switcher -->
                         <div class="bg-slate-100 p-1.5 rounded-2xl border border-slate-200 flex gap-1.5">
-                            <button id="calc-mode-quick-btn" type="button" class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold bg-brand-600 text-white shadow-md transition-all">
+                            <button id="calc-mode-quick-btn" type="button" class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold bg-brand-600 text-white shadow-md transition-all" data-en="Quick Mode (Business Preset)">
                                 Mode Cepat (Preset Bisnis)
                             </button>
-                            <button id="calc-mode-tech-btn" type="button" class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition-all">
+                            <button id="calc-mode-tech-btn" type="button" class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition-all" data-en="Technical Mode (Engineer)">
                                 Mode Teknis (Engineer)
                             </button>
                         </div>
@@ -328,23 +339,23 @@
                         <!-- PANEL A: MODE CEPAT -->
                         <div id="calc-panel-quick" class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-5">
                             <div>
-                                <label class="text-xs font-bold uppercase tracking-wider text-[#d9141d] block mb-2.5">1. Pilih Profil Lokasi Anda</label>
+                                <label class="text-xs font-bold uppercase tracking-wider text-[#d9141d] block mb-2.5" data-en="1. Select Your Site Profile">1. Pilih Profil Lokasi Anda</label>
                                 <div class="grid grid-cols-2 gap-2.5">
                                     <button type="button" data-preset="office" class="calc-preset-btn text-left p-3 rounded-xl border border-brand-500 bg-brand-950/60 text-white transition-all">
-                                        <span class="block text-xs font-bold">Kantor / Startup</span>
+                                        <span class="block text-xs font-bold" data-en="Office / Startup">Kantor / Startup</span>
                                         <span class="block text-[10px] text-slate-400 mt-0.5">Wi-Fi 6 + LAN + VPN</span>
                                     </button>
                                     <button type="button" data-preset="warehouse" class="calc-preset-btn text-left p-3 rounded-xl border border-red-950 bg-[#080d1a] text-slate-300 hover:border-brand-700 transition-all">
-                                        <span class="block text-xs font-bold">Gudang / Pabrik</span>
-                                        <span class="block text-[10px] text-slate-400 mt-0.5">Area Luas + FO + CCTV</span>
+                                        <span class="block text-xs font-bold" data-en="Warehouse / Factory">Gudang / Pabrik</span>
+                                        <span class="block text-[10px] text-slate-400 mt-0.5" data-en="Wide Area + FO + CCTV">Area Luas + FO + CCTV</span>
                                     </button>
                                     <button type="button" data-preset="clinic" class="calc-preset-btn text-left p-3 rounded-xl border border-red-950 bg-[#080d1a] text-slate-300 hover:border-brand-700 transition-all">
-                                        <span class="block text-xs font-bold">Klinik / RS / Sekolah</span>
-                                        <span class="block text-[10px] text-slate-400 mt-0.5">Sekat Beton + Server HA</span>
+                                        <span class="block text-xs font-bold" data-en="Clinic / Hospital / School">Klinik / RS / Sekolah</span>
+                                        <span class="block text-[10px] text-slate-400 mt-0.5" data-en="Concrete Walls + HA Server">Sekat Beton + Server HA</span>
                                     </button>
                                     <button type="button" data-preset="retail" class="calc-preset-btn text-left p-3 rounded-xl border border-red-950 bg-[#080d1a] text-slate-300 hover:border-brand-700 transition-all">
-                                        <span class="block text-xs font-bold">Ruko / Retail</span>
-                                        <span class="block text-[10px] text-slate-400 mt-0.5">Ringkas + Dual ISP</span>
+                                        <span class="block text-xs font-bold" data-en="Shophouse / Retail">Ruko / Retail</span>
+                                        <span class="block text-[10px] text-slate-400 mt-0.5" data-en="Compact + Dual ISP">Ringkas + Dual ISP</span>
                                     </button>
                                 </div>
                             </div>
@@ -352,45 +363,45 @@
                             <div class="space-y-4">
                                 <div>
                                     <div class="flex justify-between text-xs sm:text-sm font-semibold mb-1">
-                                        <label for="quick-user-slider" class="text-slate-800">Jumlah Karyawan / Perangkat (User)</label>
+                                        <label for="quick-user-slider" class="text-slate-800" data-en="Employees / Devices (Users)">Jumlah Karyawan / Perangkat (User)</label>
                                         <span id="quick-user-val" class="text-[#d9141d] font-mono font-bold">60 User</span>
                                     </div>
                                     <input type="range" id="quick-user-slider" min="10" max="1000" value="60" step="10" class="tkt-range">
-                                    <p class="text-[11px] text-slate-500 mt-1">Total staf, PC, atau perangkat yang terhubung ke internet/LAN.</p>
+                                    <p class="text-[11px] text-slate-500 mt-1" data-en="Total staff, PCs, or devices connected to the internet/LAN.">Total staf, PC, atau perangkat yang terhubung ke internet/LAN.</p>
                                 </div>
 
                                 <div>
                                     <div class="flex justify-between text-xs sm:text-sm font-semibold mb-1">
-                                        <label for="quick-floor-slider" class="text-slate-800">Jumlah Lantai Bangunan</label>
+                                        <label for="quick-floor-slider" class="text-slate-800" data-en="Number of Building Floors">Jumlah Lantai Bangunan</label>
                                         <span id="quick-floor-val" class="text-[#d9141d] font-mono font-bold">2 Lantai</span>
                                     </div>
                                     <input type="range" id="quick-floor-slider" min="1" max="25" value="2" step="1" class="tkt-range">
-                                    <p class="text-[11px] text-slate-500 mt-1">Jika &gt;1 lantai, otomatis menyertakan kabel utama Fiber Optic antar lantai.</p>
+                                    <p class="text-[11px] text-slate-500 mt-1" data-en="If &gt;1 floor, automatically includes inter-floor Fiber Optic backbone.">Jika &gt;1 lantai, otomatis menyertakan kabel utama Fiber Optic antar lantai.</p>
                                 </div>
 
                                 <div>
                                     <div class="flex justify-between text-xs sm:text-sm font-semibold mb-1">
-                                        <label for="quick-area-slider" class="text-slate-800">Perkiraan Luas per Lantai</label>
+                                        <label for="quick-area-slider" class="text-slate-800" data-en="Estimated Area per Floor">Perkiraan Luas per Lantai</label>
                                         <span id="quick-area-val" class="text-[#d9141d] font-mono font-bold">350 m² / Lantai</span>
                                     </div>
                                     <input type="range" id="quick-area-slider" min="50" max="3000" value="350" step="50" class="tkt-range">
-                                    <p class="text-[11px] text-slate-500 mt-1">Menentukan jumlah pemancar Wi-Fi agar seluruh ruangan bebas susah sinyal.</p>
+                                    <p class="text-[11px] text-slate-500 mt-1" data-en="Determines the number of Wi-Fi Access Points to eliminate dead zones.">Menentukan jumlah pemancar Wi-Fi agar seluruh ruangan bebas susah sinyal.</p>
                                 </div>
                             </div>
 
                             <div class="space-y-2.5 pt-2 border-t border-slate-200">
-                                <span class="text-xs font-bold uppercase tracking-wider text-[#d9141d] block">Modul Tambahan</span>
+                                <span class="text-xs font-bold uppercase tracking-wider text-[#d9141d] block" data-en="Additional Modules">Modul Tambahan</span>
                                 <label class="flex items-center gap-3 text-xs sm:text-sm text-slate-700 cursor-pointer">
                                     <input type="checkbox" id="quick-check-firewall" checked class="w-4 h-4 accent-[#d9141d] rounded">
-                                    Firewall Keamanan + Dual-ISP Failover &amp; VPN
+                                    <span data-en="Security Firewall + Dual-ISP Failover &amp; VPN">Firewall Keamanan + Dual-ISP Failover &amp; VPN</span>
                                 </label>
                                 <label class="flex items-center gap-3 text-xs sm:text-sm text-slate-700 cursor-pointer">
                                     <input type="checkbox" id="quick-check-cctv" checked class="w-4 h-4 accent-[#d9141d] rounded">
-                                    IP CCTV Surveillance &amp; Central NVR
+                                    <span>IP CCTV Surveillance &amp; Central NVR</span>
                                 </label>
                                 <label class="flex items-center gap-3 text-xs sm:text-sm text-slate-700 cursor-pointer">
                                     <input type="checkbox" id="quick-check-cloud" checked class="w-4 h-4 accent-[#d9141d] rounded">
-                                    Cloud Disaster Recovery / Backup Offsite
+                                    <span>Cloud Disaster Recovery / Backup Offsite</span>
                                 </label>
                             </div>
                         </div>
@@ -398,10 +409,10 @@
                         <!-- PANEL B: MODE TEKNIS (ENGINEER) -->
                         <div id="calc-panel-tech" class="hidden bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-5">
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
-                                <button type="button" data-tech-tab="dimensi" class="tech-subtab-btn py-2 px-2 rounded-xl border border-brand-500/60 bg-brand-600/20 text-brand-400 text-[11px] font-bold">1. Dimensi &amp; Kabel</button>
-                                <button type="button" data-tech-tab="jaringan" class="tech-subtab-btn py-2 px-2 rounded-xl border border-red-950 bg-[#080d1a] text-slate-400 text-[11px] font-bold">2. Vendor &amp; WAN</button>
-                                <button type="button" data-tech-tab="cctv" class="tech-subtab-btn py-2 px-2 rounded-xl border border-red-950 bg-[#080d1a] text-slate-400 text-[11px] font-bold">3. CCTV &amp; Akses</button>
-                                <button type="button" data-tech-tab="server" class="tech-subtab-btn py-2 px-2 rounded-xl border border-red-950 bg-[#080d1a] text-slate-400 text-[11px] font-bold">4. Server &amp; UPS</button>
+                                <button type="button" data-tech-tab="dimensi" class="tech-subtab-btn py-2 px-2 rounded-xl border border-brand-500/60 bg-brand-600/20 text-brand-400 text-[11px] font-bold" data-en="1. Size &amp; Cabling">1. Dimensi &amp; Kabel</button>
+                                <button type="button" data-tech-tab="jaringan" class="tech-subtab-btn py-2 px-2 rounded-xl border border-red-950 bg-[#080d1a] text-slate-400 text-[11px] font-bold" data-en="2. Vendor &amp; WAN">2. Vendor &amp; WAN</button>
+                                <button type="button" data-tech-tab="cctv" class="tech-subtab-btn py-2 px-2 rounded-xl border border-red-950 bg-[#080d1a] text-slate-400 text-[11px] font-bold" data-en="3. CCTV &amp; Access">3. CCTV &amp; Akses</button>
+                                <button type="button" data-tech-tab="server" class="tech-subtab-btn py-2 px-2 rounded-xl border border-red-950 bg-[#080d1a] text-slate-400 text-[11px] font-bold" data-en="4. Server &amp; UPS">4. Server &amp; UPS</button>
                             </div>
 
                             <!-- Sub-tab 1 -->
@@ -415,14 +426,14 @@
                                 </div>
                                 <div>
                                     <div class="flex justify-between text-xs font-semibold mb-1">
-                                        <label for="tech-floor-slider" class="text-slate-800">Jumlah Lantai</label>
+                                        <label for="tech-floor-slider" class="text-slate-800" data-en="Number of Floors">Jumlah Lantai</label>
                                         <span id="tech-floor-val" class="text-[#d9141d] font-mono font-bold">2 Lantai</span>
                                     </div>
                                     <input type="range" id="tech-floor-slider" min="1" max="25" value="2" step="1" class="tkt-range">
                                 </div>
                                 <div>
                                     <div class="flex justify-between text-xs font-semibold mb-1">
-                                        <label for="tech-area-slider" class="text-slate-800">Luas Rata-Rata per Lantai</label>
+                                        <label for="tech-area-slider" class="text-slate-800" data-en="Average Area per Floor">Luas Rata-Rata per Lantai</label>
                                         <span id="tech-area-val" class="text-[#d9141d] font-mono font-bold">350 m² / Lantai</span>
                                     </div>
                                     <input type="range" id="tech-area-slider" min="50" max="3000" value="350" step="50" class="tkt-range">
@@ -430,15 +441,15 @@
 
                                 <div class="grid sm:grid-cols-2 gap-3">
                                     <div>
-                                        <label for="tech-partition" class="block text-[11px] font-semibold text-slate-700 mb-1">Redaman Sekat Ruangan</label>
+                                        <label for="tech-partition" class="block text-[11px] font-semibold text-slate-700 mb-1" data-en="Room Wall Attenuation">Redaman Sekat Ruangan</label>
                                         <select id="tech-partition" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:border-[#d9141d] focus:outline-none">
-                                            <option value="open">Open Space (~150m²/AP)</option>
-                                            <option value="gypsum" selected>Partisi Kaca / Gypsum (~90m²/AP)</option>
-                                            <option value="concrete">Banyak Dinding Beton (~55m²/AP)</option>
+                                            <option value="open" data-en="Open Space (~150m²/AP)">Open Space (~150m²/AP)</option>
+                                            <option value="gypsum" selected data-en="Glass / Gypsum Partition (~90m²/AP)">Partisi Kaca / Gypsum (~90m²/AP)</option>
+                                            <option value="concrete" data-en="Heavy Concrete Walls (~55m²/AP)">Banyak Dinding Beton (~55m²/AP)</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label for="tech-cable-type" class="block text-[11px] font-semibold text-slate-700 mb-1">Kabel Horizontal (TIA-568)</label>
+                                        <label for="tech-cable-type" class="block text-[11px] font-semibold text-slate-700 mb-1" data-en="Horizontal Cabling (TIA-568)">Kabel Horizontal (TIA-568)</label>
                                         <select id="tech-cable-type" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:border-[#d9141d] focus:outline-none">
                                             <option value="cat6" selected>UTP Cat6 (1G / 10G &lt;55m)</option>
                                             <option value="cat6a">UTP Cat6A Shielded (10G 100m)</option>
@@ -450,15 +461,15 @@
                                     <div>
                                         <label for="tech-fo-type" class="block text-[11px] font-semibold text-slate-700 mb-1">Backbone Fiber Optic</label>
                                         <select id="tech-fo-type" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:border-[#d9141d] focus:outline-none">
-                                            <option value="om3" selected>Multimode OM3/OM4 (Antar Lantai)</option>
-                                            <option value="os2">Singlemode OS2 (Jarak Jauh / Outdoor)</option>
+                                            <option value="om3" selected data-en="Multimode OM3/OM4 (Inter-Floor)">Multimode OM3/OM4 (Antar Lantai)</option>
+                                            <option value="os2" data-en="Singlemode OS2 (Long Distance / Outdoor)">Singlemode OS2 (Jarak Jauh / Outdoor)</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label for="tech-pathway" class="block text-[11px] font-semibold text-slate-700 mb-1">Kondisi Jalur Kabel Lapangan</label>
+                                        <label for="tech-pathway" class="block text-[11px] font-semibold text-slate-700 mb-1" data-en="Site Cable Pathway Condition">Kondisi Jalur Kabel Lapangan</label>
                                         <select id="tech-pathway" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:border-[#d9141d] focus:outline-none">
-                                            <option value="existing_tray" selected>Plafon / Tray Eksisting Ready</option>
-                                            <option value="new_conduit">Pasang Conduit &amp; Tray Baru</option>
+                                            <option value="existing_tray" selected data-en="Existing Ceiling / Tray Ready">Plafon / Tray Eksisting Ready</option>
+                                            <option value="new_conduit" data-en="Install New Conduit &amp; Tray">Pasang Conduit &amp; Tray Baru</option>
                                         </select>
                                     </div>
                                 </div>
@@ -467,7 +478,7 @@
                             <!-- Sub-tab 2 -->
                             <div data-tech-panel="jaringan" class="tech-subtab-panel hidden space-y-4">
                                 <div>
-                                    <label for="tech-vendor-tier" class="block text-[11px] font-semibold text-slate-700 mb-1">Tier Kelas Perangkat / Brand</label>
+                                    <label for="tech-vendor-tier" class="block text-[11px] font-semibold text-slate-700 mb-1" data-en="Hardware Tier / Brand Class">Tier Kelas Perangkat / Brand</label>
                                     <select id="tech-vendor-tier" class="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:border-[#d9141d] focus:outline-none">
                                         <option value="tier1">Tier 1 — Value Enterprise (MikroTik + Ruijie/UniFi)</option>
                                         <option value="tier2" selected>Tier 2 — Corporate Standard (Fortinet + Cisco Business/Aruba)</option>
@@ -475,7 +486,7 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label for="tech-wan-count" class="block text-[11px] font-semibold text-slate-700 mb-1">Topologi Koneksi Internet (WAN ISP)</label>
+                                    <label for="tech-wan-count" class="block text-[11px] font-semibold text-slate-700 mb-1" data-en="Internet Connection Topology (WAN ISP)">Topologi Koneksi Internet (WAN ISP)</label>
                                     <select id="tech-wan-count" class="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:border-[#d9141d] focus:outline-none">
                                         <option value="1">1 ISP (Single WAN)</option>
                                         <option value="2" selected>2 ISP (Dual-WAN Failover / Load Balance)</option>
@@ -484,14 +495,14 @@
                                 </div>
                                 <div>
                                     <div class="flex justify-between text-xs font-semibold mb-1">
-                                        <label for="tech-vpn-slider" class="text-slate-800">Koneksi Cabang IPsec VPN</label>
+                                        <label for="tech-vpn-slider" class="text-slate-800" data-en="IPsec VPN Branch Connections">Koneksi Cabang IPsec VPN</label>
                                         <span id="tech-vpn-val" class="text-[#d9141d] font-mono font-bold">2 Cabang</span>
                                     </div>
                                     <input type="range" id="tech-vpn-slider" min="0" max="30" value="2" step="1" class="tkt-range">
                                 </div>
                                 <label class="flex items-center gap-3 text-xs text-slate-700 cursor-pointer pt-1">
                                     <input type="checkbox" id="tech-fluke-check" checked class="w-4 h-4 accent-[#d9141d] rounded">
-                                    Wajib Uji Sertifikasi Fluke Certifier &amp; OTDR + As-Built Drawing
+                                    <span data-en="Require Fluke Certifier &amp; OTDR Testing + As-Built Drawing">Wajib Uji Sertifikasi Fluke Certifier &amp; OTDR + As-Built Drawing</span>
                                 </label>
                             </div>
 
@@ -499,26 +510,26 @@
                             <div data-tech-panel="cctv" class="tech-subtab-panel hidden space-y-4">
                                 <label class="flex items-center gap-3 text-xs font-bold text-slate-900 cursor-pointer">
                                     <input type="checkbox" id="tech-cctv-enable" checked class="w-4 h-4 accent-[#d9141d] rounded">
-                                    Aktifkan Sistem IP CCTV &amp; Central NVR
+                                    <span data-en="Enable IP CCTV &amp; Central NVR System">Aktifkan Sistem IP CCTV &amp; Central NVR</span>
                                 </label>
                                 <div id="tech-cctv-fields" class="space-y-3 transition-opacity">
                                     <div>
                                         <div class="flex justify-between text-xs font-semibold mb-1">
-                                            <label for="tech-cctv-in-slider" class="text-slate-700">Kamera Indoor Dome PoE</label>
+                                            <label for="tech-cctv-in-slider" class="text-slate-700" data-en="Indoor Dome PoE Cameras">Kamera Indoor Dome PoE</label>
                                             <span id="tech-cctv-in-val" class="text-[#d9141d] font-mono font-bold">8 Unit</span>
                                         </div>
                                         <input type="range" id="tech-cctv-in-slider" min="0" max="64" value="8" step="1" class="tkt-range">
                                     </div>
                                     <div>
                                         <div class="flex justify-between text-xs font-semibold mb-1">
-                                            <label for="tech-cctv-out-slider" class="text-slate-700">Kamera Outdoor Bullet Weatherproof</label>
+                                            <label for="tech-cctv-out-slider" class="text-slate-700" data-en="Outdoor Bullet Weatherproof Cameras">Kamera Outdoor Bullet Weatherproof</label>
                                             <span id="tech-cctv-out-val" class="text-[#d9141d] font-mono font-bold">4 Unit</span>
                                         </div>
                                         <input type="range" id="tech-cctv-out-slider" min="0" max="32" value="4" step="1" class="tkt-range">
                                     </div>
                                     <div class="grid grid-cols-2 gap-3">
                                         <div>
-                                            <label for="tech-cctv-res" class="block text-[11px] font-semibold text-slate-700 mb-1">Resolusi (H.265+)</label>
+                                            <label for="tech-cctv-res" class="block text-[11px] font-semibold text-slate-700 mb-1" data-en="Resolution (H.265+)">Resolusi (H.265+)</label>
                                             <select id="tech-cctv-res" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:border-[#d9141d] focus:outline-none">
                                                 <option value="2mp">2MP Full HD (1080p)</option>
                                                 <option value="4mp" selected>4MP Super HD (2K)</option>
@@ -526,12 +537,12 @@
                                             </select>
                                         </div>
                                         <div>
-                                            <label for="tech-cctv-days" class="block text-[11px] font-semibold text-slate-700 mb-1">Retensi Simpan</label>
+                                            <label for="tech-cctv-days" class="block text-[11px] font-semibold text-slate-700 mb-1" data-en="Storage Retention">Retensi Simpan</label>
                                             <select id="tech-cctv-days" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:border-[#d9141d] focus:outline-none">
-                                                <option value="14">14 Hari</option>
-                                                <option value="30" selected>30 Hari</option>
-                                                <option value="60">60 Hari</option>
-                                                <option value="90">90 Hari</option>
+                                                <option value="14" data-en="14 Days">14 Hari</option>
+                                                <option value="30" selected data-en="30 Days">30 Hari</option>
+                                                <option value="60" data-en="60 Days">60 Hari</option>
+                                                <option value="90" data-en="90 Days">90 Hari</option>
                                             </select>
                                         </div>
                                     </div>
@@ -542,7 +553,7 @@
                                         Door Access Control (RFID / Biometric)
                                     </label>
                                     <div class="flex justify-between text-xs font-semibold">
-                                        <label for="tech-door-slider" class="text-slate-700">Jumlah Pintu Terkontrol</label>
+                                        <label for="tech-door-slider" class="text-slate-700" data-en="Controlled Doors">Jumlah Pintu Terkontrol</label>
                                         <span id="tech-door-val" class="text-[#d9141d] font-mono font-bold">2 Pintu</span>
                                     </div>
                                     <input type="range" id="tech-door-slider" min="0" max="20" value="2" step="1" class="tkt-range">
@@ -553,11 +564,11 @@
                             <div data-tech-panel="server" class="tech-subtab-panel hidden space-y-4">
                                 <label class="flex items-center gap-3 text-xs font-bold text-slate-900 cursor-pointer">
                                     <input type="checkbox" id="tech-server-enable" checked class="w-4 h-4 accent-[#d9141d] rounded">
-                                    Sertakan Server Lokal / Storage NAS
+                                    <span data-en="Include Local Server / NAS Storage">Sertakan Server Lokal / Storage NAS</span>
                                 </label>
                                 <div id="tech-server-fields" class="space-y-3 transition-opacity">
                                     <div>
-                                        <label for="tech-server-mode" class="block text-[11px] font-semibold text-slate-700 mb-1">Arsitektur Server</label>
+                                        <label for="tech-server-mode" class="block text-[11px] font-semibold text-slate-700 mb-1" data-en="Server Architecture">Arsitektur Server</label>
                                         <select id="tech-server-mode" class="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:border-[#d9141d] focus:outline-none">
                                             <option value="nas">Centralized Rackmount NAS File Server</option>
                                             <option value="single_host" selected>Single Host Virtualization (VMware ESXi / Proxmox)</option>
@@ -570,11 +581,11 @@
                                     Cloud Disaster Recovery / Offsite Backup
                                 </label>
                                 <div>
-                                    <label for="tech-ups-minutes" class="block text-[11px] font-semibold text-slate-700 mb-1">Target Backup Daya UPS Ruang Server (MDF)</label>
+                                    <label for="tech-ups-minutes" class="block text-[11px] font-semibold text-slate-700 mb-1" data-en="Server Room (MDF) UPS Backup Target">Target Backup Daya UPS Ruang Server (MDF)</label>
                                     <select id="tech-ups-minutes" class="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:border-[#d9141d] focus:outline-none">
-                                        <option value="15">15 Menit (Graceful Shutdown Standar)</option>
-                                        <option value="30" selected>30 Menit (Operasional Menunggu Genset)</option>
-                                        <option value="60">60+ Menit (Extended Battery Pack)</option>
+                                        <option value="15" data-en="15 Minutes (Standard Graceful Shutdown)">15 Menit (Graceful Shutdown Standar)</option>
+                                        <option value="30" selected data-en="30 Minutes (Operations Awaiting Generator)">30 Menit (Operasional Menunggu Genset)</option>
+                                        <option value="60" data-en="60+ Minutes (Extended Battery Pack)">60+ Menit (Extended Battery Pack)</option>
                                     </select>
                                 </div>
                             </div>
@@ -583,7 +594,7 @@
                         <!-- Ringkasan Arsitektur VLAN -->
                         <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2.5">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold uppercase tracking-wider text-[#d9141d]">Desain Segregasi VLAN Rekomendasi</span>
+                                <span class="text-xs font-bold uppercase tracking-wider text-[#d9141d]" data-en="Recommended VLAN Segregation Design">Desain Segregasi VLAN Rekomendasi</span>
                                 <span id="boq-wifi-badge" class="text-[11px] font-mono bg-red-50 text-[#d9141d] font-bold px-2.5 py-0.5 rounded-full border border-red-200">8 AP Wi-Fi 6</span>
                             </div>
                             <ul id="boq-vlan-list" class="text-[11px] text-slate-700 space-y-1.5 font-mono"></ul>
@@ -594,12 +605,12 @@
                     <div id="boq-output-panel" class="lg:col-span-7 min-w-0 space-y-5">
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                             <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-                                <span class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold block">Kapasitas Port (+20%)</span>
+                                <span class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold block" data-en="Port Capacity (+20%)">Kapasitas Port (+20%)</span>
                                 <span id="metric-ports" class="text-base sm:text-lg font-extrabold text-slate-950 font-mono mt-1 block">96 Port</span>
                                 <span id="metric-poe" class="text-[10px] text-[#d9141d] font-mono font-semibold block mt-0.5">Beban PoE+: ~240W</span>
                             </div>
                             <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-                                <span class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold block">Kabel &amp; Backbone</span>
+                                <span class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold block" data-en="Cabling &amp; Backbone">Kabel &amp; Backbone</span>
                                 <span id="metric-cabling" class="text-base sm:text-lg font-extrabold text-slate-950 font-mono mt-1 block">8 Box Cat6</span>
                                 <span id="metric-fo" class="text-[10px] text-[#d9141d] font-mono font-semibold block mt-0.5">+ 77m FO 6-Core</span>
                             </div>
@@ -609,7 +620,7 @@
                                 <span id="metric-ups" class="text-[10px] text-[#d9141d] font-mono font-semibold block mt-0.5">UPS: 2000VA</span>
                             </div>
                             <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-                                <span class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold block">Rack &amp; Durasi Kerja</span>
+                                <span class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold block" data-en="Rack &amp; Est. Duration">Rack &amp; Durasi Kerja</span>
                                 <span id="metric-rack" class="text-base sm:text-lg font-extrabold text-slate-950 font-mono mt-1 block">MDF 20U + 1 IDF</span>
                                 <span id="metric-days" class="text-[10px] text-[#d9141d] font-mono font-semibold block mt-0.5">Estimasi: 4–6 Hari</span>
                             </div>
@@ -619,14 +630,14 @@
                         <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
                             <div class="px-4 py-3 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 bg-slate-50">
                                 <div>
-                                    <h3 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-950">Rincian Bill of Quantities (BOQ Teknis)</h3>
-                                    <p class="text-[11px] text-slate-500">Hanya spesifikasi &amp; kuantitas teknis — tanpa estimasi harga Rupiah sebelum survei.</p>
+                                    <h3 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-950" data-en="Bill of Quantities Breakdown (Technical BOQ)">Rincian Bill of Quantities (BOQ Teknis)</h3>
+                                    <p class="text-[11px] text-slate-500" data-en="Technical specifications &amp; quantities only — no Rupiah pricing estimate prior to site survey.">Hanya spesifikasi &amp; kuantitas teknis — tanpa estimasi harga Rupiah sebelum survei.</p>
                                 </div>
                                 <div class="flex items-center gap-2 no-print">
-                                    <button id="boq-copy-btn" type="button" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-100 border border-slate-300 text-[11px] font-semibold text-slate-700 flex items-center gap-1.5 transition-all">
+                                    <button id="boq-copy-btn" type="button" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-100 border border-slate-300 text-[11px] font-semibold text-slate-700 flex items-center gap-1.5 transition-all" data-en-html="&lt;i data-lucide=&quot;copy&quot; class=&quot;w-3.5 h-3.5 text-[#d9141d]&quot;&gt;&lt;/i&gt; Copy">
                                         <i data-lucide="copy" class="w-3.5 h-3.5 text-[#d9141d]"></i> Salin
                                     </button>
-                                    <button id="boq-print-btn" type="button" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-100 border border-slate-300 text-[11px] font-semibold text-slate-700 flex items-center gap-1.5 transition-all">
+                                    <button id="boq-print-btn" type="button" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-100 border border-slate-300 text-[11px] font-semibold text-slate-700 flex items-center gap-1.5 transition-all" data-en-html="&lt;i data-lucide=&quot;printer&quot; class=&quot;w-3.5 h-3.5 text-[#d9141d]&quot;&gt;&lt;/i&gt; Print / PDF">
                                         <i data-lucide="printer" class="w-3.5 h-3.5 text-[#d9141d]"></i> Cetak / PDF
                                     </button>
                                 </div>
@@ -636,9 +647,9 @@
                                 <table id="boq-table" class="w-full text-left border-collapse">
                                     <thead class="bg-slate-900 text-white sticky top-0 z-10">
                                         <tr>
-                                            <th class="py-2.5 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-200">Modul</th>
-                                            <th class="py-2.5 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-200">Komponen &amp; Spesifikasi Teknis</th>
-                                            <th class="py-2.5 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-200 text-right">Kuantitas</th>
+                                            <th class="py-2.5 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-200" data-en="Module">Modul</th>
+                                            <th class="py-2.5 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-200" data-en="Component &amp; Technical Specs">Komponen &amp; Spesifikasi Teknis</th>
+                                            <th class="py-2.5 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-200 text-right" data-en="Quantity">Kuantitas</th>
                                         </tr>
                                     </thead>
                                     <tbody id="boq-table-body"></tbody>
@@ -648,11 +659,11 @@
 
                         <!-- Action Bar -->
                         <div class="grid sm:grid-cols-2 gap-3 no-print">
-                            <button id="boq-ask-ai-btn" type="button" class="w-full bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-900 font-bold py-3.5 px-4 rounded-full transition-all text-xs sm:text-sm flex items-center justify-center gap-2">
+                            <button id="boq-ask-ai-btn" type="button" class="w-full bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-900 font-bold py-3.5 px-4 rounded-full transition-all text-xs sm:text-sm flex items-center justify-center gap-2" data-en-html="&lt;i data-lucide=&quot;bot&quot; class=&quot;w-4 h-4 text-[#d9141d]&quot;&gt;&lt;/i&gt; Discuss BOQ with AI Engineer">
                                 <i data-lucide="bot" class="w-4 h-4 text-[#d9141d]"></i>
                                 Diskusikan BOQ dengan AI Engineer
                             </button>
-                            <button id="boq-book-btn" type="button" class="w-full bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold py-3.5 px-4 rounded-full transition-all text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-red-600/25">
+                            <button id="boq-book-btn" type="button" class="w-full bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold py-3.5 px-4 rounded-full transition-all text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-red-600/25" data-en-html="&lt;i data-lucide=&quot;send&quot; class=&quot;w-4 h-4&quot;&gt;&lt;/i&gt; Proceed to Survey Booking (Auto-Fill)">
                                 <i data-lucide="send" class="w-4 h-4"></i>
                                 Lanjut Booking Survei (Isi Otomatis)
                             </button>
@@ -675,7 +686,7 @@
                     <a href="/" class="inline-block">
                         <img src="img/teknotama_logo.jpeg" alt="PT Teknotama Prakarsa Mulia" width="160" height="46" loading="lazy" decoding="async" class="w-40 h-auto rounded">
                     </a>
-                    <p class="text-xs text-slate-400 leading-relaxed max-w-xs">
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-xs" data-en="PT Teknotama Prakarsa Mulia — Enterprise IT infrastructure contractor in Jakarta, Fiber Optic networks, enterprise Wi-Fi, managed server data centers, &amp; enterprise cybersecurity.">
                         PT Teknotama Prakarsa Mulia — Kontraktor infrastruktur IT Jakarta, jaringan Fiber Optic, Wi-Fi enterprise, managed server data center, &amp; cyber security enterprise.
                     </p>
                 </div>
@@ -698,9 +709,9 @@
                     <h3 class="text-xs font-bold text-white mb-4 uppercase tracking-wider">Navigasi</h3>
                     <ul class="space-y-2.5 text-xs">
                         <li><a href="tentang.html" class="hover:text-white transition-colors">Tentang Kami</a></li>
-                        <li><a href="/#layanan" class="hover:text-white transition-colors">Layanan Utama</a></li>
+                        <li><a href="/#layanan" class="hover:text-white transition-colors" data-en="Core Services">Layanan Utama</a></li>
                         <li><a href="/#portofolio" class="hover:text-white transition-colors">Portofolio</a></li>
-                        <li><a href="kalkulator-boq-it.html" class="text-white font-bold">Kalkulator IT</a></li>
+                        <li><a href="kalkulator-boq-it.html" class="text-white font-bold" data-en="IT Calculator">Kalkulator IT</a></li>
                     </ul>
                 </div>
 
@@ -736,5 +747,6 @@
 
     <!-- Main Script -->
     <script src="script.js" defer></script>
+    <script src="i18n.js" defer></script>
 </body>
 </html>

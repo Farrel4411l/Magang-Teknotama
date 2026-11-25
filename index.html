@@ -18,6 +18,7 @@
 
     <!-- Primary SEO Meta Tags -->
     <title>Teknotama — PT Teknotama Prakarsa Mulia | Jasa Jaringan &amp; Server</title>
+    <meta name="i18n-title-en" content="Teknotama — PT Teknotama Prakarsa Mulia | IT Network &amp; Server Solutions">
     <meta name="description" content="Teknotama (PT Teknotama Prakarsa Mulia) adalah kontraktor &amp; integrator infrastruktur IT enterprise di Jakarta Selatan. Spesialis jasa instalasi jaringan Fiber Optic, kabel LAN Cat6/Cat6A, server Data Center, Firewall Fortinet/Cisco/MikroTik, Wi-Fi Enterprise, IP CCTV &amp; Managed IT NOC 24/7.">
     <meta name="keywords" content="Teknotama, PT Teknotama Prakarsa Mulia, kontraktor infrastruktur it jakarta, jasa instalasi jaringan kantor, kontraktor fiber optic jakarta, jasa penarikan kabel lan cat6 cat6a, jasa setting mikrotik cisco fortinet, instalasi server data center jakarta, jasa pasang wifi kantor, jasa pasang cctv kantor, managed it service indonesia, kalkulator boq jaringan">
     <meta name="author" content="PT Teknotama Prakarsa Mulia">
@@ -395,18 +396,28 @@
                 </div>
             </nav>
 
-            <!-- CTA Desktop -->
-            <div class="hidden lg:flex items-center">
+            <!-- CTA Desktop & Language Toggle -->
+            <div class="hidden lg:flex items-center gap-3">
+                <div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 text-[11px] font-bold" role="group" aria-label="Language switch">
+                    <button type="button" data-lang-btn="id" class="lang-switch-btn px-2.5 py-1 rounded-full transition-all bg-white text-slate-900 shadow-sm">ID</button>
+                    <button type="button" data-lang-btn="en" class="lang-switch-btn px-2.5 py-1 rounded-full transition-all text-slate-500 hover:text-slate-900">EN</button>
+                </div>
                 <a href="kontak.html" class="bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold text-xs xl:text-sm px-6 py-2.5 rounded-full shadow-md shadow-red-600/20 hover:shadow-lg transition-all flex items-center gap-2">
                     <i data-lucide="headset" class="w-4 h-4"></i>
                     Konsultasi Gratis
                 </a>
             </div>
 
-            <!-- Mobile Menu Toggle -->
-            <button id="mobile-menu-btn" type="button" class="lg:hidden p-2 text-slate-700 hover:text-[#d9141d] focus:outline-none" aria-label="Toggle Navigation">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
+            <!-- Mobile Controls (Language + Menu Toggle) -->
+            <div class="flex lg:hidden items-center gap-2">
+                <div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 text-[11px] font-bold" role="group" aria-label="Language switch">
+                    <button type="button" data-lang-btn="id" class="lang-switch-btn px-2 py-0.5 rounded-full transition-all bg-white text-slate-900 shadow-sm">ID</button>
+                    <button type="button" data-lang-btn="en" class="lang-switch-btn px-2 py-0.5 rounded-full transition-all text-slate-500 hover:text-slate-900">EN</button>
+                </div>
+                <button id="mobile-menu-btn" type="button" class="p-2 text-slate-700 hover:text-[#d9141d] focus:outline-none" aria-label="Toggle Navigation">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile Drawer Menu -->
@@ -441,24 +452,24 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="py-10 lg:py-20 max-w-xl space-y-5">
-                <h1 class="text-4xl sm:text-5xl lg:text-[50px] font-extrabold tracking-tight leading-[1.14] text-slate-950">
+                <h1 class="text-4xl sm:text-5xl lg:text-[50px] font-extrabold tracking-tight leading-[1.14] text-slate-950" data-en-html="Teknotama — IT Infrastructure, &lt;span class=&quot;text-[#d9141d]&quot;&gt;Fiber Optic &amp;amp; Server&lt;/span&gt; Jakarta">
                     Teknotama — Infrastruktur IT, <span class="text-[#d9141d]">Fiber Optic &amp; Server</span> Jakarta
                 </h1>
 
-                <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-medium max-w-md">
+                <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-medium max-w-md" data-en-html="&lt;strong&gt;PT Teknotama Prakarsa Mulia&lt;/strong&gt; — Certified contractor for Fiber Optic/Cat6A LAN, Enterprise Wi-Fi, Data Center, Firewall &amp;amp; IP CCTV.">
                     <strong>PT Teknotama Prakarsa Mulia</strong> — Kontraktor Fiber Optic/LAN Cat6A, Wi-Fi Enterprise, Data Center, Firewall &amp; IP CCTV bergaransi resmi.
                 </p>
 
                 <div class="flex flex-wrap items-center gap-4 pt-2">
                     <a href="#kontak" class="inline-flex items-center gap-2.5 bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full shadow-lg shadow-red-600/25 transition-all transform hover:-translate-y-0.5">
-                        <span>Diskusi Arsitektur IT</span>
+                        <span data-en="Discuss IT Architecture">Diskusi Arsitektur IT</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                     <a href="tentang.html" class="inline-flex items-center gap-2.5 text-slate-800 hover:text-[#d9141d] font-bold text-xs sm:text-sm px-3 py-2 transition-colors group">
                         <span class="w-9 h-9 rounded-full border border-slate-300 group-hover:border-[#d9141d] flex items-center justify-center bg-white shadow-sm">
                             <i data-lucide="play" class="w-3.5 h-3.5 fill-current ml-0.5"></i>
                         </span>
-                        <span>Pelajari Lebih Lanjut</span>
+                        <span data-en="Learn More">Pelajari Lebih Lanjut</span>
                     </a>
                 </div>
             </div>
@@ -468,7 +479,7 @@
     <!-- ================= PARTNER VENDOR STRIP ================= -->
     <section class="py-8 bg-white fade-in">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-center text-sm sm:text-base font-extrabold text-slate-800 mb-5">Dukungan Teknologi &amp; Partner Vendor Resmi</h2>
+            <h2 class="text-center text-sm sm:text-base font-extrabold text-slate-800 mb-5" data-en="Technology Support &amp; Official Vendor Partners">Dukungan Teknologi &amp; Partner Vendor Resmi</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 items-center">
                 <!-- Cisco -->
                 <div class="corp-card rounded-xl h-20 px-4 flex flex-col items-center justify-center">
@@ -523,7 +534,7 @@
             <!-- Section Eyebrow -->
             <div class="flex items-center justify-center gap-4 mb-8">
                 <span class="eyebrow-line"></span>
-                <span class="text-xs sm:text-sm font-bold text-[#d9141d] tracking-wide">Tentang Teknotama</span>
+                <span class="text-xs sm:text-sm font-bold text-[#d9141d] tracking-wide" data-en="About Teknotama">Tentang Teknotama</span>
                 <span class="eyebrow-line"></span>
             </div>
 
@@ -541,16 +552,16 @@
 
                 <!-- Right Content -->
                 <div class="lg:col-span-6 space-y-5">
-                    <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-950 leading-tight">
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-950 leading-tight" data-en="Building Digital Foundations for the Future of Business.">
                         Membangun Fondasi Digital untuk Masa Depan Bisnis.
                     </h2>
-                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed" data-en-html="&lt;strong&gt;PT Teknotama Prakarsa Mulia&lt;/strong&gt; is an enterprise IT solutions provider focused on designing, implementing, and managing information technology infrastructure.">
                         <strong>PT Teknotama Prakarsa Mulia</strong> merupakan penyedia solusi IT enterprise yang berfokus pada perancangan, implementasi, dan pengelolaan infrastruktur teknologi informasi.
                     </p>
 
                     <!-- Expandable Full Details (Dibuka saat klik Baca Selengkapnya) -->
                     <div id="about-more-panel" class="hidden space-y-4 pt-2 border-t border-slate-200 text-xs sm:text-sm text-slate-600">
-                        <p class="leading-relaxed">
+                        <p class="leading-relaxed" data-en-html="Established in 2021, we ensure uninterrupted network architecture (&lt;em&gt;zero-downtime execution&lt;/em&gt;), structured cabling compliant with ANSI/TIA-568 standards, and support from CCNA, CCNP, Fortinet NSE, &amp;amp; MTCWE certified engineers for projects across Indonesia.">
                             Berdiri sejak 2021, kami menjamin arsitektur jaringan tanpa henti (<em>zero-downtime execution</em>), pengkabelan terstruktur sesuai standar ANSI/TIA-568, serta dukungan insinyur bersertifikasi CCNA, CCNP, Fortinet NSE, &amp; MTCWE untuk proyek di seluruh Indonesia.
                         </p>
                         <div class="grid grid-cols-2 gap-3 pt-1">
@@ -564,18 +575,18 @@
                             </div>
                             <div class="flex items-center gap-2 font-semibold text-slate-800">
                                 <i data-lucide="check-circle-2" class="w-4 h-4 text-[#d9141d] flex-shrink-0"></i>
-                                <span>Uji Fluke &amp; OTDR</span>
+                                <span data-en="Fluke &amp; OTDR Testing">Uji Fluke &amp; OTDR</span>
                             </div>
                             <div class="flex items-center gap-2 font-semibold text-slate-800">
                                 <i data-lucide="check-circle-2" class="w-4 h-4 text-[#d9141d] flex-shrink-0"></i>
-                                <span>Respons &lt; 2 Jam</span>
+                                <span data-en="Response &lt; 2 Hours">Respons &lt; 2 Jam</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="pt-1">
                         <a href="tentang.html" class="inline-flex items-center gap-2 bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md shadow-red-600/20 transition-all">
-                            <span>Baca Selengkapnya</span>
+                            <span data-en="Read More">Baca Selengkapnya</span>
                             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                         </a>
                     </div>
@@ -589,7 +600,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-center gap-4 mb-8">
                 <span class="eyebrow-line"></span>
-                <span class="text-xs sm:text-sm font-bold text-[#d9141d] tracking-wide">Layanan Utama</span>
+                <span class="text-xs sm:text-sm font-bold text-[#d9141d] tracking-wide" data-en="Core Services">Layanan Utama</span>
                 <span class="eyebrow-line"></span>
             </div>
 
@@ -602,7 +613,7 @@
                         </div>
                         <div>
                             <h3 class="text-base font-extrabold text-slate-900 leading-snug">Enterprise Network &amp; Structured Cabling</h3>
-                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed" data-en="Cat6/Cat6A/Fiber Optic structured cabling installation, Core Switch &amp; Cisco/MikroTik Router configuration, VLAN, and Wi-Fi 6.">
                                 Pemasangan kabel terstruktur Cat6/Cat6A/Fiber Optic, konfigurasi Core Switch, Router Cisco/MikroTik, VLAN, dan Wi-Fi 6.
                             </p>
                         </div>
@@ -612,7 +623,7 @@
                             <span>Wi-Fi Enterprise</span>
                         </a>
                         <a href="jasa-instalasi-jaringan-fiber-optic.html" class="inline-flex items-center gap-1 text-xs font-bold text-[#d9141d] hover:underline">
-                            <span>Pelajari</span>
+                            <span data-en="Learn More">Pelajari</span>
                             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                         </a>
                     </div>
@@ -626,14 +637,14 @@
                         </div>
                         <div>
                             <h3 class="text-base font-extrabold text-slate-900 leading-snug">Data Center &amp; Cloud Infrastructure</h3>
-                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed" data-en="Design and consolidation of physical servers to Private/Hybrid Cloud (VMware ESXi, AWS, Proxmox) with high availability.">
                                 Desain dan konsolidasi server fisik ke Private/Hybrid Cloud (VMware ESXi, AWS, Proxmox) dengan ketersediaan tinggi.
                             </p>
                         </div>
                     </div>
                     <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
                         <a href="jasa-server-data-center-cloud.html" class="inline-flex items-center gap-1 text-xs font-bold text-[#d9141d] hover:underline">
-                            <span>Pelajari</span>
+                            <span data-en="Learn More">Pelajari</span>
                             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                         </a>
                     </div>
@@ -647,14 +658,14 @@
                         </div>
                         <div>
                             <h3 class="text-base font-extrabold text-slate-900 leading-snug">Cybersecurity &amp; Perimeter Defense</h3>
-                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed" data-en="Office network traffic protection with Next-Gen Firewall (Fortinet/Palo Alto), IPS/IDS, and inter-branch IPsec VPN.">
                                 Proteksi lalu lintas jaringan kantor dengan Next-Gen Firewall (Fortinet/Palo Alto), IPS/IDS, dan IPsec VPN antar cabang.
                             </p>
                         </div>
                     </div>
                     <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
                         <a href="jasa-firewall-keamanan-jaringan-vpn.html" class="inline-flex items-center gap-1 text-xs font-bold text-[#d9141d] hover:underline">
-                            <span>Pelajari</span>
+                            <span data-en="Learn More">Pelajari</span>
                             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                         </a>
                     </div>
@@ -668,14 +679,14 @@
                         </div>
                         <div>
                             <h3 class="text-base font-extrabold text-slate-900 leading-snug">Managed IT Services &amp; NOC 24/7</h3>
-                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed" data-en="Routine server room maintenance, backup UPS power, MDF/IDF rack cable tidying, and 24/7 network monitoring.">
                                 Pemeliharaan rutin ruang server, UPS cadangan daya, perapihan kabel rack MDF/IDF, dan pemantauan jaringan 24/7.
                             </p>
                         </div>
                     </div>
                     <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
                         <a href="jasa-managed-it-support-maintenance-jakarta.html" class="inline-flex items-center gap-1 text-xs font-bold text-[#d9141d] hover:underline">
-                            <span>Pelajari</span>
+                            <span data-en="Learn More">Pelajari</span>
                             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                         </a>
                     </div>
@@ -689,14 +700,14 @@
                         </div>
                         <div>
                             <h3 class="text-base font-extrabold text-slate-900 leading-snug">Smart Office &amp; IP Surveillance</h3>
-                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed" data-en="HD/4K IP Camera CCTV installation with H.265+ NVR storage, RFID/Biometric door access control, and IoT.">
                                 Instalasi CCTV IP Camera HD/4K dengan NVR storage H.265+, Access Control RFID/Biometrik pintu gedung, dan IoT.
                             </p>
                         </div>
                     </div>
                     <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
                         <a href="jasa-pasang-cctv-smart-office.html" class="inline-flex items-center gap-1 text-xs font-bold text-[#d9141d] hover:underline">
-                            <span>Pelajari</span>
+                            <span data-en="Learn More">Pelajari</span>
                             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                         </a>
                     </div>
@@ -709,15 +720,15 @@
                             <i data-lucide="shopping-bag" class="w-6 h-6 stroke-[1.75]"></i>
                         </div>
                         <div>
-                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">Pengadaan Perangkat Hardware IT</h3>
-                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug" data-en="IT Hardware Procurement">Pengadaan Perangkat Hardware IT</h3>
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed" data-en="Supply of Server Racks, Workstations, NAS Storage, Managed PoE+ Switches, and officially warranted software licenses.">
                                 Penyediaan unit Server Rack, Workstation, NAS Storage, Switch Managed PoE+, dan lisensi software bergaransi resmi.
                             </p>
                         </div>
                     </div>
                     <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
                         <a href="kalkulator-boq-it.html" class="inline-flex items-center gap-1 text-xs font-bold text-[#d9141d] hover:underline">
-                            <span>Pelajari</span>
+                            <span data-en="Learn More">Pelajari</span>
                             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                         </a>
                     </div>
@@ -727,14 +738,14 @@
             <!-- Cakupan Area B2B Jakarta, Jabodetabek & Kawasan Industri -->
             <div class="mt-8 corp-card rounded-2xl p-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 bg-slate-50/70">
                 <div class="space-y-1.5 max-w-2xl">
-                    <h3 class="text-base font-extrabold text-slate-900">Cakupan Tim Onsite Jakarta, Jabodetabek &amp; Seluruh Indonesia</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">
+                    <h3 class="text-base font-extrabold text-slate-900" data-en="Onsite Team Coverage: Jakarta, Greater Jakarta &amp; All of Indonesia">Cakupan Tim Onsite Jakarta, Jabodetabek &amp; Seluruh Indonesia</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed" data-en-html="Based at Belleza BSA South Jakarta, PT Teknotama engineers provide Site Surveys &amp;amp; project execution for offices in &lt;strong&gt;SCBD, Sudirman, Thamrin, Kuningan, TB Simatupang, Kelapa Gading&lt;/strong&gt;, business districts in &lt;strong&gt;Tangerang, BSD Serpong, Depok, Bogor, Bekasi&lt;/strong&gt;, industrial estates in &lt;strong&gt;Cikarang, MM2100, Jababeka, Karawang&lt;/strong&gt;, and branch rollouts nationwide.">
                         Berkantor di Belleza BSA Jakarta Selatan, engineer PT Teknotama melayani Site Survey &amp; pengerjaan proyek untuk perkantoran <strong>SCBD, Sudirman, Thamrin, Kuningan, TB Simatupang, Kelapa Gading</strong>, kawasan bisnis <strong>Tangerang, BSD Serpong, Depok, Bogor, Bekasi</strong>, kawasan industri <strong>Cikarang, MM2100, Jababeka, Karawang</strong>, hingga proyek cabang seluruh Indonesia.
                     </p>
                 </div>
                 <a href="#kontak" class="flex-shrink-0 inline-flex items-center justify-center gap-2 bg-slate-950 hover:bg-[#d9141d] text-white font-bold text-xs px-5 py-3 rounded-full transition-all">
                     <i data-lucide="map-pin" class="w-4 h-4"></i>
-                    <span>Jadwalkan Site Survey Gratis</span>
+                    <span data-en="Schedule Free Site Survey">Jadwalkan Site Survey Gratis</span>
                 </a>
             </div>
         </div>
@@ -754,14 +765,14 @@
     <div class="infra-banner__inner">
       <div class="infra-banner__content">
         <span class="infra-banner__accent" aria-hidden="true"></span>
-        <h2 id="infra-banner-heading fade-in" class="infra-banner__title">
+        <h2 id="infra-banner-heading fade-in" class="infra-banner__title" data-en="Calculate Your Infrastructure Needs">
           Hitung Kebutuhan Infrastruktur Anda
         </h2>
-        <p class="infra-banner__desc fade-in">
+        <p class="infra-banner__desc fade-in" data-en="Use our IT infrastructure calculator to get the right solution recommendations tailored to your business scale.">
           Gunakan kalkulator kebutuhan IT kami untuk mendapatkan rekomendasi solusi yang tepat sesuai skala bisnis anda.
         </p>
         <a id="banner-kalkulator-btn" href="kalkulator-boq-it.html" class="infra-banner__cta fade-in">
-          <span>Mulai Sekarang</span>
+          <span data-en="Start Now">Mulai Sekarang</span>
           <span class="infra-banner__arrow" aria-hidden="true">&#8594;</span>
         </a>
       </div>
@@ -775,9 +786,9 @@
                 <div>
                     <div class="flex items-center gap-3 mb-2">
                         <span class="eyebrow-line"></span>
-                        <span class="text-xs sm:text-sm font-bold text-[#d9141d]">Portofolio</span>
+                        <span class="text-xs sm:text-sm font-bold text-[#d9141d]" data-en="Portfolio">Portofolio</span>
                     </div>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-950">Implementasi Nyata untuk Bisnis Anda</h2>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-950" data-en="Real-World Implementations for Your Business">Implementasi Nyata untuk Bisnis Anda</h2>
                 </div>
                 <!-- <button id="toggle-portfolio-filters" type="button" class="inline-flex items-center gap-1 text-xs font-bold text-[#d9141d] hover:underline">
                     <span>Lihat Semua Portofolio</span>
@@ -787,7 +798,7 @@
 
             <!-- Filter Tabs -->
             <div class="flex flex-wrap gap-2.5 mb-6" id="portfolio-filters">
-                <button type="button" data-filter="all" class="portfolio-btn active px-4 py-2 rounded-full text-xs font-bold bg-[#d9141d] text-white transition-all">Semua Proyek</button>
+                <button type="button" data-filter="all" class="portfolio-btn active px-4 py-2 rounded-full text-xs font-bold bg-[#d9141d] text-white transition-all" data-en="All Projects">Semua Proyek</button>
                 <button type="button" data-filter="networking" class="portfolio-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all">Networking &amp; Cable</button>
                 <button type="button" data-filter="security" class="portfolio-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all">Cyber Security</button>
                 <button type="button" data-filter="cloud" class="portfolio-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all">Cloud &amp; Data Center</button>
@@ -804,13 +815,13 @@
                          onerror="this.onerror=null; this.src='img/portfolio_pic1.jpg';">
                     <!-- Default: gradient bawah, konten di bawah -->
                     <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:opacity-0 transition-opacity duration-400 flex flex-col justify-end p-6 pointer-events-none">
-                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug">Fiber Optic Backbone Gedung 25 Lantai</h3>
-                        <p class="text-slate-200 text-xs mt-1.5 leading-relaxed opacity-90">Penarikan 5.000m kabel Fiber Optic &amp; Cat6A terstruktur untuk area perkantoran CBD Jakarta.</p>
+                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug" data-en="25-Story Building Fiber Optic Backbone">Fiber Optic Backbone Gedung 25 Lantai</h3>
+                        <p class="text-slate-200 text-xs mt-1.5 leading-relaxed opacity-90" data-en="5,000m structured Fiber Optic &amp; Cat6A cabling installation for a CBD Jakarta office tower.">Penarikan 5.000m kabel Fiber Optic &amp; Cat6A terstruktur untuk area perkantoran CBD Jakarta.</p>
                     </div>
                     <!-- Hover: gray box full, konten di tengah -->
                     <div class="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col justify-center p-6 pointer-events-none">
-                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug">Fiber Optic Backbone Gedung 25 Lantai</h3>
-                        <p class="text-slate-200 text-xs mt-2 leading-relaxed">Penarikan 5.000m kabel Fiber Optic &amp; Cat6A terstruktur untuk area perkantoran CBD Jakarta.</p>
+                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug" data-en="25-Story Building Fiber Optic Backbone">Fiber Optic Backbone Gedung 25 Lantai</h3>
+                        <p class="text-slate-200 text-xs mt-2 leading-relaxed" data-en="5,000m structured Fiber Optic &amp; Cat6A cabling installation for a CBD Jakarta office tower.">Penarikan 5.000m kabel Fiber Optic &amp; Cat6A terstruktur untuk area perkantoran CBD Jakarta.</p>
                     </div>
                 </div>
 
@@ -823,13 +834,13 @@
                          onerror="this.onerror=null; this.src='img/portfolio_pic2.jpg';">
                     <!-- Default: gradient bawah, konten di bawah -->
                     <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:opacity-0 transition-opacity duration-400 flex flex-col justify-end p-6 pointer-events-none">
-                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug">UTM Fortinet Firewall 15 Cabang Bank</h3>
-                        <p class="text-slate-200 text-xs mt-1.5 leading-relaxed opacity-90">Konfigurasi Site-to-Site Encrypted VPN IPsec antar kantor cabang institusi perbankan daerah.</p>
+                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug" data-en="UTM Fortinet Firewall for 15 Bank Branches">UTM Fortinet Firewall 15 Cabang Bank</h3>
+                        <p class="text-slate-200 text-xs mt-1.5 leading-relaxed opacity-90" data-en="Site-to-Site encrypted IPsec VPN configuration across regional banking branch offices.">Konfigurasi Site-to-Site Encrypted VPN IPsec antar kantor cabang institusi perbankan daerah.</p>
                     </div>
                     <!-- Hover: gray box full, konten di tengah -->
                     <div class="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col justify-center p-6 pointer-events-none">
-                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug">UTM Fortinet Firewall 15 Cabang Bank</h3>
-                        <p class="text-slate-200 text-xs mt-2 leading-relaxed">Konfigurasi Site-to-Site Encrypted VPN IPsec antar kantor cabang institusi perbankan daerah.</p>
+                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug" data-en="UTM Fortinet Firewall for 15 Bank Branches">UTM Fortinet Firewall 15 Cabang Bank</h3>
+                        <p class="text-slate-200 text-xs mt-2 leading-relaxed" data-en="Site-to-Site encrypted IPsec VPN configuration across regional banking branch offices.">Konfigurasi Site-to-Site Encrypted VPN IPsec antar kantor cabang institusi perbankan daerah.</p>
                     </div>
                 </div>
 
@@ -842,13 +853,13 @@
                          onerror="this.onerror=null; this.src='img/portfolio_pic3.jpg';">
                     <!-- Default: gradient bawah, konten di bawah -->
                     <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:opacity-0 transition-opacity duration-400 flex flex-col justify-end p-6 pointer-events-none">
-                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug">Migrasi Private Cloud VMware Logistics</h3>
-                        <p class="text-slate-200 text-xs mt-1.5 leading-relaxed opacity-90">Konsolidasi 20 physical server ke VMware ESXi cluster dengan sistem disaster recovery instan.</p>
+                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug" data-en="VMware Private Cloud Migration — Logistics">Migrasi Private Cloud VMware Logistics</h3>
+                        <p class="text-slate-200 text-xs mt-1.5 leading-relaxed opacity-90" data-en="Consolidation of 20 physical servers into a VMware ESXi cluster with instant disaster recovery.">Konsolidasi 20 physical server ke VMware ESXi cluster dengan sistem disaster recovery instan.</p>
                     </div>
                     <!-- Hover: gray box full, konten di tengah -->
                     <div class="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col justify-center p-6 pointer-events-none">
-                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug">Migrasi Private Cloud VMware Logistics</h3>
-                        <p class="text-slate-200 text-xs mt-2 leading-relaxed">Konsolidasi 20 physical server ke VMware ESXi cluster dengan sistem disaster recovery instan.</p>
+                        <h3 class="font-extrabold text-base sm:text-lg text-white leading-snug" data-en="VMware Private Cloud Migration — Logistics">Migrasi Private Cloud VMware Logistics</h3>
+                        <p class="text-slate-200 text-xs mt-2 leading-relaxed" data-en="Consolidation of 20 physical servers into a VMware ESXi cluster with instant disaster recovery.">Konsolidasi 20 physical server ke VMware ESXi cluster dengan sistem disaster recovery instan.</p>
                     </div>
                 </div>
             </div>
@@ -861,13 +872,13 @@
         <header class="testimonials-header">
           <div class="testimonials-eyebrow">
             <span class="testimonials-line" aria-hidden="true"></span>
-            <span>Testimoni Klien</span>
+            <span data-en="Client Testimonials">Testimoni Klien</span>
             <span class="testimonials-line" aria-hidden="true"></span>
           </div>
-          <h2 id="testimonials-heading" class="testimonials-title">
+          <h2 id="testimonials-heading" class="testimonials-title" data-en="What Clients Say About Teknotama">
             Kata Mereka tentang Teknotama
           </h2>
-          <p class="text-xs sm:text-sm text-slate-500 mt-2 max-w-lg mx-auto">
+          <p class="text-xs sm:text-sm text-slate-500 mt-2 max-w-lg mx-auto" data-en="Corporate partners and business institutions trusting Teknotama's IT infrastructure reliability.">
             Kepercayaan mitra korporat dan institusi bisnis terhadap keandalan infrastruktur IT Teknotama.
           </p>
         </header>
@@ -886,7 +897,7 @@
                 </div>
                 <span class="text-[10px] font-bold text-[#d9141d] bg-red-50 border border-red-100 px-2.5 py-0.5 rounded-full">Fiber Optic &amp; LAN</span>
               </div>
-              <p class="testimonial-text text-slate-700 text-sm leading-relaxed">
+              <p class="testimonial-text text-slate-700 text-sm leading-relaxed" data-en="&ldquo;The Teknotama team worked professionally on our company network installation. Fiber Optic cabling and Fluke certification were neat and trouble-free.&rdquo;">
                 &ldquo;Tim Teknotama bekerja secara profesional dalam menangani instalasi jaringan perusahaan kami. Penarikan kabel FO dan sertifikasi Fluke rapi tanpa kendala.&rdquo;
               </p>
             </div>
@@ -912,7 +923,7 @@
                 </div>
                 <span class="text-[10px] font-bold text-[#d9141d] bg-red-50 border border-red-100 px-2.5 py-0.5 rounded-full">Data Center &amp; Cloud</span>
               </div>
-              <p class="testimonial-text text-slate-700 text-sm leading-relaxed">
+              <p class="testimonial-text text-slate-700 text-sm leading-relaxed" data-en="&ldquo;We were greatly helped by Teknotama's Data Center and Cloud Infrastructure solutions. The server cluster migration ran smoothly with zero operational downtime.&rdquo;">
                 &ldquo;Kami sangat terbantu dengan solusi Data Center dan Cloud Infrastructure dari Teknotama. Migrasi cluster server berjalan mulus tanpa downtime operasional.&rdquo;
               </p>
             </div>
@@ -938,7 +949,7 @@
                 </div>
                 <span class="text-[10px] font-bold text-[#d9141d] bg-red-50 border border-red-100 px-2.5 py-0.5 rounded-full">Managed IT &amp; Security</span>
               </div>
-              <p class="testimonial-text text-slate-700 text-sm leading-relaxed">
+              <p class="testimonial-text text-slate-700 text-sm leading-relaxed" data-en="&ldquo;Teknotama's service is very satisfying. Fast SLA ticket response under 2 hours and technicians who are always on standby to maintain our system uptime.&rdquo;">
                 &ldquo;Pelayanan Teknotama sangat memuaskan. Respons cepat tiket SLA di bawah 2 jam dan tim teknisi yang selalu siap siaga menjaga uptime sistem kami.&rdquo;
               </p>
             </div>
@@ -960,21 +971,21 @@
             <div class="text-center mb-8 space-y-2">
                 <div class="flex items-center justify-center gap-4">
                     <span class="eyebrow-line"></span>
-                    <span class="text-xs sm:text-sm font-bold text-[#d9141d]">Tanya Jawab</span>
+                    <span class="text-xs sm:text-sm font-bold text-[#d9141d]" data-en="FAQ">Tanya Jawab</span>
                     <span class="eyebrow-line"></span>
                 </div>
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-950">Pertanyaan Sering Diajukan</h2>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-950" data-en="Frequently Asked Questions">Pertanyaan Sering Diajukan</h2>
             </div>
 
             <div class="space-y-3.5 fade-in-group" id="faq-accordion">
                 <!-- FAQ 1 -->
                 <div class="rounded-2xl bg-white border border-red-200/90 shadow-sm overflow-hidden transition-all">
                     <button type="button" aria-expanded="false" class="faq-btn w-full px-6 py-4 text-center flex items-center justify-between text-slate-900 font-bold text-sm sm:text-base focus:outline-none">
-                        <span class="flex-1 text-center">Berapa lama garansi instalasi jaringan dan kabel di Teknotama?</span>
+                        <span class="flex-1 text-center" data-en="How long is the network and cabling installation warranty at Teknotama?">Berapa lama garansi instalasi jaringan dan kabel di Teknotama?</span>
                         <i data-lucide="chevron-down" class="w-5 h-5 text-slate-700 transition-transform duration-300 flex-shrink-0"></i>
                     </button>
                     <div class="faq-content hidden px-8 pb-5 text-slate-500 text-xs sm:text-sm text-center leading-relaxed">
-                        <div class="border-t border-slate-200 pt-3.5">
+                        <div class="border-t border-slate-200 pt-3.5" data-en="We provide up to 1 (one) year warranty on structured cabling workmanship and 1–3 years official manufacturer/distributor warranty on hardware (Cisco, MikroTik, Fortinet).">
                             Kami memberikan garansi penataan kabel terstruktur hingga 1 (satu) tahun serta garansi hardware resmi dari pabrikan/distributor (Cisco, MikroTik, Fortinet) selama 1–3 tahun.
                         </div>
                     </div>
@@ -983,11 +994,11 @@
                 <!-- FAQ 2 (Expanded by default sesuai Mockup UI/UX) -->
                 <div class="rounded-2xl bg-white border border-red-300 shadow-sm overflow-hidden transition-all">
                     <button type="button" aria-expanded="true" class="faq-btn w-full px-6 py-4 text-center flex items-center justify-between text-slate-900 font-bold text-sm sm:text-base focus:outline-none">
-                        <span class="flex-1 text-center">Apakah Teknotama melayani proyek di luar kota/luar pulau?</span>
+                        <span class="flex-1 text-center" data-en="Does Teknotama handle projects outside Jakarta or on other islands?">Apakah Teknotama melayani proyek di luar kota/luar pulau?</span>
                         <i data-lucide="chevron-down" class="w-5 h-5 text-slate-700 rotate-180 transition-transform duration-300 flex-shrink-0"></i>
                     </button>
                     <div class="faq-content px-8 pb-5 text-slate-500 text-xs sm:text-sm text-center leading-relaxed">
-                        <div class="border-t border-slate-200 pt-3.5">
+                        <div class="border-t border-slate-200 pt-3.5" data-en="Yes, our Network Engineers and Technicians are ready to execute network installation projects across all regions of Indonesia (Sumatra, Java, Kalimantan, Sulawesi, to Bali/Nusa Tenggara).">
                             Ya, tim Network Engineer dan Teknisi kami siap menangani proyek instalasi jaringan di seluruh wilayah Indonesia (Sumatera, Jawa, Kalimantan, Sulawesi, hingga Bali/Nusa Tenggara).
                         </div>
                     </div>
@@ -996,11 +1007,11 @@
                 <!-- FAQ 3 -->
                 <div class="rounded-2xl bg-white border border-red-200/90 shadow-sm overflow-hidden transition-all">
                     <button type="button" aria-expanded="false" class="faq-btn w-full px-6 py-4 text-center flex items-center justify-between text-slate-900 font-bold text-sm sm:text-base focus:outline-none">
-                        <span class="flex-1 text-center">Bagaimana mekanisme dukungan SLA emergency tiket saat terjadi kendala?</span>
+                        <span class="flex-1 text-center" data-en="How does emergency SLA ticket support work when an issue occurs?">Bagaimana mekanisme dukungan SLA emergency tiket saat terjadi kendala?</span>
                         <i data-lucide="chevron-down" class="w-5 h-5 text-slate-700 transition-transform duration-300 flex-shrink-0"></i>
                     </button>
                     <div class="faq-content hidden px-8 pb-5 text-slate-500 text-xs sm:text-sm text-center leading-relaxed">
-                        <div class="border-t border-slate-200 pt-3.5">
+                        <div class="border-t border-slate-200 pt-3.5" data-en-html="Managed Services clients receive 24/7 NOC monitoring support. For high-priority incidents (&lt;em&gt;Critical Emergency&lt;/em&gt;), our onsite technician response time is under 2 hours for the Greater Jakarta (Jabodetabek) area.">
                             Klien Managed Services berhak atas dukungan pemantauan NOC 24/7. Untuk gangguan prioritas tinggi (<em>Critical Emergency</em>), waktu respons tim teknisi onsite kami di bawah 2 jam untuk wilayah Jabodetabek.
                         </div>
                     </div>
@@ -1009,11 +1020,11 @@
                 <!-- FAQ 4 -->
                 <div class="rounded-2xl bg-white border border-red-200/90 shadow-sm overflow-hidden transition-all">
                     <button type="button" aria-expanded="false" class="faq-btn w-full px-6 py-4 text-center flex items-center justify-between text-slate-900 font-bold text-sm sm:text-base focus:outline-none">
-                        <span class="flex-1 text-center">Apakah Teknotama menyediakan layanan Site Survey gratis sebelum pengajuan penawaran BOQ?</span>
+                        <span class="flex-1 text-center" data-en="Does Teknotama provide a free Site Survey before submitting a BOQ quotation?">Apakah Teknotama menyediakan layanan Site Survey gratis sebelum pengajuan penawaran BOQ?</span>
                         <i data-lucide="chevron-down" class="w-5 h-5 text-slate-700 transition-transform duration-300 flex-shrink-0"></i>
                     </button>
                     <div class="faq-content hidden px-8 pb-5 text-slate-500 text-xs sm:text-sm text-center leading-relaxed">
-                        <div class="border-t border-slate-200 pt-3.5">
+                        <div class="border-t border-slate-200 pt-3.5" data-en="Yes, for Jakarta and Greater Jakarta (SCBD, Sudirman, Kuningan, TB Simatupang, Tangerang, Bekasi, Cikarang, Depok, Bogor), our Solutions Architect team provides Site Surveys to accurately measure cable pathways, Access Point placements, and hardware requirements before preparing an official BOQ.">
                             Ya, untuk wilayah Jakarta dan Jabodetabek (SCBD, Sudirman, Kuningan, TB Simatupang, Tangerang, Bekasi, Cikarang, Depok, Bogor), tim Solutions Architect kami menyediakan jadwal Site Survey guna mengukur jalur kabel, titik Access Point, serta kebutuhan perangkat secara presisi sebelum menyusun BOQ resmi.
                         </div>
                     </div>
@@ -1022,11 +1033,11 @@
                 <!-- FAQ 5 -->
                 <div class="rounded-2xl bg-white border border-red-200/90 shadow-sm overflow-hidden transition-all">
                     <button type="button" aria-expanded="false" class="faq-btn w-full px-6 py-4 text-center flex items-center justify-between text-slate-900 font-bold text-sm sm:text-base focus:outline-none">
-                        <span class="flex-1 text-center">Bisakah penarikan kabel LAN, Fiber Optic, atau migrasi server dikerjakan di luar jam kerja kantor?</span>
+                        <span class="flex-1 text-center" data-en="Can LAN, Fiber Optic cabling, or server migration be performed outside office hours?">Bisakah penarikan kabel LAN, Fiber Optic, atau migrasi server dikerjakan di luar jam kerja kantor?</span>
                         <i data-lucide="chevron-down" class="w-5 h-5 text-slate-700 transition-transform duration-300 flex-shrink-0"></i>
                     </button>
                     <div class="faq-content hidden px-8 pb-5 text-slate-500 text-xs sm:text-sm text-center leading-relaxed">
-                        <div class="border-t border-slate-200 pt-3.5">
+                        <div class="border-t border-slate-200 pt-3.5" data-en-html="Yes. Using our &lt;em&gt;Zero-Downtime Execution&lt;/em&gt; methodology, our team performs configuration pre-staging at our workshop and schedules physical work or cutovers during &lt;em&gt;night shifts&lt;/em&gt; or weekends per Building Management permits.">
                             Bisa. Dengan metode <em>Zero-Downtime Execution</em>, tim kami melakukan pre-staging konfigurasi di workshop dan menjadwalkan pekerjaan fisik maupun cutover pada malam hari (<em>night shift</em>) atau akhir pekan sesuai izin Building Management gedung.
                         </div>
                     </div>
@@ -1035,11 +1046,11 @@
                 <!-- FAQ 6 -->
                 <div class="rounded-2xl bg-white border border-red-200/90 shadow-sm overflow-hidden transition-all">
                     <button type="button" aria-expanded="false" class="faq-btn w-full px-6 py-4 text-center flex items-center justify-between text-slate-900 font-bold text-sm sm:text-base focus:outline-none">
-                        <span class="flex-1 text-center">Dokumen teknis dan pengujian apa saja yang diterima perusahaan saat serah terima proyek?</span>
+                        <span class="flex-1 text-center" data-en="What technical documents and test reports does our company receive upon project handover?">Dokumen teknis dan pengujian apa saja yang diterima perusahaan saat serah terima proyek?</span>
                         <i data-lucide="chevron-down" class="w-5 h-5 text-slate-700 transition-transform duration-300 flex-shrink-0"></i>
                     </button>
                     <div class="faq-content hidden px-8 pb-5 text-slate-500 text-xs sm:text-sm text-center leading-relaxed">
-                        <div class="border-t border-slate-200 pt-3.5">
+                        <div class="border-t border-slate-200 pt-3.5" data-en="Every network installation handover includes Fluke Network Certifier reports (UTP Cat6/Cat6A) or OTDR/OPM test reports (Fiber Optic), As-Built Drawing topology documentation, IP/VLAN schemas, and TIA-606-B labeling schedules.">
                             Setiap serah terima proyek instalasi jaringan dilengkapi laporan hasil uji Fluke Network Certifier (UTP Cat6/Cat6A) atau OTDR/OPM (Fiber Optic), dokumentasi topologi As-Built Drawing, skema IP/VLAN, serta daftar labeling TIA-606-B.
                         </div>
                     </div>
@@ -1051,12 +1062,12 @@
     <!-- ================= RED SKYLINE CTA BANNER ================= -->
     <section id="cta-banner" class="py-12 lg:py-14 cta-red-skyline text-white text-center" style="background-image: linear-gradient(135deg, rgba(165, 14, 22, 0.90) 0%, rgba(217, 20, 29, 0.81) 50%, rgba(136, 12, 19, 0.88) 100%), url('assets/jakarta.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
-            <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight fade-in">
+            <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight fade-in" data-en-html="Build the Best IT Infrastructure&lt;br&gt;with TEKNOTAMA">
                 Wujudkan Infrastruktur IT<br>
                 Terbaik bersama TEKNOTAMA
             </h2>
             <div>
-                <a href="#kontak" class="inline-flex items-center justify-center bg-white hover:bg-slate-100 text-[#d9141d] font-extrabold text-xs sm:text-sm px-8 py-3.5 rounded-full shadow-xl transition-all transform hover:-translate-y-0.5 fade-in">
+                <a href="kontak.html" class="inline-flex items-center justify-center bg-white hover:bg-slate-100 text-[#d9141d] font-extrabold text-xs sm:text-sm px-8 py-3.5 rounded-full shadow-xl transition-all transform hover:-translate-y-0.5 fade-in" data-en="Free Consultation">
                     Konsultasi Gratis
                 </a>
             </div>
@@ -1095,7 +1106,7 @@
                     <h3 class="text-xs font-bold text-white mb-4 uppercase tracking-wider">Navigasi</h3>
                     <ul class="space-y-2.5 text-xs">
                         <li><a href="tentang.html" class="hover:text-white transition-colors">Tentang Kami</a></li>
-                        <li><a href="#layanan" class="hover:text-white transition-colors">Metodologi Kerja</a></li>
+                        <li><a href="#layanan" class="hover:text-white transition-colors" data-en="Work Methodology">Metodologi Kerja</a></li>
                         <li><a href="#portofolio" class="hover:text-white transition-colors">Portofolio</a></li>
                         <li><a href="kalkulator-boq-it.html" class="hover:text-white transition-colors">Kalkulator BOQ IT</a></li>
                         <li><a href="#faq" class="hover:text-white transition-colors">Tanya Jawab (FAQ)</a></li>
@@ -1150,16 +1161,16 @@
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                         TeknoAssist AI &amp; WhatsApp CS • 1 Box Terpadu
                     </div>
-                    <h3 class="text-lg font-extrabold text-white">Halo! Ada yang bisa dibantu? &#128075;</h3>
-                    <p class="text-[11px] text-slate-300 mt-0.5 leading-relaxed">Konsultasi instan dengan AI Field Engineer atau terhubung langsung ke WhatsApp CS resmi kami.</p>
+                    <h3 class="text-lg font-extrabold text-white" data-en-html="Hello! How can we help? &#128075;">Halo! Ada yang bisa dibantu? &#128075;</h3>
+                    <p class="text-[11px] text-slate-300 mt-0.5 leading-relaxed" data-en="Instant consultation with our AI Field Engineer or connect directly to our official WhatsApp CS.">Konsultasi instan dengan AI Field Engineer atau terhubung langsung ke WhatsApp CS resmi kami.</p>
                 </div>
 
                 <div class="flex-1 overflow-y-auto tkt-scroll p-3.5 space-y-2.5 bg-[#080c15]">
                     <!-- Action 1: Mulai Chat AI Engineer -->
                     <button id="widget-start-conversation" type="button" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-brand-600/40 rounded-2xl p-3.5 flex items-center justify-between gap-3 transition-all group">
                         <div>
-                            <span class="block text-xs font-bold text-white group-hover:text-brand-400 transition-colors">Mulai Konsultasi AI Engineer</span>
-                            <span class="block text-[11px] text-slate-400 mt-0.5">Ketik <strong class="text-emerald-400">"cs"</strong> di chat kapan saja untuk pindah ke WhatsApp</span>
+                            <span class="block text-xs font-bold text-white group-hover:text-brand-400 transition-colors" data-en="Start AI Engineer Consultation">Mulai Konsultasi AI Engineer</span>
+                            <span class="block text-[11px] text-slate-400 mt-0.5" data-en-html="Type &lt;strong class=&quot;text-emerald-400&quot;&gt;&amp;quot;cs&amp;quot;&lt;/strong&gt; anytime in chat to switch to WhatsApp">Ketik <strong class="text-emerald-400">"cs"</strong> di chat kapan saja untuk pindah ke WhatsApp</span>
                         </div>
                         <div class="w-9 h-9 rounded-xl bg-brand-600 text-white flex items-center justify-center flex-shrink-0 shadow-md shadow-brand-600/30">
                             <i data-lucide="bot" class="w-4 h-4"></i>
@@ -1169,7 +1180,7 @@
                     <!-- Action 2: Direct WhatsApp CS in the Same Box -->
                     <a id="widget-wa-direct-card" href="https://wa.me/6285167694457?text=Halo%20CS%20%26%20Tim%20Teknis%20PT%20Teknotama%20Prakarsa%20Mulia%2C%20saya%20ingin%20berkonsultasi%20mengenai%20infrastruktur%20IT." target="_blank" rel="noopener noreferrer" class="w-full text-left bg-emerald-950/50 hover:bg-emerald-900/60 border border-emerald-500/50 rounded-2xl p-3.5 flex items-center justify-between gap-3 transition-all group">
                         <div>
-                            <span class="block text-xs font-bold text-emerald-300 group-hover:text-white transition-colors">Chat Langsung CS via WhatsApp</span>
+                            <span class="block text-xs font-bold text-emerald-300 group-hover:text-white transition-colors" data-en="Direct CS Chat via WhatsApp">Chat Langsung CS via WhatsApp</span>
                             <span class="block text-[11px] text-emerald-200/80 mt-0.5">Official NOC &amp; Sales: +62 851-6769-4457</span>
                         </div>
                         <div class="w-9 h-9 rounded-xl bg-[#25D366] text-white flex items-center justify-center flex-shrink-0 shadow-md">
@@ -1180,19 +1191,19 @@
                     <!-- Pusat Bantuan SOP Lapangan -->
                     <div class="bg-[#11192b] border border-red-950/80 rounded-2xl p-3 space-y-2">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs font-bold text-white">Pusat Bantuan SOP Lapangan</span>
-                            <span class="text-[10px] text-brand-400 font-mono">8 Panduan</span>
+                            <span class="text-xs font-bold text-white" data-en="Field SOP Help Center">Pusat Bantuan SOP Lapangan</span>
+                            <span class="text-[10px] text-brand-400 font-mono" data-en="8 Guides">8 Panduan</span>
                         </div>
                         <div class="relative">
                             <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
-                            <input id="widget-help-search" type="text" placeholder="Cari SOP (TIA-568, FO, Fluke, SLA)..." class="w-full pl-8 pr-3 py-1.5 rounded-xl bg-[#080d1a] border border-red-950 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+                            <input id="widget-help-search" type="text" placeholder="Cari SOP (TIA-568, FO, Fluke, SLA)..." data-en-placeholder="Search SOP (TIA-568, FO, Fluke, SLA)..." class="w-full pl-8 pr-3 py-1.5 rounded-xl bg-[#080d1a] border border-red-950 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
                         </div>
                         <div id="widget-help-results" class="space-y-1.5 pt-1"></div>
                     </div>
 
                     <button id="widget-review-boq-card" type="button" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-red-950/80 rounded-2xl p-3 flex items-center justify-between gap-3 transition-all">
                         <div>
-                            <span class="block text-xs font-bold text-brand-400">Review Simulasi Kalkulator BOQ</span>
+                            <span class="block text-xs font-bold text-brand-400" data-en="Review BOQ Calculator Simulation">Review Simulasi Kalkulator BOQ</span>
                             <span id="ai-calc-context-badge" class="block text-[11px] text-slate-300 mt-0.5">Konteks BOQ Aktif: 60 User • 2 Lantai</span>
                         </div>
                         <i data-lucide="cpu" class="w-4 h-4 text-brand-400 flex-shrink-0"></i>
@@ -1282,6 +1293,7 @@
 
     <!-- Main Script -->
     <script src="script.js" defer></script>
+    <script src="i18n.js" defer></script>
 
     <!-- Fade-In Scroll Animation (Intersection Observer) -->
     <script>

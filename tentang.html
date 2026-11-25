@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Profil PT Teknotama Prakarsa Mulia, integrator IT untuk infrastruktur jaringan, data center, cloud, dan keamanan siber enterprise.">
     <title>Tentang Kami | PT Teknotama Prakarsa Mulia</title>
+    <meta name="i18n-title-en" content="About Us | PT Teknotama Prakarsa Mulia">
 
     <script type="application/ld+json">
     {
@@ -111,18 +112,28 @@
                 </div>
             </nav>
 
-            <!-- CTA Desktop -->
-            <div class="hidden lg:flex items-center">
+            <!-- CTA Desktop & Language Toggle -->
+            <div class="hidden lg:flex items-center gap-3">
+                <div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 text-[11px] font-bold" role="group" aria-label="Language switch">
+                    <button type="button" data-lang-btn="id" class="lang-switch-btn px-2.5 py-1 rounded-full transition-all bg-white text-slate-900 shadow-sm">ID</button>
+                    <button type="button" data-lang-btn="en" class="lang-switch-btn px-2.5 py-1 rounded-full transition-all text-slate-500 hover:text-slate-900">EN</button>
+                </div>
                 <a href="kontak.html" class="bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold text-xs xl:text-sm px-6 py-2.5 rounded-full shadow-md shadow-red-600/20 hover:shadow-lg transition-all flex items-center gap-2">
                     <i data-lucide="headset" class="w-4 h-4"></i>
                     Konsultasi Gratis
                 </a>
             </div>
 
-            <!-- Mobile Menu Toggle -->
-            <button id="mobile-menu-btn" type="button" class="lg:hidden p-2 text-slate-700 hover:text-[#d9141d] focus:outline-none" aria-label="Toggle Navigation">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
+            <!-- Mobile Controls (Language + Menu Toggle) -->
+            <div class="flex lg:hidden items-center gap-2">
+                <div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 text-[11px] font-bold" role="group" aria-label="Language switch">
+                    <button type="button" data-lang-btn="id" class="lang-switch-btn px-2 py-0.5 rounded-full transition-all bg-white text-slate-900 shadow-sm">ID</button>
+                    <button type="button" data-lang-btn="en" class="lang-switch-btn px-2 py-0.5 rounded-full transition-all text-slate-500 hover:text-slate-900">EN</button>
+                </div>
+                <button id="mobile-menu-btn" type="button" class="p-2 text-slate-700 hover:text-[#d9141d] focus:outline-none" aria-label="Toggle Navigation">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile Drawer Menu -->
@@ -145,20 +156,20 @@
         <div class="about-hero__overlay"></div>
         <div class="about-hero__content reveal">
           <nav aria-label="Breadcrumb" class="text-xs text-slate-500 flex items-center gap-2 mb-4">
-              <a href="/" class="hover:text-[#d9141d] transition-colors">Beranda</a>
+              <a href="/" class="hover:text-[#d9141d] transition-colors" data-en="Home">Beranda</a>
               <span>/</span>
-              <span class="text-[#d9141d] font-bold">Tentang Kami</span>
+              <span class="text-[#d9141d] font-bold" data-en="About Us">Tentang Kami</span>
           </nav>
-          <h1>Membangun Infrastruktur Digital yang <em>Andal &amp; Aman</em></h1>
-          <p>Mitra integrasi IT untuk menghubungkan, melindungi, dan mengembangkan bisnis melalui teknologi jaringan yang tepat.</p>
+          <h1 data-en-html="Building Digital Infrastructure That Is &lt;em&gt;Reliable &amp;amp; Secure&lt;/em&gt;">Membangun Infrastruktur Digital yang <em>Andal &amp; Aman</em></h1>
+          <p data-en="Your IT integration partner to connect, protect, and grow your business through the right network technology.">Mitra integrasi IT untuk menghubungkan, melindungi, dan mengembangkan bisnis melalui teknologi jaringan yang tepat.</p>
         </div>
         <div class="about-hero__corner"></div>
       </section>
 
       <section class="about-stats section-wrap" aria-label="Pencapaian Teknotama">
-        <article class="about-stat reveal reveal-d1"><strong data-count-target="99.9" data-count-decimals="1" data-count-suffix="%">99.9%</strong><span>SLA Uptime Network</span></article>
-        <article class="about-stat reveal reveal-d2"><strong data-count-target="500" data-count-decimals="0" data-count-suffix="+">500+</strong><span>Proyek Terpasang</span></article>
-        <article class="about-stat reveal reveal-d3"><strong data-count-target="24" data-count-decimals="0" data-count-suffix="/7">24/7</strong><span>NOC Support &amp; Patrol</span></article>
+        <article class="about-stat reveal reveal-d1"><strong data-count-target="99.9" data-count-decimals="1" data-count-suffix="%">99.9%</strong><span data-en="SLA Uptime Network">SLA Uptime Network</span></article>
+        <article class="about-stat reveal reveal-d2"><strong data-count-target="500" data-count-decimals="0" data-count-suffix="+">500+</strong><span data-en="Projects Deployed">Proyek Terpasang</span></article>
+        <article class="about-stat reveal reveal-d3"><strong data-count-target="24" data-count-decimals="0" data-count-suffix="/7">24/7</strong><span data-en="NOC Support &amp; Patrol">NOC Support &amp; Patrol</span></article>
       </section>
 
       <section class="about-profile section-wrap" id="profil">
@@ -166,23 +177,23 @@
           <img src="assets/work2-edited.jpeg" alt="Tim teknis Teknotama melakukan pekerjaan instalasi infrastruktur">
           <div class="about-image-caption">
             <span class="about-caption-icon"><i data-lucide="cpu" class="w-5 h-5"></i></span>
-            <div><strong>Technology Infrastructure Partner</strong><small>Perencanaan · Implementasi · Pemeliharaan</small></div>
+            <div><strong>Technology Infrastructure Partner</strong><small data-en="Planning · Implementation · Maintenance">Perencanaan · Implementasi · Pemeliharaan</small></div>
           </div>
         </div>
         <div class="about-profile__copy reveal-right">
-          <span class="about-kicker"><i></i> PROFIL PERUSAHAAN</span>
-          <h2>Integrator IT Handal untuk Infrastruktur &amp; Keamanan Jaringan Masa Depan</h2>
-          <p><strong>PT Teknotama</strong> adalah penyedia solusi IT enterprise yang berspesialisasi dalam perancangan jaringan kabel Fiber Optic/LAN, pengelolaan Data Center, infrastruktur cloud, dan benteng pertahanan keamanan siber.</p>
-          <p>Kami menjamin jaringan tanpa henti (<em>zero downtime architecture</em>), efisiensi pengadaan perangkat IT, serta skalabilitas sistem yang mampu menopang pertumbuhan bisnis Anda dari skala menengah hingga perusahaan multinasional.</p>
+          <span class="about-kicker" data-en-html="&lt;i&gt;&lt;/i&gt; COMPANY PROFILE"><i></i> PROFIL PERUSAHAAN</span>
+          <h2 data-en="Reliable IT Integrator for Future-Ready Network Infrastructure &amp; Security">Integrator IT Handal untuk Infrastruktur &amp; Keamanan Jaringan Masa Depan</h2>
+          <p data-en-html="&lt;strong&gt;PT Teknotama&lt;/strong&gt; is an enterprise IT solutions provider specializing in Fiber Optic/LAN structured cabling, Data Center management, cloud infrastructure, and cybersecurity defense."><strong>PT Teknotama</strong> adalah penyedia solusi IT enterprise yang berspesialisasi dalam perancangan jaringan kabel Fiber Optic/LAN, pengelolaan Data Center, infrastruktur cloud, dan benteng pertahanan keamanan siber.</p>
+          <p data-en-html="We guarantee uninterrupted connectivity (&lt;em&gt;zero downtime architecture&lt;/em&gt;), cost-efficient IT hardware procurement, and system scalability to support your business growth from mid-sized enterprises to multinational corporations.">Kami menjamin jaringan tanpa henti (<em>zero downtime architecture</em>), efisiensi pengadaan perangkat IT, serta skalabilitas sistem yang mampu menopang pertumbuhan bisnis Anda dari skala menengah hingga perusahaan multinasional.</p>
           <div class="about-feature-list">
-            <span><b><i data-lucide="check" class="w-3 h-3"></i></b> Koneksi Redundan High-Speed</span>
-            <span><b><i data-lucide="check" class="w-3 h-3"></i></b> Patroli NOC 24 Jam Nonstop</span>
-            <span><b><i data-lucide="check" class="w-3 h-3"></i></b> Standar Pengkabelan TIA/EIA</span>
-            <span><b><i data-lucide="check" class="w-3 h-3"></i></b> Respons Cepat (SLA &lt; 2 Jam)</span>
+            <span data-en-html="&lt;b&gt;&lt;i data-lucide=&quot;check&quot; class=&quot;w-3 h-3&quot;&gt;&lt;/i&gt;&lt;/b&gt; High-Speed Redundant Connectivity"><b><i data-lucide="check" class="w-3 h-3"></i></b> Koneksi Redundan High-Speed</span>
+            <span data-en-html="&lt;b&gt;&lt;i data-lucide=&quot;check&quot; class=&quot;w-3 h-3&quot;&gt;&lt;/i&gt;&lt;/b&gt; 24/7 Nonstop NOC Patrol"><b><i data-lucide="check" class="w-3 h-3"></i></b> Patroli NOC 24 Jam Nonstop</span>
+            <span data-en-html="&lt;b&gt;&lt;i data-lucide=&quot;check&quot; class=&quot;w-3 h-3&quot;&gt;&lt;/i&gt;&lt;/b&gt; TIA/EIA Cabling Standards"><b><i data-lucide="check" class="w-3 h-3"></i></b> Standar Pengkabelan TIA/EIA</span>
+            <span data-en-html="&lt;b&gt;&lt;i data-lucide=&quot;check&quot; class=&quot;w-3 h-3&quot;&gt;&lt;/i&gt;&lt;/b&gt; Fast Response (SLA &amp;lt; 2 Hours)"><b><i data-lucide="check" class="w-3 h-3"></i></b> Respons Cepat (SLA &lt; 2 Jam)</span>
           </div>
           <div class="about-certification">
             <div class="about-certification__icon"><i data-lucide="award" class="w-5 h-5"></i></div>
-            <div><strong>Sertifikasi Insinyur Resmi</strong><p>Tim teknis tersertifikasi CCNA, CCNP, Fortinet NSE, &amp; MTCWE.</p></div>
+            <div><strong data-en="Certified Engineers">Sertifikasi Insinyur Resmi</strong><p data-en="Technical team certified in CCNA, CCNP, Fortinet NSE, &amp; MTCWE.">Tim teknis tersertifikasi CCNA, CCNP, Fortinet NSE, &amp; MTCWE.</p></div>
           </div>
         </div>
       </section>
@@ -190,34 +201,34 @@
       <section class="about-method">
         <div class="section-wrap">
           <div class="about-section-heading reveal">
-            <span class="about-kicker"><i></i> METODOLOGI KERJA</span>
-            <h2>Tahapan Implementasi Arsitektur IT</h2>
-            <p>Proses teruji untuk memastikan pengerjaan proyek tepat waktu tanpa mengganggu jaringan eksisting.</p>
+            <span class="about-kicker" data-en-html="&lt;i&gt;&lt;/i&gt; WORK METHODOLOGY"><i></i> METODOLOGI KERJA</span>
+            <h2 data-en="IT Architecture Implementation Stages">Tahapan Implementasi Arsitektur IT</h2>
+            <p data-en="Proven processes to ensure on-time project delivery without disrupting existing network operations.">Proses teruji untuk memastikan pengerjaan proyek tepat waktu tanpa mengganggu jaringan eksisting.</p>
           </div>
           <div class="about-steps">
             <article class="about-step reveal reveal-d1">
               <span class="about-step__number">01</span>
               <div class="about-step__icon"><i data-lucide="search" class="w-6 h-6"></i></div>
-              <h3>Audit &amp; Site Survey</h3>
-              <p>Inspeksi langsung lokasi gedung, analisis lalu lintas bandwidth, dan pengukuran jalur kabel.</p>
+              <h3 data-en="Audit &amp; Site Survey">Audit &amp; Site Survey</h3>
+              <p data-en="On-site building inspection, bandwidth traffic analysis, and cable pathway measurement.">Inspeksi langsung lokasi gedung, analisis lalu lintas bandwidth, dan pengukuran jalur kabel.</p>
             </article>
             <article class="about-step reveal reveal-d2">
               <span class="about-step__number">02</span>
               <div class="about-step__icon"><i data-lucide="network" class="w-6 h-6"></i></div>
-              <h3>Desain Topologi &amp; BOQ</h3>
-              <p>Penyusunan blueprint arsitektur jaringan (Subnetting, VLAN) &amp; daftar rincian perangkat hardware.</p>
+              <h3 data-en="Topology Design &amp; BOQ">Desain Topologi &amp; BOQ</h3>
+              <p data-en="Network architecture blueprint (Subnetting, VLAN) &amp; detailed hardware Bill of Quantities.">Penyusunan blueprint arsitektur jaringan (Subnetting, VLAN) &amp; daftar rincian perangkat hardware.</p>
             </article>
             <article class="about-step reveal reveal-d3">
               <span class="about-step__number">03</span>
               <div class="about-step__icon"><i data-lucide="settings" class="w-6 h-6"></i></div>
-              <h3>Penarikan Kabel &amp; Deploy</h3>
-              <p>Pemasangan fisik, penataan kabel rack, labeling, crimping, serta konfigurasi Router &amp; Switch.</p>
+              <h3 data-en="Cabling &amp; Deployment">Penarikan Kabel &amp; Deploy</h3>
+              <p data-en="Physical installation, rack cable management, labeling, crimping, and Router &amp; Switch configuration.">Pemasangan fisik, penataan kabel rack, labeling, crimping, serta konfigurasi Router &amp; Switch.</p>
             </article>
             <article class="about-step reveal reveal-d4">
               <span class="about-step__number">04</span>
               <div class="about-step__icon"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
-              <h3>Testing &amp; SLA Support</h3>
-              <p>Pengujian Fluke/OTDR, dokumentasi topologi final, serta dukungan SLA &amp; monitoring NOC 24/7.</p>
+              <h3 data-en="Testing &amp; SLA Support">Testing &amp; SLA Support</h3>
+              <p data-en="Fluke/OTDR certification testing, final topology documentation, plus SLA &amp; 24/7 NOC monitoring.">Pengujian Fluke/OTDR, dokumentasi topologi final, serta dukungan SLA &amp; monitoring NOC 24/7.</p>
             </article>
           </div>
         </div>
@@ -226,29 +237,29 @@
       <section class="vision-mission section-wrap" id="visi-misi">
         <article class="vm-card reveal reveal-d1">
           <div class="vm-icon" aria-hidden="true"><i data-lucide="compass" class="w-6 h-6"></i></div>
-          <div><h2>Visi Kami</h2><p>Menjadi perusahaan teknologi terdepan di Indonesia yang mendorong transformasi industri melalui inovasi dan kolaborasi berkelanjutan.</p></div>
+          <div><h2 data-en="Our Vision">Visi Kami</h2><p data-en="To become Indonesia's leading technology company driving industrial transformation through continuous innovation and collaboration.">Menjadi perusahaan teknologi terdepan di Indonesia yang mendorong transformasi industri melalui inovasi dan kolaborasi berkelanjutan.</p></div>
         </article>
         <article class="vm-card reveal reveal-d2">
           <div class="vm-icon target-icon" aria-hidden="true"><i data-lucide="target" class="w-6 h-6"></i></div>
-          <div><h2>Misi Kami</h2><p>Menyediakan solusi teknologi yang inovatif, andal, dan berkelanjutan untuk mendukung kemajuan industri di Indonesia.</p></div>
+          <div><h2 data-en="Our Mission">Misi Kami</h2><p data-en="Providing innovative, reliable, and sustainable technology solutions to support industrial advancement across Indonesia.">Menyediakan solusi teknologi yang inovatif, andal, dan berkelanjutan untuk mendukung kemajuan industri di Indonesia.</p></div>
         </article>
       </section>
 
       <section class="values section-wrap">
-        <div class="values-heading reveal"><span class="eyebrow-line"></span><h2>Nilai-Nilai Kami</h2><p>Nilai-nilai yang menjadi landasan kami dalam setiap langkah.</p></div>
+        <div class="values-heading reveal"><span class="eyebrow-line"></span><h2 data-en="Our Core Values">Nilai-Nilai Kami</h2><p data-en="The core principles that guide every step we take.">Nilai-nilai yang menjadi landasan kami dalam setiap langkah.</p></div>
         <div class="value-grid">
-          <article class="value-card reveal-scale reveal-d1"><div class="value-icon"><i data-lucide="lightbulb" class="w-6 h-6"></i></div><h3>Inovasi</h3><p>Selalu menghadirkan solusi terbaik melalui inovasi berkelanjutan.</p></article>
-          <article class="value-card reveal-scale reveal-d2"><div class="value-icon"><i data-lucide="users" class="w-6 h-6"></i></div><h3>Kolaborasi</h3><p>Bekerja bersama untuk mencapai tujuan bersama.</p></article>
-          <article class="value-card reveal-scale reveal-d3"><div class="value-icon"><i data-lucide="shield-check" class="w-6 h-6"></i></div><h3>Integritas</h3><p>Menjunjung tinggi kejujuran dan profesionalisme.</p></article>
-          <article class="value-card reveal-scale reveal-d4"><div class="value-icon"><i data-lucide="trending-up" class="w-6 h-6"></i></div><h3>Pertumbuhan</h3><p>Terus berkembang untuk memberikan dampak yang lebih besar.</p></article>
+          <article class="value-card reveal-scale reveal-d1"><div class="value-icon"><i data-lucide="lightbulb" class="w-6 h-6"></i></div><h3 data-en="Innovation">Inovasi</h3><p data-en="Always delivering the best solutions through continuous innovation.">Selalu menghadirkan solusi terbaik melalui inovasi berkelanjutan.</p></article>
+          <article class="value-card reveal-scale reveal-d2"><div class="value-icon"><i data-lucide="users" class="w-6 h-6"></i></div><h3 data-en="Collaboration">Kolaborasi</h3><p data-en="Working together as partners to achieve shared goals.">Bekerja bersama untuk mencapai tujuan bersama.</p></article>
+          <article class="value-card reveal-scale reveal-d3"><div class="value-icon"><i data-lucide="shield-check" class="w-6 h-6"></i></div><h3 data-en="Integrity">Integritas</h3><p data-en="Upholding honesty, transparency, and professionalism.">Menjunjung tinggi kejujuran dan profesionalisme.</p></article>
+          <article class="value-card reveal-scale reveal-d4"><div class="value-icon"><i data-lucide="trending-up" class="w-6 h-6"></i></div><h3 data-en="Growth">Pertumbuhan</h3><p data-en="Continuously growing to create a greater positive impact.">Terus berkembang untuk memberikan dampak yang lebih besar.</p></article>
         </div>
       </section>
 
       <section class="cta-banner" id="kontak">
         <div class="cta-photo"></div>
         <div class="cta-content reveal">
-          <h2>Infrastruktur yang Tepat untuk Bisnis yang Terus Bertumbuh</h2>
-          <p>Teknotama siap mendukung kebutuhan jaringan, data center, dan keamanan IT melalui perencanaan serta implementasi yang terukur.</p>
+          <h2 data-en="The Right Infrastructure for a Growing Business">Infrastruktur yang Tepat untuk Bisnis yang Terus Bertumbuh</h2>
+          <p data-en="Teknotama is ready to support your networking, data center, and IT security needs through measurable planning and execution.">Teknotama siap mendukung kebutuhan jaringan, data center, dan keamanan IT melalui perencanaan serta implementasi yang terukur.</p>
         </div>
       </section>
     </main>
@@ -325,6 +336,7 @@
     </footer>
 
     <script src="script.js" defer></script>
+    <script src="i18n.js" defer></script>
     <script>
         (function () {
             const statsSection = document.querySelector('.about-stats');

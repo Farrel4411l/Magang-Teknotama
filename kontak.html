@@ -18,6 +18,7 @@
 
     <!-- Primary SEO Meta Tags -->
     <title>Teknotama — PT Teknotama Prakarsa Mulia | Jasa Jaringan &amp; Server</title>
+    <meta name="i18n-title-en" content="Contact &amp; Consultation | PT Teknotama Prakarsa Mulia">
     <meta name="description" content="Teknotama (PT Teknotama Prakarsa Mulia) adalah kontraktor &amp; integrator infrastruktur IT enterprise di Jakarta Selatan. Spesialis jasa instalasi jaringan Fiber Optic, kabel LAN Cat6/Cat6A, server Data Center, Firewall Fortinet/Cisco/MikroTik, Wi-Fi Enterprise, IP CCTV &amp; Managed IT NOC 24/7.">
     <meta name="keywords" content="Teknotama, PT Teknotama Prakarsa Mulia, kontraktor infrastruktur it jakarta, jasa instalasi jaringan kantor, kontraktor fiber optic jakarta, jasa penarikan kabel lan cat6 cat6a, jasa setting mikrotik cisco fortinet, instalasi server data center jakarta, jasa pasang wifi kantor, jasa pasang cctv kantor, managed it service indonesia, kalkulator boq jaringan">
     <meta name="author" content="PT Teknotama Prakarsa Mulia">
@@ -129,18 +130,28 @@
                 </div>
             </nav>
 
-            <!-- CTA Desktop -->
-            <div class="hidden lg:flex items-center">
+            <!-- CTA Desktop & Language Toggle -->
+            <div class="hidden lg:flex items-center gap-3">
+                <div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 text-[11px] font-bold" role="group" aria-label="Language switch">
+                    <button type="button" data-lang-btn="id" class="lang-switch-btn px-2.5 py-1 rounded-full transition-all bg-white text-slate-900 shadow-sm">ID</button>
+                    <button type="button" data-lang-btn="en" class="lang-switch-btn px-2.5 py-1 rounded-full transition-all text-slate-500 hover:text-slate-900">EN</button>
+                </div>
                 <a href="kontak.html" class="bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold text-xs xl:text-sm px-6 py-2.5 rounded-full shadow-md shadow-red-600/20 hover:shadow-lg transition-all flex items-center gap-2">
                     <i data-lucide="headset" class="w-4 h-4"></i>
                     Konsultasi Gratis
                 </a>
             </div>
 
-            <!-- Mobile Menu Toggle -->
-            <button id="mobile-menu-btn" type="button" class="lg:hidden p-2 text-slate-700 hover:text-[#d9141d] focus:outline-none" aria-label="Toggle Navigation">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
+            <!-- Mobile Controls (Language + Menu Toggle) -->
+            <div class="flex lg:hidden items-center gap-2">
+                <div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 text-[11px] font-bold" role="group" aria-label="Language switch">
+                    <button type="button" data-lang-btn="id" class="lang-switch-btn px-2 py-0.5 rounded-full transition-all bg-white text-slate-900 shadow-sm">ID</button>
+                    <button type="button" data-lang-btn="en" class="lang-switch-btn px-2 py-0.5 rounded-full transition-all text-slate-500 hover:text-slate-900">EN</button>
+                </div>
+                <button id="mobile-menu-btn" type="button" class="p-2 text-slate-700 hover:text-[#d9141d] focus:outline-none" aria-label="Toggle Navigation">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile Drawer Menu -->
@@ -163,19 +174,19 @@
 
             <!-- Breadcrumb -->
             <nav aria-label="Breadcrumb" class="text-xs text-slate-500 flex items-center gap-2">
-                <a href="/" class="hover:text-[#d9141d]">Beranda</a>
+                <a href="/" class="hover:text-[#d9141d]" data-en="Home">Beranda</a>
                 <span>/</span>
-                <span class="text-[#d9141d] font-bold">Kontak &amp; Konsultasi</span>
+                <span class="text-[#d9141d] font-bold" data-en="Contact &amp; Consultation">Kontak &amp; Konsultasi</span>
             </nav>
 
             <div class="text-center max-w-3xl mx-auto space-y-2">
                 <div class="flex items-center justify-center gap-4">
                     <span class="eyebrow-line"></span>
-                    <span class="text-xs sm:text-sm font-bold text-[#d9141d]">Konsultasi &amp; Jadwal Survei</span>
+                    <span class="text-xs sm:text-sm font-bold text-[#d9141d]" data-en="Consultation &amp; Survey Schedule">Konsultasi &amp; Jadwal Survei</span>
                     <span class="eyebrow-line"></span>
                 </div>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-950">Diskusikan Kondisi Lapangan &amp; Booking Site Survey</h2>
-                <p class="text-xs sm:text-sm text-slate-600">Validasi kebutuhan teknis Anda bersama AI Field Engineer kami, lalu kirimkan permintaan survei resmi langsung ke <strong>admin@teknotama.com</strong>.</p>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-950" data-en="Discuss Site Conditions &amp; Book a Site Survey">Diskusikan Kondisi Lapangan &amp; Booking Site Survey</h2>
+                <p class="text-xs sm:text-sm text-slate-600" data-en-html="Validate your technical requirements with our AI Field Engineer, then submit an official survey request directly to &lt;strong&gt;admin@teknotama.com&lt;/strong&gt;.">Validasi kebutuhan teknis Anda bersama AI Field Engineer kami, lalu kirimkan permintaan survei resmi langsung ke <strong>admin@teknotama.com</strong>.</p>
             </div>
 
             <!-- Grid Langkah 1 (AI Pre-Booking) & Langkah 2 (Formulir Survei) -->
@@ -186,15 +197,15 @@
                     <div class="bg-[#0b101b] text-slate-100 rounded-3xl p-6 border border-slate-800 shadow-xl flex flex-col h-full">
                         <div class="flex items-start justify-between gap-3 pb-4 border-b border-slate-800">
                             <div>
-                                <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-brand-400 bg-red-950/80 border border-brand-600/40 px-2.5 py-0.5 rounded-full">
+                                <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-brand-400 bg-red-950/80 border border-brand-600/40 px-2.5 py-0.5 rounded-full" data-en-html="&lt;span class=&quot;w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse&quot;&gt;&lt;/span&gt; Step 1 • Before Booking">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                                     Langkah 1 • Sebelum Booking
                                 </span>
-                                <h3 class="text-lg font-bold text-white mt-2 flex items-center gap-2">
+                                <h3 class="text-lg font-bold text-white mt-2 flex items-center gap-2" data-en-html="&lt;i data-lucide=&quot;bot&quot; class=&quot;w-5 h-5 text-brand-400&quot;&gt;&lt;/i&gt; Field Execution Technical AI">
                                     <i data-lucide="bot" class="w-5 h-5 text-brand-400"></i>
                                     AI Teknis Eksekusi Lapangan
                                 </h3>
-                                <p class="text-xs text-slate-400 mt-0.5">Tanyakan SOP tarikan kabel, FO, Fluke test, hingga kesiapan lokasi sebelum booking survei.</p>
+                                <p class="text-xs text-slate-400 mt-0.5" data-en="Ask about cable pulling SOPs, Fiber Optic, Fluke testing, and site readiness before booking a survey.">Tanyakan SOP tarikan kabel, FO, Fluke test, hingga kesiapan lokasi sebelum booking survei.</p>
                             </div>
                             <button id="inline-open-widget-btn" type="button" title="Buka Mode Widget" class="p-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-300 hover:text-brand-400 transition-colors flex-shrink-0">
                                 <i data-lucide="maximize-2" class="w-4 h-4"></i>
@@ -204,19 +215,19 @@
                         <div id="inline-chat-messages" class="flex-1 min-h-[240px] max-h-[340px] overflow-y-auto tkt-scroll py-4 space-y-3"></div>
 
                         <div class="flex flex-wrap gap-1.5 pb-3">
-                            <button type="button" data-prompt="Bagaimana SOP penarikan kabel UTP & Fiber Optic Teknotama agar rapi?" class="ai-quick-chip text-[11px] px-2.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-slate-300 hover:border-brand-500 hover:text-white transition-all">SOP Kabel &amp; FO</button>
+                            <button type="button" data-prompt="Bagaimana SOP penarikan kabel UTP & Fiber Optic Teknotama agar rapi?" class="ai-quick-chip text-[11px] px-2.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-slate-300 hover:border-brand-500 hover:text-white transition-all" data-en="Cable &amp; FO SOP">SOP Kabel &amp; FO</button>
                             <button type="button" data-prompt="Apakah instalasi bisa dilakukan di luar jam kerja tanpa downtime?" class="ai-quick-chip text-[11px] px-2.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-slate-300 hover:border-brand-500 hover:text-white transition-all">Zero-Downtime</button>
-                            <button type="button" data-prompt="cs" class="ai-quick-chip text-[11px] px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/60 text-emerald-300 hover:bg-emerald-600 hover:text-white font-semibold transition-all">Direct CS WhatsApp (Ketik: cs)</button>
+                            <button type="button" data-prompt="cs" class="ai-quick-chip text-[11px] px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/60 text-emerald-300 hover:bg-emerald-600 hover:text-white font-semibold transition-all" data-en="Direct WhatsApp CS (Type: cs)">Direct CS WhatsApp (Ketik: cs)</button>
                         </div>
 
                         <form id="inline-chat-form" class="flex gap-2">
-                            <input id="inline-chat-input" type="text" placeholder="Tanya teknis atau ketik 'cs' untuk langsung ke WhatsApp..." class="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500">
+                            <input id="inline-chat-input" type="text" placeholder="Tanya teknis atau ketik 'cs' untuk langsung ke WhatsApp..." data-en-placeholder="Ask a technical question or type 'cs' for WhatsApp..." class="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500">
                             <button type="submit" class="px-4 py-2.5 rounded-xl bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold text-xs flex items-center gap-1.5 transition-all">
                                 <i data-lucide="send" class="w-3.5 h-3.5"></i>
                             </button>
                         </form>
 
-                        <button id="inline-sync-booking-btn" type="button" class="mt-3 w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 border border-brand-600/40 text-brand-400 hover:text-brand-300 text-xs font-bold flex items-center justify-center gap-2 transition-all">
+                        <button id="inline-sync-booking-btn" type="button" class="mt-3 w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 border border-brand-600/40 text-brand-400 hover:text-brand-300 text-xs font-bold flex items-center justify-center gap-2 transition-all" data-en-html="&lt;i data-lucide=&quot;clipboard-check&quot; class=&quot;w-4 h-4&quot;&gt;&lt;/i&gt; Apply AI Summary &amp; BOQ to Booking Form &amp;rarr;">
                             <i data-lucide="clipboard-check" class="w-4 h-4"></i>
                             Terapkan Ringkasan AI &amp; BOQ ke Formulir Booking &rarr;
                         </button>
@@ -228,22 +239,22 @@
                     <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-lg h-full">
                         <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
                             <div>
-                                <span class="inline-block text-[10px] font-bold uppercase tracking-wider text-[#d9141d] bg-red-50 border border-red-200 px-2.5 py-0.5 rounded-full mb-1.5">
+                                <span class="inline-block text-[10px] font-bold uppercase tracking-wider text-[#d9141d] bg-red-50 border border-red-200 px-2.5 py-0.5 rounded-full mb-1.5" data-en="Step 2 • Official Booking">
                                     Langkah 2 • Booking Resmi
                                 </span>
-                                <h3 class="text-xl font-extrabold text-slate-950 flex items-center gap-2">
+                                <h3 class="text-xl font-extrabold text-slate-950 flex items-center gap-2" data-en-html="&lt;i data-lucide=&quot;file-text&quot; class=&quot;w-5 h-5 text-[#d9141d]&quot;&gt;&lt;/i&gt; Survey &amp; Quotation Form">
                                     <i data-lucide="file-text" class="w-5 h-5 text-[#d9141d]"></i>
                                     Formulir Survei &amp; Penawaran
                                 </h3>
                             </div>
-                            <span class="text-[11px] text-slate-500 font-mono">Tujuan: admin@teknotama.com</span>
+                            <span class="text-[11px] text-slate-500 font-mono" data-en="To: admin@teknotama.com">Tujuan: admin@teknotama.com</span>
                         </div>
 
                         <!-- Lampiran BOQ Badge -->
                         <div id="booking-attachment-badge" class="hidden mb-5 p-3 rounded-xl bg-red-50 border border-red-200 flex items-center justify-between gap-3">
                             <div class="flex items-center gap-2.5 text-xs text-slate-800 font-medium">
                                 <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#d9141d] flex-shrink-0"></i>
-                                <span id="booking-attachment-text" class="leading-snug">Lampiran BOQ aktif</span>
+                                <span id="booking-attachment-text" class="leading-snug" data-en="Active BOQ attachment">Lampiran BOQ aktif</span>
                             </div>
                             <button id="clear-booking-attachment" type="button" class="text-xs text-slate-500 hover:text-slate-900 px-2 py-1" title="Hapus lampiran BOQ">&times;</button>
                         </div>
@@ -256,28 +267,28 @@
 
                             <div class="grid sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label for="form-company" class="block text-xs font-bold uppercase text-slate-700 mb-1">Nama Perusahaan / Klien</label>
-                                    <input id="form-company" type="text" required placeholder="PT Jaya Abadi" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white text-sm">
+                                    <label for="form-company" class="block text-xs font-bold uppercase text-slate-700 mb-1" data-en="Company / Client Name">Nama Perusahaan / Klien</label>
+                                    <input id="form-company" type="text" required placeholder="PT Jaya Abadi" data-en-placeholder="Acme Corp" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white text-sm">
                                 </div>
                                 <div>
-                                    <label for="form-email" class="block text-xs font-bold uppercase text-slate-700 mb-1">Email Bisnis</label>
-                                    <input id="form-email" type="email" required placeholder="it.manager@perusahaan.com" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white text-sm">
+                                    <label for="form-email" class="block text-xs font-bold uppercase text-slate-700 mb-1" data-en="Business Email">Email Bisnis</label>
+                                    <input id="form-email" type="email" required placeholder="it.manager@perusahaan.com" data-en-placeholder="it.manager@company.com" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white text-sm">
                                 </div>
                             </div>
 
                             <div class="grid sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label for="form-phone" class="block text-xs font-bold uppercase text-slate-700 mb-1">Nomor Telepon/WA</label>
+                                    <label for="form-phone" class="block text-xs font-bold uppercase text-slate-700 mb-1" data-en="Phone / WhatsApp Number">Nomor Telepon/WA</label>
                                     <input id="form-phone" type="tel" required placeholder="08123456789" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white text-sm">
                                 </div>
                                 <div>
-                                    <label for="form-survey-date" class="block text-xs font-bold uppercase text-slate-700 mb-1">Rencana Tgl Survei (Opsional)</label>
+                                    <label for="form-survey-date" class="block text-xs font-bold uppercase text-slate-700 mb-1" data-en="Preferred Survey Date (Optional)">Rencana Tgl Survei (Opsional)</label>
                                     <input id="form-survey-date" type="date" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white text-sm">
                                 </div>
                             </div>
 
                             <div>
-                                <label for="form-category" class="block text-xs font-bold uppercase text-slate-700 mb-1">Kategori Layanan Utama</label>
+                                <label for="form-category" class="block text-xs font-bold uppercase text-slate-700 mb-1" data-en="Primary Service Category">Kategori Layanan Utama</label>
                                 <select id="form-category" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white text-sm">
                                     <option>Enterprise Network &amp; Cabling</option>
                                     <option>Cloud &amp; Server Virtualization</option>
@@ -288,11 +299,11 @@
                             </div>
 
                             <div>
-                                <label for="form-message" class="block text-xs font-bold uppercase text-slate-700 mb-1">Rincian Kebutuhan Proyek</label>
-                                <textarea id="form-message" rows="4" required placeholder="Jelaskan lokasi gedung, jumlah lantai/user, kebutuhan LAN/FO/CCTV, atau klik 'Terapkan Ringkasan AI & BOQ' di panel sebelah..." class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white text-sm"></textarea>
+                                <label for="form-message" class="block text-xs font-bold uppercase text-slate-700 mb-1" data-en="Project Requirement Details">Rincian Kebutuhan Proyek</label>
+                                <textarea id="form-message" rows="4" required placeholder="Jelaskan lokasi gedung, jumlah lantai/user, kebutuhan LAN/FO/CCTV, atau klik 'Terapkan Ringkasan AI & BOQ' di panel sebelah..." data-en-placeholder="Describe building location, number of floors/users, LAN/FO/CCTV needs, or click 'Apply AI Summary & BOQ' on the left panel..." class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:border-[#d9141d] focus:bg-white text-sm"></textarea>
                             </div>
 
-                            <button id="booking-submit-btn" type="submit" class="w-full bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold py-4 rounded-full shadow-lg shadow-red-600/25 transition-all flex items-center justify-center gap-2 text-sm">
+                            <button id="booking-submit-btn" type="submit" class="w-full bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold py-4 rounded-full shadow-lg shadow-red-600/25 transition-all flex items-center justify-center gap-2 text-sm" data-en-html="&lt;i data-lucide=&quot;send&quot; class=&quot;w-4 h-4&quot;&gt;&lt;/i&gt; Send Survey Request to admin@teknotama.com">
                                 <i data-lucide="send" class="w-4 h-4"></i>
                                 Kirim Permintaan Survei ke admin@teknotama.com
                             </button>
@@ -304,7 +315,7 @@
             <!-- Info Alamat Kantor & Peta -->
             <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm grid lg:grid-cols-12 gap-8 items-center">
                 <div class="lg:col-span-5 space-y-4">
-                    <h3 class="text-lg font-extrabold text-slate-950">Kantor Operasional PT Teknotama</h3>
+                    <h3 class="text-lg font-extrabold text-slate-950" data-en="PT Teknotama Operational Office">Kantor Operasional PT Teknotama</h3>
                     <div class="space-y-3 text-xs sm:text-sm text-slate-600">
                         <p class="flex items-start gap-3">
                             <i data-lucide="map-pin" class="w-4 h-4 text-[#d9141d] mt-1 flex-shrink-0"></i>
@@ -324,7 +335,7 @@
                         <div class="pt-1">
                             <a href="https://maps.google.com/?q=Infiniti+Office+Belleza+BSA+Jakarta+Selatan" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#d9141d] hover:underline">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                                <span>Buka Lokasi di Google Maps</span>
+                                <span data-en="Open Location in Google Maps">Buka Lokasi di Google Maps</span>
                             </a>
                         </div>
                     </div>
@@ -557,5 +568,6 @@
 
     <!-- Main Script -->
     <script src="script.js" defer></script>
+    <script src="i18n.js" defer></script>
 </body>
 </html>
