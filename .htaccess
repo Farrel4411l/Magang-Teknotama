@@ -39,8 +39,8 @@
   SetEnvIfNoCase Request_URI "^/games(?:/|$)" TKT_NOINDEX_GAMES=1
 </IfModule>
 
-# 2. Proteksi File Konfigurasi Sensitif
-<FilesMatch "^(teknotama_secrets(\.example)?\.php|testimonials_data\.json|\.gitignore)$">
+# 2. Proteksi File Konfigurasi Sensitif & Dokumentasi Internal
+<FilesMatch "^(teknotama_secrets(\.example)?\.php|testimonials_data\.json|\.gitignore|(?:AGENTS|RULES|README)\.md)$">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>

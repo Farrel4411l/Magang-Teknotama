@@ -14,7 +14,7 @@ Options -Indexes
   RewriteRule ^(.+?)/?$ /marketing/$1.php [L]
 </IfModule>
 
-<FilesMatch "^(\.htaccess|README\.md|.*config(\.example)?\.php|.*\.json|.*\.log|.*\.gs)$">
+<FilesMatch "^(\.htaccess|.*config(\.example)?\.php|.*\.md|.*\.json|.*\.log|.*\.gs)$">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>
