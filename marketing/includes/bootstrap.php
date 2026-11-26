@@ -58,13 +58,6 @@ function tkt_mkt_send_json($data, $statusCode)
 
 function tkt_mkt_get_client_ip()
 {
-    if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
-        return trim((string) $_SERVER['HTTP_CF_CONNECTING_IP']);
-    }
-    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        $parts = explode(',', (string) $_SERVER['HTTP_X_FORWARDED_FOR']);
-        return trim($parts[0]);
-    }
     return isset($_SERVER['REMOTE_ADDR']) ? (string) $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
 }
 
@@ -113,6 +106,21 @@ function tkt_mkt_read_json($storeKey, $default)
     return $default;
 }
 
+function tkt_mkt_utf8_substr($val, $maxLen)
+{
+    $str = (string) $val;
+    if ($maxLen <= 0) {
+        return '';
+    }
+    if (function_exists('mb_strlen') && function_exists('mb_substr')) {
+        if (mb_strlen($str, 'UTF-8') > $maxLen) {
+            return mb_substr($str, 0, $maxLen, 'UTF-8');
+        }
+        return $str;
+    }
+    return strlen($str) > $maxLen ? substr($str, 0, $maxLen) : $str;
+}
+
 function tkt_mkt_write_json($storeKey, $data)
 {
     $file = tkt_mkt_data_path($storeKey);
@@ -121,7 +129,7 @@ function tkt_mkt_write_json($storeKey, $data)
     }
     $flags = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
     $json = json_encode($data, $flags);
-    if (!is_string($json)) {
+    if (!is_string($json) || $json === '') {
         return false;
     }
     return @file_put_contents($file, $json, LOCK_EX) !== false;
@@ -133,8 +141,8 @@ function tkt_mkt_clean_text($val, $maxLen)
     $raw = preg_replace('#<(script|style|iframe|object|embed)\b[^>]*>.*?</\1>#is', '', $raw);
     $clean = trim(strip_tags($raw));
     $clean = preg_replace("/[ \t]+/", ' ', $clean);
-    if ($maxLen > 0 && strlen($clean) > $maxLen) {
-        $clean = substr($clean, 0, $maxLen);
+    if ($maxLen > 0) {
+        $clean = tkt_mkt_utf8_substr($clean, $maxLen);
     }
     return $clean;
 }
@@ -145,8 +153,8 @@ function tkt_mkt_clean_multiline($val, $maxLen)
     $raw = preg_replace('#<(script|style|iframe|object|embed)\b[^>]*>.*?</\1>#is', '', $raw);
     $clean = trim(strip_tags($raw));
     $clean = str_replace(array("\r\n", "\r"), "\n", $clean);
-    if ($maxLen > 0 && strlen($clean) > $maxLen) {
-        $clean = substr($clean, 0, $maxLen);
+    if ($maxLen > 0) {
+        $clean = tkt_mkt_utf8_substr($clean, $maxLen);
     }
     return $clean;
 }

@@ -22,7 +22,14 @@ function tkt_mkt_normalize_target_url($rawUrl)
 
 function tkt_mkt_is_public_ip($ip)
 {
-    return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false;
+    $rawIp = trim((string) $ip);
+    if (stripos($rawIp, '::ffff:') === 0) {
+        $mapped = substr($rawIp, 7);
+        if (filter_var($mapped, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            $rawIp = $mapped;
+        }
+    }
+    return filter_var($rawIp, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false;
 }
 
 function tkt_mkt_validate_public_url($rawUrl)
@@ -165,6 +172,15 @@ function tkt_mkt_fetch_public_http($rawUrl, $maxBytes, $timeoutSec)
         if (!empty($check['ip']) && $check['ip'] !== $check['host'] && defined('CURLOPT_RESOLVE')) {
             $opts[CURLOPT_RESOLVE] = array($check['host'] . ':' . $check['port'] . ':' . $check['ip']);
         }
+        if (defined('CURLOPT_PROTOCOLS') && defined('CURLPROTO_HTTP') && defined('CURLPROTO_HTTPS')) {
+            $opts[CURLOPT_PROTOCOLS] = CURLPROTO_HTTP | CURLPROTO_HTTPS;
+        }
+        if (defined('CURLOPT_REDIR_PROTOCOLS') && defined('CURLPROTO_HTTP') && defined('CURLPROTO_HTTPS')) {
+            $opts[CURLOPT_REDIR_PROTOCOLS] = CURLPROTO_HTTP | CURLPROTO_HTTPS;
+        }
+        if (defined('PHP_OS_FAMILY') && PHP_OS_FAMILY === 'Windows' && defined('CURLSSLOPT_NATIVE_CA')) {
+            $opts[CURLOPT_SSL_OPTIONS] = CURLSSLOPT_NATIVE_CA;
+        }
         curl_setopt_array($ch, $opts);
         curl_exec($ch);
         $httpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -286,7 +302,7 @@ function tkt_mkt_extract_company_intel_from_html($html, $baseUrl)
     return array(
         'title'           => $title,
         'meta_desc'       => $metaDesc,
-        'text_excerpt'    => substr($plain, 0, 2600),
+        'text_excerpt'    => tkt_mkt_utf8_substr($plain, 2600),
         'emails'          => array_values(array_slice($emails, 0, 6)),
         'phones'          => array_values(array_slice($phones, 0, 5)),
         'locations'       => array_values(array_slice($locations, 0, 6)),
@@ -340,7 +356,7 @@ function tkt_mkt_fetch_company_public_pages($rawUrl)
             $allEmails = array_values(array_unique(array_merge($allEmails, $subIntel['emails'])));
             $allPhones = array_values(array_unique(array_merge($allPhones, $subIntel['phones'])));
             $allLocations = array_values(array_unique(array_merge($allLocations, $subIntel['locations'])));
-            $combinedText .= "\nSUBPAGE ({$subUrl}): " . substr($subIntel['text_excerpt'], 0, 1400);
+            $combinedText .= "\nSUBPAGE ({$subUrl}): " . tkt_mkt_utf8_substr($subIntel['text_excerpt'], 1400);
         }
     }
 
@@ -351,7 +367,7 @@ function tkt_mkt_fetch_company_public_pages($rawUrl)
         'host'           => $homeRes['host'],
         'title'          => $homeIntel['title'],
         'meta_desc'      => $homeIntel['meta_desc'],
-        'text_excerpt'   => substr($combinedText, 0, 4500),
+        'text_excerpt'   => tkt_mkt_utf8_substr($combinedText, 4500),
         'emails'         => array_slice($allEmails, 0, 6),
         'phones'         => array_slice($allPhones, 0, 5),
         'locations'      => array_slice($allLocations, 0, 6),
@@ -405,7 +421,7 @@ function tkt_mkt_analyze_company_account($config, $business, $input, $crawlResul
     $heuristic = tkt_mkt_heuristic_company_icp($companyName, $industry, $websiteText . ' ' . $notes, !empty($crawlResult['ok']));
 
     // Bersihkan pola email/telepon dari teks sebelum dikirim ke LLM free-tier
-    $scrubbedText = tkt_mkt_scrub_pii_patterns(substr($websiteText, 0, 3200));
+    $scrubbedText = tkt_mkt_scrub_pii_patterns(tkt_mkt_utf8_substr($websiteText, 3200));
     $scrubbedNotes = tkt_mkt_scrub_pii_patterns($notes);
 
     $systemPrompt = "Anda adalah Principal B2B Account Researcher & Solutions Strategist untuk {$business['company_name']} ({$business['industry_focus']}).\n"
@@ -544,8 +560,11 @@ function tkt_mkt_parse_rss_xml($xmlString, $keywordsCsv, $sourceLabel)
             $qParams = array();
             parse_str((string) $qStr, $qParams);
             if (!empty($qParams['url'])) {
-                $cleanLink = $qParams['url'];
+                $cleanLink = trim((string) $qParams['url']);
             }
+        }
+        if ($cleanLink !== '' && (!preg_match('#^https?://#i', $cleanLink) || !filter_var($cleanLink, FILTER_VALIDATE_URL))) {
+            $cleanLink = '';
         }
 
         $haystack = strtolower($cleanTitle . ' ' . $cleanSummary);

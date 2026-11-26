@@ -469,20 +469,21 @@ if ($action === 'outbound_send_approved') {
         tkt_mkt_send_json(array('ok' => false, 'error' => 'Subject dan isi email hasil review manusia tidak boleh kosong.'), 422);
     }
 
-    $quotaCheck = tkt_mkt_consume_outbound_quota($config);
-    if (empty($quotaCheck['ok'])) {
+    $quotaBefore = tkt_mkt_get_outbound_quota($config);
+    if ($quotaBefore['remaining'] <= 0) {
         tkt_mkt_send_json(array(
             'ok'    => false,
-            'error' => 'Batas aman pengiriman outbound harian (' . $quotaCheck['quota']['daily_limit'] . ' email/hari) tercapai untuk menjaga reputasi domain teknotama.com.',
-            'quota' => $quotaCheck['quota'],
+            'error' => 'Batas aman pengiriman outbound harian (' . $quotaBefore['daily_limit'] . ' email/hari) tercapai untuk menjaga reputasi domain teknotama.com.',
+            'quota' => $quotaBefore,
         ), 429);
     }
 
     $mailRes = tkt_mkt_send_email($config, $business, $prospect['email'], $prospect['pic_name'], $subject, $body);
     if (empty($mailRes['ok'])) {
         tkt_mkt_log('outbound', 'ERROR', 'Gagal kirim outbound ' . $pid . ': ' . $mailRes['error'], $user['username'], $config);
-        tkt_mkt_send_json(array('ok' => false, 'error' => $mailRes['error'], 'quota' => $quotaCheck['quota']), 500);
+        tkt_mkt_send_json(array('ok' => false, 'error' => $mailRes['error'], 'quota' => $quotaBefore), 500);
     }
+    $quotaCheck = tkt_mkt_consume_outbound_quota($config);
 
     $prospect['ai_draft_subject'] = $subject;
     $prospect['ai_draft_body'] = $body;

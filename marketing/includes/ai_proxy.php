@@ -15,7 +15,7 @@ function tkt_mkt_http_post_json($url, $headers, $payload, $timeoutSec)
     }
     $ch = curl_init($url);
     $encoded = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    curl_setopt_array($ch, array(
+    $opts = array(
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_POST           => true,
         CURLOPT_HTTPHEADER     => $headers,
@@ -23,7 +23,12 @@ function tkt_mkt_http_post_json($url, $headers, $payload, $timeoutSec)
         CURLOPT_CONNECTTIMEOUT => 3,
         CURLOPT_TIMEOUT        => (int) $timeoutSec,
         CURLOPT_SSL_VERIFYPEER => true,
-    ));
+        CURLOPT_SSL_VERIFYHOST => 2,
+    );
+    if (defined('PHP_OS_FAMILY') && PHP_OS_FAMILY === 'Windows' && defined('CURLSSLOPT_NATIVE_CA')) {
+        $opts[CURLOPT_SSL_OPTIONS] = CURLSSLOPT_NATIVE_CA;
+    }
+    curl_setopt_array($ch, $opts);
     $body = curl_exec($ch);
     $httpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $err = curl_error($ch);
@@ -34,7 +39,7 @@ function tkt_mkt_http_post_json($url, $headers, $payload, $timeoutSec)
             'ok'     => false,
             'status' => $httpCode,
             'error'  => $err !== '' ? $err : ('HTTP ' . $httpCode),
-            'raw'    => is_string($body) ? substr($body, 0, 240) : '',
+            'raw'    => is_string($body) ? tkt_mkt_utf8_substr($body, 240) : '',
         );
     }
 
@@ -121,10 +126,13 @@ function tkt_mkt_call_gemini($apiKey, $systemPrompt, $userPrompt)
 {
     $models = array('gemini-3-flash-preview', 'gemini-flash-latest');
     foreach ($models as $model) {
-        $url = 'https://generativelanguage.googleapis.com/v1beta/models/' . rawurlencode($model) . ':generateContent?key=' . rawurlencode($apiKey);
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models/' . rawurlencode($model) . ':generateContent';
         $res = tkt_mkt_http_post_json(
             $url,
-            array('Content-Type: application/json'),
+            array(
+                'Content-Type: application/json',
+                'x-goog-api-key: ' . $apiKey,
+            ),
             array(
                 'systemInstruction' => array(
                     'parts' => array(array('text' => $systemPrompt)),

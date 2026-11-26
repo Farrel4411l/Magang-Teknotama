@@ -403,8 +403,8 @@
         }
 
         // Desktop dropdown support for touch devices (>=1024px without hover) & keyboard
-        const isCoarsePointer = function () {
-            return (window.matchMedia && window.matchMedia('(hover: none)').matches) || (navigator.maxTouchPoints > 0 && window.innerWidth <= 1366);
+        const hasNoHover = function () {
+            return window.matchMedia && window.matchMedia('(hover: none)').matches;
         };
         document.querySelectorAll('.tkt-nav-dropdown').forEach(function (dd) {
             const trig = dd.querySelector('.tkt-nav-trigger');
@@ -415,7 +415,7 @@
             });
             trig.addEventListener('click', function (e) {
                 const isButton = trig.tagName === 'BUTTON';
-                const isTouchTap = lastPointerType === 'touch' || isCoarsePointer();
+                const isTouchTap = lastPointerType === 'touch' || hasNoHover();
                 if (isButton || (isTouchTap && !dd.classList.contains('is-open'))) {
                     e.preventDefault();
                     e.stopPropagation();

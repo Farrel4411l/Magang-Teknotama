@@ -54,6 +54,11 @@
             .replace(/'/g, '&#39;');
     }
 
+    function safeHttpUrl(url) {
+        const raw = String(url == null ? '' : url).trim();
+        return /^https?:\/\//i.test(raw) ? raw : '#';
+    }
+
     function formatIdr(num) {
         const val = Number(num) || 0;
         return 'Rp ' + val.toLocaleString('id-ID');
@@ -559,7 +564,7 @@
                 + '<div class="flex flex-wrap items-start justify-between gap-2 border-b border-slate-200 pb-3">'
                 + '<div><span class="text-[10px] font-bold uppercase text-slate-500">' + escapeHtml(selected.industry) + ' &bull; ' + escapeHtml(selected.crawl_note) + '</span>'
                 + '<h3 class="text-base font-extrabold text-slate-950">' + escapeHtml(selected.company_name) + '</h3>'
-                + (selected.website_url ? '<a href="' + escapeHtml(selected.website_url) + '" target="_blank" rel="noopener noreferrer" class="text-[11px] text-[#d9141d] hover:underline break-all">' + escapeHtml(selected.website_url) + '</a>' : '')
+                + (selected.website_url ? '<a href="' + escapeHtml(safeHttpUrl(selected.website_url)) + '" target="_blank" rel="noopener noreferrer" class="text-[11px] text-[#d9141d] hover:underline break-all">' + escapeHtml(selected.website_url) + '</a>' : '')
                 + '</div>'
                 + '<span class="px-3 py-1 rounded-full text-xs font-extrabold border ' + tierBadge + '">ICP ' + escapeHtml(selected.icp_score) + '/100 (' + escapeHtml(selected.icp_tier) + ')</span>'
                 + '</div>'
@@ -613,7 +618,7 @@
             : state.marketSignals.map(function (s) {
                 return '<div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">'
                     + '<div class="flex items-start justify-between gap-2">'
-                    + '<a href="' + escapeHtml(s.link || '#') + '" target="_blank" rel="noopener noreferrer" class="font-bold text-slate-950 hover:text-[#d9141d]">' + escapeHtml(s.title) + '</a>'
+                    + '<a href="' + escapeHtml(safeHttpUrl(s.link)) + '" target="_blank" rel="noopener noreferrer" class="font-bold text-slate-950 hover:text-[#d9141d]">' + escapeHtml(s.title) + '</a>'
                     + '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 flex-shrink-0">Relevansi ' + escapeHtml(s.relevance_score) + '</span>'
                     + '</div>'
                     + '<p class="text-[11px] text-slate-600">' + escapeHtml(s.summary) + '</p>'

@@ -959,6 +959,6 @@ $esc = function ($val) {
     <!-- Toast Notification -->
     <div id="toast-container" class="hidden fixed bottom-5 right-5 z-[60] bg-[#090d16] text-white border border-red-500/60 px-4 py-2.5 rounded-xl shadow-2xl text-xs font-semibold no-print"></div>
 
-    <script src="./assets/app.js?v=20261126" defer></script>
+    <script src="./assets/app.js?v=20261126b" defer></script>
 </body>
 </html>

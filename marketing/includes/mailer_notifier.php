@@ -75,8 +75,8 @@ function tkt_mkt_send_email($config, $business, $toEmail, $toName, $subject, $bo
     $safeSubject = str_replace(array("\r", "\n"), ' ', trim((string) $subject));
     $safeFrom = str_replace(array("\r", "\n"), '', (string) $config['email_from']);
     $safeReplyTo = str_replace(array("\r", "\n"), '', (string) $config['email_reply_to']);
-    $companyName = str_replace(array("\r", "\n"), ' ', (string) $business['company_name']);
-    $safeToName = str_replace(array("\r", "\n"), ' ', trim((string) $toName));
+    $companyName = preg_replace('/["<>]/', '', str_replace(array("\r", "\n"), ' ', (string) $business['company_name']));
+    $safeToName = preg_replace('/["<>]/', '', str_replace(array("\r", "\n"), ' ', trim((string) $toName)));
 
     $esc = function ($val) {
         return htmlspecialchars((string) $val, ENT_QUOTES, 'UTF-8');
