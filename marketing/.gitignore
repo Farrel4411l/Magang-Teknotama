@@ -1,0 +1,7 @@
+# Secrets & runtime data (do not commit to Git)
+config/portal_config.php
+data/*.json
+data/*.log
+*.log
+.DS_Store
+Thumbs.db

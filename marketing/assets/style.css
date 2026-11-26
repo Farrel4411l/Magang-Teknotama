@@ -1,0 +1,88 @@
+/**
+ * Tekno AI Marketing Portal - Corporate Editorial Light + Crimson Red Stylesheet
+ */
+:root {
+    --tkt-red: #d9141d;
+    --tkt-red-dark: #b50e16;
+    --tkt-dark: #090d16;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.tkt-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.05);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tkt-card:hover {
+    border-color: #cbd5e1;
+}
+
+.eyebrow-line {
+    display: inline-block;
+    width: 28px;
+    height: 2px;
+    background-color: var(--tkt-red);
+    vertical-align: middle;
+}
+
+.tkt-scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.tkt-scroll::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.05);
+    border-radius: 9999px;
+}
+
+.tkt-scroll::-webkit-scrollbar-thumb {
+    background: rgba(217, 20, 29, 0.35);
+    border-radius: 9999px;
+}
+
+.tkt-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(217, 20, 29, 0.7);
+}
+
+.nav-pill.active {
+    background-color: #d9141d;
+    color: #ffffff;
+    box-shadow: 0 6px 16px -4px rgba(217, 20, 29, 0.45);
+}
+
+.nav-pill:not(.active) {
+    color: #cbd5e1;
+}
+
+.nav-pill:not(.active):hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+}
+
+@media print {
+    .no-print,
+    aside,
+    header,
+    #toast-container {
+        display: none !important;
+    }
+
+    body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+    }
+
+    .print-area {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+}

@@ -1,0 +1,34 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /marketing/
+
+  # Blokir akses langsung HTTP ke direktori sensitif & skrip internal
+  RewriteRule ^(config|data|includes|gas)(/|$) - [F,L]
+
+  # Clean URL opsional: /marketing/login -> /marketing/login.php
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{DOCUMENT_ROOT}/marketing/$1.php -f
+  RewriteRule ^(.+?)/?$ /marketing/$1.php [L]
+</IfModule>
+
+<FilesMatch "^(\.htaccess|README\.md|.*config(\.example)?\.php|.*\.json|.*\.log|.*\.gs)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "noindex, nofollow, noarchive"
+  Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+</IfModule>
+
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php72 .php .php7 .phtml
+</IfModule>
