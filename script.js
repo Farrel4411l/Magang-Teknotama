@@ -368,12 +368,18 @@
                 if (!ticking) {
                     window.requestAnimationFrame(function () {
                         const currentY = window.scrollY;
+                        const mob = document.getElementById('mobile-menu');
+                        // Keep header pinned if user is browsing the open mobile drawer
+                        if (mob && !mob.classList.contains('hidden')) {
+                            header.classList.remove('glass-nav--hidden');
+                            lastScrollY = currentY;
+                            ticking = false;
+                            return;
+                        }
                         if (currentY > lastScrollY && currentY > 80) {
                             // Scrolling down — hide nav
                             header.classList.add('glass-nav--hidden');
-                            // Also close mobile menu if open
-                            const mob = document.getElementById('mobile-menu');
-                            if (mob) mob.classList.add('hidden');
+                            closeDesktopDropdowns();
                         } else {
                             // Scrolling up — show nav
                             header.classList.remove('glass-nav--hidden');
@@ -387,18 +393,92 @@
         }());
         // ─────────────────────────────────────────────────────────────────────
 
+        function closeDesktopDropdowns(exceptDropdown) {
+            document.querySelectorAll('.tkt-nav-dropdown').forEach(function (dd) {
+                if (exceptDropdown && dd === exceptDropdown) return;
+                dd.classList.remove('is-open');
+                const trig = dd.querySelector('.tkt-nav-trigger');
+                if (trig) trig.setAttribute('aria-expanded', 'false');
+            });
+        }
+
+        // Desktop dropdown support for touch devices (>=1024px without hover) & keyboard
+        const isCoarsePointer = function () {
+            return (window.matchMedia && window.matchMedia('(hover: none)').matches) || (navigator.maxTouchPoints > 0 && window.innerWidth <= 1366);
+        };
+        document.querySelectorAll('.tkt-nav-dropdown').forEach(function (dd) {
+            const trig = dd.querySelector('.tkt-nav-trigger');
+            if (!trig) return;
+            let lastPointerType = 'mouse';
+            trig.addEventListener('pointerdown', function (e) {
+                lastPointerType = e.pointerType || 'mouse';
+            });
+            trig.addEventListener('click', function (e) {
+                const isButton = trig.tagName === 'BUTTON';
+                const isTouchTap = lastPointerType === 'touch' || isCoarsePointer();
+                if (isButton || (isTouchTap && !dd.classList.contains('is-open'))) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const willOpen = !dd.classList.contains('is-open');
+                    closeDesktopDropdowns(willOpen ? dd : null);
+                    dd.classList.toggle('is-open', willOpen);
+                    trig.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+                }
+            });
+        });
+
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        function setMobileMenuOpen(open) {
+            if (!mobileMenu) return;
+            mobileMenu.classList.toggle('hidden', !open);
+            if (mobileMenuBtn) {
+                mobileMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            }
+        }
         if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', function () {
-                mobileMenu.classList.toggle('hidden');
+            mobileMenuBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const isOpening = mobileMenu.classList.contains('hidden');
+                setMobileMenuOpen(isOpening);
             });
             mobileMenu.querySelectorAll('a').forEach(function (link) {
                 link.addEventListener('click', function () {
-                    mobileMenu.classList.add('hidden');
+                    setMobileMenuOpen(false);
                 });
             });
         }
+
+        // Expandable accordions inside Mobile Drawer (Layanan IT & Lainnya)
+        document.querySelectorAll('[data-mobile-acc-btn]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const targetId = btn.getAttribute('data-mobile-acc-btn');
+                const panel = targetId ? document.getElementById(targetId) : null;
+                if (!panel) return;
+                const willOpen = panel.classList.contains('hidden');
+                panel.classList.toggle('hidden', !willOpen);
+                btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+                const chev = btn.querySelector('[data-mobile-acc-chevron]');
+                if (chev) {
+                    chev.classList.toggle('rotate-180', willOpen);
+                }
+            });
+        });
+
+        // Close menus on outside click or Escape key
+        document.addEventListener('click', function (e) {
+            const headerEl = document.querySelector('header.glass-nav');
+            if (headerEl && !headerEl.contains(e.target)) {
+                closeDesktopDropdowns();
+                setMobileMenuOpen(false);
+            }
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeDesktopDropdowns();
+                setMobileMenuOpen(false);
+            }
+        });
 
         // Filter Portfolio (Light Corporate Pill Styling)
         const filterBtns = document.querySelectorAll('.portfolio-btn');
@@ -456,11 +536,13 @@
             });
         }
 
-        // Trigger Tekno AI dari Navbar & Footer
-        ['nav-open-ai-btn', 'footer-open-ai-btn'].forEach(function (id) {
+        // Trigger Tekno AI dari Navbar Desktop, Mobile Drawer & Footer
+        ['nav-open-ai-btn', 'mobile-open-ai-btn', 'footer-open-ai-btn'].forEach(function (id) {
             const el = document.getElementById(id);
             if (el) {
                 el.addEventListener('click', function () {
+                    closeDesktopDropdowns();
+                    setMobileMenuOpen(false);
                     openWidgetToChat();
                 });
             }

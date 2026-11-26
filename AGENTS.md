@@ -55,5 +55,5 @@ Saat mengunggah pembaruan via FileZilla atau Ops Agent ke `/public_html/`, **DIL
 ## 3. CHECKLIST WAJIB SEBELUM `git push` / RILIS
 1. Jalankan `php -l` pada setiap file `.php` yang diubah dan pastikan bebas sintaks PHP 7.3+/8.x.
 2. Pastikan **tidak ada** file rahasia (`teknotama_secrets.php`, `marketing/config/portal_config.php`, `marketing/data/*.json`) yang masuk ke `git status` atau `git diff --cached`.
-3. Untuk perubahan UI publik, cek tampilan Desktop (`1440x900`) & Mobile (`390x844`) tanpa *horizontal overflow* dan tanpa *console error* lokal.
+3. Untuk perubahan UI publik, wajib verifikasi **lintas ukuran layar & perangkat** (`360x640`, `400x738`, `768x1024`, `1024x768`, dan `1440x900`) tanpa *horizontal overflow*, tanpa elemen bertumpuk/terpotong (termasuk widget melayang vs CTA hero/footer & tinggi `100dvh`), tanpa *console error* lokal, serta **paritas 1:1 seluruh menu & fitur** antara navigasi Desktop, dropdown sentuh (`hover: none`), dan `#mobile-menu` (termasuk `Layanan IT`, `Lainnya`, dan `Tekno AI & WhatsApp CS`).
 4. Untuk deploy ke `/public_html/marketing/`, selalu kecualikan `marketing/data/` dan `marketing/config/portal_config.php`.

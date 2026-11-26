@@ -127,7 +127,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3146007647541379" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="style.css?v=20261126">
+    <link rel="stylesheet" href="style.css?v=20261126b">
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-[#d9141d] selection:text-white">
 
@@ -140,17 +140,17 @@
             </a>
 
             <!-- Desktop Nav Links -->
-            <nav aria-label="Navigasi Utama" class="hidden lg:flex items-center gap-7 text-xs xl:text-sm font-semibold text-slate-700">
+            <nav aria-label="Navigasi Utama" class="hidden lg:flex items-center gap-4 xl:gap-7 text-xs xl:text-sm font-semibold text-slate-700 whitespace-nowrap">
                 <a href="/" class="hover:text-[#d9141d] transition-colors">Beranda</a>
                 <a href="tentang.html" class="hover:text-[#d9141d] transition-colors">Tentang Kami</a>
 
                 <!-- Dropdown Layanan IT -->
-                <div class="relative group py-2">
-                    <a href="/#layanan" class="inline-flex items-center gap-1 text-slate-950 font-bold border-b-2 border-[#d9141d] pb-1">
+                <div class="relative group py-2 tkt-nav-dropdown">
+                    <a href="/#layanan" aria-expanded="false" aria-haspopup="true" class="tkt-nav-trigger inline-flex items-center gap-1 text-slate-950 font-bold border-b-2 border-[#d9141d] pb-1">
                         <span>Layanan IT</span>
                         <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-[#d9141d]"></i>
                     </a>
-                    <div class="hidden group-hover:block absolute left-0 top-full w-64 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 z-50">
+                    <div class="tkt-nav-menu hidden group-hover:block group-focus-within:block absolute left-0 top-full w-64 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 z-50 whitespace-normal">
                         <a href="jasa-instalasi-jaringan-fiber-optic.html" class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-red-50 hover:text-[#d9141d]">Jaringan LAN &amp; Fiber Optic</a>
                         <a href="jasa-instalasi-wifi-kantor-access-point.html" class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-red-50 hover:text-[#d9141d]">Wi-Fi Kantor &amp; Heatmap Survey</a>
                         <a href="jasa-server-data-center-cloud.html" class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-red-50 hover:text-[#d9141d]">Server, Data Center &amp; Cloud</a>
@@ -164,12 +164,12 @@
                 <a href="/#portofolio" class="hover:text-[#d9141d] transition-colors">Portofolio</a>
 
                 <!-- Dropdown Lainnya -->
-                <div class="relative group py-2">
-                    <button type="button" class="inline-flex items-center gap-1 hover:text-[#d9141d] transition-colors focus:outline-none">
+                <div class="relative group py-2 tkt-nav-dropdown">
+                    <button type="button" aria-expanded="false" aria-haspopup="true" class="tkt-nav-trigger inline-flex items-center gap-1 hover:text-[#d9141d] transition-colors focus:outline-none">
                         <span>Lainnya</span>
                         <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 group-hover:text-[#d9141d]"></i>
                     </button>
-                    <div class="hidden group-hover:block absolute right-0 top-full w-52 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 z-50">
+                    <div class="tkt-nav-menu hidden group-hover:block group-focus-within:block absolute right-0 top-full w-56 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 z-50 whitespace-normal">
                         <a href="/#testimoni" class="nav-testimoni-link hidden block px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-red-50 hover:text-[#d9141d]">Ulasan &amp; Testimoni Klien</a>
                         <a href="/#faq" class="block px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-red-50 hover:text-[#d9141d]">Tanya Jawab (FAQ)</a>
                         <button type="button" id="nav-open-ai-btn" class="w-full text-left px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-red-50 hover:text-[#d9141d]">Tekno AI &amp; WhatsApp CS</button>
@@ -178,12 +178,12 @@
             </nav>
 
             <!-- CTA Desktop & Language Toggle -->
-            <div class="hidden lg:flex items-center gap-3">
+            <div class="hidden lg:flex items-center gap-2.5 xl:gap-3 flex-shrink-0">
                 <div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 text-[11px] font-bold" role="group" aria-label="Language switch">
                     <button type="button" data-lang-btn="id" class="lang-switch-btn px-2.5 py-1 rounded-full transition-all bg-white text-slate-900 shadow-sm">ID</button>
                     <button type="button" data-lang-btn="en" class="lang-switch-btn px-2.5 py-1 rounded-full transition-all text-slate-500 hover:text-slate-900">EN</button>
                 </div>
-                <a href="kontak.html" class="bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold text-xs xl:text-sm px-6 py-2.5 rounded-full shadow-md shadow-red-600/20 hover:shadow-lg transition-all flex items-center gap-2">
+                <a href="kontak.html" class="bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold text-xs xl:text-sm px-4 xl:px-6 py-2.5 rounded-full shadow-md shadow-red-600/20 hover:shadow-lg transition-all flex items-center gap-2 whitespace-nowrap">
                     <i data-lucide="headset" class="w-4 h-4"></i>
                     Konsultasi Gratis
                 </a>
@@ -195,29 +195,55 @@
                     <button type="button" data-lang-btn="id" class="lang-switch-btn px-2 py-0.5 rounded-full transition-all bg-white text-slate-900 shadow-sm">ID</button>
                     <button type="button" data-lang-btn="en" class="lang-switch-btn px-2 py-0.5 rounded-full transition-all text-slate-500 hover:text-slate-900">EN</button>
                 </div>
-                <button id="mobile-menu-btn" type="button" class="p-2 text-slate-700 hover:text-[#d9141d] focus:outline-none" aria-label="Toggle Navigation">
+                <button id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" class="p-2 text-slate-700 hover:text-[#d9141d] focus:outline-none" aria-label="Toggle Navigation">
                     <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile Drawer Menu -->
-        <div id="mobile-menu" class="hidden lg:hidden border-b border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg">
-            <a href="/" class="block text-slate-700 font-medium py-2 hover:text-[#d9141d]">Beranda</a>
-            <a href="tentang.html" class="block text-slate-700 font-medium py-2 hover:text-[#d9141d]">Tentang Kami</a>
-            <a href="/#layanan" class="block text-slate-900 font-bold py-2">Layanan IT</a>
-            <a href="kalkulator-boq-it.html" class="block text-slate-700 font-medium py-2 hover:text-[#d9141d]">Kalkulator BOQ</a>
-            <a href="/#portofolio" class="block text-slate-700 font-medium py-2 hover:text-[#d9141d]">Portofolio</a>
-            <a href="/#testimoni" class="nav-testimoni-link hidden block text-slate-700 font-medium py-2 hover:text-[#d9141d]">Testimoni Klien</a>
-            <a href="/#faq" class="block text-slate-700 font-medium py-2 hover:text-[#d9141d]">FAQ</a>
-            <a href="kontak.html" class="block w-full text-center bg-[#d9141d] text-white font-bold py-2.5 rounded-full mt-3">Konsultasi Gratis</a>
+        <!-- Mobile Drawer Menu (Paritas 1:1 dengan Navigasi Desktop) -->
+        <div id="mobile-menu" class="hidden lg:hidden border-b border-slate-200 bg-white px-4 pt-3 pb-6 space-y-1 shadow-xl max-h-[calc(100vh-5rem)] max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain">
+            <a href="/" class="block text-slate-700 font-medium py-2.5 hover:text-[#d9141d]">Beranda</a>
+            <a href="tentang.html" class="block text-slate-700 font-medium py-2.5 hover:text-[#d9141d]">Tentang Kami</a>
+            <div>
+                <button type="button" data-mobile-acc-btn="mobile-sub-layanan" aria-expanded="false" aria-controls="mobile-sub-layanan" class="w-full flex items-center justify-between py-2.5 text-left text-slate-900 font-bold">
+                    <span>Layanan IT</span>
+                    <i data-lucide="chevron-down" data-mobile-acc-chevron class="w-4 h-4 text-[#d9141d] transition-transform duration-200"></i>
+                </button>
+                <div id="mobile-sub-layanan" class="hidden pl-3 ml-1 border-l-2 border-red-100 space-y-1 pb-2">
+                    <a href="/#layanan" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-[#d9141d]">Semua Layanan IT</a>
+                    <a href="jasa-instalasi-jaringan-fiber-optic.html" class="block py-1.5 text-xs font-semibold text-slate-700 hover:text-[#d9141d]">Jaringan LAN &amp; Fiber Optic</a>
+                    <a href="jasa-instalasi-wifi-kantor-access-point.html" class="block py-1.5 text-xs font-bold text-[#d9141d]">Wi-Fi Kantor &amp; Heatmap Survey</a>
+                    <a href="jasa-server-data-center-cloud.html" class="block py-1.5 text-xs font-semibold text-slate-700 hover:text-[#d9141d]">Server, Data Center &amp; Cloud</a>
+                    <a href="jasa-firewall-keamanan-jaringan-vpn.html" class="block py-1.5 text-xs font-semibold text-slate-700 hover:text-[#d9141d]">Firewall Security &amp; VPN</a>
+                    <a href="jasa-pasang-cctv-smart-office.html" class="block py-1.5 text-xs font-semibold text-slate-700 hover:text-[#d9141d]">IP CCTV &amp; Smart Office</a>
+                    <a href="jasa-managed-it-support-maintenance-jakarta.html" class="block py-1.5 text-xs font-semibold text-slate-700 hover:text-[#d9141d]">Managed IT &amp; Maintenance</a>
+                </div>
+            </div>
+            <a href="kalkulator-boq-it.html" class="block text-slate-700 font-medium py-2.5 hover:text-[#d9141d]">Kalkulator BOQ</a>
+            <a href="/#portofolio" class="block text-slate-700 font-medium py-2.5 hover:text-[#d9141d]">Portofolio</a>
+            <div>
+                <button type="button" data-mobile-acc-btn="mobile-sub-lainnya" aria-expanded="false" aria-controls="mobile-sub-lainnya" class="w-full flex items-center justify-between py-2.5 text-left text-slate-700 font-medium hover:text-[#d9141d]">
+                    <span>Lainnya</span>
+                    <i data-lucide="chevron-down" data-mobile-acc-chevron class="w-4 h-4 text-slate-400 transition-transform duration-200"></i>
+                </button>
+                <div id="mobile-sub-lainnya" class="hidden pl-3 ml-1 border-l-2 border-slate-200 space-y-1 pb-2">
+                    <a href="/#testimoni" class="nav-testimoni-link hidden block py-1.5 text-xs font-semibold text-slate-700 hover:text-[#d9141d]">Ulasan &amp; Testimoni Klien</a>
+                    <a href="/#faq" class="block py-1.5 text-xs font-semibold text-slate-700 hover:text-[#d9141d]">Tanya Jawab (FAQ)</a>
+                    <button type="button" id="mobile-open-ai-btn" class="w-full text-left py-1.5 text-xs font-semibold text-slate-700 hover:text-[#d9141d]">Tekno AI &amp; WhatsApp CS</button>
+                </div>
+            </div>
+            <a href="kontak.html" class="flex items-center justify-center gap-2 w-full text-center bg-[#d9141d] hover:bg-[#b50e16] text-white font-bold py-3 rounded-full mt-3 shadow-md shadow-red-600/20">
+                <i data-lucide="headset" class="w-4 h-4"></i>
+                Konsultasi Gratis
+            </a>
         </div>
     </header>
 
     <main class="pt-32 pb-20">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
 
-            <nav aria-label="Breadcrumb" class="text-xs text-slate-500 flex items-center gap-2">
+            <nav aria-label="Breadcrumb" class="text-xs text-slate-500 flex flex-wrap items-center gap-x-2 gap-y-1">
                 <a href="/" class="hover:text-[#d9141d]" data-en="Home">Beranda</a>
                 <span>/</span>
                 <a href="/#layanan" class="hover:text-[#d9141d]" data-en="IT Services">Layanan IT</a>
@@ -355,7 +381,7 @@
         </div>
     </main>
 
-    <footer class="bg-[#060709] text-slate-400 py-8 border-t border-slate-900 text-center text-xs px-4 space-y-2">
+    <footer class="bg-[#060709] text-slate-400 pt-8 pb-24 lg:pb-8 border-t border-slate-900 text-center text-xs px-4 space-y-2">
         <p>&copy; <span id="year"></span> <strong>PT Teknotama Prakarsa Mulia</strong> • Infiniti Office, Belleza BSA 1st Floor Unit 106, Grogol Utara, Jakarta Selatan 12210</p>
         <p class="flex flex-wrap justify-center gap-x-4 gap-y-1">
             <a href="tel:+622158905002" class="hover:text-white">+62-21 58905002</a>
@@ -365,7 +391,7 @@
         </p>
     </footer>
 
-    <script src="script.js?v=20261126" defer></script>
-    <script src="i18n.js?v=20261126" defer></script>
+    <script src="script.js?v=20261126b" defer></script>
+    <script src="i18n.js?v=20261126b" defer></script>
 </body>
 </html>

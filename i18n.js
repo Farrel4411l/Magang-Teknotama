@@ -10,6 +10,7 @@
         'Beranda': 'Home',
         'Tentang Kami': 'About Us',
         'Layanan IT': 'IT Services',
+        'Semua Layanan IT': 'All IT Services',
         'Jaringan LAN & Fiber Optic': 'LAN & Fiber Optic Network',
         'Wi-Fi Kantor & Heatmap Survey': 'Office Wi-Fi & Heatmap Survey',
         'Server, Data Center & Cloud': 'Server, Data Center & Cloud',
