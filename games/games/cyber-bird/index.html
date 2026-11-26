@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Cyber Bird - TeknoGame</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #060913;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      touch-action: manipulation;
+    }
+    #gameContainer {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    #hud {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .hud-left {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .badge {
+      background: rgba(11, 18, 34, 0.85);
+      color: #94a3b8;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-weight: 800;
+      font-size: 13px;
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(4px);
+    }
+    .badge span {
+      color: #00f0ff;
+    }
+    .badge.best span {
+      color: #f59e0b;
+    }
+    .btn-audio {
+      pointer-events: auto;
+      background: rgba(11, 18, 34, 0.85);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #00f0ff;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
+      transition: transform 0.1s, border-color 0.2s;
+    }
+    .btn-audio:active {
+      transform: scale(0.92);
+    }
+    .btn-audio svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(6, 9, 19, 0.88);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      color: #fff;
+      text-align: center;
+      padding: 24px;
+    }
+    .title {
+      font-size: 34px;
+      font-weight: 900;
+      color: #00f0ff;
+      text-shadow: 0 0 25px rgba(0, 240, 255, 0.7);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .desc {
+      font-size: 14px;
+      color: #94a3b8;
+      max-width: 320px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .stats-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 16px;
+      padding: 16px 24px;
+      margin-bottom: 24px;
+      min-width: 200px;
+    }
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 4px 0;
+    }
+    .stats-label {
+      color: #64748b;
+    }
+    .stats-val {
+      color: #fff;
+    }
+    .btn-action {
+      background: linear-gradient(135deg, #00f0ff, #3b82f6);
+      color: #060913;
+      border: none;
+      padding: 14px 34px;
+      border-radius: 9999px;
+      font-weight: 900;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.45);
+      letter-spacing: 0.5px;
+      transition: transform 0.1s, box-shadow 0.2s;
+    }
+    .btn-action:hover {
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.65);
+    }
+    .btn-action:active {
+      transform: scale(0.96);
+    }
+  </style>
+</head>
+<body>
+  <div id="gameContainer">
+    <div id="hud">
+      <div class="hud-left">
+        <div class="badge"><span data-i18n="hudScore" style="color: inherit;">SKOR:</span> <span id="scoreVal">0</span></div>
+        <div class="badge best"><span data-i18n="hudBest" style="color: inherit;">REKOR:</span> <span id="highScoreVal">0</span></div>
+        <div class="badge"><span data-i18n="hudSpeed" style="color: inherit;">SPEED:</span> <span id="speedVal">1.0x</span></div>
+      </div>
+      <button class="btn-audio" id="audioToggle" aria-label="Toggle Suara" data-i18n-aria="toggleAudio">
+        <svg id="iconSoundOn" viewBox="0 0 24 24">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+        <svg id="iconSoundOff" viewBox="0 0 24 24" style="display: none;">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Start Overlay -->
+    <div id="startScreen" class="overlay">
+      <div class="title" data-i18n="title">CYBER BIRD</div>
+      <div class="desc" data-i18n="startDesc">Navigasikan drone siber melintasi pilar neon. Tekan Spasi atau ketuk layar untuk bermanuver!</div>
+      <div class="stats-card">
+        <div class="stats-row">
+          <span class="stats-label" data-i18n="yourBest">REKOR ANDA:</span>
+          <span class="stats-val" id="startHighScore">0</span>
+        </div>
+      </div>
+      <button class="btn-action" id="startBtn" data-i18n="startBtn">MULAI TERBANG</button>
+    </div>
+
+    <!-- Game Over Overlay -->
+    <div id="gameOverScreen" class="overlay" style="display: none;">
+      <div class="title" style="color: #ef4444; text-shadow: 0 0 25px rgba(239,68,68,0.7);" data-i18n="gameOverTitle">MISI BERAKHIR</div>
+      <div class="desc" data-i18n="gameOverDesc">Drone siber mengalami benturan pada pilar energi.</div>
+      <div class="stats-card">
+        <div class="stats-row">
+          <span class="stats-label" data-i18n="missionScore">Skor Misi:</span>
+          <span class="stats-val" id="finalScoreVal" style="color: #00f0ff;">0</span>
+        </div>
+        <div class="stats-row">
+          <span class="stats-label" data-i18n="highScoreLabel">Rekor Tertinggi:</span>
+          <span class="stats-val" id="finalHighScoreVal" style="color: #f59e0b;">0</span>
+        </div>
+      </div>
+      <button class="btn-action" id="restartBtn" data-i18n="restartBtn">TERBANG LAGI</button>
+    </div>
+
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <script>
+    // Audio Synth Web Audio API
+    let audioCtx = null;
+    let isMuted = localStorage.getItem('teknogames_muted') === 'true';
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playTone(f1, f2, dur, type = 'sine') {
+      if (isMuted) return;
+      initAudio();
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(f1, audioCtx.currentTime);
+        if (f2) osc.frequency.exponentialRampToValueAtTime(f2, audioCtx.currentTime + dur);
+        gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + dur);
+      } catch (e) {}
+    }
+
+    const Sound = {
+      jump: () => playTone(240, 520, 0.12, 'sine'),
+      score: () => playTone(650, 1100, 0.15, 'triangle'),
+      hit: () => playTone(140, 30, 0.3, 'sawtooth')
+    };
+
+    // Toggle Audio UI
+    const audioBtn = document.getElementById('audioToggle');
+    const iconSoundOn = document.getElementById('iconSoundOn');
+    const iconSoundOff = document.getElementById('iconSoundOff');
+    function updateAudioUI() {
+      if (isMuted) {
+        iconSoundOn.style.display = 'none';
+        iconSoundOff.style.display = 'block';
+      } else {
+        iconSoundOn.style.display = 'block';
+        iconSoundOff.style.display = 'none';
+      }
+    }
+    audioBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      isMuted = !isMuted;
+      localStorage.setItem('teknogames_muted', isMuted);
+      updateAudioUI();
+    });
+    updateAudioUI();
+
+    // High Score System
+    const HS_KEY = 'teknogames_cyber-bird_highscore';
+    let highScore = parseInt(localStorage.getItem(HS_KEY) || '0', 10);
+    document.getElementById('highScoreVal').innerText = highScore;
+    document.getElementById('startHighScore').innerText = highScore;
+
+    // Canvas & Game Logic
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let W = 0, H = 0;
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let isPlaying = false;
+    let score = 0;
+    const baseSpeed = 2.6;
+    const gravity = 0.24;
+    const jumpForce = -5.6;
+    let bird = { x: 90, y: 0, vy: 0, size: 15 };
+    let pipes = [];
+    let pipeTimer = 0;
+    let stars = [];
+
+    // Inisialisasi latar belakang bintang kosmik
+    for (let i = 0; i < 35; i++) {
+      stars.push({
+        x: Math.random() * 2000,
+        y: Math.random() * 1000,
+        size: Math.random() * 2 + 1,
+        speed: Math.random() * 0.8 + 0.2
+      });
+    }
+
+    function resetGame() {
+      score = 0;
+      bird.x = Math.min(100, W * 0.25);
+      bird.y = H * 0.45;
+      bird.vy = 0;
+      pipes = [];
+      pipeTimer = 0;
+      updateHUD();
+    }
+
+    function updateHUD() {
+      document.getElementById('scoreVal').innerText = score;
+      document.getElementById('highScoreVal').innerText = highScore;
+      const spd = (1 + Math.floor(score / 5) * 0.15).toFixed(1);
+      document.getElementById('speedVal').innerText = spd + 'x';
+    }
+
+    function flap() {
+      if (!isPlaying) return;
+      bird.vy = jumpForce;
+      Sound.jump();
+    }
+
+    // Input Handlers
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' || e.code === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+        e.preventDefault();
+        if (!isPlaying) {
+          if (document.getElementById('startScreen').style.display !== 'none' ||
+              document.getElementById('gameOverScreen').style.display !== 'none') {
+            startGame();
+          }
+        } else {
+          flap();
+        }
+      }
+    });
+
+    window.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('#hud') || e.target.closest('.overlay')) return;
+      if (isPlaying) {
+        flap();
+      }
+    });
+
+    function startGame() {
+      initAudio();
+      document.getElementById('startScreen').style.display = 'none';
+      document.getElementById('gameOverScreen').style.display = 'none';
+      resetGame();
+      isPlaying = true;
+    }
+
+    function gameOver() {
+      if (!isPlaying) return;
+      isPlaying = false;
+      Sound.hit();
+
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem(HS_KEY, highScore.toString());
+      }
+
+      document.getElementById('finalScoreVal').innerText = score;
+      document.getElementById('finalHighScoreVal').innerText = highScore;
+      document.getElementById('highScoreVal').innerText = highScore;
+      document.getElementById('gameOverScreen').style.display = 'flex';
+
+      // Kirim event ke portal web utama
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: "GAME_OVER", score: score }, "*");
+      }
+    }
+
+    document.getElementById('startBtn').onclick = startGame;
+    document.getElementById('restartBtn').onclick = startGame;
+
+    // Game Loop
+    function loop() {
+      ctx.fillStyle = '#060913';
+      ctx.fillRect(0, 0, W, H);
+
+      // Render Bintang
+      ctx.fillStyle = 'rgba(0, 240, 255, 0.25)';
+      for (const s of stars) {
+        s.x -= s.speed;
+        if (s.x < 0) s.x = W + 50;
+        ctx.fillRect(s.x, s.y % H, s.size, s.size);
+      }
+
+      const curSpeed = baseSpeed + Math.floor(score / 5) * 0.35;
+
+      if (isPlaying) {
+        bird.vy += gravity;
+        bird.y += bird.vy;
+
+        // Cek Batas Atas dan Bawah
+        if (bird.y + bird.size >= H - 24 || bird.y - bird.size <= 0) {
+          gameOver();
+        }
+
+        // Spawn Pilar
+        pipeTimer++;
+        const spawnInterval = Math.max(70, Math.floor(125 - Math.floor(score / 5) * 5));
+        if (pipeTimer >= spawnInterval) {
+          pipeTimer = 0;
+          const gap = Math.max(130, 185 - Math.floor(score / 5) * 4);
+          const topH = Math.random() * (H - gap - 160) + 60;
+          pipes.push({ x: W, top: topH, gap: gap, passed: false });
+        }
+
+        // Update Pilar & Deteksi Tabrakan
+        for (let i = pipes.length - 1; i >= 0; i--) {
+          const p = pipes[i];
+          p.x -= curSpeed;
+
+          // Hitung Poin
+          if (!p.passed && p.x + 52 < bird.x) {
+            p.passed = true;
+            score++;
+            Sound.score();
+            updateHUD();
+          }
+
+          // Tabrakan AABB
+          if (bird.x + bird.size > p.x && bird.x - bird.size < p.x + 52) {
+            if (bird.y - bird.size < p.top || bird.y + bird.size > p.top + p.gap) {
+              gameOver();
+            }
+          }
+
+          if (p.x < -65) pipes.splice(i, 1);
+        }
+      }
+
+      // Gambar Pilar Energi
+      for (const p of pipes) {
+        const bY = p.top + p.gap;
+
+        // Batang Pilar
+        ctx.fillStyle = '#0b1324';
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 2;
+
+        ctx.fillRect(p.x, 0, 52, p.top);
+        ctx.strokeRect(p.x, -2, 52, p.top + 2);
+
+        ctx.fillRect(p.x, bY, 52, H - bY);
+        ctx.strokeRect(p.x, bY, 52, H - bY + 2);
+
+        // Cap Lampu Neon di Ujung
+        ctx.fillStyle = '#00f0ff';
+        ctx.shadowColor = '#00f0ff';
+        ctx.shadowBlur = 10;
+        ctx.fillRect(p.x - 3, p.top - 8, 58, 8);
+        ctx.fillRect(p.x - 3, bY, 58, 8);
+        ctx.shadowBlur = 0;
+      }
+
+      // Gambar Lantai Energi
+      ctx.fillStyle = '#080d1a';
+      ctx.fillRect(0, H - 24, W, 24);
+      ctx.strokeStyle = '#00f0ff';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, H - 24);
+      ctx.lineTo(W, H - 24);
+      ctx.stroke();
+
+      // Gambar Drone Siber
+      ctx.save();
+      ctx.translate(bird.x, bird.y);
+      const angle = Math.min(Math.PI / 4, Math.max(-Math.PI / 4, bird.vy * 0.08));
+      ctx.rotate(angle);
+
+      // Efek Pendar Neon
+      ctx.shadowColor = '#00f0ff';
+      ctx.shadowBlur = 14;
+
+      // Badan Drone
+      ctx.fillStyle = '#00f0ff';
+      ctx.beginPath();
+      ctx.moveTo(bird.size + 4, 0);
+      ctx.lineTo(-bird.size + 2, -bird.size * 0.85);
+      ctx.lineTo(-bird.size * 0.5, 0);
+      ctx.lineTo(-bird.size + 2, bird.size * 0.85);
+      ctx.closePath();
+      ctx.fill();
+
+      // Inti Sensor Energi
+      ctx.fillStyle = '#060913';
+      ctx.shadowBlur = 0;
+      ctx.beginPath();
+      ctx.arc(0, 0, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Jet Api Pendorong
+      if (isPlaying) {
+        ctx.fillStyle = '#38bdf8';
+        ctx.beginPath();
+        ctx.moveTo(-bird.size * 0.5, -3);
+        ctx.lineTo(-bird.size - 6 - (Math.random() * 5), 0);
+        ctx.lineTo(-bird.size * 0.5, 3);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      ctx.restore();
+
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    // --- I18N BILINGUAL SYNC ---
+    let currentLang = "id";
+    try {
+      if (localStorage.getItem("teknogame-lang") === "en") currentLang = "en";
+    } catch {}
+
+    const I18N = {
+      id: {
+        pageTitle: "Cyber Bird - TeknoGame",
+        hudScore: "SKOR:",
+        hudBest: "REKOR:",
+        hudSpeed: "SPEED:",
+        toggleAudio: "Toggle Suara",
+        title: "CYBER BIRD",
+        startDesc: "Navigasikan drone siber melintasi pilar neon. Tekan Spasi atau ketuk layar untuk bermanuver!",
+        yourBest: "REKOR ANDA:",
+        startBtn: "MULAI TERBANG",
+        gameOverTitle: "MISI BERAKHIR",
+        gameOverDesc: "Drone siber mengalami benturan pada pilar energi.",
+        missionScore: "Skor Misi:",
+        highScoreLabel: "Rekor Tertinggi:",
+        restartBtn: "TERBANG LAGI"
+      },
+      en: {
+        pageTitle: "Cyber Bird - TeknoGame",
+        hudScore: "SCORE:",
+        hudBest: "BEST:",
+        hudSpeed: "SPEED:",
+        toggleAudio: "Toggle Sound",
+        title: "CYBER BIRD",
+        startDesc: "Navigate the cyber drone through neon pillars. Press Space or tap the screen to maneuver!",
+        yourBest: "YOUR BEST:",
+        startBtn: "START FLIGHT",
+        gameOverTitle: "MISSION OVER",
+        gameOverDesc: "The cyber drone collided with an energy pillar.",
+        missionScore: "Mission Score:",
+        highScoreLabel: "High Score:",
+        restartBtn: "FLY AGAIN"
+      }
+    };
+
+    function t(key, vars) {
+      let str = (I18N[currentLang] && I18N[currentLang][key]) || I18N.id[key] || key;
+      if (vars) {
+        for (const k of Object.keys(vars)) {
+          str = str.replace(new RegExp("\\{" + k + "\\}", "g"), vars[k]);
+        }
+      }
+      return str;
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang === "en" ? "en" : "id";
+      document.documentElement.lang = currentLang;
+      document.title = t("pageTitle");
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        el.textContent = t(el.getAttribute("data-i18n"));
+      });
+      document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+        el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria")));
+      });
+    }
+
+    window.addEventListener("message", (e) => {
+      if (e.data && e.data.type === "LANG_CHANGE" && (e.data.lang === "id" || e.data.lang === "en")) {
+        applyLanguage(e.data.lang);
+      }
+    });
+    window.addEventListener("storage", (e) => {
+      if (e.key === "teknogame-lang") {
+        applyLanguage(e.newValue === "en" ? "en" : "id");
+      }
+    });
+
+    applyLanguage(currentLang);
+  </script>
+</body>
+</html>

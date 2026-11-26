@@ -1,0 +1,119 @@
+name: Sync TeknoGame (out/) to /games
+
+on:
+  schedule:
+    # Jalankan setiap hari pukul 00:00 WIB (17:00 UTC)
+    - cron: '0 17 * * *'
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: 'Branch/tag sumber di ImmanuelValentino/Teknogames'
+        required: false
+        default: 'main'
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-games-to-main
+  cancel-in-progress: false
+
+jobs:
+  sync-games:
+    name: Sync Teknogames out/ -> games/
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Magang-Teknotama (main)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+
+      - name: Checkout ImmanuelValentino/Teknogames (out/ only)
+        uses: actions/checkout@v4
+        with:
+          repository: ImmanuelValentino/Teknogames
+          ref: ${{ inputs.source_ref || 'main' }}
+          path: _teknogames_tmp
+          sparse-checkout: out
+          sparse-checkout-cone-mode: true
+          fetch-depth: 5
+          persist-credentials: false
+
+      - name: Verify source out/ and capture metadata
+        id: meta
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -f "_teknogames_tmp/out/index.html" ]; then
+            echo "::error::Folder _teknogames_tmp/out/index.html tidak ditemukan. Sinkronisasi dibatalkan agar folder games/ tidak terhapus."
+            exit 1
+          fi
+
+          short_sha="$(git -C _teknogames_tmp rev-parse --short HEAD)"
+          full_sha="$(git -C _teknogames_tmp rev-parse HEAD)"
+          commit_subject="$(git -C _teknogames_tmp log -1 --format=%s)"
+          commit_date="$(git -C _teknogames_tmp log -1 --format=%ci)"
+          file_count="$(find _teknogames_tmp/out -type f | wc -l | tr -d ' ')"
+
+          {
+            echo "short_sha=${short_sha}"
+            echo "full_sha=${full_sha}"
+            echo "commit_subject=${commit_subject}"
+            echo "commit_date=${commit_date}"
+            echo "file_count=${file_count}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Sync _teknogames_tmp/out/ to games/
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p games
+          rsync -a --delete --exclude='.git/' _teknogames_tmp/out/ games/
+          rm -rf _teknogames_tmp
+
+      - name: Commit and push changes in games/ to main
+        shell: bash
+        env:
+          SOURCE_REF: ${{ inputs.source_ref || 'main' }}
+          SHORT_SHA: ${{ steps.meta.outputs.short_sha }}
+          FULL_SHA: ${{ steps.meta.outputs.full_sha }}
+          COMMIT_SUBJECT: ${{ steps.meta.outputs.commit_subject }}
+          COMMIT_DATE: ${{ steps.meta.outputs.commit_date }}
+          FILE_COUNT: ${{ steps.meta.outputs.file_count }}
+        run: |
+          set -euo pipefail
+          git add -A -- games/
+
+          if git diff --cached --quiet -- games/; then
+            echo "games/ sudah sinkron dengan ImmanuelValentino/Teknogames@${SHORT_SHA}."
+            {
+              echo "### Status Sinkronisasi TeknoGame"
+              echo "- **Sumber**: \`ImmanuelValentino/Teknogames\` (\`${SOURCE_REF}\` @ \`${SHORT_SHA}\`)"
+              echo "- **Commit sumber**: ${COMMIT_SUBJECT} (${COMMIT_DATE})"
+              echo "- **Hasil**: Tidak ada perubahan di \`games/\` (sudah terbaru)."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          changed_count="$(git diff --cached --name-only -- games/ | wc -l | tr -d ' ')"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git commit -m "chore(games): sync out/ from Teknogames@${SHORT_SHA}" \
+            -m "Source: https://github.com/ImmanuelValentino/Teknogames/commit/${FULL_SHA}" \
+            -m "Latest upstream commit: ${COMMIT_SUBJECT} (${COMMIT_DATE})" \
+            -m "Synced files: ${FILE_COUNT} total (${changed_count} changed in games/)"
+
+          git pull --rebase origin main
+          git push origin main
+
+          {
+            echo "### Sinkronisasi TeknoGame Berhasil"
+            echo "- **Sumber**: \`ImmanuelValentino/Teknogames\` (\`${SOURCE_REF}\` @ \`${SHORT_SHA}\`)"
+            echo "- **Commit sumber**: ${COMMIT_SUBJECT} (${COMMIT_DATE})"
+            echo "- **Target**: \`Farrel4411l/Magang-Teknotama\` branch \`main\`"
+            echo "- **Total file di \`games/\`**: ${FILE_COUNT} (${changed_count} path berubah)"
+          } >> "$GITHUB_STEP_SUMMARY"
