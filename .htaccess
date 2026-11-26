@@ -34,6 +34,11 @@
   RewriteRule ^index\.html$ https://teknotama.com/ [L,R=301]
 </IfModule>
 
+# Pastikan env TKT_NOINDEX_GAMES tetap bekerja meski /games/.htaccess memiliki RewriteEngine On terpisah
+<IfModule mod_setenvif.c>
+  SetEnvIfNoCase Request_URI "^/games(?:/|$)" TKT_NOINDEX_GAMES=1
+</IfModule>
+
 # 2. Proteksi File Konfigurasi Sensitif
 <FilesMatch "^(teknotama_secrets(\.example)?\.php|testimonials_data\.json|\.gitignore)$">
   <IfModule mod_authz_core.c>

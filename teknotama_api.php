@@ -961,6 +961,9 @@ function teknotama_sync_booking_to_marketing($booking)
         $notesParts[] = '[Pre-Booking AI] ' . teknotama_sanitize_testimonial_text($booking['ai_summary'], 220);
     }
 
+    $notesJoined = implode("\n", $notesParts);
+    $notesSafe = function_exists('mb_substr') ? mb_substr($notesJoined, 0, 800, 'UTF-8') : substr($notesJoined, 0, 800);
+
     $score = teknotama_score_booking_lead($booking);
     $leadRecord = array(
         'lead_id'          => $refId,
@@ -976,14 +979,18 @@ function teknotama_sync_booking_to_marketing($booking)
         'status'           => 'New Lead',
         'next_followup_at' => !empty($booking['survey_date']) ? teknotama_sanitize_testimonial_text($booking['survey_date'], 20) : date('Y-m-d'),
         'last_contact_at'  => '',
-        'notes'            => substr(implode("\n", $notesParts), 0, 800),
+        'notes'            => $notesSafe,
         'last_wa_draft'    => '',
         'ai_score'         => $score['tier'],
         'score_numeric'    => $score['score'],
     );
 
     array_unshift($leads, $leadRecord);
-    $written = @file_put_contents($leadsFile, json_encode(array_values($leads), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), LOCK_EX);
+    $encodedLeads = json_encode(array_values($leads), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    if (!is_string($encodedLeads) || $encodedLeads === '') {
+        return false;
+    }
+    $written = @file_put_contents($leadsFile, $encodedLeads, LOCK_EX);
     if ($written === false) {
         return false;
     }
@@ -1007,7 +1014,10 @@ function teknotama_sync_booking_to_marketing($booking)
     if (count($logs) > 200) {
         $logs = array_slice($logs, 0, 200);
     }
-    @file_put_contents($logsFile, json_encode($logs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), LOCK_EX);
+    $encodedLogs = json_encode($logs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    if (is_string($encodedLogs) && $encodedLogs !== '') {
+        @file_put_contents($logsFile, $encodedLogs, LOCK_EX);
+    }
 
     // Notifikasi opsional ke Telegram / Google Apps Script jika sudah dikonfigurasi di portal marketing
     if (function_exists('curl_init')) {
@@ -1206,7 +1216,11 @@ function teknotama_sanitize_testimonial_text($val, $maxLen)
     $raw = preg_replace('#<(script|style|iframe|object|embed)\b[^>]*>.*?</\1>#is', '', $raw);
     $clean = trim(strip_tags($raw));
     $clean = preg_replace('/\s+/', ' ', $clean);
-    if (strlen($clean) > $maxLen) {
+    if (function_exists('mb_strlen') && function_exists('mb_substr')) {
+        if (mb_strlen($clean, 'UTF-8') > $maxLen) {
+            $clean = mb_substr($clean, 0, $maxLen, 'UTF-8');
+        }
+    } elseif (strlen($clean) > $maxLen) {
         $clean = substr($clean, 0, $maxLen);
     }
     return $clean;

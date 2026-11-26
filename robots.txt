@@ -9,5 +9,7 @@ Disallow: /teknotama_api.php
 Disallow: /teknotama_secrets.php
 Disallow: /teknotama_secrets.example.php
 Disallow: /testimonials_data.json
+Disallow: /marketing/data/
+Disallow: /marketing/config/
 
 Sitemap: https://teknotama.com/sitemap.xml
