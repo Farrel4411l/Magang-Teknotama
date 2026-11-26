@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Allow: /games/
 
 # Cegah perayapan direktori sistem, staging lama, serta file backend/rahasia (file legacy HTML ditangani via 301 & X-Robots-Tag di .htaccess)
 Disallow: /cgi-bin/

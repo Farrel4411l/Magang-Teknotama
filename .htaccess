@@ -21,6 +21,10 @@
   RewriteCond %{HTTP_HOST} ^teknotama\.com$ [NC]
   RewriteRule ^ https://teknotama.com%{REQUEST_URI} [L,R=301,NE]
 
+  # Soft SEO Isolation untuk /games/: tetap dapat diakses, namun ditandai noindex pada domain B2B utama
+  RewriteCond %{REQUEST_URI} ^/games(?:/|$) [NC]
+  RewriteRule ^ - [E=TKT_NOINDEX_GAMES:1]
+
   # Redirect halaman legacy 2021 ("TIS" / placeholder) agar otoritas lama menyatu ke URL kanonik
   RewriteRule ^(?:index_old|underconstructions1?|index_bak)\.html$ https://teknotama.com/ [L,R=301]
   RewriteRule ^portfolio\.html$ https://teknotama.com/#portofolio [L,R=301,NE]
@@ -78,6 +82,8 @@
   <FilesMatch "^admin-testimoni\.html$">
     Header set X-Robots-Tag "noindex, nofollow, noarchive"
   </FilesMatch>
+  Header set X-Robots-Tag "noindex, nofollow" env=TKT_NOINDEX_GAMES
+  Header set X-Robots-Tag "noindex, nofollow" env=REDIRECT_TKT_NOINDEX_GAMES
   <FilesMatch "\.(css|js|xml|svg|txt)$">
     Header append Vary Accept-Encoding
   </FilesMatch>

@@ -844,9 +844,22 @@ function teknotama_handle_booking($config, $input)
 
     $waUrl = 'https://wa.me/' . $config['whatsapp_number'] . '?text=' . rawurlencode($waText);
 
+    $marketingSynced = teknotama_sync_booking_to_marketing(array(
+        'ref_id' => $refId,
+        'company' => $safeCompany,
+        'email' => $safeEmail,
+        'phone' => $phone,
+        'service' => $service,
+        'survey_date' => $surveyDate,
+        'message' => $message,
+        'ai_summary' => $aiSummary,
+        'boq' => $boqData,
+    ));
+
     teknotama_send_json(array(
         'ok' => true,
         'mail_sent' => (bool) $mailSent,
+        'marketing_synced' => (bool) $marketingSynced,
         'reference_id' => $refId,
         'target_email' => $to,
         'whatsapp_url' => $waUrl,
@@ -854,6 +867,189 @@ function teknotama_handle_booking($config, $input)
             ? "Permintaan survei & lampiran teknis (Ref: {$refId}) berhasil dikirim ke {$to}. Tim NOC/Architect Teknotama akan menghubungi Anda dalam 1x24 jam."
             : "Permintaan Anda (Ref: {$refId}) telah tercatat. Server lokal saat ini tidak mengaktifkan relay mail(), silakan klik tombol WhatsApp atau kirim salinan langsung ke {$to}.",
     ), 200);
+}
+
+function teknotama_score_booking_lead($booking)
+{
+    $haystack = strtolower(
+        (isset($booking['service']) ? $booking['service'] : '') . ' '
+        . (isset($booking['message']) ? $booking['message'] : '') . ' '
+        . (isset($booking['boq']['summary']) ? $booking['boq']['summary'] : '')
+    );
+
+    $score = 45;
+    if (preg_match('/(data\s*center|server|fiber\s*optic|splicing|firewall|fortinet|cisco|multi[\s\-]*lantai|gedung|pabrik|gudang|kawasan\s*industri)/i', $haystack)) {
+        $score += 30;
+    }
+    if (preg_match('/(\d{2,4})\s*(titik|user|node|kamera|cctv|ap|lantai|core)/i', $haystack, $m)) {
+        $qty = (int) $m[1];
+        if ($qty >= 30) {
+            $score += 20;
+        } elseif ($qty >= 10) {
+            $score += 10;
+        }
+    }
+    if (!empty($booking['email']) && strpos((string) $booking['email'], '@gmail.') === false && strpos((string) $booking['email'], '@yahoo.') === false) {
+        $score += 10;
+    }
+    if (preg_match('/(jakarta|tangerang|bekasi|depok|bogor|cikarang|karawang|bsd|scbd|simatupang)/i', $haystack)) {
+        $score += 5;
+    }
+
+    $tier = 'Low';
+    if ($score >= 75) {
+        $tier = 'High';
+    } elseif ($score >= 50) {
+        $tier = 'Medium';
+    }
+
+    return array('tier' => $tier, 'score' => min(99, $score));
+}
+
+function teknotama_sync_booking_to_marketing($booking)
+{
+    $marketingDir = __DIR__ . '/marketing';
+    if (!is_dir($marketingDir)) {
+        return false;
+    }
+
+    $dataDir = $marketingDir . '/data';
+    if (!is_dir($dataDir)) {
+        @mkdir($dataDir, 0755, true);
+        @file_put_contents($dataDir . '/.htaccess', "<IfModule mod_authz_core.c>\n  Require all denied\n</IfModule>\n<IfModule !mod_authz_core.c>\n  Order allow,deny\n  Deny from all\n</IfModule>\n", LOCK_EX);
+    }
+
+    $leadsFile = $dataDir . '/leads.json';
+    $leads = array();
+    if (is_file($leadsFile) && is_readable($leadsFile)) {
+        $decoded = json_decode((string) @file_get_contents($leadsFile), true);
+        if (is_array($decoded)) {
+            $leads = $decoded;
+        }
+    }
+
+    $refId = isset($booking['ref_id']) ? (string) $booking['ref_id'] : '';
+    foreach ($leads as $existing) {
+        if (isset($existing['lead_id']) && $existing['lead_id'] === $refId) {
+            return true;
+        }
+    }
+
+    $boqSummary = '';
+    if (!empty($booking['boq']) && is_array($booking['boq'])) {
+        $boqSummary = isset($booking['boq']['summary']) ? teknotama_sanitize_testimonial_text($booking['boq']['summary'], 320) : '';
+        if (!empty($booking['boq']['items']) && is_array($booking['boq']['items'])) {
+            $boqSummary .= ($boqSummary !== '' ? ' | ' : '') . count($booking['boq']['items']) . ' item BOQ terlampir';
+        }
+    }
+    if ($boqSummary === '') {
+        $boqSummary = teknotama_sanitize_testimonial_text(isset($booking['message']) ? $booking['message'] : '', 240);
+    }
+
+    $locationHint = 'Lihat Rincian Proyek';
+    $msgText = isset($booking['message']) ? (string) $booking['message'] : '';
+    if (preg_match('/\b(Jakarta(?:\s+(?:Selatan|Pusat|Barat|Timur|Utara))?|Tangerang(?:\s+Selatan)?|Bekasi|Depok|Bogor|Cikarang|Karawang|BSD|SCBD|Surabaya|Bandung)\b/i', $msgText, $locMatch)) {
+        $locationHint = ucwords(strtolower($locMatch[1]));
+    }
+
+    $notesParts = array();
+    if (!empty($booking['survey_date'])) {
+        $notesParts[] = 'Preferensi Jadwal Survei: ' . teknotama_sanitize_testimonial_text($booking['survey_date'], 30);
+    }
+    $notesParts[] = teknotama_sanitize_testimonial_text($msgText, 550);
+    if (!empty($booking['ai_summary'])) {
+        $notesParts[] = '[Pre-Booking AI] ' . teknotama_sanitize_testimonial_text($booking['ai_summary'], 220);
+    }
+
+    $score = teknotama_score_booking_lead($booking);
+    $leadRecord = array(
+        'lead_id'          => $refId,
+        'created_at'       => date('Y-m-d H:i:s'),
+        'source'           => 'web_booking',
+        'company_name'     => teknotama_sanitize_testimonial_text(isset($booking['company']) ? $booking['company'] : '', 120),
+        'pic_name'         => 'PIC Website',
+        'email'            => teknotama_sanitize_testimonial_text(isset($booking['email']) ? $booking['email'] : '', 120),
+        'whatsapp'         => teknotama_sanitize_testimonial_text(isset($booking['phone']) ? $booking['phone'] : '', 32),
+        'location'         => $locationHint,
+        'service_category' => teknotama_sanitize_testimonial_text(isset($booking['service']) ? $booking['service'] : '', 80),
+        'boq_summary'      => $boqSummary,
+        'status'           => 'New Lead',
+        'next_followup_at' => !empty($booking['survey_date']) ? teknotama_sanitize_testimonial_text($booking['survey_date'], 20) : date('Y-m-d'),
+        'last_contact_at'  => '',
+        'notes'            => substr(implode("\n", $notesParts), 0, 800),
+        'last_wa_draft'    => '',
+        'ai_score'         => $score['tier'],
+        'score_numeric'    => $score['score'],
+    );
+
+    array_unshift($leads, $leadRecord);
+    $written = @file_put_contents($leadsFile, json_encode(array_values($leads), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), LOCK_EX);
+    if ($written === false) {
+        return false;
+    }
+
+    $logsFile = $dataDir . '/system_logs.json';
+    $logs = array();
+    if (is_file($logsFile) && is_readable($logsFile)) {
+        $decodedLogs = json_decode((string) @file_get_contents($logsFile), true);
+        if (is_array($decodedLogs)) {
+            $logs = $decodedLogs;
+        }
+    }
+    array_unshift($logs, array(
+        'log_id'     => 'LOG-' . date('YmdHis') . '-' . substr(md5(uniqid('', true)), 0, 4),
+        'created_at' => date('Y-m-d H:i:s'),
+        'module'     => 'web_booking',
+        'level'      => 'INFO',
+        'message'    => 'Lead survei otomatis dari teknotama.com: ' . $leadRecord['company_name'] . ' (' . $leadRecord['ai_score'] . ')',
+        'actor'      => 'teknotama.com',
+    ));
+    if (count($logs) > 200) {
+        $logs = array_slice($logs, 0, 200);
+    }
+    @file_put_contents($logsFile, json_encode($logs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), LOCK_EX);
+
+    // Notifikasi opsional ke Telegram / Google Apps Script jika sudah dikonfigurasi di portal marketing
+    if (function_exists('curl_init')) {
+        $intCfg = array();
+        $localPortalCfg = $marketingDir . '/config/portal_config.php';
+        if (is_file($localPortalCfg) && is_readable($localPortalCfg)) {
+            if (!defined('TEKNOTAMA_MARKETING_INTERNAL')) {
+                define('TEKNOTAMA_MARKETING_INTERNAL', true);
+            }
+            $loadedCfg = include $localPortalCfg;
+            if (is_array($loadedCfg)) {
+                $intCfg = array_merge($intCfg, $loadedCfg);
+            }
+        }
+        $intFile = $dataDir . '/integrations.json';
+        if (is_file($intFile) && is_readable($intFile)) {
+            $decodedInt = json_decode((string) @file_get_contents($intFile), true);
+            if (is_array($decodedInt)) {
+                $intCfg = array_merge($intCfg, $decodedInt);
+            }
+        }
+
+        if (!empty($intCfg['telegram_bot_token']) && !empty($intCfg['telegram_chat_id'])) {
+            $tgUrl = 'https://api.telegram.org/bot' . rawurlencode((string) $intCfg['telegram_bot_token']) . '/sendMessage';
+            teknotama_http_post_json($tgUrl, array('Content-Type: application/json'), array(
+                'chat_id'                  => (string) $intCfg['telegram_chat_id'],
+                'text'                     => "[Lead Website Baru - {$leadRecord['ai_score']}]\nRef: {$refId}\nPT: {$leadRecord['company_name']}\nLayanan: {$leadRecord['service_category']}\nWA: {$leadRecord['whatsapp']}\nLokasi: {$locationHint}",
+                'disable_web_page_preview' => true,
+            ), 3);
+        }
+
+        if (!empty($intCfg['gas_webhook_url']) && stripos((string) $intCfg['gas_webhook_url'], 'https://script.google.com/') === 0) {
+            teknotama_http_post_json((string) $intCfg['gas_webhook_url'], array('Content-Type: application/json'), array(
+                'event'         => 'lead_upsert',
+                'shared_secret' => isset($intCfg['gas_shared_secret']) ? (string) $intCfg['gas_shared_secret'] : '',
+                'timestamp'     => date('c'),
+                'payload'       => $leadRecord,
+            ), 3);
+        }
+    }
+
+    return true;
 }
 
 function teknotama_build_booking_email_html($data)
