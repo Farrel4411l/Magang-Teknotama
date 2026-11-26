@@ -1298,7 +1298,7 @@
             } catch (e) {
                 // ignore
             }
-            window.location.href = 'kontak.html#kontak';
+            window.location.href = '/kontak.html#kontak';
         }
     }
 

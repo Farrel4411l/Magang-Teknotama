@@ -9,7 +9,7 @@
   --about-muted: #647084;
   color: var(--about-text);
   background: #fff;
-  font-family: "Inter", Arial, sans-serif;
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
 }
 .about-page .section-wrap { width: min(1180px, 90.4%); margin-inline: auto; }
 

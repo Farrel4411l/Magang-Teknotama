@@ -25,6 +25,7 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- Performance Preload & Preconnect Hints -->
+    <link rel="preload" as="image" href="assets/banner.webp" type="image/webp" fetchpriority="high">
     <link rel="preload" as="image" href="img/teknotama_logo.jpeg">
     <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
@@ -247,7 +248,7 @@
                 "primaryImageOfPage": { "@id": "https://teknotama.com/#logo" },
                 "breadcrumb": { "@id": "https://teknotama.com/#breadcrumb" },
                 "datePublished": "2026-11-17",
-                "dateModified": "2026-11-22",
+                "dateModified": "2026-11-26",
                 "inLanguage": "id-ID"
             },
             {
@@ -438,11 +439,14 @@
         <!-- Right Server Corridor Visual Blend -->
         <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-[62%] pointer-events-none select-none overflow-hidden">
             <div class="relative w-full h-64 sm:h-80 lg:h-full">
-                <img src="assets/banner.png"
-                     alt="Infrastruktur Data Center, Fiber Optic &amp; Server Rack PT Teknotama Prakarsa Mulia Jakarta"
-                     width="1400" height="900" fetchpriority="high" decoding="async"
-                     class="w-full h-full object-cover hero-image-mask"
-                     onerror="this.onerror=null; this.src='img/Networking-PNG.png';">
+                <picture>
+                    <source srcset="assets/banner.webp" type="image/webp">
+                    <img src="assets/banner.jpg"
+                         alt="Infrastruktur Data Center, Fiber Optic &amp; Server Rack PT Teknotama Prakarsa Mulia Jakarta"
+                         width="1400" height="788" fetchpriority="high" decoding="async"
+                         class="w-full h-full object-cover hero-image-mask"
+                         onerror="this.onerror=null; this.src='img/Networking-PNG.png';">
+                </picture>
                 <!-- Diagonal Red Fiber Accent Lines (Sesuai Mockup UI/UX) -->
                 <div class="hidden lg:block absolute top-0 right-1/4 w-96 h-1.5 bg-gradient-to-r from-transparent via-[#d9141d] to-transparent rotate-[-28deg] opacity-80 blur-[0.5px]"></div>
                 <div class="hidden lg:block absolute bottom-8 right-12 w-[480px] h-1 bg-gradient-to-r from-transparent via-[#ef4444] to-transparent rotate-[14deg] opacity-85"></div>
@@ -541,11 +545,14 @@
                 <!-- Left Curved Engineer Image -->
                 <div class="lg:col-span-6">
                     <div class="overflow-hidden about-photo-curve shadow-xl border border-slate-100 h-72 sm:h-80">
-                        <img src="assets/worker.png"
-                             alt="Engineer PT Teknotama Prakarsa Mulia Mengelola Server Data Center Jakarta"
-                             width="900" height="600" loading="lazy" decoding="async"
-                             class="w-full h-full object-cover"
-                             onerror="this.onerror=null; this.src='img/about-img.jpg';">
+                        <picture>
+                            <source srcset="assets/worker.webp" type="image/webp">
+                            <img src="assets/worker.jpg"
+                                 alt="Engineer PT Teknotama Prakarsa Mulia Mengelola Server Data Center Jakarta"
+                                 width="960" height="540" loading="lazy" decoding="async"
+                                 class="w-full h-full object-cover"
+                                 onerror="this.onerror=null; this.src='img/about-img.jpg';">
+                        </picture>
                     </div>
                 </div>
 
@@ -753,11 +760,15 @@
     <!-- ================= BLACK BAND: KALKULATOR INFRASTRUKTUR & BOQ ================= -->
     <section id="kalkulator" class="infra-banner" aria-labelledby="infra-banner-heading">
     <div class="infra-banner__media" aria-hidden="true">
-      <img
-        class="infra-banner__img"
-        src="assets/earth.png"
-        alt="Earth Network Infrastructure"
-      />
+      <picture>
+        <source srcset="assets/earth.webp" type="image/webp">
+        <img
+          class="infra-banner__img"
+          src="assets/earth.jpg"
+          alt="Peta Koneksi Jaringan Infrastruktur IT Nusantara - PT Teknotama Prakarsa Mulia"
+          width="584" height="424" loading="lazy" decoding="async"
+        />
+      </picture>
       <div class="infra-banner__fade"></div>
     </div>
 
@@ -1216,28 +1227,30 @@
     <script src="script.js" defer></script>
     <script src="i18n.js" defer></script>
 
-    <!-- Fade-In Scroll Animation (Intersection Observer) -->
+    <!-- Fade-In Scroll Animation (Intersection Observer + Crawler Safety Fallback) -->
     <script>
     (function () {
-        // Threshold: trigger when 12% of element enters viewport
+        var targets = document.querySelectorAll('.fade-in, .fade-in-group');
+        function revealAll() {
+            targets.forEach(function (el) { el.classList.add('visible'); });
+        }
+        if (!('IntersectionObserver' in window)) {
+            revealAll();
+            return;
+        }
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    io.unobserve(entry.target); // fire once
+                    io.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.12 });
+        }, { threshold: 0.08, rootMargin: '0px 0px 80px 0px' });
 
-        // Observe all .fade-in elements (sections)
-        document.querySelectorAll('.fade-in').forEach(function (el) {
+        targets.forEach(function (el) {
             io.observe(el);
         });
-
-        // Observe all .fade-in-group elements (card grids)
-        document.querySelectorAll('.fade-in-group').forEach(function (el) {
-            io.observe(el);
-        });
+        window.setTimeout(revealAll, 1400);
     })();
     </script>
 </body>
