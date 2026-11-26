@@ -1,4 +1,5 @@
 :root{--tkt-red:#d9141d;--tkt-red-dark:#b50e16;--tkt-dark:#090b10}
+picture{display:contents}
 .glass-nav{background:#fffffff5;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transform:translateY(0) translateZ(0);will-change:transform;transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s ease}
 .glass-nav--hidden{transform:translateY(-100%) translateZ(0)}
 .glass-card{background:#131b2ec7;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid #dc262633}

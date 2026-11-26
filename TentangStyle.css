@@ -1,5 +1,6 @@
 /* TEKNOTAMA - Tentang Kami | Page-specific styles only
    Shared style.css is intentionally left untouched. */
+picture { display: contents; }
 
 .about-page {
   --about-red: #d9141d;
