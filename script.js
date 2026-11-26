@@ -1298,7 +1298,7 @@
             } catch (e) {
                 // ignore
             }
-            window.location.href = '/#kontak';
+            window.location.href = 'kontak.html#kontak';
         }
     }
 
@@ -1753,12 +1753,29 @@
         return stars;
     }
 
+    function buildStarsSvgHtml(rating) {
+        const r = Math.max(1, Math.min(5, Number(rating) || 5));
+        const starPath = 'M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z';
+        let stars = '';
+        for (let i = 1; i <= 5; i++) {
+            const cls = i <= r ? 'w-4 h-4 fill-current' : 'w-4 h-4 fill-current text-slate-300';
+            stars += '<svg class="' + cls + '" viewBox="0 0 20 20" aria-hidden="true"><path d="' + starPath + '"/></svg>';
+        }
+        return stars;
+    }
+
     function updateTestimonialSectionVisibility() {
-        const hasReviews = (Array.isArray(testimonialsList) && testimonialsList.length > 0)
-            || Boolean(document.querySelector('#testimonials-grid .corp-card'));
-        const sectionEl = document.getElementById('testimoni2') || document.getElementById('testimoni');
+        const hasReviews = Array.isArray(testimonialsList) && testimonialsList.length > 0;
+        const sectionEl = document.getElementById('testimoni');
+        const gridEl = document.getElementById('testimonials-grid');
         if (sectionEl) {
             sectionEl.classList.toggle('hidden', !hasReviews);
+            if (hasReviews) {
+                sectionEl.classList.add('visible');
+            }
+        }
+        if (gridEl && hasReviews) {
+            gridEl.classList.add('visible');
         }
         document.querySelectorAll('.nav-testimoni-link').forEach(function (el) {
             el.classList.toggle('hidden', !hasReviews);
@@ -1771,6 +1788,7 @@
         if (!grid) return;
 
         if (!Array.isArray(testimonialsList) || testimonialsList.length === 0) {
+            grid.innerHTML = '';
             return;
         }
 
@@ -1791,32 +1809,32 @@
             const colorClass = avatarColors[idx % avatarColors.length];
             const subtitle = [item.author_role, item.company_name].filter(Boolean).join(' • ');
             const replyHtml = item.owner_reply
-                ? '<div class="mt-4 pt-3 border-t border-slate-100 bg-slate-50/90 -mx-5 -mb-5 p-3.5 rounded-b-2xl">'
-                    + '<p class="text-[10px] font-bold text-slate-800">Respon dari pemilik (PT Teknotama Prakarsa Mulia)</p>'
+                ? '<div class="mt-3 pt-3 border-t border-slate-100">'
+                    + '<p class="text-[10px] font-bold text-slate-800">PT Teknotama Prakarsa Mulia</p>'
                     + '<p class="text-[11px] text-slate-500 mt-0.5 leading-snug">' + escapeHtml(item.owner_reply) + '</p>'
                     + '</div>'
                 : '';
 
-            return '<article class="corp-card rounded-2xl p-5 flex flex-col justify-between bg-white" data-testimonial-id="' + escapeHtml(item.id || '') + '">'
+            return '<article class="testimonial-card" data-testimonial-id="' + escapeHtml(item.id || '') + '">'
                 + '<div>'
-                + '<div class="flex items-start justify-between gap-3">'
-                + '<div class="flex items-center gap-3 min-w-0">'
-                + '<div class="w-10 h-10 rounded-full ' + colorClass + ' text-white font-extrabold text-xs flex items-center justify-center flex-shrink-0">' + escapeHtml(initials) + '</div>'
+                + '<div class="flex items-center justify-between gap-2 mb-3.5">'
+                + '<div class="testimonial-stars flex items-center gap-1 text-[#d9141d]" aria-label="' + escapeHtml(String(item.rating || 5)) + ' Bintang">'
+                + buildStarsSvgHtml(item.rating)
+                + '</div>'
+                + '<span class="text-[10px] font-bold text-[#d9141d] bg-red-50 border border-red-100 px-2.5 py-0.5 rounded-full truncate max-w-[160px]">' + escapeHtml(item.service_category || 'Infrastruktur IT') + '</span>'
+                + '</div>'
+                + '<p class="testimonial-text text-slate-700 text-sm leading-relaxed">&ldquo;' + escapeHtml(item.comment || '') + '&rdquo;</p>'
+                + '</div>'
+                + '<div>'
+                + '<div class="flex items-center gap-3 pt-4 mt-4 border-t border-slate-100">'
+                + '<div class="w-10 h-10 rounded-full ' + colorClass + ' text-white font-extrabold text-xs flex items-center justify-center flex-shrink-0 shadow-sm">' + escapeHtml(initials) + '</div>'
                 + '<div class="min-w-0">'
-                + '<h3 class="text-sm font-extrabold text-slate-900 truncate">' + escapeHtml(item.author_name || 'Klien Korporasi') + '</h3>'
+                + '<h4 class="text-sm font-extrabold text-slate-900 truncate">' + escapeHtml(item.author_name || 'Klien Korporasi') + '</h4>'
                 + '<p class="text-[11px] text-slate-500 truncate">' + escapeHtml(subtitle || 'Mitra B2B Teknotama') + '</p>'
                 + '</div>'
                 + '</div>'
-                + '<span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full flex-shrink-0">Verified</span>'
-                + '</div>'
-                + '<div class="flex flex-wrap items-center gap-2 mt-3">'
-                + '<span class="text-amber-400 text-sm tracking-tight" aria-label="' + escapeHtml(String(item.rating || 5)) + ' Bintang">' + buildStarsHtml(item.rating) + '</span>'
-                + '<span class="text-[11px] text-slate-400">• ' + escapeHtml(item.date_label || 'Baru saja') + '</span>'
-                + '<span class="text-[10px] font-semibold text-[#d9141d] bg-red-50 px-2 py-0.5 rounded-md ml-auto">' + escapeHtml(item.service_category || 'Infrastruktur IT') + '</span>'
-                + '</div>'
-                + '<p class="text-xs text-slate-600 mt-3 leading-relaxed">"' + escapeHtml(item.comment || '') + '"</p>'
-                + '</div>'
                 + replyHtml
+                + '</div>'
                 + '</article>';
         }).join('');
     }
@@ -2066,25 +2084,18 @@
             });
         }
 
-        // Fetch initial testimonials from server CMS API (dengan fallback ke testimonials_data.json)
+        // Fetch initial testimonials from server CMS API
         try {
-            let resp = await fetch('teknotama_api.php?action=testimonials_list');
-            if (!resp.ok) {
-                resp = await fetch('testimonials_data.json');
-            }
+            const resp = await fetch('teknotama_api.php?action=testimonials_list');
             const data = await resp.json();
-            const items = Array.isArray(data) ? data : (data && data.items);
-            if (Array.isArray(items) && items.length > 0) {
-                testimonialsList = items;
+            if (resp.ok && data && data.ok && Array.isArray(data.items)) {
+                testimonialsList = data.items;
                 renderTestimonialsGrid();
                 renderCmsManageList();
-                const total = items.length;
-                const sum = items.reduce(function (acc, it) { return acc + (Number(it.rating) || 5); }, 0);
-                const stats = (data && data.stats) ? data.stats : { total: total, average_rating: (sum / (total || 1)).toFixed(1) };
-                updateTestimonialsStatsUi(stats);
+                updateTestimonialsStatsUi(data.stats);
             }
         } catch (err) {
-            // Keep clean state or static pre-rendered cards if offline
+            // Keep clean hidden state if offline
         }
     }
 
@@ -2100,8 +2111,8 @@
             const waHref = buildWhatsAppCsUrl('');
             const hasCalculatorOnPage = Boolean(document.getElementById('boq-table'));
             const boqCardHtml = hasCalculatorOnPage
-                ? '<button id="widget-review-boq-card" type="button" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-red-950/80 rounded-2xl p-3 flex items-center justify-between gap-3 transition-all"><div><span class="block text-xs font-bold text-brand-400">Review Simulasi Kalkulator BOQ</span><span id="ai-calc-context-badge" class="block text-[11px] text-slate-300 mt-0.5">Konteks BOQ Aktif: 60 User • 2 Lantai</span></div><i data-lucide="cpu" class="w-4 h-4 text-brand-400 flex-shrink-0"></i></button>'
-                : '<a href="kalkulator-boq-it.html" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-red-950/80 rounded-2xl p-3 flex items-center justify-between gap-3 transition-all"><div><span class="block text-xs font-bold text-brand-400">Buka Kalkulator BOQ Teknis</span><span class="block text-[11px] text-slate-300 mt-0.5">Hitung kebutuhan Switch PoE, Kabel &amp; UPS</span></div><i data-lucide="cpu" class="w-4 h-4 text-brand-400 flex-shrink-0"></i></a>';
+                ? '<button id="widget-review-boq-card" type="button" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-red-950/80 rounded-2xl p-3 flex items-center justify-between gap-3 transition-all"><div><span class="block text-xs font-bold text-brand-400" data-en="Review BOQ Calculator Simulation">Review Simulasi Kalkulator BOQ</span><span id="ai-calc-context-badge" class="block text-[11px] text-slate-300 mt-0.5">Konteks BOQ Aktif: 60 User • 2 Lantai</span></div><i data-lucide="cpu" class="w-4 h-4 text-brand-400 flex-shrink-0"></i></button>'
+                : '<a href="kalkulator-boq-it.html" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-red-950/80 rounded-2xl p-3 flex items-center justify-between gap-3 transition-all"><div><span class="block text-xs font-bold text-brand-400" data-en="Open Technical BOQ Calculator">Buka Kalkulator BOQ Teknis</span><span class="block text-[11px] text-slate-300 mt-0.5" data-en="Calculate PoE Switch, Cabling &amp; UPS needs">Hitung kebutuhan Switch PoE, Kabel &amp; UPS</span></div><i data-lucide="cpu" class="w-4 h-4 text-brand-400 flex-shrink-0"></i></a>';
             const waIconSvg = '<svg class="w-4 h-4 fill-current flex-shrink-0" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12 0 2.126.556 4.122 1.534 5.854l-1.534 5.611 5.752-1.509c1.682.905 3.604 1.419 5.647 1.419 6.627 0 12-5.373 12-12 0-6.627-5.373-12-11.399-11.375z"/></svg>';
 
             const wrap = document.createElement('div');
@@ -2111,15 +2122,15 @@
                 + '<div id="widget-view-home" class="flex-1 flex flex-col overflow-hidden">'
                 + '<div class="bg-gradient-to-br from-[#12080d] via-[#1c0b12] to-[#090d16] p-4 pr-12 border-b border-red-950/70">'
                 + '<div class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>TeknoAssist AI &amp; WhatsApp CS • 1 Box Terpadu</div>'
-                + '<h3 class="text-lg font-extrabold text-white">Halo! Ada yang bisa dibantu? &#128075;</h3>'
-                + '<p class="text-[11px] text-slate-300 mt-0.5 leading-relaxed">Konsultasi instan dengan AI Field Engineer atau terhubung langsung ke WhatsApp CS resmi kami.</p>'
+                + '<h3 class="text-lg font-extrabold text-white" data-en-html="Hello! How can we help? &#128075;">Halo! Ada yang bisa dibantu? &#128075;</h3>'
+                + '<p class="text-[11px] text-slate-300 mt-0.5 leading-relaxed" data-en="Instant consultation with our AI Field Engineer or connect directly to our official WhatsApp CS.">Konsultasi instan dengan AI Field Engineer atau terhubung langsung ke WhatsApp CS resmi kami.</p>'
                 + '</div>'
                 + '<div class="flex-1 overflow-y-auto tkt-scroll p-3.5 space-y-2.5 bg-[#080c15]">'
-                + '<button id="widget-start-conversation" type="button" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-brand-600/40 rounded-2xl p-3.5 flex items-center justify-between gap-3 transition-all group"><div><span class="block text-xs font-bold text-white group-hover:text-brand-400 transition-colors">Mulai Konsultasi AI Engineer</span><span class="block text-[11px] text-slate-400 mt-0.5">Ketik <strong class="text-emerald-400">&quot;cs&quot;</strong> di chat untuk langsung ke WhatsApp</span></div><div class="w-9 h-9 rounded-xl bg-brand-600 text-white flex items-center justify-center flex-shrink-0 shadow-md shadow-brand-600/30"><i data-lucide="bot" class="w-4 h-4"></i></div></button>'
-                + '<a id="widget-wa-direct-card" href="' + escapeHtml(waHref) + '" target="_blank" rel="noopener noreferrer" class="w-full text-left bg-emerald-950/50 hover:bg-emerald-900/60 border border-emerald-500/50 rounded-2xl p-3.5 flex items-center justify-between gap-3 transition-all group"><div><span class="block text-xs font-bold text-emerald-300 group-hover:text-white transition-colors">Chat Langsung CS via WhatsApp</span><span class="block text-[11px] text-emerald-200/80 mt-0.5">Official NOC &amp; Sales: +62 851-6769-4457</span></div><div class="w-9 h-9 rounded-xl bg-[#25D366] text-white flex items-center justify-center flex-shrink-0 shadow-md"><i data-lucide="phone-call" class="w-4 h-4"></i></div></a>'
+                + '<button id="widget-start-conversation" type="button" class="w-full text-left bg-[#11192b] hover:bg-[#172138] border border-brand-600/40 rounded-2xl p-3.5 flex items-center justify-between gap-3 transition-all group"><div><span class="block text-xs font-bold text-white group-hover:text-brand-400 transition-colors" data-en="Start AI Engineer Consultation">Mulai Konsultasi AI Engineer</span><span class="block text-[11px] text-slate-400 mt-0.5" data-en-html="Type &lt;strong class=&quot;text-emerald-400&quot;&gt;&amp;quot;cs&amp;quot;&lt;/strong&gt; in chat to go straight to WhatsApp">Ketik <strong class="text-emerald-400">&quot;cs&quot;</strong> di chat untuk langsung ke WhatsApp</span></div><div class="w-9 h-9 rounded-xl bg-brand-600 text-white flex items-center justify-center flex-shrink-0 shadow-md shadow-brand-600/30"><i data-lucide="bot" class="w-4 h-4"></i></div></button>'
+                + '<a id="widget-wa-direct-card" href="' + escapeHtml(waHref) + '" target="_blank" rel="noopener noreferrer" class="w-full text-left bg-emerald-950/50 hover:bg-emerald-900/60 border border-emerald-500/50 rounded-2xl p-3.5 flex items-center justify-between gap-3 transition-all group"><div><span class="block text-xs font-bold text-emerald-300 group-hover:text-white transition-colors" data-en="Direct CS Chat via WhatsApp">Chat Langsung CS via WhatsApp</span><span class="block text-[11px] text-emerald-200/80 mt-0.5">Official NOC &amp; Sales: +62 851-6769-4457</span></div><div class="w-9 h-9 rounded-xl bg-[#25D366] text-white flex items-center justify-center flex-shrink-0 shadow-md"><i data-lucide="phone-call" class="w-4 h-4"></i></div></a>'
                 + '<div class="bg-[#11192b] border border-red-950/80 rounded-2xl p-3 space-y-2">'
-                + '<div class="flex items-center justify-between"><span class="text-xs font-bold text-white">Pusat Bantuan SOP Lapangan</span><span class="text-[10px] text-brand-400 font-mono">8 Panduan</span></div>'
-                + '<div class="relative"><i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i><input id="widget-help-search" type="text" placeholder="Cari SOP (TIA-568, FO, Fluke, SLA)..." class="w-full pl-8 pr-3 py-1.5 rounded-xl bg-[#080d1a] border border-red-950 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500"></div>'
+                + '<div class="flex items-center justify-between"><span class="text-xs font-bold text-white" data-en="Field SOP Help Center">Pusat Bantuan SOP Lapangan</span><span class="text-[10px] text-brand-400 font-mono" data-en="8 Guides">8 Panduan</span></div>'
+                + '<div class="relative"><i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i><input id="widget-help-search" type="text" placeholder="Cari SOP (TIA-568, FO, Fluke, SLA)..." data-en-placeholder="Search SOP (TIA-568, FO, Fluke, SLA)..." class="w-full pl-8 pr-3 py-1.5 rounded-xl bg-[#080d1a] border border-red-950 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500"></div>'
                 + '<div id="widget-help-results" class="space-y-1.5 pt-1"></div>'
                 + '</div>'
                 + boqCardHtml

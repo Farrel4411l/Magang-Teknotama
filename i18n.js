@@ -47,12 +47,25 @@
         'Tutup': 'Close',
         'Chat AI': 'AI Chat',
         'Mulai Konsultasi AI Engineer': 'Start AI Engineer Consultation',
-        'Chat Langsung CS via WhatsApp': 'Direct CS Chat via WhatsApp'
+        'Chat Langsung CS via WhatsApp': 'Direct CS Chat via WhatsApp',
+        'Pusat Bantuan SOP Lapangan': 'Field SOP Help Center',
+        '8 Panduan': '8 Guides',
+        'Review Simulasi Kalkulator BOQ': 'Review BOQ Calculator Simulation',
+        'Buka Kalkulator BOQ Teknis': 'Open Technical BOQ Calculator',
+        'Hitung kebutuhan Switch PoE, Kabel & UPS': 'Calculate PoE Switch, Cabling & UPS needs',
+        'Hubungi CS WA (Ketik: cs)': 'Contact WA CS (Type: cs)',
+        'SOP Kabel & FO': 'Cabling & FO SOP',
+        'Review BOQ': 'Review BOQ',
+        'Ke Form': 'To Form'
     };
 
     var SELECTOR_EN = [
         {
-            sel: '#widget-home-panel p.text-\\[11px\\].text-slate-300',
+            sel: '#widget-view-home h3.text-lg.font-extrabold.text-white',
+            enHtml: 'Hello! How can we help? &#128075;'
+        },
+        {
+            sel: '#widget-view-home p.text-\\[11px\\].text-slate-300',
             en: 'Instant consultation with our AI Field Engineer or connect directly to our official WhatsApp CS.'
         },
         {
@@ -100,7 +113,7 @@
     }
 
     function applySharedTextNodes(lang) {
-        var containers = document.querySelectorAll('header.glass-nav, footer, #unified-ai-wa-widget');
+        var containers = document.querySelectorAll('header.glass-nav, footer, #ai-widget-container');
         containers.forEach(function (root) {
             var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
             var node;

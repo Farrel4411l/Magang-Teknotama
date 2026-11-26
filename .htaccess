@@ -72,7 +72,7 @@
   <FilesMatch "\.(html|htm)$">
     Header set Cache-Control "no-cache, must-revalidate"
   </FilesMatch>
-  <FilesMatch "^(index_old|portfolio|underconstructions1?|index_bak)\.html$">
+  <FilesMatch "^(index_old|portfolio|underconstructions1?|index_bak|testimoni)\.html$">
     Header set X-Robots-Tag "noindex, nofollow"
   </FilesMatch>
   <FilesMatch "^admin-testimoni\.html$">
