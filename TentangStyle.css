@@ -11,6 +11,8 @@ picture { display: contents; }
   color: var(--about-text);
   background: #fff;
   font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 .about-page .section-wrap { width: min(1180px, 90.4%); margin-inline: auto; }
 
@@ -40,7 +42,7 @@ picture { display: contents; }
 .about-stat strong { color: var(--about-navy); font-size: clamp(27px,3vw,36px); line-height: 1; font-weight: 800; letter-spacing: -1px; }
 .about-stat span { color: #687386; font-size: 12px; font-weight: 600; }
 
-.about-profile { display: grid; grid-template-columns: .92fr 1.08fr; align-items: center; gap: 6%; padding-top: 76px; padding-bottom: 72px; }
+.about-profile { display: grid; grid-template-columns: .92fr 1.08fr; align-items: center; gap: 6%; padding-top: 76px; padding-bottom: 72px; overflow-x: hidden; overflow-x: clip; }
 .about-profile__visual { min-height: 430px; position: relative; }
 .about-profile__visual::before { content:""; position:absolute; z-index:0; left:-16px; bottom:-15px; width:42%; height:34%; background:var(--about-red); border-radius:14px; }
 .about-profile__visual::after { content:""; position:absolute; z-index:0; top:-15px; right:-15px; width:100px; height:100px; border:2px solid #d9141d55; border-radius:50%; }

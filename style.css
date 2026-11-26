@@ -1,5 +1,7 @@
 :root{--tkt-red:#d9141d;--tkt-red-dark:#b50e16;--tkt-dark:#090b10}
+html,body{overflow-x:clip}
 picture{display:contents}
+.tkt-nav-dropdown.is-open>.tkt-nav-menu{display:block}
 .glass-nav{background:#fffffff5;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transform:translateY(0) translateZ(0);will-change:transform;transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s ease}
 .glass-nav--hidden{transform:translateY(-100%) translateZ(0)}
 .glass-card{background:#131b2ec7;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid #dc262633}
@@ -41,10 +43,13 @@ picture{display:contents}
 40%{transform:scale(1);opacity:1}
 }
 #ai-widget-container{transform:translateZ(0)}
-#ai-widget-panel{width:390px;max-width:100%;height:min(580px,calc(100vh - 120px));box-shadow:0 24px 60px -12px #0f172a52,0 0 0 1px #e2e8f0e6}
+#ai-widget-panel{width:390px;max-width:100%;height:min(580px,calc(100vh - 120px));height:min(580px,calc(100dvh - 110px));box-shadow:0 24px 60px -12px #0f172a52,0 0 0 1px #e2e8f0e6}
+@media (min-width: 1024px) and (max-width: 1279px) {
+#logo_fixed{width:144px}
+}
 @media (max-width: 640px) {
-#ai-widget-panel{width:100%;height:min(540px,calc(100vh - 156px))}
-#logo_fixed{width:150px}
+#ai-widget-panel{width:100%;height:min(540px,calc(100vh - 156px));height:min(540px,calc(100dvh - 140px))}
+#logo_fixed{width:clamp(124px,34vw,150px)}
 }
 .testimonials-section{background-color:#fff;color:#111827;font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;padding:36px 24px 32px}
 .testimonials-container{max-width:1140px;margin:0 auto}
