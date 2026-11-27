@@ -30,5 +30,5 @@ Options -Indexes
 </IfModule>
 
 <IfModule mime_module>
-  AddHandler application/x-httpd-ea-php72 .php .php7 .phtml
+  AddHandler application/x-httpd-ea-php83 .php .php7 .phtml
 </IfModule>
