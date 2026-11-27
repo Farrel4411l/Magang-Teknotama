@@ -21,10 +21,6 @@
   RewriteCond %{HTTP_HOST} ^teknotama\.com$ [NC]
   RewriteRule ^ https://teknotama.com%{REQUEST_URI} [L,R=301,NE]
 
-  # Soft SEO Isolation untuk /games/: tetap dapat diakses, namun ditandai noindex pada domain B2B utama
-  RewriteCond %{REQUEST_URI} ^/games(?:/|$) [NC]
-  RewriteRule ^ - [E=TKT_NOINDEX_GAMES:1]
-
   # Blokir akses HTTP ke direktori .git & .github workflows
   RewriteRule ^\.git(?:hub)?(?:/|$) - [F,L]
 
@@ -35,11 +31,6 @@
   # Kanonikalisasi /index.html di root menjadi / (tanpa memengaruhi /games/index.html)
   RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
   RewriteRule ^index\.html$ https://teknotama.com/ [L,R=301]
-</IfModule>
-
-# Pastikan env TKT_NOINDEX_GAMES tetap bekerja meski /games/.htaccess memiliki RewriteEngine On terpisah
-<IfModule mod_setenvif.c>
-  SetEnvIfNoCase Request_URI "^/games(?:/|$)" TKT_NOINDEX_GAMES=1
 </IfModule>
 
 # 2. Proteksi File Konfigurasi Sensitif & Dokumentasi Internal
@@ -90,8 +81,6 @@
   <FilesMatch "^admin-testimoni\.html$">
     Header set X-Robots-Tag "noindex, nofollow, noarchive"
   </FilesMatch>
-  Header set X-Robots-Tag "noindex, nofollow" env=TKT_NOINDEX_GAMES
-  Header set X-Robots-Tag "noindex, nofollow" env=REDIRECT_TKT_NOINDEX_GAMES
   <FilesMatch "\.(css|js|xml|svg|txt)$">
     Header append Vary Accept-Encoding
   </FilesMatch>

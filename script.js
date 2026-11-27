@@ -2252,9 +2252,44 @@
         }
     }
 
+    function initCrossPortalReferralTracking() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const rawRef = (params.get('ref') || '').trim();
+            if (rawRef && /^[a-zA-Z0-9_-]{2,40}$/.test(rawRef)) {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'tkt_internal_ref',
+                    ref_source: rawRef,
+                    landing_path: window.location.pathname
+                });
+                if (typeof window.gtag === 'function') {
+                    window.gtag('event', 'internal_referral', {
+                        ref_source: rawRef,
+                        page_path: window.location.pathname
+                    });
+                }
+            }
+        } catch (e) {
+            // ignore URLSearchParams errors on older browsers
+        }
+
+        document.querySelectorAll('a[href*="/games/"]').forEach(function (link) {
+            link.addEventListener('click', function () {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'tkt_cross_portal_click',
+                    target_portal: 'teknogame',
+                    ref_param: 'teknotamacom'
+                });
+            });
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         ensureFloatingWidgetDom();
         initNavigationAndStaticSections();
+        initCrossPortalReferralTracking();
         initCalculator();
         initChatbotInterfaces();
         initBookingForm();

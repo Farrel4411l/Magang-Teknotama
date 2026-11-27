@@ -43,9 +43,9 @@ Saat mengunggah pembaruan via FileZilla atau Ops Agent ke `/public_html/`, **DIL
 ### C. Portal TeknoGame (`/games/`)
 - Dikelola oleh tim developer game (`ImmanuelValentino/Teknogames`) via `.github/workflows/sync-games.yml`.
 - **Jangan edit isi `games/` secara manual** di repo ini agar tidak konflik dengan sinkronisasi CI.
-- **Soft SEO Isolation di Root:**
-  - Halaman B2B **tidak** menautkan ke `/games/`, dan `sitemap.xml` **tidak** menyertakan URL `/games/`.
-  - `.htaccess` root memberi `X-Robots-Tag: noindex, nofollow` pada `/games/` via `SetEnvIfNoCase` tanpa memblokir akses pengguna (dan **jangan** tambahkan `Disallow: /games/` di `robots.txt` selama Google masih memproses `noindex`).
+- **Cross-Portal Link & Isolasi SEO B2B:**
+  - Navigasi desktop (`Lainnya`), `#mobile-menu`, dan footer `Lainnya` di halaman Company Profile menautkan ke `/games/?ref=teknotamacom` menggunakan `rel="nofollow"` agar sinyal referral GA4 (`?ref=teknotamacom` vs Google Search) terbaca jelas tanpa mencampur otoritas kata kunci B2B utama.
+  - `sitemap.xml` root tetap hanya berisi URL Company Profile B2B murni (tanpa mencampur URL `/games/`), sementara `/games/` dibiarkan terindeks terpisah untuk pencarian TeknoGame (tanpa dipaksa `noindex` di `.htaccess` root).
 
 ### D. Folder Legacy Terproteksi
 - Jangan menghapus atau mengubah nama file di `img/`, `icons/`, `css/`, `js/`, `fonts/`, `redesign/`, `teknotama.com/` tanpa persetujuan eksplisit.

@@ -23,6 +23,7 @@
         'Ulasan & Testimoni Klien': 'Client Reviews & Testimonials',
         'Testimoni Klien': 'Client Testimonials',
         'Tanya Jawab (FAQ)': 'FAQ',
+        'Tekno Game': 'Tekno Game',
         'Tekno AI & WhatsApp CS': 'Tekno AI & WhatsApp CS',
         'Konsultasi Gratis': 'Free Consultation',
 
